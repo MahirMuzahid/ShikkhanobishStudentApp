@@ -5,17 +5,17 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height=".5*"/>
-            <RowDefinition Height="2*"/>
             <RowDefinition Height="1*"/>
+            <RowDefinition Height="2.5*"/>
+            <RowDefinition Height="4*"/>
             <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
+            <RowDefinition Height=".2*"/>
+            <RowDefinition Height=".6*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="15*"/>
-            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width=".1*"/>
+            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width=".1*"/>
         </Grid.ColumnDefinitions>
         <Grid Grid.Row="0" Grid.Column="1">
             <Grid.ColumnDefinitions>
@@ -24,8 +24,7 @@
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            <Label Text="Coin:" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="15"/>
-            <Label Text="50" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center" FontAttributes="Bold" FontSize="15"/>
+            <Image Source="logo.png" Grid.Column="0" Aspect="AspectFit"/>
             <Image Source="download.png" Grid.Column="3"/>
         </Grid>
 
@@ -33,7 +32,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height=".5*"/>
                 <RowDefinition Height=".3*"/>
-                <RowDefinition Height="2*"/>
+                <RowDefinition Height="1.5*"/>
                 <RowDefinition Height=".5*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -42,13 +41,273 @@
                 <ColumnDefinition Width="3*"/>
                 <ColumnDefinition Width=".1*"/>
             </Grid.ColumnDefinitions>
-            <Frame BackgroundColor="#323232" CornerRadius="20" Grid.RowSpan="4" Grid.ColumnSpan="4"/>
+            <Frame BackgroundColor="#414141" CornerRadius="20" Grid.RowSpan="4" Grid.ColumnSpan="4"/>
             <Label Text="Request Tuition" Grid.ColumnSpan="4" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" TextColor="White" FontSize="17" FontAttributes="Bold"/>
-            <Label Text="Detail about your question" Grid.Column="1" Grid.Row="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" TextColor="#ACACAC" FontSize="13" />
-            <Label Text="What should I write here?" Grid.Column="2" Grid.Row="1" TextColor="#40BD71" FontSize="11" HorizontalTextAlignment="End" VerticalTextAlignment="Center" FontAttributes="Bold"/>
-            <Frame BackgroundColor="#B7B7B7" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" CornerRadius="10"/>
+            <Label Text="Detail about your question" Grid.Column="1" Grid.Row="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" TextColor="White" FontSize="13" />
+            <Label Text="What should I write here?" Grid.Column="2" Grid.Row="1" TextColor="White" FontSize="11" HorizontalTextAlignment="End" VerticalTextAlignment="Center" FontAttributes="Bold"/>
+            <Frame BackgroundColor="White" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" CornerRadius="10"/>
             <Editor Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" FontSize="14"/>
             <Label Text="Max 100 words" Grid.Column="2" Grid.Row="3" HorizontalTextAlignment="End" VerticalTextAlignment="Start" TextColor="White" FontSize="12"/>
+        </Grid>
+
+        <Grid Grid.Row="2" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height=".1*"/>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height=".1*"/>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height=".1*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width=".1*"/>
+                <ColumnDefinition Width="10*"/>
+                <ColumnDefinition Width=".1*"/>
+                <ColumnDefinition Width="10*"/>
+                <ColumnDefinition Width=".1*"/>
+            </Grid.ColumnDefinitions>
+            <Frame BackgroundColor="#E7E7E7" Grid.Row="1" Grid.Column="1" CornerRadius="15" HasShadow="False"/>
+            <Grid Grid.Row="1" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height=".4*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height=".7*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Source="" Grid.Column="0"/>
+                    <Label Text="Institution" Grid.Column="1" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" FontSize="16" FontAttributes="Bold"/>
+                    <Frame BackgroundColor="#FF6565" Grid.Column="2" CornerRadius="20" Margin="7,10,7,10"/>
+                </Grid>
+                <Grid Grid.Row="1" RowSpacing="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Text="North South University" Grid.Row="0" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Start" FontSize="12" FontAttributes="Bold" Padding="10,0,0,0"/>
+                    <Label Text="Student" Grid.Row="1" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Center" FontSize="12" Padding="10,0,0,0"/>
+                    <Label Text="Tuition Request" Grid.Row="2" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Center" FontSize="12" Padding="10,0,0,0"/>
+                    <Label Text="Avg. Ratting/Tuition" Grid.Row="3" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Center" FontSize="12" Padding="10,0,0,0"/>
+
+                    <Label Text="50" Grid.Row="1" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="0,0,5,0" FontAttributes="Bold"/>
+                    <Label Text="300" Grid.Row="2" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="10,0,5,0" FontAttributes="Bold"/>
+                    <Label Text="4.5" Grid.Row="3" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="10,0,5,0" FontAttributes="Bold"/>
+                </Grid>
+                <Button Text="Select" CornerRadius="5" TextColor="White" Grid.Row="2" HorizontalOptions="End" VerticalOptions="Center" FontSize="10" Margin="10,5,10,10" FontAttributes="Bold">
+                    <Button.Background>
+                        <LinearGradientBrush EndPoint="1,0">
+                            <GradientStop Color="#FF6565" Offset="0.1" />
+                            <GradientStop Color="#FFB7B7" Offset="1.0" />
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
+            </Grid>
+            <Frame BackgroundColor="#E7E7E7" Grid.Row="1" Grid.Column="3" CornerRadius="15" HasShadow="False"/>
+            <Grid Grid.Row="1" Grid.Column="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height=".4*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height=".7*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Source="" Grid.Column="0"/>
+                    <Label Text="Institution" Grid.Column="1" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" FontSize="16" FontAttributes="Bold"/>
+                    <Frame BackgroundColor="#9665FF" Grid.Column="2" CornerRadius="20" Margin="7,10,7,10"/>
+                </Grid>
+                <Grid Grid.Row="1" RowSpacing="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Text="North South University" Grid.Row="0" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Start" FontSize="12" FontAttributes="Bold" Padding="10,0,0,0"/>
+                    <Label Text="Student" Grid.Row="1" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Center" FontSize="12" Padding="10,0,0,0"/>
+                    <Label Text="Tuition Request" Grid.Row="2" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Center" FontSize="12" Padding="10,0,0,0"/>
+                    <Label Text="Avg. Ratting/Tuition" Grid.Row="3" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Center" FontSize="12" Padding="10,0,0,0"/>
+
+                    <Label Text="50" Grid.Row="1" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="0,0,5,0" FontAttributes="Bold"/>
+                    <Label Text="300" Grid.Row="2" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="10,0,5,0" FontAttributes="Bold"/>
+                    <Label Text="4.5" Grid.Row="3" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="10,0,5,0" FontAttributes="Bold"/>
+                </Grid>
+                <Button Text="Select" CornerRadius="5" TextColor="White" Grid.Row="2" HorizontalOptions="End" VerticalOptions="Center" FontSize="10" Margin="10,5,10,10" FontAttributes="Bold">
+                    <Button.Background>
+                        <LinearGradientBrush EndPoint="1,0">
+                            <GradientStop Color="#9665FF" Offset="0.1" />
+                            <GradientStop Color="#CEB7FF" Offset="1.0" />
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
+            </Grid>
+            <Frame BackgroundColor="#E7E7E7" Grid.Row="3" Grid.Column="1" CornerRadius="15" HasShadow="False"/>
+            <Grid Grid.Row="3" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height=".4*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height=".7*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Source="" Grid.Column="0"/>
+                    <Label Text="Institution" Grid.Column="1" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" FontSize="16" FontAttributes="Bold"/>
+                    <Frame BackgroundColor="#2AD871" Grid.Column="2" CornerRadius="20" Margin="7,10,7,10"/>
+                </Grid>
+                <Grid Grid.Row="1" RowSpacing="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Text="North South University" Grid.Row="0" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Start" FontSize="12" FontAttributes="Bold" Padding="10,0,0,0"/>
+                    <Label Text="Student" Grid.Row="1" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Center" FontSize="12" Padding="10,0,0,0"/>
+                    <Label Text="Tuition Request" Grid.Row="2" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Center" FontSize="12" Padding="10,0,0,0"/>
+                    <Label Text="Avg. Ratting/Tuition" Grid.Row="3" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Center" FontSize="12" Padding="10,0,0,0"/>
+
+                    <Label Text="50" Grid.Row="1" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="0,0,5,0" FontAttributes="Bold"/>
+                    <Label Text="300" Grid.Row="2" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="10,0,5,0" FontAttributes="Bold"/>
+                    <Label Text="4.5" Grid.Row="3" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="10,0,5,0" FontAttributes="Bold"/>
+                </Grid>
+                <Button Text="Select" CornerRadius="5" TextColor="White" Grid.Row="2" HorizontalOptions="End" VerticalOptions="Center" FontSize="10" Margin="10,5,10,10" FontAttributes="Bold">
+                    <Button.Background>
+                        <LinearGradientBrush EndPoint="1,0">
+                            <GradientStop Color="#2AD871" Offset="0.1" />
+                            <GradientStop Color="#97FDC1" Offset="1.0" />
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
+            </Grid>
+            <Frame BackgroundColor="#E7E7E7" Grid.Row="3" Grid.Column="3" CornerRadius="15" HasShadow="False"/>
+            <Grid Grid.Row="3" Grid.Column="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height=".4*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height=".7*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Source="" Grid.Column="0"/>
+                    <Label Text="Institution" Grid.Column="1" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" FontSize="16" FontAttributes="Bold"/>
+                    <Frame BackgroundColor="#3CBEFF" Grid.Column="2" CornerRadius="20" Margin="7,10,7,10"/>
+                </Grid>
+                <Grid Grid.Row="1" RowSpacing="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Text="North South University" Grid.Row="0" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Start" FontSize="12" FontAttributes="Bold" Padding="10,0,0,0"/>
+                    <Label Text="Student" Grid.Row="1" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Center" FontSize="12" Padding="10,0,0,0"/>
+                    <Label Text="Tuition Request" Grid.Row="2" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Center" FontSize="12" Padding="10,0,0,0"/>
+                    <Label Text="Avg. Ratting/Tuition" Grid.Row="3" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Center" FontSize="12" Padding="10,0,0,0"/>
+
+                    <Label Text="50" Grid.Row="1" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="0,0,5,0" FontAttributes="Bold"/>
+                    <Label Text="300" Grid.Row="2" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="10,0,5,0" FontAttributes="Bold"/>
+                    <Label Text="4.5" Grid.Row="3" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="10,0,5,0" FontAttributes="Bold"/>
+                </Grid>
+                <Button Text="Select" CornerRadius="5" TextColor="White" Grid.Row="2" HorizontalOptions="End" VerticalOptions="Center" FontSize="10" Margin="10,5,10,10" FontAttributes="Bold">
+                    <Button.Background>
+                        <LinearGradientBrush EndPoint="1,0">
+                            <GradientStop Color="#3CBEFF" Offset="0.1" />
+                            <GradientStop Color="#9ADDFF" Offset="1.0" />
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="3" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width=".3*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+              
+            <!---CheckBox>
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="Color"
+                                 Value="#48ACFF" />
+                            </VisualState.Setters>
+                        </VisualState>
+
+                        <VisualState x:Name="IsChecked">
+                            <VisualState.Setters>
+                                <Setter Property="Color"
+                            Value="#48ACFF" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+            </CheckBox>-->
+            <Label Grid.Column="1" HorizontalTextAlignment="Start" VerticalTextAlignment="Center">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="I accept"/>
+                        <Span Text=" Terms &amp; Conditions" TextColor="#5D84DF" FontAttributes="Italic"/>
+                        <Span Text=" Of Shikkhanobish"/>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <Button Text="Request Tuition" CornerRadius="5" TextColor="White" Grid.Column="1" Grid.Row="1" HorizontalOptions="End" VerticalOptions="Center">
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="1,0">
+                        <GradientStop Color="#48ACFF" Offset="0.1" />
+                        <GradientStop Color="#8748FF" Offset="1.0" />
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+        </Grid>
+
+        <Grid Grid.Row="5" Grid.ColumnSpan="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Label Text="Request Tuition" Grid.Column="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontAttributes="Bold" TextColor="#3D3D3D"/>
+            <Label Text="Recharge Coin" Grid.Column="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontAttributes="Bold" TextColor="#999999"/>
+            <Image Source="download.png" Grid.Column="2" Aspect="AspectFit" Margin="5"/>
         </Grid>
     </Grid>
 
