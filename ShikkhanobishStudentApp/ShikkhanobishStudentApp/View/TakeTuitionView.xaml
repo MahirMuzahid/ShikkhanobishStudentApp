@@ -112,7 +112,7 @@
                         <Label Text="300" Grid.Row="2" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="10,0,5,0" FontAttributes="Bold"/>
                         <Label Text="4.5" Grid.Row="3" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="10,0,5,0" FontAttributes="Bold"/>
                     </Grid>
-                    <Button Text="Select" CornerRadius="5" TextColor="White" Grid.Row="2" HorizontalOptions="End" VerticalOptions="Center" FontSize="10" Margin="10,5,10,10" FontAttributes="Bold" Command="{Binding selectInsCommand}">
+                    <Button Text="Select" CornerRadius="5" TextColor="White" Grid.Row="2" HorizontalOptions="End" VerticalOptions="Center" FontSize="10" Margin="10,5,10,10" FontAttributes="Bold" Command="{Binding selectInsCommand}" CommandParameter="0">
                         <Button.Background>
                             <LinearGradientBrush EndPoint="1,0">
                                 <GradientStop Color="#FF6565" Offset="0.1" />
@@ -158,7 +158,7 @@
                         <Label Text="300" Grid.Row="2" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="10,0,5,0" FontAttributes="Bold"/>
                         <Label Text="4.5" Grid.Row="3" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="10,0,5,0" FontAttributes="Bold"/>
                     </Grid>
-                    <Button Text="Select" CornerRadius="5" TextColor="White" Grid.Row="2" HorizontalOptions="End" VerticalOptions="Center" FontSize="10" Margin="10,5,10,10" FontAttributes="Bold">
+                    <Button Text="Select" CornerRadius="5" TextColor="White" Grid.Row="2" HorizontalOptions="End" VerticalOptions="Center" FontSize="10" Margin="10,5,10,10" FontAttributes="Bold" Command="{Binding selectInsCommand}" CommandParameter="1">
                         <Button.Background>
                             <LinearGradientBrush EndPoint="1,0">
                                 <GradientStop Color="#9665FF" Offset="0.1" />
@@ -181,7 +181,7 @@
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
                         <Image Source="sub.png" Grid.Column="0"  Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center"/>
-                        <Label Text="Subject" Grid.ColumnSpan="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="16" FontAttributes="Bold"/>
+                        <Label Text="Subject" Grid.ColumnSpan="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="16" FontAttributes="Bold" />
                         <Frame BackgroundColor="#2AD871" Grid.Column="2" CornerRadius="20" Margin="7,10,7,10"/>
                     </Grid>
                     <Grid Grid.Row="1" RowSpacing="0">
@@ -204,7 +204,7 @@
                         <Label Text="300" Grid.Row="2" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="10,0,5,0" FontAttributes="Bold"/>
                         <Label Text="4.5" Grid.Row="3" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="10,0,5,0" FontAttributes="Bold"/>
                     </Grid>
-                    <Button Text="Select" CornerRadius="5" TextColor="White" Grid.Row="2" HorizontalOptions="End" VerticalOptions="Center" FontSize="10" Margin="10,5,10,10" FontAttributes="Bold">
+                    <Button Text="Select" CornerRadius="5" TextColor="White" Grid.Row="2" HorizontalOptions="End" VerticalOptions="Center" FontSize="10" Margin="10,5,10,10" FontAttributes="Bold" Command="{Binding selectInsCommand}" CommandParameter="2">
                         <Button.Background>
                             <LinearGradientBrush EndPoint="1,0">
                                 <GradientStop Color="#2AD871" Offset="0.1" />
@@ -250,7 +250,7 @@
                         <Label Text="300" Grid.Row="2" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="10,0,5,0" FontAttributes="Bold"/>
                         <Label Text="4.5" Grid.Row="3" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="10,0,5,0" FontAttributes="Bold"/>
                     </Grid>
-                    <Button Text="Select" CornerRadius="5" TextColor="White" Grid.Row="2" HorizontalOptions="End" VerticalOptions="Center" FontSize="10" Margin="10,5,10,10" FontAttributes="Bold">
+                    <Button Text="Select" CornerRadius="5" TextColor="White" Grid.Row="2" HorizontalOptions="End" VerticalOptions="Center" FontSize="10" Margin="10,5,10,10" FontAttributes="Bold" Command="{Binding selectInsCommand}" CommandParameter="3">
                         <Button.Background>
                             <LinearGradientBrush EndPoint="1,0">
                                 <GradientStop Color="#3CBEFF" Offset="0.1" />
@@ -277,7 +277,7 @@
                 <Frame BackgroundColor="#D8D8D8" Grid.Row="1" Grid.ColumnSpan="2" Margin="0,0,0,0" HasShadow="False"/>
                 <Label Text="Cost:" Grid.Row="2" Grid.Column="0" HorizontalOptions="End" VerticalOptions="Start" FontAttributes="Bold"/>
                 <Label Text="3 Taka / Min" Grid.Row="2" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Start" FontAttributes="Bold"/>
-                <Button Text="Request Tuition" CornerRadius="5" TextColor="White" Grid.Column="1" Grid.Row="3" HorizontalOptions="End" VerticalOptions="Center" Margin="0,10,0,20" FontSize="12" FontAttributes="Bold">
+                <Button Text="Request Tuition" CornerRadius="5" TextColor="White" Grid.Column="1" Grid.Row="3" HorizontalOptions="End" VerticalOptions="Center" Margin="0,10,0,20" FontSize="12" FontAttributes="Bold" >
                     <Button.Background>
                         <LinearGradientBrush EndPoint="1,0">
                             <GradientStop Color="#48ACFF" Offset="0.1" />
@@ -329,8 +329,9 @@
                     <ColumnDefinition Width="10*"/>
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
-                <SearchBar x:Name="searchBar" Grid.Row="2" Grid.Column="1" Placeholder="Search Subject"  />
-                <Button Text="Search" Grid.Column="1" Grid.Row=" 3" HorizontalOptions="End" VerticalOptions="Center" FontSize="10" Margin="5" Command="{Binding searchTextChangedCommand}" CommandParameter="{Binding Text, Source={x:Reference searchBar}}"/>
+                <Label Text="{Binding searchName}" Grid.Row="1" Grid.Column="1" FontSize="17" FontAttributes="Bold" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                <SearchBar x:Name="searchBar" Grid.Row="2" Grid.Column="1" Placeholder="{Binding searchPlaceholder}" IsVisible="{Binding SearchableVisibility}"/>
+                <Button Text="Search" Grid.Column="1" Grid.Row=" 3" HorizontalOptions="End" IsVisible="{Binding SearchableVisibility}" VerticalOptions="Center" FontSize="10" Margin="5" Command="{Binding searchTextChangedCommand}" CommandParameter="{Binding Text, Source={x:Reference searchBar}}"/>
                 <Label Text="Result" Grid.Row="4" Grid.Column="1" FontAttributes="Bold"/>
                 <Frame BackgroundColor="Black" Grid.Row="4" Grid.Column="1" Margin="0,26,0,0"/>
 

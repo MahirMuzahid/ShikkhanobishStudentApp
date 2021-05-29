@@ -30,10 +30,6 @@ namespace ShikkhanobishStudentApp.ViewModel
             insNameList = insnList;
 
         }
-        private void selectIns()
-        {
-            popUpVisibility = true;
-        }
            
         private void PerformClosePopup()
         {
@@ -61,6 +57,38 @@ namespace ShikkhanobishStudentApp.ViewModel
                     insNameList = insnListNew;
                 }
                 
+            }); 
+
+            public ICommand selectInsCommand =>
+            new Command<string>((index) =>
+            {
+                popUpVisibility = true;
+
+                if(int.Parse(index) == 0)
+                {
+                    searchName = "Select Institution";
+                    SearchableVisibility = false;
+                }
+                else if (int.Parse(index) == 1)
+                {
+                    searchName = "Select Class";
+                    SearchableVisibility = false;
+                }
+                else if (int.Parse(index) == 2)
+                {
+                    searchName = "";
+
+                    searchPlaceholder = "Search Subject";
+                    SearchableVisibility = true;
+                }
+                else if (int.Parse(index) == 3)
+                {
+                    searchName = "";
+
+                    searchPlaceholder = "Search Chapter";
+                    SearchableVisibility = true;
+                }
+
             });
 
         #region Binding Garbage
@@ -84,22 +112,23 @@ namespace ShikkhanobishStudentApp.ViewModel
         }
 
 
-        private ICommand selectInsCommand1;
+        
         private ObservableCollection<InstitutionName> _insNameList = new ObservableCollection<InstitutionName>();
         public ObservableCollection<InstitutionName> insNameList { get => _insNameList; set => SetProperty(ref _insNameList, value); }
-        public ICommand selectInsCommand
-        {
-            get
-            {
-                if (selectInsCommand1 == null)
-                {
-                    selectInsCommand1 = new Command(selectIns);
-                }
-
-                return selectInsCommand1;
-            }
-        }
         
+
+        private string searchName1;
+
+        public string searchName { get => searchName1; set => SetProperty(ref searchName1, value); }
+
+        private bool searchableVisibility;
+
+        public bool SearchableVisibility { get => searchableVisibility; set => SetProperty(ref searchableVisibility, value); }
+
+        private string searchPlaceholder1;
+
+        public string searchPlaceholder { get => searchPlaceholder1; set => SetProperty(ref searchPlaceholder1, value); }
+
         #endregion
     }
 }
