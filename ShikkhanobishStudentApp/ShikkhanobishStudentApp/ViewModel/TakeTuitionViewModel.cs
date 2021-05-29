@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.ComponentModel;
 using ShikkhanobishStudentApp.Model;
 using System.Collections.ObjectModel;
+using Xamarin.Essentials;
 
 namespace ShikkhanobishStudentApp.ViewModel
 {
@@ -31,6 +32,8 @@ namespace ShikkhanobishStudentApp.ViewModel
             CLseletedCountTextVisibility = false;
             SubseletedCountTextVisibility = false;
             ChpseletedCountTextVisibility = false;
+
+            activebtn = false;
         }          
         public void InsListPopulate()
        {
@@ -142,6 +145,7 @@ namespace ShikkhanobishStudentApp.ViewModel
         public ICommand SelectedItem =>
              new Command<InstitutionName>((intName) =>
              {
+
                  popUpVisibility = false;
                  if (intName.type == 0)
                  {
@@ -175,10 +179,23 @@ namespace ShikkhanobishStudentApp.ViewModel
                      ChpSCount = intName.studentCount;
                      ChpTRequest = intName.tuitionRequest;
                      Chpavgratting = intName.avgratting;
+
                  }
-                
+                 CheckEverythign();
+
                  searchText = "";
              });
+        public void CheckEverythign()
+        {
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                if(seletedCountTextVisibility& CLseletedCountTextVisibility& SubseletedCountTextVisibility& ChpseletedCountTextVisibility)
+                {
+                    activebtn = true;
+                }
+               
+            });
+        }
         private void PerformClosePopUp()
         {
             popUpVisibility = false;
@@ -218,6 +235,7 @@ namespace ShikkhanobishStudentApp.ViewModel
 
 
         #region Binding Garbage
+
         public ObservableCollection<InstitutionName> backUpInsName { get; set; }
         public ObservableCollection<InstitutionName> backUpclsName { get; set; }
         public ObservableCollection<InstitutionName> backUpsubName { get; set; }
@@ -341,6 +359,15 @@ namespace ShikkhanobishStudentApp.ViewModel
         private bool chpseletedCountTextVisibility;
 
         public bool ChpseletedCountTextVisibility { get => chpseletedCountTextVisibility; set => SetProperty(ref chpseletedCountTextVisibility, value); }
+
+
+        private bool inactivebtn;
+
+        public bool Inactivebtn { get => inactivebtn; set => SetProperty(ref inactivebtn, value); }
+
+        private bool activebtn1;
+
+        public bool activebtn { get => activebtn1; set => SetProperty(ref activebtn1, value); }
 
 
         #endregion
