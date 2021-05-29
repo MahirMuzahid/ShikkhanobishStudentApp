@@ -1,6 +1,7 @@
 ﻿using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using ShikkhanobishStudentApp.View;
 
 namespace ShikkhanobishStudentApp
 {
@@ -10,7 +11,7 @@ namespace ShikkhanobishStudentApp
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = new TakeTuitionView();
         }
 
         protected override void OnStart()
