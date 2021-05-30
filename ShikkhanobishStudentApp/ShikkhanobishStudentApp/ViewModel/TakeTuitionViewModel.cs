@@ -34,6 +34,8 @@ namespace ShikkhanobishStudentApp.ViewModel
             ChpseletedCountTextVisibility = false;
 
             activebtn = false;
+
+            remainword = "Remain 300 Words";
         }          
         public void InsListPopulate()
        {
@@ -189,7 +191,7 @@ namespace ShikkhanobishStudentApp.ViewModel
         {
             MainThread.BeginInvokeOnMainThread(() =>
             {
-                if(seletedCountTextVisibility& CLseletedCountTextVisibility& SubseletedCountTextVisibility& ChpseletedCountTextVisibility)
+                if(seletedCountTextVisibility& CLseletedCountTextVisibility& SubseletedCountTextVisibility& ChpseletedCountTextVisibility && detailTxt.Length <101)
                 {
                     activebtn = true;
                 }
@@ -230,6 +232,24 @@ namespace ShikkhanobishStudentApp.ViewModel
                 }
                 insNameList = insnListNew;
             }
+        }
+
+        public void countWord()
+        {
+            if (detailTxt.Length > 300)
+            {
+                remainword = "Extra " + (300 - detailTxt.Length)*(-1) + " Words";
+                remainColopr = "Red";
+            }
+            else
+            {
+                remainword = "Remain " + (300 - detailTxt.Length) + " Words";
+                remainColopr = "Gray";
+                CheckEverythign();
+            }
+            
+
+
         }
         #endregion
 
@@ -368,6 +388,15 @@ namespace ShikkhanobishStudentApp.ViewModel
         private bool activebtn1;
 
         public bool activebtn { get => activebtn1; set => SetProperty(ref activebtn1, value); }
+
+        private string detailTxt1;
+        public string detailTxt { get { return detailTxt1; } set { detailTxt1 = value; countWord(); OnPropertyChanged(); } }
+
+        private string remainword1;
+        public string remainword { get { return remainword1; } set { remainword1 = value;  OnPropertyChanged(); } }
+
+        private string remainColopr1;
+        public string remainColopr { get { return remainColopr1; } set { remainColopr1 = value; OnPropertyChanged(); } }
 
 
         #endregion
