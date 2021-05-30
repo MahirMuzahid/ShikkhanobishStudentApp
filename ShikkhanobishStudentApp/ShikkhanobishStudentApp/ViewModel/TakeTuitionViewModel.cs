@@ -191,10 +191,16 @@ namespace ShikkhanobishStudentApp.ViewModel
         {
             MainThread.BeginInvokeOnMainThread(() =>
             {
-                if(seletedCountTextVisibility& CLseletedCountTextVisibility& SubseletedCountTextVisibility& ChpseletedCountTextVisibility && detailTxt.Length <101)
+                if(detailTxt != null)
                 {
-                    activebtn = true;
+                    if (seletedCountTextVisibility & CLseletedCountTextVisibility & SubseletedCountTextVisibility & ChpseletedCountTextVisibility && detailTxt.Length < 101)
+                    {
+                        activebtn = true;
+                        permincostVisibility = true;
+                        perminCostText = "3 coin/min";
+                    }
                 }
+                
                
             });
         }
@@ -397,6 +403,14 @@ namespace ShikkhanobishStudentApp.ViewModel
 
         private string remainColopr1;
         public string remainColopr { get { return remainColopr1; } set { remainColopr1 = value; OnPropertyChanged(); } }
+
+        private bool permincostVisibility1;
+
+        public bool permincostVisibility { get => permincostVisibility1; set => SetProperty(ref permincostVisibility1, value); }
+
+        private string perminCostText1;
+
+        public string perminCostText { get => perminCostText1; set => SetProperty(ref perminCostText1, value); }
 
 
         #endregion

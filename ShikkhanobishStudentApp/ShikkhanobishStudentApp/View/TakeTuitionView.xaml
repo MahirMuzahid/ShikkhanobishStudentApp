@@ -9,7 +9,7 @@
         <viewmodel:TakeTuitionViewModel/>
     </ContentPage.BindingContext>
     <Grid>
-        <Grid BackgroundColor="White">
+        <Grid BackgroundColor="White" x:Name="ttGrid">
             <Grid.RowDefinitions>
                 <RowDefinition Height=".8*"/>
                 <RowDefinition Height="2.5*"/>
@@ -26,9 +26,9 @@
             <Grid Grid.Row="0" Grid.Column="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="4*"/>
+                    <ColumnDefinition Width="3*"/>
                     <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width=".1*"/>
                 </Grid.ColumnDefinitions>
                 <Image Source="logo.png" Grid.Column="0" Aspect="AspectFit"/>
                 <Label Text="Coin" Grid.Column="1" HorizontalTextAlignment="End" VerticalTextAlignment="Center"/>
@@ -90,7 +90,7 @@
                         </Grid.ColumnDefinitions>
                         <Image Source="inst.jpg" Grid.Column="0" Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center" />
                         <Label Text="Institution" Grid.ColumnSpan="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="16" FontAttributes="Bold"/>
-                        <Frame BackgroundColor="#FF6565" Grid.Column="2" CornerRadius="20" Margin="7,10,7,10"/>
+                        <Frame BackgroundColor="#FF6565" Grid.Column="2" CornerRadius="20" Margin="7,10,7,10" HasShadow="False"/>
                     </Grid>
                     <Grid Grid.Row="1" RowSpacing="0">
                         <Grid.RowDefinitions>
@@ -108,9 +108,9 @@
                         <Label Text="Average Ratting/Tuition" Grid.Row="2" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Center" FontSize="12" Padding="10,0,0,0" IsVisible="{Binding seletedCountTextVisibility}"/>
                         <Label Text="Avg. Ratting/Tuition" Grid.Row="3" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Center" FontSize="12" Padding="10,0,0,0" IsVisible="{Binding seletedCountTextVisibility}"/>
 
-                        <Label Text="{Binding SCount}" Grid.Row="1" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="0,0,5,0" FontAttributes="Bold"/>
-                        <Label Text="{Binding TRequest}" Grid.Row="2" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="10,0,5,0" FontAttributes="Bold"/>
-                        <Label Text="{Binding avgratting}" Grid.Row="3" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="10,0,5,0" FontAttributes="Bold"/>
+                        <Label Text="{Binding SCount}" Grid.Row="1" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="0,0,5,0" FontAttributes="Bold" IsVisible="{Binding seletedCountTextVisibility}"/>
+                        <Label Text="{Binding TRequest}" Grid.Row="2" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="10,0,5,0" FontAttributes="Bold" IsVisible="{Binding seletedCountTextVisibility}"/>
+                        <Label Text="{Binding avgratting}" Grid.Row="3" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="10,0,5,0" FontAttributes="Bold" IsVisible="{Binding seletedCountTextVisibility}"/>
                     </Grid>
                     <Button Text="Select" CornerRadius="5" TextColor="White" Grid.Row="2" HorizontalOptions="End" VerticalOptions="Center" FontSize="10" Margin="10,5,10,10" FontAttributes="Bold" Command="{Binding selectInsCommand}" CommandParameter="0">
                         <Button.Background>
@@ -136,7 +136,7 @@
                         </Grid.ColumnDefinitions>
                         <Image Source="clss.png" Grid.Column="0"  Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center"/>
                         <Label Text="Class" Grid.ColumnSpan="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="16" FontAttributes="Bold"/>
-                        <Frame BackgroundColor="#9665FF" Grid.Column="2" CornerRadius="20" Margin="7,10,7,10"/>
+                        <Frame BackgroundColor="#9665FF" Grid.Column="2" CornerRadius="20" Margin="7,10,7,10" HasShadow="False"/>
                     </Grid>
                     <Grid Grid.Row="1" RowSpacing="0">
                         <Grid.RowDefinitions>
@@ -154,9 +154,9 @@
                         <Label Text="Tuition Request" Grid.Row="2" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Center" FontSize="12" Padding="10,0,0,0" IsVisible="{Binding CLseletedCountTextVisibility}"/>
                         <Label Text="Avg. Ratting/Tuition" Grid.Row="3" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Center" FontSize="12" Padding="10,0,0,0" IsVisible="{Binding CLseletedCountTextVisibility}"/>
 
-                        <Label Text="{Binding CLSCount}" Grid.Row="1" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="0,0,5,0" FontAttributes="Bold"/>
-                        <Label Text="{Binding CLTRequest}" Grid.Row="2" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="10,0,5,0" FontAttributes="Bold"/>
-                        <Label Text="{Binding CLavgratting}" Grid.Row="3" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="10,0,5,0" FontAttributes="Bold"/>
+                        <Label Text="{Binding CLSCount}" Grid.Row="1" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="0,0,5,0" FontAttributes="Bold" IsVisible="{Binding CLseletedCountTextVisibility}"/>
+                        <Label Text="{Binding CLTRequest}" Grid.Row="2" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="10,0,5,0" FontAttributes="Bold" IsVisible="{Binding CLseletedCountTextVisibility}"/>
+                        <Label Text="{Binding CLavgratting}" Grid.Row="3" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="10,0,5,0" FontAttributes="Bold" IsVisible="{Binding CLseletedCountTextVisibility}"/>
                     </Grid>
                     <Button Text="Select" CornerRadius="5" TextColor="White" Grid.Row="2" HorizontalOptions="End" VerticalOptions="Center" FontSize="10" Margin="10,5,10,10" FontAttributes="Bold" Command="{Binding selectInsCommand}" CommandParameter="1">
                         <Button.Background>
@@ -182,7 +182,7 @@
                         </Grid.ColumnDefinitions>
                         <Image Source="sub.png" Grid.Column="0"  Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center"/>
                         <Label Text="Subject" Grid.ColumnSpan="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="16" FontAttributes="Bold" />
-                        <Frame BackgroundColor="#2AD871" Grid.Column="2" CornerRadius="20" Margin="7,10,7,10"/>
+                        <Frame BackgroundColor="#2AD871" Grid.Column="2" CornerRadius="20" Margin="7,10,7,10" HasShadow="False"/>
                     </Grid>
                     <Grid Grid.Row="1" RowSpacing="0">
                         <Grid.RowDefinitions>
@@ -200,9 +200,9 @@
                         <Label Text="Tuition Request" Grid.Row="2" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Center" FontSize="12" Padding="10,0,0,0" IsVisible="{Binding SubseletedCountTextVisibility}"/>
                         <Label Text="Avg. Ratting/Tuition" Grid.Row="3" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Center" FontSize="12" Padding="10,0,0,0" IsVisible="{Binding SubseletedCountTextVisibility}"/>
 
-                        <Label Text="{Binding SubSCount}" Grid.Row="1" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="0,0,5,0" FontAttributes="Bold"/>
-                        <Label Text="{Binding SubTRequest}" Grid.Row="2" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="10,0,5,0" FontAttributes="Bold"/>
-                        <Label Text="{Binding Subavgratting}" Grid.Row="3" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="10,0,5,0" FontAttributes="Bold"/>
+                        <Label Text="{Binding SubSCount}" Grid.Row="1" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="0,0,5,0" FontAttributes="Bold" IsVisible="{Binding SubseletedCountTextVisibility}"/>
+                        <Label Text="{Binding SubTRequest}" Grid.Row="2" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="10,0,5,0" FontAttributes="Bold" IsVisible="{Binding SubseletedCountTextVisibility}"/>
+                        <Label Text="{Binding Subavgratting}" Grid.Row="3" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="10,0,5,0" FontAttributes="Bold" IsVisible="{Binding SubseletedCountTextVisibility}"/>
                     </Grid>
                     <Button Text="Select" CornerRadius="5" TextColor="White" Grid.Row="2" HorizontalOptions="End" VerticalOptions="Center" FontSize="10" Margin="10,5,10,10" FontAttributes="Bold" Command="{Binding selectInsCommand}" CommandParameter="2">
                         <Button.Background>
@@ -228,7 +228,7 @@
                         </Grid.ColumnDefinitions>
                         <Image Source="chapter.png" Grid.Column="0" Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center"/>
                         <Label Text="Chapter" Grid.ColumnSpan="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="16" FontAttributes="Bold"/>
-                        <Frame BackgroundColor="#3CBEFF" Grid.Column="2" CornerRadius="20" Margin="7,10,7,10"/>
+                        <Frame BackgroundColor="#3CBEFF" Grid.Column="2" CornerRadius="20" Margin="7,10,7,10" HasShadow="False"/>
                     </Grid>
                     <Grid Grid.Row="1" RowSpacing="0">
                         <Grid.RowDefinitions>
@@ -246,9 +246,9 @@
                         <Label Text="Tuition Request" Grid.Row="2" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Center" FontSize="12" Padding="10,0,0,0" IsVisible="{Binding ChpseletedCountTextVisibility}"/>
                         <Label Text="Avg. Ratting/Tuition" Grid.Row="3" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Center" FontSize="12" Padding="10,0,0,0" IsVisible="{Binding ChpseletedCountTextVisibility}"/>
 
-                        <Label Text="{Binding ChpSCount}" Grid.Row="1" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="0,0,5,0" FontAttributes="Bold"/>
-                        <Label Text="{Binding ChpTRequest}" Grid.Row="2" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="10,0,5,0" FontAttributes="Bold"/>
-                        <Label Text="{Binding Chpavgratting}" Grid.Row="3" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="10,0,5,0" FontAttributes="Bold"/>
+                        <Label Text="{Binding ChpSCount}" Grid.Row="1" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="0,0,5,0" FontAttributes="Bold" IsVisible="{Binding ChpseletedCountTextVisibility}"/>
+                        <Label Text="{Binding ChpTRequest}" Grid.Row="2" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="10,0,5,0" FontAttributes="Bold" IsVisible="{Binding ChpseletedCountTextVisibility}"/>
+                        <Label Text="{Binding Chpavgratting}" Grid.Row="3" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="10,0,5,0" FontAttributes="Bold" IsVisible="{Binding ChpseletedCountTextVisibility}"/>
                     </Grid>
                     <Button Text="Select" CornerRadius="5" TextColor="White" Grid.Row="2" HorizontalOptions="End" VerticalOptions="Center" FontSize="10" Margin="10,5,10,10" FontAttributes="Bold" Command="{Binding selectInsCommand}" CommandParameter="3">
                         <Button.Background>
@@ -276,7 +276,7 @@
 
                 <Frame BackgroundColor="#D8D8D8" Grid.Row="1" Grid.ColumnSpan="2" Margin="0,0,0,0" HasShadow="False"/>
                 <Label Text="Cost:" Grid.Row="2" Grid.Column="0" HorizontalOptions="End" VerticalOptions="Start" FontAttributes="Bold"/>
-                <Label Text="3 Taka / Min" Grid.Row="2" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Start" FontAttributes="Bold"/>
+                <Label Text="{Binding perminCostText}" Grid.Row="2" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Start" FontAttributes="Bold" IsVisible="{Binding permincostVisibility}"/>
                 <Button Text="Request Tuition" CornerRadius="5" TextColor="White" Grid.Column="1" Grid.Row="3" HorizontalOptions="End" VerticalOptions="Center" Margin="0,10,0,20" FontSize="12" FontAttributes="Bold" BackgroundColor="#9D9D9D" IsEnabled="False" >
                 </Button>
                 <Button Text="Request Tuition" CornerRadius="5" TextColor="White" Grid.Column="1" Grid.Row="3" HorizontalOptions="End" VerticalOptions="Center" Margin="0,10,0,20" FontSize="12" FontAttributes="Bold" IsVisible="{Binding activebtn}" >
@@ -296,9 +296,31 @@
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
+                
                 <Image Source="taketuition.png" Grid.Column="0" Aspect="AspectFit" Margin="10"/>
                 <Image Source="coinplus.png" Grid.Column="1" Aspect="AspectFit" Margin="2"/>
+                <Button Grid.Column="0" BackgroundColor="Transparent" Clicked="Button_Clicked_1"/>
+                <Button Grid.Column="1" Clicked="Button_Clicked" BackgroundColor="Transparent"/>
+                
                 <Image Source="download.png" Grid.Column="2" Aspect="AspectFit" Margin="5"/>
+            </Grid>
+            <Grid x:Name="coingrid" BackgroundColor="White" Grid.Row="1" Grid.RowSpan="4" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="2*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="20*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Text="sd" Grid.Row="0" Grid.Column="1"/>
+                </Grid>
             </Grid>
         </Grid>
         
@@ -352,6 +374,8 @@
                 </ListView>
             </Grid>
         </Grid>
+        <!-- PopUp End -->
 
+        
     </Grid>
 </ContentPage>
