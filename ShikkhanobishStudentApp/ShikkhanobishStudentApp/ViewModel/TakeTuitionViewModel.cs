@@ -36,6 +36,13 @@ namespace ShikkhanobishStudentApp.ViewModel
             activebtn = false;
 
             remainword = "Remain 300 Words";
+            List<int> ggl = new List<int>();
+            ggl.Add(1);
+            ggl.Add(2);
+            ggl.Add(3);
+            ggl.Add(4);
+
+            offerList = ggl;
         }          
         public void InsListPopulate()
        {
@@ -412,7 +419,8 @@ namespace ShikkhanobishStudentApp.ViewModel
 
         public string perminCostText { get => perminCostText1; set => SetProperty(ref perminCostText1, value); }
 
-
+        private List<int> offerList1 { get; set; }
+        public List<int> offerList { get { return offerList1; } set { offerList1 = value; OnPropertyChanged(); } }
         #endregion
     }
 }

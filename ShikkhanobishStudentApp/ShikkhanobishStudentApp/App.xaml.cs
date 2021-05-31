@@ -11,7 +11,7 @@ namespace ShikkhanobishStudentApp
         {
             InitializeComponent();
 
-            MainPage = new TestUI();
+            MainPage = new TakeTuitionView();
         }
 
         protected override void OnStart()
