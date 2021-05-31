@@ -421,6 +421,14 @@ namespace ShikkhanobishStudentApp.ViewModel
 
         private List<int> offerList1 { get; set; }
         public List<int> offerList { get { return offerList1; } set { offerList1 = value; OnPropertyChanged(); } }
+
+        private double tticonopacity1;
+
+        public double tticonopacity { get => tticonopacity1; set => SetProperty(ref tticonopacity1, value); }
+
+        private double rcopacity1;
+
+        public double rcopacity { get => rcopacity1; set => SetProperty(ref rcopacity1, value); }
         #endregion
     }
 }

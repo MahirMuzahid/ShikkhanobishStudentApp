@@ -16,7 +16,7 @@
                 <RowDefinition Height="4*"/>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height=".2*"/>
-                <RowDefinition Height=".6*"/>
+                <RowDefinition Height=".8*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width=".1*"/>
@@ -295,13 +295,19 @@
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
-                
-                <Image Source="taketuition.png" Grid.Column="0" Aspect="AspectFit" Margin="10"/>
-                <Image Source="coinplus.png" Grid.Column="1" Aspect="AspectFit" Margin="2"/>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height=".3*"/>
+                </Grid.RowDefinitions>
+                <Image x:Name="ttimg" Source="taketuition.png" Grid.Column="0" Aspect="AspectFit" Margin="10" />
+                <Image x:Name="cpimg" Source="coinplus.png" Grid.Column="1" Aspect="AspectFit" Margin="2" />
+                <Image Source="download.png" Grid.Column="2" Grid.RowSpan="2" Aspect="AspectFit" Margin="10"/>
                 <Button Grid.Column="0" BackgroundColor="Transparent" Clicked="Button_Clicked_1"/>
                 <Button Grid.Column="1" Clicked="Button_Clicked" BackgroundColor="Transparent"/>
+                <Button Grid.Column="2" Clicked="Button_Clicked_2" BackgroundColor="Transparent"/>
+                <Label x:Name="ttlbl" Text="Take Tuition" Grid.RowSpan="2" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="End" FontSize="11" FontAttributes="Bold" Margin="0,0,0,7"/>
+                <Label x:Name="rclbl" Text="Rechrage Coin" Grid.RowSpan="2" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="End" FontSize="11" FontAttributes="Bold" Margin="0,0,0,7"/>
                 
-                <Image Source="download.png" Grid.Column="2" Aspect="AspectFit" Margin="5"/>
             </Grid>
             <!-- Payment View -->
             <Grid x:Name="coingrid" BackgroundColor="White" Grid.Row="1" Grid.RowSpan="4" Grid.ColumnSpan="3">
@@ -335,7 +341,6 @@
                     <Frame BackgroundColor="White" Grid.RowSpan="2" Grid.ColumnSpan="3" CornerRadius="10" />
                     <Label Text="Total Available Balance" Grid.Row="0" HorizontalOptions="Start" VerticalOptions="End" Grid.Column="1" FontSize="13"/>
                     <Label Text="500 Coin" Grid.Row="1" HorizontalOptions="Start" VerticalOptions="Start" FontSize="25" FontAttributes="Bold" Grid.Column="1"/>
-
                     <Label Text="Total Free Tuition" Grid.Row="0" HorizontalOptions="End" VerticalOptions="End" Grid.Column="1" FontSize="13"/>
                     <Label Text="3" Grid.Row="1" HorizontalOptions="End" VerticalOptions="End" FontSize="25" FontAttributes="Bold" Grid.Column="1"/>
                 </Grid>

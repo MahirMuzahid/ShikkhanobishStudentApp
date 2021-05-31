@@ -4,6 +4,7 @@ using Android.App;
 using Android.Content.PM;
 using Android.Runtime;
 using Android.OS;
+using ImageCircle.Forms.Plugin.Droid;
 
 namespace ShikkhanobishStudentApp.Droid
 {
@@ -16,6 +17,7 @@ namespace ShikkhanobishStudentApp.Droid
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+            ImageCircleRenderer.Init();
             LoadApplication(new App());
             Window.SetStatusBarColor ( Android.Graphics.Color.Rgb ( 151 , 97 , 253 ) );
         }
