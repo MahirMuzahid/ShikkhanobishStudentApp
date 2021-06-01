@@ -8,6 +8,7 @@ using System.ComponentModel;
 using ShikkhanobishStudentApp.Model;
 using System.Collections.ObjectModel;
 using Xamarin.Essentials;
+using ShikkhanobishStudentApp.View;
 
 namespace ShikkhanobishStudentApp.ViewModel
 {
@@ -194,6 +195,11 @@ namespace ShikkhanobishStudentApp.ViewModel
 
                  searchText = "";
              });
+        public ICommand CallTeacher =>
+             new Command<InstitutionName>((intName) =>
+             {
+                 Application.Current.MainPage.Navigation.PushAsync(new VideoCallPage());
+             });
         public void CheckEverythign()
         {
             MainThread.BeginInvokeOnMainThread(() =>
@@ -204,7 +210,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                     {
                         activebtn = true;
                         permincostVisibility = true;
-                        perminCostText = "3 coin/min";
+                        perminCostText = "3 coin/min";                        
                     }
                 }
                 

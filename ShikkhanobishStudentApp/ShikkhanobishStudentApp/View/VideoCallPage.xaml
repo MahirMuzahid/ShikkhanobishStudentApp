@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:ShikkhanobishStudentApp.ViewModel"
+             x:Class="ShikkhanobishStudentApp.View.VideoCallPage">
+    <!--  x:DataType="viewmodel:VideoCalViewModel" !-->
+    <ContentPage.BindingContext>
+        <viewmodel:VideoCalViewModel/>
+    </ContentPage.BindingContext>
+    
+    <ContentPage.Content>
+        <StackLayout>
+            <Button Text="GO ratting page" HorizontalOptions="Center" VerticalOptions="Center" Command="{Binding goRattingPage}"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
