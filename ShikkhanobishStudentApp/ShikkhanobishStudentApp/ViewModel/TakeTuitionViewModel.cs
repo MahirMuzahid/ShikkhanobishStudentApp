@@ -9,21 +9,21 @@ using ShikkhanobishStudentApp.Model;
 using System.Collections.ObjectModel;
 using Xamarin.Essentials;
 using ShikkhanobishStudentApp.View;
+using ShikkhanobishStudentApp.Server_Connection;
+using Flurl.Http;
 
 namespace ShikkhanobishStudentApp.ViewModel
 {
     public class TakeTuitionViewModel : BaseViewModel, INotifyPropertyChanged
     {
 
+        public ServerConnection serverconnection { get; set; }
 
         #region Methods
         public TakeTuitionViewModel()
         {
             popUpVisibility = false;
             InsListPopulate();
-            ClsListPopulate();
-            SubListPopulate();
-            ChpListPopulate();
             SelectedInsName = "Not Selected";
             SelectedClassName = "Not Selected";
             SelectedSubjectName = "Not Selected";
@@ -45,76 +45,12 @@ namespace ShikkhanobishStudentApp.ViewModel
 
             offerList = ggl;
         }          
-        public void InsListPopulate()
+        public async void InsListPopulate()
        {
-            ObservableCollection<InstitutionName> insnList = new ObservableCollection<InstitutionName>();
-            for(int i = 0; i < 3; i++)
-            {
-                InstitutionName insn = new InstitutionName();
-                insn.InsName = "School";
-                insn.studentCount = 50;
-                insn.tuitionRequest = 300;
-                insn.avgratting = 4.5f;
-                insn.type = 0;
-                insnList.Add(insn);
-            }          
-            backUpInsName = insnList;
+            ObservableCollection<Institution> institutionList = new ObservableCollection<Institution>();
+            institutionList = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getInstitution".GetJsonAsync<ObservableCollection<Institution>>();
+            backUpInsName = institutionList;
        }
-        public void ClsListPopulate()
-        {
-            ObservableCollection<InstitutionName> insnList = new ObservableCollection<InstitutionName>();
-            for (int i = 0; i < 3; i++)
-            {
-                InstitutionName insn = new InstitutionName();
-                insn.InsName = "Class 9";
-                insn.studentCount = 10;
-                insn.tuitionRequest = 150;
-                insn.avgratting = 4f;
-                insn.type = 1;
-                insnList.Add(insn);
-            }
-            backUpclsName = insnList;
-        }
-        public void SubListPopulate()
-        {
-            ObservableCollection<InstitutionName> insnList = new ObservableCollection<InstitutionName>();
-            Random rnd = new Random();
-            for (int i = 0; i < 20; i++)
-            {
-                InstitutionName insn = new InstitutionName();
-                char randomChar = (char)rnd.Next('a', 'z');
-                char randomChar2 = (char)rnd.Next('a', 'z');
-                char randomChar3 = (char)rnd.Next('a', 'z');
-                char randomChar4 = (char)rnd.Next('a', 'z');
-                insn.InsName = randomChar.ToString() + randomChar2.ToString() + randomChar3.ToString() + randomChar4.ToString();
-                insn.studentCount = 45;
-                insn.tuitionRequest =200;
-                insn.avgratting = 4.2f;
-                insn.type = 2;
-                insnList.Add(insn);
-            }
-            backUpsubName = insnList;
-        }
-        public void ChpListPopulate()
-        {
-            ObservableCollection<InstitutionName> insnList = new ObservableCollection<InstitutionName>();
-            Random rnd = new Random();
-            for (int i = 0; i < 20; i++)
-            {
-                InstitutionName insn = new InstitutionName();
-                char randomChar = (char)rnd.Next('a', 'z');
-                char randomChar2 = (char)rnd.Next('a', 'z');
-                char randomChar3 = (char)rnd.Next('a', 'z');
-                char randomChar4 = (char)rnd.Next('a', 'z');
-                insn.InsName = randomChar.ToString() + randomChar2.ToString() + randomChar3.ToString() + randomChar4.ToString();
-                insn.studentCount = 25;
-                insn.tuitionRequest = 250;
-                insn.avgratting = 3.9f;
-                insn.type = 3;
-                insnList.Add(insn);
-            }
-            backUpchpName = insnList;
-        }
         public ICommand selectInsCommand =>
             new Command<string>((index) =>
             {
@@ -153,19 +89,15 @@ namespace ShikkhanobishStudentApp.ViewModel
 
             });
         public ICommand SelectedItem =>
-             new Command<InstitutionName>((intName) =>
+             new Command<Institution>((intName) =>
              {
 
                  popUpVisibility = false;
-                 if (intName.type == 0)
-                 {
-                     seletedCountTextVisibility = true;
-                     SelectedInsName = intName.InsName;
-                     SCount = intName.studentCount;
-                     TRequest = intName.tuitionRequest;
-                     avgratting = intName.avgratting;
-
-                 }
+                 seletedCountTextVisibility = true;
+                 SelectedInsName = intName.name;
+                 TRequest = intName.tuitionRequest;
+                 avgratting = intName.avgRatting;
+                 /*
                  else if (intName.type == 1)
                  {
                      CLseletedCountTextVisibility = true;
@@ -190,13 +122,13 @@ namespace ShikkhanobishStudentApp.ViewModel
                      ChpTRequest = intName.tuitionRequest;
                      Chpavgratting = intName.avgratting;
 
-                 }
+                 }*/
                  CheckEverythign();
 
                  searchText = "";
              });
         public ICommand CallTeacher =>
-             new Command<InstitutionName>((intName) =>
+             new Command<Institution>((intName) =>
              {
                  Application.Current.MainPage.Navigation.PushAsync(new VideoCallPage());
              });
@@ -230,10 +162,10 @@ namespace ShikkhanobishStudentApp.ViewModel
             }
             else
             {
-                ObservableCollection<InstitutionName> insnListNew = new ObservableCollection<InstitutionName>();
+                ObservableCollection<Institution> insnListNew = new ObservableCollection<Institution>();
                 for (int i = 0; i < thisList.Count; i++)
                 {
-                    string thisins = thisList[i].InsName.ToLower();
+                    string thisins = thisList[i].name.ToLower();
                     SearchedText = SearchedText.ToLower();
                     bool allMatched = true;
                     for(int j = 0; j < SearchedText.Length; j++)
@@ -275,17 +207,17 @@ namespace ShikkhanobishStudentApp.ViewModel
 
         #region Binding Garbage
 
-        public ObservableCollection<InstitutionName> backUpInsName { get; set; }
-        public ObservableCollection<InstitutionName> backUpclsName { get; set; }
-        public ObservableCollection<InstitutionName> backUpsubName { get; set; }
-        public ObservableCollection<InstitutionName> backUpchpName { get; set; }
-        public ObservableCollection<InstitutionName> thisList { get; set; }
+        public ObservableCollection<Institution> backUpInsName { get; set; }
+        public ObservableCollection<Institution> backUpclsName { get; set; }
+        public ObservableCollection<Institution> backUpsubName { get; set; }
+        public ObservableCollection<Institution> backUpchpName { get; set; }
+        public ObservableCollection<Institution> thisList { get; set; }
         private bool popUpVisibility1;
 
         public bool popUpVisibility { get => popUpVisibility1; set => SetProperty(ref popUpVisibility1, value); }
         
-        private ObservableCollection<InstitutionName> _insNameList = new ObservableCollection<InstitutionName>();
-        public ObservableCollection<InstitutionName> insNameList { get => _insNameList; set => SetProperty(ref _insNameList, value); }
+        private ObservableCollection<Institution> _insNameList = new ObservableCollection<Institution>();
+        public ObservableCollection<Institution> insNameList { get => _insNameList; set => SetProperty(ref _insNameList, value); }
         
 
         private string searchName1;
@@ -343,9 +275,9 @@ namespace ShikkhanobishStudentApp.ViewModel
 
         public int TRequest { get => tRequest; set => SetProperty(ref tRequest, value); }
 
-        private float avgratting1;
+        private double avgratting1;
 
-        public float avgratting { get => avgratting1; set => SetProperty(ref avgratting1, value); }
+        public double avgratting { get => avgratting1; set => SetProperty(ref avgratting1, value); }
 
         private int cLSCount;
 
