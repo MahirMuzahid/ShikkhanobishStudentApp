@@ -19,11 +19,19 @@
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width=".5*"/>
             <ColumnDefinition Width="20*"/>
-            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width=".5*"/>
         </Grid.ColumnDefinitions>
         <Label Text="Rate Teacher" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="End" Grid.Column="1" FontSize="20" FontAttributes="Bold"/>
+        <Label />
+        <Label  Grid.Row="0" HorizontalOptions="End" VerticalOptions="End" Grid.Column="1" FontSize="12" FontAttributes="Italic" TextColor="red">
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span Text="Report Teacher"/>
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
         <Grid Grid.Row="1" Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>

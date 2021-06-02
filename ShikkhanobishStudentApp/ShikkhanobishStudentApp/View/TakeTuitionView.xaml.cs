@@ -30,6 +30,7 @@ namespace ShikkhanobishStudentApp.View
             coingrid.IsVisible = true;           
             ttlbl.TextColor = Color.FromHex("#C9C9C9");
             rclbl.TextColor = Color.Black;
+            cpimg.Opacity = 1;
             ttimg.Opacity = .3;
             coingrid.FadeTo(1,1500, Easing.CubicOut);
             await coingrid.TranslateTo(0, 0, 1000, Easing.CubicOut);
