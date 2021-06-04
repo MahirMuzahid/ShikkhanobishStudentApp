@@ -46,7 +46,7 @@ namespace ShikkhanobishStudentApp.ViewModel
             ggl.Add(2);
             ggl.Add(3);
             ggl.Add(4);
-
+            remainColopr = "#E5E5E5";
             offerList = ggl;
             secTitle = "Class";
             thirdTitle = "Subject";
@@ -58,9 +58,7 @@ namespace ShikkhanobishStudentApp.ViewModel
         #region populate list
         public async void InsListPopulate()
         {
-            ObservableCollection<Institution> institutionList = new ObservableCollection<Institution>();
-            institutionList = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getInstitution".GetJsonAsync<ObservableCollection<Institution>>();
-            backUpFipName = institutionList;
+            backUpFipName = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getInstitution".GetJsonAsync<ObservableCollection<Institution>>();
         }
         public async void ClassListPopulate()
         {           
@@ -281,7 +279,7 @@ namespace ShikkhanobishStudentApp.ViewModel
             else
             {
                 remainword = "Remain " + (300 - detailTxt.Length) + " Words";
-                remainColopr = "Gray";
+                remainColopr = "#E5E5E5";
                 CheckEverythign();
             }
             

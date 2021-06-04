@@ -12,7 +12,7 @@
     <Grid>
         <Grid BackgroundColor="White" x:Name="ttGrid">
             <Grid.RowDefinitions>
-                <RowDefinition Height=".8*"/>
+                <RowDefinition Height=".7*"/>
                 <RowDefinition Height="2.5*"/>
                 <RowDefinition Height="4*"/>
                 <RowDefinition Height="1*"/>
@@ -24,6 +24,7 @@
                 <ColumnDefinition Width="20*"/>
                 <ColumnDefinition Width=".1*"/>
             </Grid.ColumnDefinitions>
+            
             <Grid Grid.Row="0" Grid.Column="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="4*"/>
@@ -31,12 +32,12 @@
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <Image Source="logo.png" Grid.Column="0" Aspect="AspectFit"/>
-                <Label Text="Total Active Teacher:" Grid.Column="1" HorizontalTextAlignment="End" VerticalTextAlignment="Center" FontSize="12" />
+                <Label Text="Total Active Teacher:" Grid.Column="1" HorizontalTextAlignment="End" VerticalTextAlignment="Center" FontSize="12" TextColor="Black" />
                 <Label Text="50" Grid.Column="2" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" FontAttributes="Bold" FontSize="13" TextColor="#947CF1"/>
                 
             </Grid>
 
-            <Grid Grid.Row="1" Grid.Column="1" >
+            <Grid Grid.Row="1" Grid.ColumnSpan="3" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height=".01*"/>
                     <RowDefinition Height=".3*"/>
@@ -49,13 +50,20 @@
                     <ColumnDefinition Width="3*"/>
                     <ColumnDefinition Width=".1*"/>
                 </Grid.ColumnDefinitions>
-                <Frame BackgroundColor="White" CornerRadius="20" Grid.RowSpan="4" Grid.ColumnSpan="4" HasShadow="False"/>
-                <Label Text="Detail about your question" Grid.Column="1" Grid.Row="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" TextColor="#A5A5A5" FontSize="13" />
-                <Label Text="What should I write here?" Grid.Column="2" Grid.Row="1" TextColor="#3CBEFF" FontSize="11" HorizontalTextAlignment="End" VerticalTextAlignment="Center" FontAttributes="Bold"/>
-                <Frame BackgroundColor="#F8F8F8" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" HasShadow="False"/>
-                <Editor Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" FontSize="14" Text='{Binding detailTxt}'/>
+                <Frame Grid.RowSpan="4" Grid.ColumnSpan="4" HasShadow="True">
+                    <Frame.Background>
+                        <LinearGradientBrush EndPoint="1,0">
+                            <GradientStop Color="#11AAD7" Offset="1.0" />
+                            <GradientStop Color="#864AE8" Offset="1.0" />
+                        </LinearGradientBrush>
+                    </Frame.Background>
+                </Frame>
+                <Label Text="Detail about your question" Grid.Column="1" Grid.Row="1" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" TextColor="White" FontSize="13" />
+                <Label Text="What should I write here?" Grid.Column="2" Grid.Row="1" TextColor="White" FontSize="11" HorizontalTextAlignment="End" VerticalTextAlignment="Center" FontAttributes="Bold"/>
+                <Frame BackgroundColor="#20000000" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" HasShadow="True" CornerRadius="10"/>
+                <Editor Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" FontSize="14" Text='{Binding detailTxt}' TextColor="White"/>
                 <Label Text="{Binding remainword}" Grid.Column="2" Grid.Row="3" HorizontalTextAlignment="End" VerticalTextAlignment="Start"  FontSize="12" FontAttributes="Bold" TextColor="{Binding remainColopr}"/>
-                <Frame BackgroundColor="#D8D8D8" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,40,0,0" HasShadow="False"/>
+               
 
             </Grid>
 
