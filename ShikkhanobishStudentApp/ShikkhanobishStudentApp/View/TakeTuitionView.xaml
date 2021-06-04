@@ -112,7 +112,7 @@
                         <Label Text="{Binding TRequest}" Grid.Row="1" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="10,0,5,0" FontAttributes="Bold" IsVisible="{Binding seletedCountTextVisibility}"/>
                         <Label Text="{Binding avgratting}" Grid.Row="2" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="10,0,5,0" FontAttributes="Bold" IsVisible="{Binding seletedCountTextVisibility}"/>
                     </Grid>
-                    <Button Text="Select" CornerRadius="5" TextColor="White" Grid.Row="2" HorizontalOptions="End" VerticalOptions="Center" FontSize="10" Margin="10,5,10,10" FontAttributes="Bold" Command="{Binding selectInsCommand}" CommandParameter="0">
+                    <Button Text="Select" CornerRadius="5" TextColor="White" Grid.Row="2" HorizontalOptions="End" VerticalOptions="Center" FontSize="10" Margin="10,5,10,10" FontAttributes="Bold" Command="{Binding selectInsCommand}" CommandParameter="0" IsVisible="{Binding firstListBtnVisibility}">
                         <Button.Background>
                             <LinearGradientBrush EndPoint="1,0">
                                 <GradientStop Color="#FF6565" Offset="0.1" />
@@ -135,7 +135,7 @@
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
                         <Image Source="clss.png" Grid.Column="0"  Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center"/>
-                        <Label Text="Class" Grid.ColumnSpan="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="16" FontAttributes="Bold"/>
+                        <Label Text="{Binding secTitle}" Grid.ColumnSpan="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="16" FontAttributes="Bold"/>
                         <Frame BackgroundColor="#9665FF" Grid.Column="2" CornerRadius="20" Margin="7,10,7,10" HasShadow="False"/>
                     </Grid>
                     <Grid Grid.Row="1" RowSpacing="0">
@@ -150,15 +150,15 @@
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
                         <Label Text="{Binding SelectedClassName}" Grid.Row="0" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Start" FontSize="12" FontAttributes="Bold" Padding="10,0,0,0"/>
-                        <Label Text="Student" Grid.Row="1" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Center" FontSize="12" Padding="10,0,0,0" IsVisible="{Binding CLseletedCountTextVisibility}"/>
-                        <Label Text="Tuition Request" Grid.Row="2" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Center" FontSize="12" Padding="10,0,0,0" IsVisible="{Binding CLseletedCountTextVisibility}"/>
-                        <Label Text="Avg. Ratting/Tuition" Grid.Row="3" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Center" FontSize="12" Padding="10,0,0,0" IsVisible="{Binding CLseletedCountTextVisibility}"/>
+                        
+                        <Label Text="Tuition Request" Grid.Row="1" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Center" FontSize="12" Padding="10,0,0,0" IsVisible="{Binding CLseletedCountTextVisibility}"/>
+                        <Label Text="Avg. Ratting/Tuition" Grid.Row="2" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Center" FontSize="12" Padding="10,0,0,0" IsVisible="{Binding CLseletedCountTextVisibility}"/>
 
-                        <Label Text="{Binding CLSCount}" Grid.Row="1" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="0,0,5,0" FontAttributes="Bold" IsVisible="{Binding CLseletedCountTextVisibility}"/>
-                        <Label Text="{Binding CLTRequest}" Grid.Row="2" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="10,0,5,0" FontAttributes="Bold" IsVisible="{Binding CLseletedCountTextVisibility}"/>
-                        <Label Text="{Binding CLavgratting}" Grid.Row="3" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="10,0,5,0" FontAttributes="Bold" IsVisible="{Binding CLseletedCountTextVisibility}"/>
+                       
+                        <Label Text="{Binding CLTRequest}" Grid.Row="1" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="10,0,5,0" FontAttributes="Bold" IsVisible="{Binding CLseletedCountTextVisibility}"/>
+                        <Label Text="{Binding CLavgratting}" Grid.Row="2" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="10,0,5,0" FontAttributes="Bold" IsVisible="{Binding CLseletedCountTextVisibility}"/>
                     </Grid>
-                    <Button Text="Select" CornerRadius="5" TextColor="White" Grid.Row="2" HorizontalOptions="End" VerticalOptions="Center" FontSize="10" Margin="10,5,10,10" FontAttributes="Bold"  CommandParameter="1">
+                    <Button Text="Select" CornerRadius="5" TextColor="White" Grid.Row="2" HorizontalOptions="End" VerticalOptions="Center" FontSize="10" Margin="10,5,10,10" FontAttributes="Bold"  CommandParameter="1" IsVisible="{Binding secondListBtnVisibility}">
                         <Button.Background>
                             <LinearGradientBrush EndPoint="1,0">
                                 <GradientStop Color="#9665FF" Offset="0.1" />
@@ -181,7 +181,7 @@
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
                         <Image Source="sub.png" Grid.Column="0"  Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center"/>
-                        <Label Text="Subject" Grid.ColumnSpan="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="16" FontAttributes="Bold" />
+                        <Label Text="{Binding SecondListTitle}" Grid.ColumnSpan="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="16" FontAttributes="Bold" />
                         <Frame BackgroundColor="#2AD871" Grid.Column="2" CornerRadius="20" Margin="7,10,7,10" HasShadow="False"/>
                     </Grid>
                     <Grid Grid.Row="1" RowSpacing="0">
@@ -489,8 +489,8 @@
                 <Label Text="Result" Grid.Row="4" Grid.Column="1" FontAttributes="Bold"/>
                 <Frame BackgroundColor="Black" Grid.Row="4" Grid.Column="1" Margin="0,26,0,0"/>
 
-                
-                <ListView  ItemsSource="{Binding insNameList}" Grid.Row="5" Grid.Column="1" RowHeight="50" SeparatorColor="Transparent" >
+
+                <ListView  ItemsSource="{Binding popupList}" Grid.Row="5" Grid.Column="1" RowHeight="50" SeparatorColor="Transparent" >
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell >

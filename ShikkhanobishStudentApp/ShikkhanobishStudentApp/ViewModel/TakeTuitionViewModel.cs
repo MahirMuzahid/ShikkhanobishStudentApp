@@ -18,6 +18,9 @@ namespace ShikkhanobishStudentApp.ViewModel
     {
 
         public ServerConnection serverconnection { get; set; }
+        ObservableCollection<ClassInfo> AllclsList = new ObservableCollection<ClassInfo>();
+        private int popupFirstIndex;
+
 
         #region Methods
         public TakeTuitionViewModel()
@@ -44,13 +47,25 @@ namespace ShikkhanobishStudentApp.ViewModel
             ggl.Add(4);
 
             offerList = ggl;
-        }          
+            SecondListTitle = "Class";
+            firstListBtnVisibility = true;
+            secondListBtnVisibility = false;
+        }
+
+        #region populate list
         public async void InsListPopulate()
-       {
+        {
             ObservableCollection<Institution> institutionList = new ObservableCollection<Institution>();
             institutionList = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getInstitution".GetJsonAsync<ObservableCollection<Institution>>();
-            backUpInsName = institutionList;
-       }
+            backUpFipName = institutionList;
+        }
+        public async void InsListClassPopulate()
+        {           
+            AllclsList = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getClassInfo".GetJsonAsync<ObservableCollection<ClassInfo>>();
+            secondListBtnVisibility = true;
+        }
+        #endregion
+
         public ICommand selectInsCommand =>
             new Command<string>((index) =>
             {
@@ -58,71 +73,79 @@ namespace ShikkhanobishStudentApp.ViewModel
 
                 if(int.Parse(index) == 0)
                 {
-                    thisList = backUpInsName;
-                    insNameList = backUpInsName;
-                    searchName = "Select Institution";
+                    ObservableCollection<popupList> convertedList = new ObservableCollection<popupList>();
+                    convertedList = ConvertInsTOPupUpList(backUpFipName);
+                    popupList = convertedList;
+                    searchName = "Select Institution";                   
                     SearchableVisibility = false;
                 }
                 else if (int.Parse(index) == 1)
                 {
-                    thisList = backUpclsName;
-                    insNameList = backUpclsName;
-                    searchName = "Select Class";
-                    SearchableVisibility = false;
+                    if(popupFirstIndex == 1)
+                    {
+                        searchName = "Select Class";
+                        SearchableVisibility = false;
+                    }
+                    else if (popupFirstIndex == 2)
+                    {
+                        searchName = "Select Class";
+                        SearchableVisibility = false;                      
+                    }
+                    else if (popupFirstIndex == 3)
+                    {
+                        searchName = "Select University";
+                        SearchableVisibility = false;
+                    }
+                    
                 }
-                else if (int.Parse(index) == 2)
-                {
-                    thisList = backUpsubName;
-                    insNameList = backUpsubName;
-                    searchName = "";
-                    searchPlaceholder = "Search Subject";
-                    SearchableVisibility = true;
-                }
-                else if (int.Parse(index) == 3)
-                {
-                    thisList = backUpchpName;
-                    insNameList = backUpchpName;
-                    searchName = "";
-                    searchPlaceholder = "Search Chapter";
-                    SearchableVisibility = true;
-                }
-
             });
         public ICommand SelectedItem =>
-             new Command<Institution>((intName) =>
+             new Command<popupList>((thisList) =>
              {
 
                  popUpVisibility = false;
                  seletedCountTextVisibility = true;
-                 SelectedInsName = intName.name;
-                 TRequest = intName.tuitionRequest;
-                 avgratting = intName.avgRatting;
-                 /*
-                 else if (intName.type == 1)
+                
+                 if (thisList.ListIndex == 1)
                  {
-                     CLseletedCountTextVisibility = true;
-                     SelectedClassName = intName.InsName;
-                     CLSCount = intName.studentCount;
-                     CLTRequest = intName.tuitionRequest;
-                     CLavgratting = intName.avgratting;
+                     Institution selectedIns = new Institution();
+                     for (int i = 0; i < backUpFipName.Count; i++)
+                     {
+                         if(backUpFipName[i].name == thisList.name)
+                         {
+                             selectedIns = backUpFipName[i];
+                         }
+                     }
+                     if (thisList.name == "College" || thisList.name == "School")
+                     {
+                         secTitle = "Class";
+                         InsListClassPopulate();
+                     }
+                     else
+                     {
+                         secTitle = "University";
+                     }
+                     SelectedInsName = selectedIns.name;
+                     TRequest = selectedIns.tuitionRequest;
+                     avgratting = selectedIns.avgRatting;
                  }
-                 else if (intName.type == 2)
+                 else if (thisList.ListIndex == 2)
                  {
-                     SubseletedCountTextVisibility = true;
-                     SelectedSubjectName = intName.InsName;
-                     SubSCount = intName.studentCount;
-                     SubTRequest = intName.tuitionRequest;
-                     Subavgratting = intName.avgratting;
-                 }
-                 else if (intName.type == 3)
-                 {
-                     ChpseletedCountTextVisibility = true;
-                     SelectedChapterName = intName.InsName;
-                     ChpSCount = intName.studentCount;
-                     ChpTRequest = intName.tuitionRequest;
-                     Chpavgratting = intName.avgratting;
+                     ClassInfo selectedList = new ClassInfo();
+                     for (int i = 0; i < AllclsList.Count; i++)
+                     {
+                         if (AllclsList[i].name == thisList.name)
+                         {
+                             selectedList = AllclsList[i];
+                         }
+                         
+                     }
+                     SelectedClassName = selectedList.name;
+                     CLTRequest = selectedList.tuitionRequest;
+                     CLavgratting = selectedList.avgRatting;
 
-                 }*/
+                 }
+
                  CheckEverythign();
 
                  searchText = "";
@@ -153,6 +176,7 @@ namespace ShikkhanobishStudentApp.ViewModel
         {
             popUpVisibility = false;
         }
+        /*
         public void SearchControl()
         {
             string SearchedText = searchText1;
@@ -184,7 +208,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                 insNameList = insnListNew;
             }
         }
-
+        */
         public void countWord()
         {
             if (detailTxt.Length > 300)
@@ -202,22 +226,126 @@ namespace ShikkhanobishStudentApp.ViewModel
 
 
         }
+
+        #region Converter
+        public ObservableCollection<popupList> ConvertInsTOPupUpList(ObservableCollection<Institution> insList)
+        {
+            ObservableCollection<popupList> popuplist = new ObservableCollection<popupList>();
+
+            for (int i = 0; i < insList.Count; i++)
+            {
+                popupList popupobj = new popupList();
+                popupobj.name = insList[i].name;
+                popupobj.ListIndex = 1;
+                popuplist.Add(popupobj);
+            }
+
+            return popuplist;
+        }
+        public ObservableCollection<popupList> ConvertClsTOPupUpList(ObservableCollection<ClassInfo> list)
+        {
+            ObservableCollection<popupList> popuplist = new ObservableCollection<popupList>();
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                popupList popupobj = new popupList();
+                popupobj.name = list[i].name;
+                popupobj.ListIndex = 2;
+                popuplist.Add(popupobj);
+            }
+
+            return popuplist;
+        }
+         public ObservableCollection<popupList> ConvertUniNameTOPupUpList(ObservableCollection<UniversityName> list)
+        {
+            ObservableCollection<popupList> popuplist = new ObservableCollection<popupList>();
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                popupList popupobj = new popupList();
+                popupobj.name = list[i].name;
+                popupobj.ListIndex = 3;
+                popuplist.Add(popupobj);
+            }
+
+            return popuplist;
+        }
+        public ObservableCollection<popupList> ConvertSubTOPupUpList(ObservableCollection<Subject> insList)
+        {
+            ObservableCollection<popupList> popuplist = new ObservableCollection<popupList>();
+
+            for (int i = 0; i < insList.Count; i++)
+            {
+                popupList popupobj = new popupList();
+                popupobj.name = insList[i].name;
+                popupobj.ListIndex = 4;
+                popuplist.Add(popupobj);
+            }
+
+            return popuplist;
+        }
+
+        public ObservableCollection<popupList> ConvertDegreeTOPupUpList(ObservableCollection<Degree> insList)
+        {
+            ObservableCollection<popupList> popuplist = new ObservableCollection<popupList>();
+
+            for (int i = 0; i < insList.Count; i++)
+            {
+                popupList popupobj = new popupList();
+                popupobj.name = insList[i].name;
+                popupobj.ListIndex =5;
+                popuplist.Add(popupobj);
+            }
+
+            return popuplist;
+        }
+        public ObservableCollection<popupList> ConvertChapterTOPupUpList(ObservableCollection<Chapter> insList)
+        {
+            ObservableCollection<popupList> popuplist = new ObservableCollection<popupList>();
+
+            for (int i = 0; i < insList.Count; i++)
+            {
+                popupList popupobj = new popupList();
+                popupobj.name = insList[i].name;
+                popupobj.ListIndex = 6;
+                popuplist.Add(popupobj);
+            }
+
+            return popuplist;
+        }
+        public ObservableCollection<popupList> ConvertCourseTOPupUpList(ObservableCollection<Course> insList)
+        {
+            ObservableCollection<popupList> popuplist = new ObservableCollection<popupList>();
+
+            for (int i = 0; i < insList.Count; i++)
+            {
+                popupList popupobj = new popupList();
+                popupobj.name = insList[i].name;
+                popupobj.ListIndex = 7;
+                popuplist.Add(popupobj);
+            }
+
+            return popuplist;
+        }
+        #endregion
+
+
         #endregion
 
 
         #region Binding Garbage
 
-        public ObservableCollection<Institution> backUpInsName { get; set; }
-        public ObservableCollection<Institution> backUpclsName { get; set; }
-        public ObservableCollection<Institution> backUpsubName { get; set; }
-        public ObservableCollection<Institution> backUpchpName { get; set; }
-        public ObservableCollection<Institution> thisList { get; set; }
+        public ObservableCollection<Institution> backUpFipName { get; set; }
+        public ObservableCollection<ClassInfo> backUpScPName { get; set; }
+        public ObservableCollection<popupList> backUpthrPName { get; set; }
+        public ObservableCollection<popupList> backUpfrPName { get; set; }
+        public ObservableCollection<popupList> thisList { get; set; }
         private bool popUpVisibility1;
 
         public bool popUpVisibility { get => popUpVisibility1; set => SetProperty(ref popUpVisibility1, value); }
         
-        private ObservableCollection<Institution> _insNameList = new ObservableCollection<Institution>();
-        public ObservableCollection<Institution> insNameList { get => _insNameList; set => SetProperty(ref _insNameList, value); }
+        private ObservableCollection<popupList> _popupList = new ObservableCollection<popupList>();
+        public ObservableCollection<popupList> popupList { get => _popupList; set => SetProperty(ref _popupList, value); }
         
 
         private string searchName1;
@@ -250,7 +378,7 @@ namespace ShikkhanobishStudentApp.ViewModel
 
         private string searchText1;
 
-        public string searchText { get { return searchText1; } set { searchText1 = value; SearchControl(); OnPropertyChanged(); } }
+        public string searchText { get { return searchText1; } set { searchText1 = value; /*SearchControl();*/ OnPropertyChanged(); } }
 
         private ICommand closePopUp;
 
@@ -356,6 +484,9 @@ namespace ShikkhanobishStudentApp.ViewModel
         private string perminCostText1;
 
         public string perminCostText { get => perminCostText1; set => SetProperty(ref perminCostText1, value); }
+        private string SecondListTitle1;
+
+        public string SecondListTitle { get => SecondListTitle1; set => SetProperty(ref SecondListTitle1, value); }
 
         private List<int> offerList1 { get; set; }
         public List<int> offerList { get { return offerList1; } set { offerList1 = value; OnPropertyChanged(); } }
@@ -367,6 +498,18 @@ namespace ShikkhanobishStudentApp.ViewModel
         private double rcopacity1;
 
         public double rcopacity { get => rcopacity1; set => SetProperty(ref rcopacity1, value); }
+
+        private bool secondListBtnVisibility1;
+
+        public bool secondListBtnVisibility { get => secondListBtnVisibility1; set => SetProperty(ref secondListBtnVisibility1, value); }
+
+        private bool firstListBtnVisibility1;
+
+        public bool firstListBtnVisibility { get => firstListBtnVisibility1; set => SetProperty(ref firstListBtnVisibility1, value); }
+
+        private string secTitle1;
+
+        public string secTitle { get => secTitle1; set => SetProperty(ref secTitle1, value); }
         #endregion
     }
 }

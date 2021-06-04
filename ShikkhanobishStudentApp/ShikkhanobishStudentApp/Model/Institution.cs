@@ -13,5 +13,10 @@ namespace ShikkhanobishStudentApp.Model
         public double avgRatting { get; set; }
         public int indexNo { get; set; }
         public string Response { get; set; }
+
+        public static explicit operator Institution(List<object> v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
