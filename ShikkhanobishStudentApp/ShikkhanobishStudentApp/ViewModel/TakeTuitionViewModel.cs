@@ -20,6 +20,8 @@ namespace ShikkhanobishStudentApp.ViewModel
         public ServerConnection serverconnection { get; set; }
         ObservableCollection<ClassInfo> AllclsList = new ObservableCollection<ClassInfo>();
         ObservableCollection<UniversityName> AllUNameList = new ObservableCollection<UniversityName>();
+        ObservableCollection<Subject> AllsubList = new ObservableCollection<Subject>();
+        ObservableCollection<Degree> AlldegreeList = new ObservableCollection<Degree>();
         private int popupFirstIndex;
 
 
@@ -53,6 +55,7 @@ namespace ShikkhanobishStudentApp.ViewModel
             forthTitle = "Chapter";
             firstListBtnVisibility = true;
             secondListBtnVisibility = false;
+            thirdListBtnVisibility = false;
         }
 
         #region populate list
@@ -68,6 +71,16 @@ namespace ShikkhanobishStudentApp.ViewModel
         public async void UNameListPopulate()
         {
             AllUNameList = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getUniversityName".GetJsonAsync<ObservableCollection<UniversityName>>();
+            secondListBtnVisibility = true;
+        }
+        public async void DegreeListPopulate()
+        {
+            AlldegreeList = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getDegree".GetJsonAsync<ObservableCollection<Degree>>();
+            secondListBtnVisibility = true;
+        }
+        public async void SubjectListPopulate()
+        {
+            AllsubList = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getSubject".GetJsonAsync<ObservableCollection<Subject>>();
             secondListBtnVisibility = true;
         }
         #endregion
@@ -117,6 +130,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                         }
                         ObservableCollection<popupList> convertedList = new ObservableCollection<popupList>();
                         convertedList = ConvertClsTOPupUpList(popupclsList);
+                        
                         popupList = convertedList;
                     }
                     else if (selectedGlobalIns.institutionID == 103)
@@ -126,8 +140,42 @@ namespace ShikkhanobishStudentApp.ViewModel
                         convertedList = ConvertUniNameTOPupUpList(AllUNameList);
                         popupList = convertedList;
                     }               
-                    SearchableVisibility = false;
-                    
+                    SearchableVisibility = false;                   
+                }
+                //selecting list for 3rd popup
+                else if (int.Parse(index) == 2)
+                {
+                    if(thirdTitle == "Subject")
+                    {
+                        searchName = "Select Subject";
+                        ObservableCollection<Subject> popupclsList = new ObservableCollection<Subject>();
+                        for (int i = 0; i < AllsubList.Count; i++)
+                        {
+                            if(AllsubList[i].classID == selectedGlobalCls.classID)
+                            {
+                                popupclsList.Add(AllsubList[i]);
+                            }
+                        }
+                        ObservableCollection<popupList> convertedList = new ObservableCollection<popupList>();
+                        convertedList = ConvertSubTOPupUpList(popupclsList);
+                        popupList = convertedList;
+                    }
+                    else if (thirdTitle == "Degree")
+                    {
+                        searchName = "Select Degree";
+                        ObservableCollection<Degree> popupclsList = new ObservableCollection<Degree>();
+                        for (int i = 0; i < AlldegreeList.Count; i++)
+                        {
+                            if (AlldegreeList[i].uniNameID == selectedGlobalUniName.uniNameID)
+                            {
+                                popupclsList.Add(AlldegreeList[i]);
+                            }
+                        }
+                        ObservableCollection<popupList> convertedList = new ObservableCollection<popupList>();
+                        convertedList = ConvertDegreeTOPupUpList(popupclsList);
+                        popupList = convertedList;
+                    }
+
                 }
             });
         //click in selected item
@@ -170,6 +218,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                  }
                  else if (thisList.ListIndex == 2 || thisList.ListIndex == 3)
                  {
+                     thirdListBtnVisibility = true;
                      CLseletedCountTextVisibility = true;
                      if(thisList.ListIndex == 2)
                      {
@@ -186,6 +235,8 @@ namespace ShikkhanobishStudentApp.ViewModel
                          SelectedClassName = selectedList.name;
                          CLTRequest = selectedList.tuitionRequest;
                          CLavgratting = selectedList.avgRatting;
+                         SubjectListPopulate();
+
                      }
                      else
                      {
@@ -202,8 +253,43 @@ namespace ShikkhanobishStudentApp.ViewModel
                          SelectedClassName = selectedList.name;
                          CLTRequest = selectedList.tuitionRequest;
                          CLavgratting = selectedList.avgRatting;
+                         DegreeListPopulate();
                      }                                         
 
+                 }
+                 else if(thisList.ListIndex == 4)
+                 {
+                     SubseletedCountTextVisibility = true;
+                     Subject selectedList = new Subject();
+                     for (int i = 0; i < AllclsList.Count; i++)
+                     {
+                         if (AllsubList[i].name == thisList.name)
+                         {
+                             selectedList = AllsubList[i];
+                         }
+
+                     }
+                     selectedGlobalSub = selectedList;
+                     SelectedSubjectName = selectedList.name;
+                     SubTRequest = selectedList.tuitionRequest;
+                     Subavgratting = selectedList.avgRatting;
+                 }
+                 else if (thisList.ListIndex == 5)
+                 {
+                     SubseletedCountTextVisibility = true;
+                     Degree selectedList = new Degree();
+                     for (int i = 0; i < AlldegreeList.Count; i++)
+                     {
+                         if (AlldegreeList[i].name == thisList.name)
+                         {
+                             selectedList = AlldegreeList[i];
+                         }
+
+                     }
+                     selectedGlobalDgr = selectedList;
+                     SelectedSubjectName = selectedList.name;
+                     SubTRequest = selectedList.tuitionRequest;
+                     Subavgratting = selectedList.avgRatting;
                  }
 
                  CheckEverythign();
@@ -584,6 +670,10 @@ namespace ShikkhanobishStudentApp.ViewModel
         private string forthTitle1;
 
         public string forthTitle { get => forthTitle1; set => SetProperty(ref forthTitle1, value); }
+
+        private bool thirdListBtnVisibility1;
+
+        public bool thirdListBtnVisibility { get => thirdListBtnVisibility1; set => SetProperty(ref thirdListBtnVisibility1, value); }
         #endregion
     }
 }

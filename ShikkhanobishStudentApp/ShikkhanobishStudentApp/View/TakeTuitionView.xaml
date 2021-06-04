@@ -205,14 +205,14 @@
                         </Grid.ColumnDefinitions>
                         <Label Text="{Binding SelectedSubjectName}" Grid.Row="0" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Start" FontSize="12" FontAttributes="Bold" Padding="10,0,0,0"/>
                         
-                        <Label Text="Tuition Request" Grid.Row="2" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Center" FontSize="12" Padding="10,0,0,0" IsVisible="{Binding SubseletedCountTextVisibility}"/>
-                        <Label Text="Avg. Ratting/Tuition" Grid.Row="3" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Center" FontSize="12" Padding="10,0,0,0" IsVisible="{Binding SubseletedCountTextVisibility}"/>
+                        <Label Text="Tuition Request" Grid.Row="1" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Center" FontSize="12" Padding="10,0,0,0" IsVisible="{Binding SubseletedCountTextVisibility}"/>
+                        <Label Text="Avg. Ratting/Tuition" Grid.Row="2" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Center" FontSize="12" Padding="10,0,0,0" IsVisible="{Binding SubseletedCountTextVisibility}"/>
 
                        
-                        <Label Text="{Binding SubTRequest}" Grid.Row="2" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="10,0,5,0" FontAttributes="Bold" IsVisible="{Binding SubseletedCountTextVisibility}"/>
-                        <Label Text="{Binding Subavgratting}" Grid.Row="3" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="10,0,5,0" FontAttributes="Bold" IsVisible="{Binding SubseletedCountTextVisibility}"/>
+                        <Label Text="{Binding SubTRequest}" Grid.Row="1" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="10,0,5,0" FontAttributes="Bold" IsVisible="{Binding SubseletedCountTextVisibility}"/>
+                        <Label Text="{Binding Subavgratting}" Grid.Row="2" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="10,0,5,0" FontAttributes="Bold" IsVisible="{Binding SubseletedCountTextVisibility}"/>
                     </Grid>
-                    <Button Text="Select" CornerRadius="5" TextColor="White" Grid.Row="2" HorizontalOptions="End" VerticalOptions="Center" FontSize="10" Margin="10,5,10,10" FontAttributes="Bold"  CommandParameter="2">
+                    <Button Text="Select" CornerRadius="5" TextColor="White" Grid.Row="2" HorizontalOptions="End" VerticalOptions="Center" FontSize="10" Margin="10,5,10,10" FontAttributes="Bold" Command="{Binding selectInsCommand}" CommandParameter="2" IsVisible="{Binding thirdListBtnVisibility}">
                         <Button.Background>
                             <LinearGradientBrush EndPoint="1,0">
                                 <GradientStop Color="#2AD871" Offset="0.1" />
