@@ -4,7 +4,7 @@
              xmlns:viewmodel="clr-namespace:ShikkhanobishStudentApp.ViewModel"
              xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin"
              x:Name="tuitionView"
-             x:Class="ShikkhanobishStudentApp.View.TakeTuitionView" >
+             x:Class="ShikkhanobishStudentApp.View.TakeTuitionView">
     <!--  x:DataType="viewmodel:TakeTuitionViewModel" !-->
     <ContentPage.BindingContext>
         <viewmodel:TakeTuitionViewModel/>
@@ -83,7 +83,7 @@
                     <ColumnDefinition Width=".1*"/>
                 </Grid.ColumnDefinitions>
 
-                <Frame BackgroundColor="#F8F8F8" Grid.Row="1" Grid.Column="1" CornerRadius="15" HasShadow="False"/>
+                <Frame BackgroundColor="White" Grid.Row="1" Grid.Column="1" CornerRadius="15" HasShadow="False"/>
                 <Grid Grid.Row="1" Grid.Column="1">
                     <Grid.RowDefinitions>
                         <RowDefinition Height=".4*"/>
@@ -129,7 +129,7 @@
                         </Button.Background>
                     </Button>
                 </Grid>
-                <Frame BackgroundColor="#F8F8F8" Grid.Row="1" Grid.Column="3" CornerRadius="15" HasShadow="False"/>
+                <Frame BackgroundColor="White" Grid.Row="1" Grid.Column="3" CornerRadius="15" HasShadow="False"/>
                 <Grid Grid.Row="1" Grid.Column="3">
                     <Grid.RowDefinitions>
                         <RowDefinition Height=".4*"/>
@@ -175,7 +175,7 @@
                         </Button.Background>
                     </Button>
                 </Grid>
-                <Frame BackgroundColor="#F8F8F8" Grid.Row="3" Grid.Column="1" CornerRadius="15" HasShadow="False"/>
+                <Frame BackgroundColor="White" Grid.Row="3" Grid.Column="1" CornerRadius="15" HasShadow="False"/>
                 <Grid Grid.Row="3" Grid.Column="1">
                     <Grid.RowDefinitions>
                         <RowDefinition Height=".4*"/>
@@ -221,7 +221,7 @@
                         </Button.Background>
                     </Button>
                 </Grid>
-                <Frame BackgroundColor="#F8F8F8" Grid.Row="3" Grid.Column="3" CornerRadius="15" HasShadow="False"/>
+                <Frame BackgroundColor="White" Grid.Row="3" Grid.Column="3" CornerRadius="15" HasShadow="False"/>
                 <Grid Grid.Row="3" Grid.Column="3">
                     <Grid.RowDefinitions>
                         <RowDefinition Height=".4*"/>
@@ -250,15 +250,14 @@
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
                         <Label Text="{Binding SelectedChapterName}" Grid.Row="0" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Start" FontSize="12" FontAttributes="Bold" Padding="10,0,0,0"/>
-                        <Label Text="Student" Grid.Row="1" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Center" FontSize="12" Padding="10,0,0,0" IsVisible="{Binding ChpseletedCountTextVisibility}"/>
-                        <Label Text="Tuition Request" Grid.Row="2" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Center" FontSize="12" Padding="10,0,0,0" IsVisible="{Binding ChpseletedCountTextVisibility}"/>
-                        <Label Text="Avg. Ratting/Tuition" Grid.Row="3" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Center" FontSize="12" Padding="10,0,0,0" IsVisible="{Binding ChpseletedCountTextVisibility}"/>
+                        <Label Text="Tuition Request" Grid.Row="1" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Center" FontSize="12" Padding="10,0,0,0" IsVisible="{Binding ChpseletedCountTextVisibility}"/>
+                        <Label Text="Avg. Ratting/Tuition" Grid.Row="2" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Center" FontSize="12" Padding="10,0,0,0" IsVisible="{Binding ChpseletedCountTextVisibility}"/>
 
-                        <Label Text="{Binding ChpSCount}" Grid.Row="1" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="0,0,5,0" FontAttributes="Bold" IsVisible="{Binding ChpseletedCountTextVisibility}"/>
-                        <Label Text="{Binding ChpTRequest}" Grid.Row="2" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="10,0,5,0" FontAttributes="Bold" IsVisible="{Binding ChpseletedCountTextVisibility}"/>
-                        <Label Text="{Binding Chpavgratting}" Grid.Row="3" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="10,0,5,0" FontAttributes="Bold" IsVisible="{Binding ChpseletedCountTextVisibility}"/>
+                        
+                        <Label Text="{Binding ChpTRequest}" Grid.Row="1" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="10,0,5,0" FontAttributes="Bold" IsVisible="{Binding ChpseletedCountTextVisibility}"/>
+                        <Label Text="{Binding Chpavgratting}" Grid.Row="2" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" Padding="10,0,5,0" FontAttributes="Bold" IsVisible="{Binding ChpseletedCountTextVisibility}"/>
                     </Grid>
-                    <Button Text="Select" CornerRadius="5" TextColor="White" Grid.Row="2" HorizontalOptions="End" VerticalOptions="Center" FontSize="10" Margin="10,5,10,10" FontAttributes="Bold"  CommandParameter="3">
+                    <Button Text="Select" CornerRadius="5" TextColor="White" Grid.Row="2" HorizontalOptions="End" VerticalOptions="Center" FontSize="10" Margin="10,5,10,10" FontAttributes="Bold" Command="{Binding selectInsCommand}"  CommandParameter="3" IsVisible="{Binding forthBtnVisbility}">
                         <Button.Background>
                             <LinearGradientBrush EndPoint="1,0">
                                 <GradientStop Color="#3CBEFF" Offset="0.1" />
