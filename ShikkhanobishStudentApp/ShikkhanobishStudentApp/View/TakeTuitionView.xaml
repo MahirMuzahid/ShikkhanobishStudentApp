@@ -48,7 +48,7 @@
                 </Grid.ColumnDefinitions>
                 <Image Source="newlogowhite.png" Grid.Column="0" Aspect="AspectFit"/>
 
-                <Button Text="Signout" Grid.Column="1" Grid.ColumnSpan="2" HorizontalOptions="End" VerticalOptions="Center" BackgroundColor="Transparent" FontAttributes="Bold" FontSize="13" TextColor="White">
+                <Button Text="Signout" Grid.Column="1" Grid.ColumnSpan="2" HorizontalOptions="End" VerticalOptions="Center" BackgroundColor="Transparent" FontAttributes="Bold" FontSize="13" TextColor="White" Clicked="Button_Clicked_3">
                 </Button>
 
             </Grid>
@@ -321,6 +321,7 @@
                 <Label x:Name="rclbl" Text="Rechrage Coin" Grid.RowSpan="2" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="End" FontSize="11" FontAttributes="Bold" Margin="0,0,0,7"/>
                 
             </Grid>
+            
             <!-- Payment View -->
             <Grid x:Name="coingrid" BackgroundColor="#FFFFFF" Grid.Row="1" Grid.RowSpan="4" Grid.ColumnSpan="3">
                 <Grid.RowDefinitions>
@@ -456,6 +457,7 @@
                 </CarouselView>
             </Grid>
             <!-- Payment View -->
+            
         </Grid>
         
         
@@ -509,7 +511,74 @@
             </Grid>
         </Grid>
         <!-- PopUp End -->
+        <Grid  x:Name="loginView">
+            <Frame HasShadow="False" CornerRadius="20" Grid.RowSpan="2" Grid.ColumnSpan="3">
+                <Frame.Background>
+                    <LinearGradientBrush EndPoint="1,0">
+                        <GradientStop Color="#11AAD7" Offset="0.1" />
+                        <GradientStop Color="#864AE8" Offset="1.0" />
+                    </LinearGradientBrush>
+                </Frame.Background>
+            </Frame>
 
-        
-    </Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="20*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Image Source="newlogowhite.png" Grid.Row="0" Grid.Column="1" Margin="40"/>
+
+            <Grid Grid.Row="1" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height=".4*"/>
+                    <RowDefinition Height=".5*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width=".1*"/>
+                    <ColumnDefinition Width="20*"/>
+                    <ColumnDefinition Width=".1*"/>
+                </Grid.ColumnDefinitions>
+                <Frame BackgroundColor="#20000000" Grid.Row="0" Margin="20,0,20,0" CornerRadius="20" Grid.ColumnSpan="3"/>
+                <Entry Placeholder="Phone Number" Grid.Row="0" Margin="20,0,20,0" FontSize="16" Grid.Column="1" PlaceholderColor="#E7E7E7" TextColor="White"/>
+
+                <Frame BackgroundColor="#20000000" Grid.Row="1" Margin="20,0,20,0" CornerRadius="20" Grid.ColumnSpan="3"/>
+                <Entry Placeholder="Password" Grid.Row="1" Margin="20,0,20,0" FontSize="16" Grid.Column="1" IsPassword="True" PlaceholderColor="#E7E7E7" TextColor="White"/>
+
+                
+                <Button Text="Login" Grid.Row="4" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="White" CornerRadius="10" TextColor="#1D64B4" Clicked="Button_Clicked_4"/>
+                <Grid Grid.Row="2" Grid.Column="1" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width=".2*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <CheckBox  Grid.Column="0" HorizontalOptions="Start"/>
+                    <Label Text="Remeber Me" TextColor="White" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center"/>
+                    <Label Text="Forgot Information?" TextColor="White" Grid.Column="2" HorizontalOptions="End" VerticalOptions="Center" Margin="0,0,20,0"/>
+                </Grid>
+                
+
+                <Label FontSize="12" Grid.Row="6" Grid.Column="1" TextColor="White" HorizontalOptions="Center">
+                    <Label.FormattedText>
+                        <FormattedString >
+                            <Span Text="Do not have an account? "></Span>
+                            <Span Text=" Register Now " FontAttributes="Bold"/>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+            </Grid>
+        </Grid>
+            
+
+        </Grid>
 </ContentPage>

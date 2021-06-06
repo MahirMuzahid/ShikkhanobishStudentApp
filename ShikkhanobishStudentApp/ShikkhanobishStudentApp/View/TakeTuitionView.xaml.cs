@@ -23,6 +23,8 @@ namespace ShikkhanobishStudentApp.View
             coingrid.IsVisible = true;
             coingrid.TranslationX = width;
             coingrid.Opacity = 0;
+            //var displayheight = DeviceDisplay.MainDisplayInfo.Height;
+            //colorFrame.TranslationY = -(displayheight - displayheight / (9.2 / 3.2));
         }
 
         async private void Button_Clicked(object sender, EventArgs e)
@@ -51,8 +53,22 @@ namespace ShikkhanobishStudentApp.View
         }
 
         private void Button_Clicked_2(object sender, EventArgs e)
-        {
+        {            
             Application.Current.MainPage.Navigation.PushAsync(new StudentProfile());
+        }
+
+        private void Button_Clicked_3(object sender, EventArgs e)
+        {
+
+            loginView.TranslateTo(0, 0, 1500, Easing.CubicOut);
+            loginView.FadeTo(1, 1000, Easing.CubicOut);
+        }
+
+        private void Button_Clicked_4(object sender, EventArgs e)
+        {
+            loginView.TranslateTo(0, -1000, 1500, Easing.CubicIn);
+            loginView.FadeTo(0, 1200, Easing.CubicIn);
+            loginView.Opacity = 0;
         }
     }
 }
