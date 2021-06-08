@@ -19,7 +19,7 @@ namespace ShikkhanobishStudentApp.Droid
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             ImageCircleRenderer.Init();
             LoadApplication(new App());
-            Window.SetStatusBarColor ( Android.Graphics.Color.Rgb (78, 121, 224));
+            Window.SetStatusBarColor ( Android.Graphics.Color.Rgb (181, 181, 181));
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
