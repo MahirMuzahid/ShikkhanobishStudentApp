@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ShikkhanobishStudentApp.View.ResgisterView">
+    <Grid>
+        <Grid.RowDefinitions >
+            <RowDefinition Height=".3*"/>
+            <RowDefinition Height=".1*"/>
+            <RowDefinition Height=".1*"/>
+            <RowDefinition Height=".3*"/>
+            <RowDefinition Height=".5*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height=".4*"/>
+            <RowDefinition Height=".6*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Label Text="Welcome To Shikkhanobish Registration" TextColor="#A5A5A5" Grid.Row="3" HorizontalOptions="Start" VerticalOptions="End" Grid.Column="1"/>
+        <Label Text="Enter Your Phone Number" Grid.Row="4" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Start" TextColor="#3D3D3D" FontSize="26" FontAttributes="Bold"/>
+
+        <Label Text="e.g: 01xxxxxxxxx" Grid.Column="1" Grid.Row="6" HorizontalOptions="Start" VerticalOptions="Center"/>
+        <Grid Grid.Row="7" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Frame BackgroundColor="#E9E9E9" Grid.Column="0"/>
+            <Frame BackgroundColor="#E9E9E9" Grid.Column="1"/>
+            <Frame BackgroundColor="#E9E9E9" Grid.Column="2"/>
+            <Frame BackgroundColor="#E9E9E9" Grid.Column="3"/>
+            <Frame BackgroundColor="#E9E9E9" Grid.Column="4"/>
+            <Frame BackgroundColor="#E9E9E9" Grid.Column="5"/>
+            <Frame BackgroundColor="#E9E9E9" Grid.Column="6"/>
+            <Frame BackgroundColor="#E9E9E9" Grid.Column="7"/>
+            <Frame BackgroundColor="#E9E9E9" Grid.Column="8"/>
+            <Frame BackgroundColor="#E9E9E9" Grid.Column="9"/>
+            <Frame BackgroundColor="#E9E9E9" Grid.Column="10"/>
+
+            <Label Text="0" Grid.Column="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"/>
+            <Label Text="1" Grid.Column="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"/>
+            <Entry Grid.Column="2" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"/>
+            <Entry Grid.Column="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"/>
+            <Entry Grid.Column="4" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"/>
+            <Entry Grid.Column="5" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"/>
+            <Entry Grid.Column="6" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"/>
+            <Entry Grid.Column="7" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"/>
+            <Entry Grid.Column="8" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"/>
+            <Entry Grid.Column="9" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"/>
+            <Entry Grid.Column="10" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"/>
+        </Grid>
+
+        <Button Text="Send OTP" Grid.Row="9" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" CornerRadius="10" BackgroundColor="#6C3ED6" TextColor="White"/>
+
+        <Label Text="Terms And Conditions" Grid.Column="1" Grid.Row="11" HorizontalOptions="Center" VerticalOptions="Center" TextColor="#354EFF"/>
+    </Grid>
+</ContentPage>

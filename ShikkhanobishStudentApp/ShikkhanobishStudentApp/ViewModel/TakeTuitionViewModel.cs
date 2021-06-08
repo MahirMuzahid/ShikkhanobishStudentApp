@@ -505,6 +505,12 @@ namespace ShikkhanobishStudentApp.ViewModel
 
         }
 
+        public ICommand goRegisterView =>
+              new Command(() =>
+              {
+                  Application.Current.MainPage.Navigation.PushAsync(new ResgisterView());
+              });
+
         #region Converter
         public ObservableCollection<popupList> ConvertInsTOPupUpList(ObservableCollection<Institution> insList)
         {
