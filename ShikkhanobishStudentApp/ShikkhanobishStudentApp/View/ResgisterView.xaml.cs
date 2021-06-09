@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ShikkhanobishStudentApp.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,9 +17,18 @@ namespace ShikkhanobishStudentApp.View
         {
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
-            fi.Focus();
         }
 
-       
+        private void Button_Clicked(object sender, EventArgs e)
+        {
+            StaticPageToPassData.RegisteredPhonenNumber = fi.Text + sec.Text + th.Text + fr.Text + fiv.Text + si.Text + sev.Text + ei.Text + ni.Text;
+            StaticPageToPassData.otpcode = "12345";
+        }
+
+        private void Button_Clicked_1(object sender, EventArgs e)
+        {
+            //fi.Text = ""; sec.Text = ""; th.Text = ""; fr.Text = ""; fiv.Text = ""; si.Text = ""; sev.Text = ""; ei.Text = ""; ni.Text = ""; 
+            first.Text = ""; second.Text = ""; third.Text = ""; forth.Text = ""; fifth.Text = "";
+        }
     }
 }

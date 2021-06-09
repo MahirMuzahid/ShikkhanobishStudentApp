@@ -1,10 +1,12 @@
-﻿using ShikkhanobishStudentApp.Model;
+﻿using Flurl.Http;
+using ShikkhanobishStudentApp.Model;
 using ShikkhanobishStudentApp.View;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -13,6 +15,8 @@ namespace ShikkhanobishStudentApp.ViewModel
     public class RegisterViewModel : BaseViewModel, INotifyPropertyChanged
     {
         int btnNav;
+        public string studentPhonenumber;
+        List<Student> allStudent { get; set; }
         public RegisterViewModel()
         {
             btnNav = 1;
@@ -27,7 +31,7 @@ namespace ShikkhanobishStudentApp.ViewModel
             otpVisibility = false;
         }
         public ICommand btnCommand =>
-             new Command<string>((index) =>
+             new Command<string>( async(index) =>
              {
                  if(int.Parse(index) == 0)
                  {
@@ -40,6 +44,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                      sendAgainVisibility = false;
                      infoVisibility = false;
                      registerbtvEnabled = true;
+                     otpVisibility = false;
                      otpfiText = "";
                      otpsecText = "";
                      otpthText = "";
@@ -50,6 +55,8 @@ namespace ShikkhanobishStudentApp.ViewModel
                  {
                      if (btnNav == 1)
                      {
+                         
+                         
                          btnNav++;
                          titleTxt = "Enter 5 Digit OTP ";
                          numberVisibility = false;
@@ -57,25 +64,35 @@ namespace ShikkhanobishStudentApp.ViewModel
                          btnTxt = "Varify";
                          sendAgainColor = "gray";
                          sendAgainVisibility = true;
-                         varificationvisibility = false;
+                         varificationvisibility = true;
                          otpVisibility = true;
                          entryText = "";
                      }
                      else if (btnNav == 2)
                      {
-                         //send otp to mobile
-                         string otp = "12345";
+                         string otp = StaticPageToPassData.otpcode;
                          if (otpfiText != null && otpsecText != null && otpthText != null && otpfrText != null && otpfivText != null)
                          {
                              if(otpfiText == otp[0].ToString() && otpsecText == otp[1].ToString() && otpthText == otp[2].ToString() && otpfrText == otp[3].ToString() && otpfivText == otp[4].ToString() )
                              {
-                                 btnNav++;
-                                 errorText = "";
-                                 otpVisibility = false;
-                                 titleTxt = "Enter Your Information";
-                                 infoVisibility = true;
-                                 btnTxt = "Register";
-                                 sendAgainVisibility = false;
+                                 studentPhonenumber = "01"+StaticPageToPassData.RegisteredPhonenNumber;
+                                 await CheckPhonenumber();
+                                 if(uniquePhonenumber == true)
+                                 {
+     
+                                     btnNav++;
+                                     errorText = "";
+                                     otpVisibility = false;
+                                     titleTxt = "Enter Your Information";
+                                     infoVisibility = true;
+                                     btnTxt = "Register";
+                                     sendAgainVisibility = false;
+                                 }
+                                 else
+                                 {
+                                     errorText = "Phone Number Already Registered";
+                                 }
+                                 
                              }
                              else
                              {
@@ -166,13 +183,65 @@ namespace ShikkhanobishStudentApp.ViewModel
                          if (allok == true)
                          {
                              registerbtvEnabled = true;
-                             Application.Current.MainPage.Navigation.PushAsync(new TakeTuitionView(false));
+                             await RegisterStudnet();
+                             if(regRes.Massage == "Succesfull!")
+                             {
+                                 Application.Current.MainPage.Navigation.PushAsync(new TakeTuitionView(false));
+                             }
+                             else
+                             {
+                                 errorText = regRes.Massage;
+                             }
+                             
                          }
 
                      }
                  }
                  
              });
+        bool uniquePhonenumber = true;
+        Response regRes;
+        public async Task CheckPhonenumber()
+        {
+            allStudent = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getStudent".GetJsonAsync<List<Student>>();
+            if(allStudent.Count != 0)
+            {
+                for (int i = 0; i < allStudent.Count; i++)
+                {
+                    if (int.Parse(studentPhonenumber) == allStudent[i].phonenumber)
+                    {
+                        uniquePhonenumber = false;
+                        break;
+                    }
+                }
+            }
+            
+        }
+        public async Task RegisterStudnet()
+        {           
+            int thisUSerID = 0;
+            
+            if (allStudent.Count == 0)
+            {
+                thisUSerID = 10000001;
+            }
+            else
+            {
+                int maxID = allStudent[0].studentID;
+                for (int i = 0; i < allStudent.Count; i++)
+                {
+                    if (maxID < allStudent[i].studentID)
+                    {
+                        maxID = allStudent[i].studentID;
+                    }
+                }
+                thisUSerID = maxID + 1;
+            }
+
+            regRes = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/setStudent"
+          .PostUrlEncodedAsync(new { studentID = thisUSerID, phonenumber = "+880"+studentPhonenumber, password = password, totalSpent = 0, totalTuitionTime = 0, coin = 0, freemin = 10, city = city, name = name, institutionName  = "none"})
+          .ReceiveJson<Response>();
+        }
          public ICommand goBack =>
              new Command(() =>
              {

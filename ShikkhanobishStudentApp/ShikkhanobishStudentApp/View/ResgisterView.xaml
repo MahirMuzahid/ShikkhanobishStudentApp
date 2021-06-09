@@ -58,11 +58,11 @@
             <Frame BackgroundColor="#E9E9E9" Grid.Column="0" IsVisible="{Binding numberVisibility}"/>
             <Frame BackgroundColor="#E9E9E9" Grid.Column="1" IsVisible="{Binding numberVisibility}"/>
             <Frame BackgroundColor="#E9E9E9" Grid.Column="2" IsVisible="{Binding numberVisibility}"/>
-            <Frame BackgroundColor="#E9E9E9" Grid.Column="3"/>
-            <Frame BackgroundColor="#E9E9E9" Grid.Column="4"/>
-            <Frame BackgroundColor="#E9E9E9" Grid.Column="5"/>
-            <Frame BackgroundColor="#E9E9E9" Grid.Column="6"/>
-            <Frame BackgroundColor="#E9E9E9" Grid.Column="7"/>
+            <Frame BackgroundColor="#E9E9E9" Grid.Column="3" IsVisible="{Binding numberVisibility}"/>
+            <Frame BackgroundColor="#E9E9E9" Grid.Column="4" IsVisible="{Binding numberVisibility}"/>
+            <Frame BackgroundColor="#E9E9E9" Grid.Column="5" IsVisible="{Binding numberVisibility}"/>
+            <Frame BackgroundColor="#E9E9E9" Grid.Column="6" IsVisible="{Binding numberVisibility}"/>
+            <Frame BackgroundColor="#E9E9E9" Grid.Column="7" IsVisible="{Binding numberVisibility}"/>
             <Frame BackgroundColor="#E9E9E9" Grid.Column="8" IsVisible="{Binding numberVisibility}"/>
             <Frame BackgroundColor="#E9E9E9" Grid.Column="9" IsVisible="{Binding numberVisibility}"/>
             <Frame BackgroundColor="#E9E9E9" Grid.Column="10" IsVisible="{Binding numberVisibility}"/>
@@ -75,27 +75,27 @@
                     <local:EntryFocusBehavior NextFocusElementName="sec"/>
                 </Entry.Behaviors>
             </localEntry:CustomEntry>
-            <localEntry:CustomEntry x:Name="sec" Grid.Column="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"  Keyboard="Numeric" >
+            <localEntry:CustomEntry x:Name="sec" Grid.Column="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"  Keyboard="Numeric" IsVisible="{Binding numberVisibility}">
                 <Entry.Behaviors>
                     <local:EntryFocusBehavior NextFocusElementName="th"/>
                 </Entry.Behaviors>
             </localEntry:CustomEntry>
-            <localEntry:CustomEntry x:Name="th" Grid.Column="4" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"  Keyboard="Numeric">
+            <localEntry:CustomEntry x:Name="th" Grid.Column="4" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"  Keyboard="Numeric" IsVisible="{Binding numberVisibility}">
                 <Entry.Behaviors>
                     <local:EntryFocusBehavior NextFocusElementName="fr"/>
                 </Entry.Behaviors>
             </localEntry:CustomEntry>
-            <localEntry:CustomEntry x:Name="fr" Grid.Column="5" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"  Keyboard="Numeric">
+            <localEntry:CustomEntry x:Name="fr" Grid.Column="5" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"  Keyboard="Numeric" IsVisible="{Binding numberVisibility}">
                 <Entry.Behaviors>
                     <local:EntryFocusBehavior NextFocusElementName="fiv"/>
                 </Entry.Behaviors>
             </localEntry:CustomEntry>
-            <localEntry:CustomEntry x:Name="fiv" Grid.Column="6" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"  Keyboard="Numeric">
+            <localEntry:CustomEntry x:Name="fiv" Grid.Column="6" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"  Keyboard="Numeric" IsVisible="{Binding numberVisibility}">
                 <Entry.Behaviors>
                     <local:EntryFocusBehavior NextFocusElementName="si"/>
                 </Entry.Behaviors>
             </localEntry:CustomEntry>
-            <localEntry:CustomEntry x:Name="si" Grid.Column="7" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"  Keyboard="Numeric" >
+            <localEntry:CustomEntry x:Name="si" Grid.Column="7" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"  Keyboard="Numeric" IsVisible="{Binding numberVisibility}">
                 <Entry.Behaviors>
                     <local:EntryFocusBehavior NextFocusElementName="sev"/>
                 </Entry.Behaviors>
@@ -133,20 +133,28 @@
             <Frame BackgroundColor="#E9E9E9" Grid.Column="7"/>
 
 
-            <localEntry:CustomEntry  Grid.Column="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"  Keyboard="Numeric" Text="{Binding otpfiText}">
-
+            <localEntry:CustomEntry x:Name="first" Grid.Column="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"  Keyboard="Numeric" Text="{Binding otpfiText}">
+                <Entry.Behaviors>
+                    <local:EntryFocusBehavior NextFocusElementName="second"/>
+                </Entry.Behaviors>
             </localEntry:CustomEntry>
-            <localEntry:CustomEntry  Grid.Column="4" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"  Keyboard="Numeric" Text="{Binding otpsecText}">
-
+            <localEntry:CustomEntry x:Name="second"  Grid.Column="4" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"  Keyboard="Numeric" Text="{Binding otpsecText}">
+                <Entry.Behaviors>
+                    <local:EntryFocusBehavior NextFocusElementName="third"/>
+                </Entry.Behaviors>
             </localEntry:CustomEntry>
 
-            <localEntry:CustomEntry  Grid.Column="5" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"  Keyboard="Numeric" Text="{Binding otpthText}">
-
+            <localEntry:CustomEntry x:Name="third"  Grid.Column="5" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"  Keyboard="Numeric" Text="{Binding otpthText}">
+                <Entry.Behaviors>
+                    <local:EntryFocusBehavior NextFocusElementName="forth"/>
+                </Entry.Behaviors>
             </localEntry:CustomEntry>
-            <localEntry:CustomEntry  Grid.Column="6" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"  Keyboard="Numeric" Text="{Binding otpfrText}">
-
+            <localEntry:CustomEntry x:Name="forth" Grid.Column="6" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"  Keyboard="Numeric" Text="{Binding otpfrText}">
+                <Entry.Behaviors>
+                    <local:EntryFocusBehavior NextFocusElementName="fifth"/>
+                </Entry.Behaviors>
             </localEntry:CustomEntry>
-            <localEntry:CustomEntry  Grid.Column="7" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"  Keyboard="Numeric" Text="{Binding otpfivText}">
+            <localEntry:CustomEntry x:Name="fifth" Grid.Column="7" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"  Keyboard="Numeric" Text="{Binding otpfivText}">
 
             </localEntry:CustomEntry>
         </Grid>
@@ -180,8 +188,8 @@
             <Entry  Grid.Row="7" FontSize="16" Text="{Binding city}"/>
             <Image Source="{Binding cityimgsrc}" Grid.Row="7" HorizontalOptions="End" VerticalOptions="Center" Aspect="AspectFill" Margin="{Binding cityMargin}"/>
         </Grid>
-        <Button Text="Change Number" HorizontalOptions="Start" VerticalOptions="Center" Grid.Row="9" Grid.Column="1" FontSize="10" BackgroundColor="White" TextColor="Blue"  IsVisible="{Binding sendAgainVisibility}" Command="{Binding btnCommand}" CommandParameter="0"/>
-        <Button Text="{Binding btnTxt}" Grid.Row="9" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" CornerRadius="10" BackgroundColor="#6C3ED6" TextColor="White" Command="{Binding btnCommand}" IsEnabled="{Binding registerbtvEnabled}" CommandParameter="1"/>
+        <Button Text="Change Number" HorizontalOptions="Start" VerticalOptions="Center" Grid.Row="9" Grid.Column="1" FontSize="10" BackgroundColor="White" TextColor="Blue"  IsVisible="{Binding sendAgainVisibility}" Command="{Binding btnCommand}" CommandParameter="0" Clicked="Button_Clicked_1"/>
+        <Button Text="{Binding btnTxt}" Grid.Row="9" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" CornerRadius="10" BackgroundColor="#6C3ED6" TextColor="White" Command="{Binding btnCommand}" IsEnabled="{Binding registerbtvEnabled}" CommandParameter="1" Clicked="Button_Clicked"/>
         <Button Text="Send Again in 60 Seconds" Grid.Row="8" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Start" BackgroundColor="White"  FontSize="10" IsVisible="{Binding sendAgainVisibility}" TextColor="{Binding sendAgainColor}"/>
 
         <Label Text="{Binding errorText}" Grid.Row="10" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="End" TextColor="Red"/>
