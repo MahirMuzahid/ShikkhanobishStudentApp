@@ -12,7 +12,7 @@ namespace ShikkhanobishStudentApp.View
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TakeTuitionView : ContentPage
     {
-        public TakeTuitionView()
+        public TakeTuitionView(bool fromLogin)
         {
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
@@ -23,6 +23,13 @@ namespace ShikkhanobishStudentApp.View
             coingrid.IsVisible = true;
             coingrid.TranslationX = width;
             coingrid.Opacity = 0;
+            if(!fromLogin)
+            {
+                loginView.Opacity = 0;
+                loginView.TranslateTo(0, -1000, 1500, Easing.CubicIn);
+                loginView.FadeTo(0, 1200, Easing.CubicIn);
+                
+            }
             //var displayheight = DeviceDisplay.MainDisplayInfo.Height;
             //colorFrame.TranslationY = -(displayheight - displayheight / (9.2 / 3.2));
         }

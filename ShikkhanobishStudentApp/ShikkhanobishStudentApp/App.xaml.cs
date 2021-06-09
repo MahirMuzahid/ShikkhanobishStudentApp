@@ -11,7 +11,7 @@ namespace ShikkhanobishStudentApp
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new TakeTuitionView());
+            MainPage = new NavigationPage(new TakeTuitionView(true));
 
         }
 

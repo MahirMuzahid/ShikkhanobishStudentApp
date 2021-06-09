@@ -2,7 +2,9 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodel="clr-namespace:ShikkhanobishStudentApp.ViewModel"
-             x:Class="ShikkhanobishStudentApp.View.ResgisterView" x:DataType="viewmodel:RegisterViewModel">
+             x:Class="ShikkhanobishStudentApp.View.ResgisterView" x:DataType="viewmodel:RegisterViewModel"
+             xmlns:local="clr-namespace:ShikkhanobishStudentApp.Custom_Rendarar"
+             xmlns:localEntry="clr-namespace:ShikkhanobishStudentApp.Custom_Rendarar">
     <!--  x:DataType="viewmodel:RegisterViewModel" !-->
     <ContentPage.BindingContext>
         <viewmodel:RegisterViewModel/>
@@ -66,15 +68,48 @@
 
             <Label Text="0" Grid.Column="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20" IsVisible="{Binding numberVisibility}"/>
             <Label Text="1" Grid.Column="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20" IsVisible="{Binding numberVisibility}"/>
-            <Entry Grid.Column="2" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20" IsVisible="{Binding numberVisibility}"/>
-            <Entry Grid.Column="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"/>
-            <Entry Grid.Column="4" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"/>
-            <Entry Grid.Column="5" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"/>
-            <Entry Grid.Column="6" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"/>
-            <Entry Grid.Column="7" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"/>
-            <Entry Grid.Column="8" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20" IsVisible="{Binding numberVisibility}"/>
-            <Entry Grid.Column="9" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20" IsVisible="{Binding numberVisibility}"/>
-            <Entry Grid.Column="10" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20" IsVisible="{Binding numberVisibility}"/>
+
+            <localEntry:CustomEntry x:Name="fi"  Grid.Column="2" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20" IsVisible="{Binding numberVisibility}"  Keyboard="Numeric">
+                <Entry.Behaviors>
+                    <local:EntryFocusBehavior NextFocusElementName="sec"/>
+                </Entry.Behaviors>
+            </localEntry:CustomEntry>
+            <localEntry:CustomEntry x:Name="sec" Grid.Column="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"  Keyboard="Numeric">
+                <Entry.Behaviors>
+                    <local:EntryFocusBehavior NextFocusElementName="th"/>
+                </Entry.Behaviors>
+            </localEntry:CustomEntry>
+            <localEntry:CustomEntry x:Name="th" Grid.Column="4" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"  Keyboard="Numeric">
+                <Entry.Behaviors>
+                    <local:EntryFocusBehavior NextFocusElementName="fr"/>
+                </Entry.Behaviors>
+            </localEntry:CustomEntry>
+            <localEntry:CustomEntry x:Name="fr" Grid.Column="5" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"  Keyboard="Numeric">
+                <Entry.Behaviors>
+                    <local:EntryFocusBehavior NextFocusElementName="fiv"/>
+                </Entry.Behaviors>
+            </localEntry:CustomEntry>
+            <localEntry:CustomEntry x:Name="fiv" Grid.Column="6" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"  Keyboard="Numeric">
+                <Entry.Behaviors>
+                    <local:EntryFocusBehavior NextFocusElementName="si"/>
+                </Entry.Behaviors>
+            </localEntry:CustomEntry>
+            <localEntry:CustomEntry x:Name="si" Grid.Column="7" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"  Keyboard="Numeric">
+                <Entry.Behaviors>
+                    <local:EntryFocusBehavior NextFocusElementName="sev"/>
+                </Entry.Behaviors>
+            </localEntry:CustomEntry>
+            <localEntry:CustomEntry x:Name="sev" Grid.Column="8" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20" IsVisible="{Binding numberVisibility}" Keyboard="Numeric">
+                <Entry.Behaviors>
+                    <local:EntryFocusBehavior NextFocusElementName="ei"/>
+                </Entry.Behaviors>
+            </localEntry:CustomEntry>
+            <localEntry:CustomEntry x:Name="ei" Grid.Column="9" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20" IsVisible="{Binding numberVisibility}"  Keyboard="Numeric">
+                <Entry.Behaviors>
+                    <local:EntryFocusBehavior NextFocusElementName="ni"/>
+                </Entry.Behaviors>
+            </localEntry:CustomEntry>
+            <localEntry:CustomEntry x:Name="ni" Grid.Column="10" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20" IsVisible="{Binding numberVisibility}"  Keyboard="Numeric"/>
         </Grid>
 
         <Grid Grid.Row="5" Grid.RowSpan="4" Grid.Column="1" Margin="0,80,0,40" IsVisible="{Binding infoVisibility}">
@@ -99,7 +134,7 @@
             <Label Text="Name" Grid.Row="4" HorizontalOptions="Start" VerticalOptions="Center"  FontSize="12"/>
             <Entry  Grid.Row="5" FontSize="16"/>
 
-            <Label Text="Age" Grid.Row="6" HorizontalOptions="Start" VerticalOptions="Center"  FontSize="12"/>
+            <Label Text="City" Grid.Row="6" HorizontalOptions="Start" VerticalOptions="Center"  FontSize="12"/>
             <Entry  Grid.Row="7" FontSize="16"/>
         </Grid>
         <Button Text="{Binding btnTxt}" Grid.Row="9" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" CornerRadius="10" BackgroundColor="#6C3ED6" TextColor="White" Command="{Binding btnCommand}"/>

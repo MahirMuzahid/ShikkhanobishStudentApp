@@ -16,6 +16,9 @@ namespace ShikkhanobishStudentApp.View
         {
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
+            fi.Focus();
         }
+
+       
     }
 }

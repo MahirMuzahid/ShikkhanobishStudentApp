@@ -38,11 +38,16 @@ namespace ShikkhanobishStudentApp.ViewModel
                  }
                  else if(btnNav == 2)
                  {
+                     btnNav++;
                      varificationvisibility = false;
                      titleTxt = "Enter Your Information";
                      infoVisibility = true;
                      btnTxt = "Register";
                      sendAgainVisibility = false;
+                 }
+                 else if(btnNav == 3)
+                 {
+                     Application.Current.MainPage.Navigation.PushAsync(new TakeTuitionView(false));
                  }
              });
          public ICommand goBack =>
