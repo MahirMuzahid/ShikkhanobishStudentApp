@@ -8,5 +8,6 @@ namespace ShikkhanobishStudentApp.Model
     {
         public static string RegisteredPhonenNumber;
         public static string otpcode;
+        public static bool isLoginOK;
     }
 }

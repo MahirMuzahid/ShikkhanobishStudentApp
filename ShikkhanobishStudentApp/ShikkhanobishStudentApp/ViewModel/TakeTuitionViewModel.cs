@@ -510,6 +510,12 @@ namespace ShikkhanobishStudentApp.ViewModel
               {
                   Application.Current.MainPage.Navigation.PushAsync(new ResgisterView());
               });
+        public ICommand loginCommand =>
+              new Command(async() =>
+              {
+                  
+                  
+              });
 
         #region Converter
         public ObservableCollection<popupList> ConvertInsTOPupUpList(ObservableCollection<Institution> insList)
@@ -816,6 +822,13 @@ namespace ShikkhanobishStudentApp.ViewModel
         private bool forthBtnVisbility1;
 
         public bool forthBtnVisbility { get => forthBtnVisbility1; set => SetProperty(ref forthBtnVisbility1, value); }
+
+        private string phoneNumber;
+
+        public string PhoneNumber { get => phoneNumber; set => SetProperty(ref phoneNumber, value); }
+        private string Password1;
+
+        public string Password { get => Password1; set => SetProperty(ref Password1, value); }
         #endregion
     }
 }

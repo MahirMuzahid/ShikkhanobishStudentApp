@@ -553,15 +553,15 @@
                     <ColumnDefinition Width=".1*"/>
                 </Grid.ColumnDefinitions>
                 <Frame BackgroundColor="#30000000" Grid.Row="0" Margin="20,0,20,0" CornerRadius="20" Grid.ColumnSpan="3"/>
-                <localEntry:CustomEntry Placeholder="Phone Number" Grid.Row="0" Margin="20,0,20,0" FontSize="16" Grid.Column="1" PlaceholderColor="#E7E7E7" TextColor="White" IsSpellCheckEnabled="False">
+                <localEntry:CustomEntry x:Name="pn" Placeholder="Phone Number" Grid.Row="0" Margin="20,0,20,0" FontSize="16" Grid.Column="1" PlaceholderColor="#E7E7E7" TextColor="White" IsSpellCheckEnabled="False" Keyboard="Numeric" Text="{Binding PhoneNumber}">
 
                 </localEntry:CustomEntry>
 
                 <Frame BackgroundColor="#30000000" Grid.Row="1" Margin="20,0,20,0" CornerRadius="20" Grid.ColumnSpan="3"/>
-                <localEntry:CustomEntry Placeholder="Password" Grid.Row="1" Margin="20,0,20,0" FontSize="16" Grid.Column="1" IsPassword="True" PlaceholderColor="#E7E7E7" TextColor="White"/>
+                <localEntry:CustomEntry x:Name="pass" Placeholder="Password" Grid.Row="1" Margin="20,0,20,0" FontSize="16" Grid.Column="1" IsPassword="True" PlaceholderColor="#E7E7E7" TextColor="White" Text="{Binding Password}"/>
 
-                
-                <Button Text="Login" Grid.Row="4" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="White" CornerRadius="10" TextColor="#1D64B4" Clicked="Button_Clicked_4"/>
+
+                <Button Text="Login" Grid.Row="4" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="White" CornerRadius="10" TextColor="#1D64B4" Command="{Binding loginCommand}" Clicked="Button_Clicked_4" />
                 <Grid Grid.Row="2" Grid.Column="1" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width=".2*"/>

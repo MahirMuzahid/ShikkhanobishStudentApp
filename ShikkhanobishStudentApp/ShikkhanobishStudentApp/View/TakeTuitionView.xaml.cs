@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Flurl.Http;
+using ShikkhanobishStudentApp.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -73,9 +75,26 @@ namespace ShikkhanobishStudentApp.View
 
         private void Button_Clicked_4(object sender, EventArgs e)
         {
-            loginView.TranslateTo(0, -1000, 1500, Easing.CubicIn);
-            loginView.FadeTo(0, 1200, Easing.CubicIn);
-            loginView.Opacity = 0;
+
+            LoginStudent();
+        }
+
+        public async Task LoginStudent()
+        {
+            List<Student> allStudent = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getStudent".GetJsonAsync<List<Student>>();
+            if(pn.Text.Length == 11)
+            {
+                for (int i = 0; i < allStudent.Count; i++)
+                {
+                    if (int.Parse(pn.Text) == allStudent[i].phonenumber && pass.Text == allStudent[i].password)
+                    {
+                        loginView.TranslateTo(0, -1000, 1500, Easing.CubicIn);
+                        loginView.FadeTo(0, 1200, Easing.CubicIn);
+                        loginView.Opacity = 0;
+                    }
+                }
+            }
+            
         }
     }
 }
