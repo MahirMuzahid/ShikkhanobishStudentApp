@@ -7,7 +7,7 @@ namespace ShikkhanobishStudentApp.Model
     public class Student
     {
         public int studentID { get; set; }
-        public int phonenumber { get; set; }
+        public string phonenumber { get; set; }
         public string password { get; set; }
         public int totalSpent { get; set; }
         public int totalTuitionTime { get; set; }

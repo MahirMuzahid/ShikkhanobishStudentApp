@@ -194,5 +194,37 @@
 
         <Label Text="{Binding errorText}" Grid.Row="10" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="End" TextColor="Red"/>
         <Label Text="Terms And Conditions" Grid.Column="1" Grid.Row="11" HorizontalOptions="Center" VerticalOptions="Center" TextColor="#354EFF"/>
+        <Grid Grid.RowSpan="12" Grid.ColumnSpan="3" IsVisible="{Binding waitVisibility}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="20*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Frame BackgroundColor="#70000000" Grid.RowSpan="3" Grid.ColumnSpan="3"/>
+
+            <Grid Grid.Row="1" Grid.Column="1" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1.5*"/>
+                    <RowDefinition Height=".5*"/>
+                    <RowDefinition Height=".5*"/>
+                    <RowDefinition Height=".5*"/>
+                    <RowDefinition Height="1.5*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width=".1*"/>
+                    <ColumnDefinition Width="20*"/>
+                    <ColumnDefinition Width=".1*"/>
+                </Grid.ColumnDefinitions>
+                <Frame BackgroundColor="#6C3ED6" Grid.RowSpan="5" Grid.ColumnSpan="3" CornerRadius="40" HasShadow="False"/>
+                <Label Text="Creating Your Shikkhanobish Student Account..." Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="End" TextColor="White" FontAttributes="Bold"/>
+                <ProgressBar Progress="{Binding prgs}" Grid.Row="2" Grid.Column="1" ProgressColor="#D6C4FF" Margin="10,0,10,0"/>
+                <Label Text="{Binding prgsPercent}" Grid.Row="3" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Start" TextColor="White"/>
+            </Grid>
+        </Grid>
     </Grid>
 </ContentPage>

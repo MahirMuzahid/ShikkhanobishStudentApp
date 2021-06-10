@@ -82,19 +82,16 @@ namespace ShikkhanobishStudentApp.View
         public async Task LoginStudent()
         {
             List<Student> allStudent = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getStudent".GetJsonAsync<List<Student>>();
-            if(pn.Text.Length == 11)
+            for (int i = 0; i < allStudent.Count; i++)
             {
-                for (int i = 0; i < allStudent.Count; i++)
+                if (pn.Text == allStudent[i].phonenumber && pass.Text == allStudent[i].password)
                 {
-                    if (int.Parse(pn.Text) == allStudent[i].phonenumber && pass.Text == allStudent[i].password)
-                    {
-                        loginView.TranslateTo(0, -1000, 1500, Easing.CubicIn);
-                        loginView.FadeTo(0, 1200, Easing.CubicIn);
-                        loginView.Opacity = 0;
-                    }
+                    loginView.TranslateTo(0, -1000, 1500, Easing.CubicIn);
+                    loginView.FadeTo(0, 1200, Easing.CubicIn);
+                    loginView.Opacity = 0;
                 }
             }
-            
+
         }
     }
 }

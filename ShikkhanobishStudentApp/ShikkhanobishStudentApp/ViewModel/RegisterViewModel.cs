@@ -19,6 +19,7 @@ namespace ShikkhanobishStudentApp.ViewModel
         List<Student> allStudent { get; set; }
         public RegisterViewModel()
         {
+            waitVisibility = false;
             btnNav = 1;
             btnTxt = "Send Otp";
             varificationvisibility = true;
@@ -186,7 +187,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                              await RegisterStudnet();
                              if(regRes.Massage == "Succesfull!")
                              {
-                                 Application.Current.MainPage.Navigation.PushAsync(new TakeTuitionView(false));
+                                 Application.Current.MainPage.Navigation.PushModalAsync(new TakeTuitionView(false));
                              }
                              else
                              {
@@ -208,7 +209,7 @@ namespace ShikkhanobishStudentApp.ViewModel
             {
                 for (int i = 0; i < allStudent.Count; i++)
                 {
-                    if (int.Parse(studentPhonenumber) == allStudent[i].phonenumber)
+                    if (studentPhonenumber == allStudent[i].phonenumber)
                     {
                         uniquePhonenumber = false;
                         break;
@@ -218,7 +219,10 @@ namespace ShikkhanobishStudentApp.ViewModel
             
         }
         public async Task RegisterStudnet()
-        {           
+        {
+            waitVisibility = true;
+            prgs = .1;
+            prgsPercent = "10%";
             int thisUSerID = 0;
             
             if (allStudent.Count == 0)
@@ -237,10 +241,19 @@ namespace ShikkhanobishStudentApp.ViewModel
                 }
                 thisUSerID = maxID + 1;
             }
-
+            prgs = .3;
+            prgsPercent = "30%";
+            if (studentPhonenumber.Length != 11)
+            {
+                studentPhonenumber = "0" + studentPhonenumber;
+            }
+            prgs = .8;
+            prgsPercent = "80%";
             regRes = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/setStudent"
-          .PostUrlEncodedAsync(new { studentID = thisUSerID, phonenumber = "+880"+studentPhonenumber, password = password, totalSpent = 0, totalTuitionTime = 0, coin = 0, freemin = 10, city = city, name = name, institutionName  = "none"})
+          .PostUrlEncodedAsync(new { studentID = thisUSerID, phonenumber = studentPhonenumber, password = password, totalSpent = 0, totalTuitionTime = 0, coin = 0, freemin = 10, city = city, name = name, institutionName  = "none"})
           .ReceiveJson<Response>();
+           prgs = 1;
+           prgsPercent = "100%";
         }
          public ICommand goBack =>
              new Command(() =>
@@ -363,6 +376,18 @@ namespace ShikkhanobishStudentApp.ViewModel
         private string otpfivText1;
 
         public string otpfivText { get => otpfivText1; set => SetProperty(ref otpfivText1, value); }
+
+        private bool waitVisibility1;
+
+        public bool waitVisibility { get => waitVisibility1; set => SetProperty(ref waitVisibility1, value); }
+
+        private double prgs1;
+
+        public double prgs { get => prgs1; set => SetProperty(ref prgs1, value); }
+
+        private string prgsPercent1;
+
+        public string prgsPercent { get => prgsPercent1; set => SetProperty(ref prgsPercent1, value); }
         #endregion
 
     }
