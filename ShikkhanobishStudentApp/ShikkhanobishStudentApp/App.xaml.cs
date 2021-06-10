@@ -2,6 +2,7 @@
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using ShikkhanobishStudentApp.View;
+using Xamarin.Essentials;
 
 namespace ShikkhanobishStudentApp
 {
@@ -10,10 +11,9 @@ namespace ShikkhanobishStudentApp
         public App()
         {
             InitializeComponent();
-
-            MainPage = new NavigationPage(new TakeTuitionView(true));
-
+            MainPage = new NavigationPage(new StartScreen());
         }
+        
 
         protected override void OnStart()
         {

@@ -68,7 +68,7 @@ namespace ShikkhanobishStudentApp.View
 
         private void Button_Clicked_3(object sender, EventArgs e)
         {
-
+            SecureStorage.RemoveAll();
             loginView.TranslateTo(0, 0, 1500, Easing.CubicOut);
             loginView.FadeTo(1, 1000, Easing.CubicOut);
         }
@@ -81,12 +81,8 @@ namespace ShikkhanobishStudentApp.View
 
         public async Task LoginStudent()
         {
-            if(chkBox.IsChecked)
-            {
-                SecureStorage.SetAsync("phonenumber", pn.Text);
-                SecureStorage.SetAsync("password", pass.Text);
-            }
-            if(pn.Text == null && pass.Text == null)
+            
+            if(pn.Text != null && pass.Text != null)
             {
                 List<Student> allStudent = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getStudent".GetJsonAsync<List<Student>>();
                 bool allOK = false; ;
@@ -94,6 +90,12 @@ namespace ShikkhanobishStudentApp.View
                 {
                     if (pn.Text == allStudent[i].phonenumber && pass.Text == allStudent[i].password)
                     {
+                        if (chkBox.IsChecked)
+                        {
+                            StaticPageToPassData.thisStudentInfo = allStudent[i];
+                            SecureStorage.SetAsync("phonenumber", pn.Text);
+                            SecureStorage.SetAsync("password", pass.Text);
+                        }
                         loginView.TranslateTo(0, -1000, 1500, Easing.CubicIn);
                         loginView.FadeTo(0, 1200, Easing.CubicIn);
                         loginView.Opacity = 0;
