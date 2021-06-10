@@ -14,7 +14,7 @@ namespace ShikkhanobishStudentApp.ViewModel
     {
         public StartPageViewModel()
         {
-            getLoggedUser();
+            Application.Current.MainPage.Navigation.PushAsync(new TakeTuitionView(true));
         }
         public async Task getLoggedUser()
         {
@@ -37,7 +37,7 @@ namespace ShikkhanobishStudentApp.ViewModel
             }
             else
             {
-                await Application.Current.MainPage.Navigation.PushAsync(new TakeTuitionView(true));
+                 Application.Current.MainPage.Navigation.PushAsync(new TakeTuitionView(true));
             }
         }
     }
