@@ -829,6 +829,10 @@ namespace ShikkhanobishStudentApp.ViewModel
         private string Password1;
 
         public string Password { get => Password1; set => SetProperty(ref Password1, value); }
+
+        private string errortxt1;
+
+        public string errortxt { get => errortxt1; set => SetProperty(ref errortxt1, value); }
         #endregion
     }
 }

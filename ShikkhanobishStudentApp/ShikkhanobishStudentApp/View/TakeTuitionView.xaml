@@ -536,7 +536,7 @@
             </Frame>
             <Image Source="newlogowhite.png" HorizontalOptions="Center" VerticalOptions="Center" Grid.Row="0" Grid.Column="1" Margin="50"/>
 
-            
+            <Label x:Name="errortxt"  Grid.Row="0" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="End" Margin="20,0,20,0" TextColor="Red"/>
             <Grid Grid.Row="1" Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height=".8*"/>
@@ -568,7 +568,7 @@
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <CheckBox  Grid.Column="0" HorizontalOptions="Start"/>
+                    <CheckBox x:Name="chkBox" Grid.Column="0" HorizontalOptions="Start"/>
                     <Label Text="Remeber Me" TextColor="White" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center"/>
                     <Label Text="Forgot Information?" TextColor="White" Grid.Column="2" HorizontalOptions="End" VerticalOptions="Center" Margin="0,0,20,0"/>
                 </Grid>

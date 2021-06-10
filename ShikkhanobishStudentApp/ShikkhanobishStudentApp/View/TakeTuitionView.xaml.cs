@@ -75,23 +75,47 @@ namespace ShikkhanobishStudentApp.View
 
         private void Button_Clicked_4(object sender, EventArgs e)
         {
-
+            errortxt.Text = "";
             LoginStudent();
         }
 
         public async Task LoginStudent()
         {
-            List<Student> allStudent = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getStudent".GetJsonAsync<List<Student>>();
-            for (int i = 0; i < allStudent.Count; i++)
+            if(chkBox.IsChecked)
             {
-                if (pn.Text == allStudent[i].phonenumber && pass.Text == allStudent[i].password)
+                SecureStorage.SetAsync("phonenumber", pn.Text);
+                SecureStorage.SetAsync("password", pass.Text);
+            }
+            if(pn.Text == null && pass.Text == null)
+            {
+                List<Student> allStudent = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getStudent".GetJsonAsync<List<Student>>();
+                bool allOK = false; ;
+                for (int i = 0; i < allStudent.Count; i++)
                 {
-                    loginView.TranslateTo(0, -1000, 1500, Easing.CubicIn);
-                    loginView.FadeTo(0, 1200, Easing.CubicIn);
-                    loginView.Opacity = 0;
+                    if (pn.Text == allStudent[i].phonenumber && pass.Text == allStudent[i].password)
+                    {
+                        loginView.TranslateTo(0, -1000, 1500, Easing.CubicIn);
+                        loginView.FadeTo(0, 1200, Easing.CubicIn);
+                        loginView.Opacity = 0;
+                        allOK = true;
+                        break;
+                    }
+
+                }
+                if (!allOK)
+                {
+                    errortxt.Text = "Phone Number Or Password Doesn't Match!";
+                }
+                else
+                {
+                    errortxt.Text = "";
                 }
             }
-
+            else
+            {
+                errortxt.Text = "Phone Number Or Password Can't Be Empty";
+            }
+            
         }
     }
 }
