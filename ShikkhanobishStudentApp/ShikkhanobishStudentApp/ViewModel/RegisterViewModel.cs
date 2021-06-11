@@ -258,7 +258,7 @@ namespace ShikkhanobishStudentApp.ViewModel
          public ICommand goBack =>
              new Command(() =>
              {
-                 Application.Current.MainPage.Navigation.PopAsync();
+                 Application.Current.MainPage.Navigation.PopModalAsync();
              });
 
         #region Binding 

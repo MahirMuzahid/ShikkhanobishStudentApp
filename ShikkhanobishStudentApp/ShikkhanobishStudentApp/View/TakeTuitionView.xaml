@@ -547,17 +547,34 @@
                 <ColumnDefinition Width="20*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            <Frame HasShadow="False" CornerRadius="20" Grid.RowSpan="2" Grid.ColumnSpan="3">
-                <Frame.Background>
+            <BoxView x:Name="backBox" Grid.RowSpan="2" Grid.ColumnSpan="3" Scale="2">
+                <BoxView.Background>
                     <LinearGradientBrush EndPoint="1,0">
-                        <GradientStop Color="#11AAD7" Offset="0.1" />
-                        <GradientStop Color="#864AE8" Offset="1.0" />
+                        <GradientStop Color="#991190B6" Offset="1" />
+                        <GradientStop Color="#99864AE8" Offset=".01" />
                     </LinearGradientBrush>
-                </Frame.Background>
-            </Frame>
+                </BoxView.Background>
+            </BoxView>
+            <BoxView x:Name="backBox2" Grid.RowSpan="2" Grid.ColumnSpan="3" Scale="2">
+                <BoxView.Background>
+                    <LinearGradientBrush EndPoint="1,0">
+                        <GradientStop Color="#901190B6" Offset="1" />
+                        <GradientStop Color="#90864AE8" Offset=".01" />
+                    </LinearGradientBrush>
+                </BoxView.Background>
+            </BoxView>
+            <BoxView  Grid.RowSpan="2" Grid.ColumnSpan="3">
+                <BoxView.Background>
+                    <LinearGradientBrush EndPoint="1,0">
+                        <GradientStop Color="#801190B6" Offset="1" />
+                        <GradientStop Color="#80864AE8" Offset="1" />
+                        <GradientStop Color="#80864AE8" Offset=".01" />
+                    </LinearGradientBrush>
+                </BoxView.Background>
+            </BoxView>
             <Image Source="newlogowhite.png" HorizontalOptions="Center" VerticalOptions="Center" Grid.Row="0" Grid.Column="1" Margin="50"/>
 
-            <Label x:Name="errortxt"  Grid.Row="0" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="End" Margin="20,0,20,0" TextColor="Red"/>
+            <Label x:Name="errortxt"  Grid.Row="0" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="End" Margin="20,0,20,0" />
             <Grid Grid.Row="1" Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height=".8*"/>
@@ -582,7 +599,7 @@
                 <localEntry:CustomEntry x:Name="pass" Placeholder="Password" Grid.Row="1" Margin="20,0,20,0" FontSize="16" Grid.Column="1" IsPassword="True" PlaceholderColor="#E7E7E7" TextColor="White" Text="{Binding Password}"/>
 
 
-                <Button Text="Login" Grid.Row="4" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="White" CornerRadius="10" TextColor="#1D64B4" Command="{Binding loginCommand}" Clicked="Button_Clicked_4" />
+                <Button x:Name="loginbtn" Text="Login" Grid.Row="4" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="White" CornerRadius="10" TextColor="#1D64B4"  Clicked="Button_Clicked_4" />
                 <Grid Grid.Row="2" Grid.Column="1" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width=".2*"/>
@@ -590,8 +607,8 @@
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
                     <CheckBox x:Name="chkBox" Grid.Column="0" HorizontalOptions="Start"/>
-                    <Label Text="Remeber Me" TextColor="White" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center"/>
-                    <Label Text="Forgot Information?" TextColor="White" Grid.Column="2" HorizontalOptions="End" VerticalOptions="Center" Margin="0,0,20,0"/>
+                    <Label Text="Remeber Me" TextColor="White" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" FontAttributes="Bold"/>
+                    <Label Text="Forgot Information?" TextColor="White" Grid.Column="2" HorizontalOptions="End" VerticalOptions="Center" Margin="0,0,10,0" FontAttributes="Bold"/>
                 </Grid>
                 
 

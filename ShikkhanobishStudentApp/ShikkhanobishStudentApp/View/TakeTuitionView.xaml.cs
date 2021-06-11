@@ -43,8 +43,11 @@ namespace ShikkhanobishStudentApp.View
             {
                 connectivityGrid.IsVisible = true;
             }
+            
             Connectivity.ConnectivityChanged += Connectivity_ConnectivityChanged;
         }
+
+        
         void Connectivity_ConnectivityChanged(object sender, ConnectivityChangedEventArgs e)
         {
             var current = Connectivity.NetworkAccess;
@@ -102,9 +105,12 @@ namespace ShikkhanobishStudentApp.View
 
         public async Task LoginStudent()
         {
+            loginbtn.IsEnabled = false;
             var current = Connectivity.NetworkAccess;
             if ( current == NetworkAccess.Internet)
             {
+                errortxt.Text = "Wait... Loggin In";
+                errortxt.TextColor = Color.White;
                 if (pn.Text != null && pass.Text != null)
                 {
                     List<Student> allStudent = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getStudent".GetJsonAsync<List<Student>>();
@@ -123,6 +129,9 @@ namespace ShikkhanobishStudentApp.View
                             loginView.FadeTo(0, 1200, Easing.CubicIn);
                             loginView.Opacity = 0;
                             allOK = true;
+                            errortxt.Text = "";
+                            pn.Text = "";
+                            pass.Text = "";
                             break;
                         }
 
@@ -130,6 +139,7 @@ namespace ShikkhanobishStudentApp.View
                     if (!allOK)
                     {
                         errortxt.Text = "Phone Number Or Password Doesn't Match!";
+                        errortxt.TextColor = Color.Red;
                     }
                     else
                     {
@@ -139,14 +149,15 @@ namespace ShikkhanobishStudentApp.View
                 else
                 {
                     errortxt.Text = "Phone Number Or Password Can't Be Empty";
+                    errortxt.TextColor = Color.Red;
                 }
             }
             else
             {
                 errortxt.Text = "No Internet connection";
+                errortxt.TextColor = Color.Red;
             }
-        }
-
-        
+            loginbtn.IsEnabled = true;
+        }       
     }
 }
