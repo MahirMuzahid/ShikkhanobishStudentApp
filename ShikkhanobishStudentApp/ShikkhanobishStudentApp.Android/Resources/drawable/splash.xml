@@ -10,12 +10,13 @@
 		</shape>
 
 	</item>
-	<item android:bottom="20dp"
-        android:left="20dp"
-        android:right="20dp"
-        android:top="20dp">
+	<item android:bottom="600dp"
+        android:top="200dp"
+		>
+		
 		<bitmap
-            android:src="@drawable/newlogowhite"
-            android:gravity="center"/>
+            android:src="@drawable/splashlogo"
+            android:gravity="center"
+	/>
 	</item>
 </layer-list>

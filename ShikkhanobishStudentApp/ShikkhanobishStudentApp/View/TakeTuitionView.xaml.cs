@@ -14,9 +14,11 @@ namespace ShikkhanobishStudentApp.View
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TakeTuitionView : ContentPage
     {
+        
         public TakeTuitionView(bool fromLogin)
         {
             InitializeComponent();
+            connectivityGrid.IsVisible = false;
             NavigationPage.SetHasNavigationBar(this, false);
             var mainDisplayInfo = DeviceDisplay.MainDisplayInfo;
             var width = mainDisplayInfo.Width;
@@ -25,17 +27,36 @@ namespace ShikkhanobishStudentApp.View
             coingrid.IsVisible = true;
             coingrid.TranslationX = width;
             coingrid.Opacity = 0;
-            if(!fromLogin)
+            if (!fromLogin)
             {
                 loginView.Opacity = 0;
                 loginView.TranslateTo(0, -1000, 1500, Easing.CubicIn);
                 loginView.FadeTo(0, 1200, Easing.CubicIn);
-                
-            }
-            //var displayheight = DeviceDisplay.MainDisplayInfo.Height;
-            //colorFrame.TranslationY = -(displayheight - displayheight / (9.2 / 3.2));
-        }
 
+            }
+            var current = Connectivity.NetworkAccess;
+            if (current == NetworkAccess.Internet)
+            {
+                connectivityGrid.IsVisible = false;
+            }
+            else
+            {
+                connectivityGrid.IsVisible = true;
+            }
+            Connectivity.ConnectivityChanged += Connectivity_ConnectivityChanged;
+        }
+        void Connectivity_ConnectivityChanged(object sender, ConnectivityChangedEventArgs e)
+        {
+            var current = Connectivity.NetworkAccess;
+            if (current == NetworkAccess.Internet)
+            {
+                connectivityGrid.IsVisible = false;
+            }
+            else
+            {
+                connectivityGrid.IsVisible = true;
+            }
+        }
         async private void Button_Clicked(object sender, EventArgs e)
         {
             coingrid.IsVisible = true;           
@@ -81,43 +102,51 @@ namespace ShikkhanobishStudentApp.View
 
         public async Task LoginStudent()
         {
-            
-            if(pn.Text != null && pass.Text != null)
+            var current = Connectivity.NetworkAccess;
+            if ( current == NetworkAccess.Internet)
             {
-                List<Student> allStudent = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getStudent".GetJsonAsync<List<Student>>();
-                bool allOK = false; ;
-                for (int i = 0; i < allStudent.Count; i++)
+                if (pn.Text != null && pass.Text != null)
                 {
-                    if (pn.Text == allStudent[i].phonenumber && pass.Text == allStudent[i].password)
+                    List<Student> allStudent = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getStudent".GetJsonAsync<List<Student>>();
+                    bool allOK = false; ;
+                    for (int i = 0; i < allStudent.Count; i++)
                     {
-                        if (chkBox.IsChecked)
+                        if (pn.Text == allStudent[i].phonenumber && pass.Text == allStudent[i].password)
                         {
-                            StaticPageToPassData.thisStudentInfo = allStudent[i];
-                            SecureStorage.SetAsync("phonenumber", pn.Text);
-                            SecureStorage.SetAsync("password", pass.Text);
+                            if (chkBox.IsChecked)
+                            {
+                                StaticPageToPassData.thisStudentInfo = allStudent[i];
+                                SecureStorage.SetAsync("phonenumber", pn.Text);
+                                SecureStorage.SetAsync("password", pass.Text);
+                            }
+                            loginView.TranslateTo(0, -1000, 1500, Easing.CubicIn);
+                            loginView.FadeTo(0, 1200, Easing.CubicIn);
+                            loginView.Opacity = 0;
+                            allOK = true;
+                            break;
                         }
-                        loginView.TranslateTo(0, -1000, 1500, Easing.CubicIn);
-                        loginView.FadeTo(0, 1200, Easing.CubicIn);
-                        loginView.Opacity = 0;
-                        allOK = true;
-                        break;
-                    }
 
-                }
-                if (!allOK)
-                {
-                    errortxt.Text = "Phone Number Or Password Doesn't Match!";
+                    }
+                    if (!allOK)
+                    {
+                        errortxt.Text = "Phone Number Or Password Doesn't Match!";
+                    }
+                    else
+                    {
+                        errortxt.Text = "";
+                    }
                 }
                 else
                 {
-                    errortxt.Text = "";
+                    errortxt.Text = "Phone Number Or Password Can't Be Empty";
                 }
             }
             else
             {
-                errortxt.Text = "Phone Number Or Password Can't Be Empty";
+                errortxt.Text = "No Internet connection";
             }
-            
         }
+
+        
     }
 }

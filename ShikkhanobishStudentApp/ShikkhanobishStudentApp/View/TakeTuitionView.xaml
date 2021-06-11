@@ -459,6 +459,26 @@
             </Grid>
             <!-- Payment View -->
             
+            
+            
+            <!--Connection View -->
+            <Grid x:Name="connectivityGrid" Grid.Row="0" Grid.RowSpan="6" Grid.ColumnSpan="3" BackgroundColor="#90000000" IsVisible="{Binding connectivitiVisibility}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="4*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width=".6*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Frame BackgroundColor="White"   Grid.Row="1" Grid.Column="1" CornerRadius="20" HasShadow="False"/>
+                <Image Source="nointernetconnection.png" HorizontalOptions="Center" VerticalOptions="Center" Aspect="AspectFit"  Grid.Row="1" Grid.Column="1" Margin="10"/>
+               
+
+            </Grid>
+            <!--Connection View-->
         </Grid>
         
         
@@ -496,14 +516,15 @@
                 <Label Text="Result" Grid.Row="4" Grid.Column="1" FontAttributes="Bold"/>
                 <Frame BackgroundColor="Black" Grid.Row="4" Grid.Column="1" Margin="0,26,0,0"/>
 
+                <Label Text="Getting Result..." Grid.Row="5" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" TextColor="#9C9C9C" Margin="0,0,0,50" IsVisible="{Binding resultvisi}" FontAttributes="Bold"/>
+                
 
                 <ListView  ItemsSource="{Binding popupList}" Grid.Row="5" Grid.Column="1" RowHeight="50" SeparatorColor="Transparent" >
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell >
                                 <Grid>
-                                    <Button  BackgroundColor="#10000000"  Command="{Binding Source={x:Reference tuitionView}, Path=BindingContext.SelectedItem}" Margin="4" CommandParameter="{Binding .}"  FontSize="11" FontAttributes="Bold"/>
-                                    <Label Text="{Binding name}" HorizontalOptions="Center" VerticalOptions="Center" TextColor="Black"/>
+                                    <Button Text="{Binding name}" BackgroundColor="#EAEAEA"  Command="{Binding Source={x:Reference tuitionView}, Path=BindingContext.SelectedItem}" Margin="4" CommandParameter="{Binding .}"  FontSize="11" />
                                 </Grid>
                             </ViewCell>
                         </DataTemplate>
@@ -589,7 +610,8 @@
 
             </Grid>
         </Grid>
-            
+        <!-- Login -->
 
-        </Grid>
+
+    </Grid>
 </ContentPage>

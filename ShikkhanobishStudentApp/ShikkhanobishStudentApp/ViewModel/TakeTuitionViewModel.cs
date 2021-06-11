@@ -11,6 +11,7 @@ using Xamarin.Essentials;
 using ShikkhanobishStudentApp.View;
 using ShikkhanobishStudentApp.Server_Connection;
 using Flurl.Http;
+using System.Threading.Tasks;
 
 namespace ShikkhanobishStudentApp.ViewModel
 {
@@ -25,13 +26,12 @@ namespace ShikkhanobishStudentApp.ViewModel
         ObservableCollection<Chapter> AllchpList = new ObservableCollection<Chapter>();
         ObservableCollection<Course> AllCrsList = new ObservableCollection<Course>();
         private int popupFirstIndex;
-
+       
 
         #region Methods
         public TakeTuitionViewModel()
         {
-            popUpVisibility = false;
-            InsListPopulate();
+            popUpVisibility = false;          
             SelectedInsName = "Not Selected";
             SelectedClassName = "Not Selected";
             SelectedSubjectName = "Not Selected";
@@ -59,64 +59,83 @@ namespace ShikkhanobishStudentApp.ViewModel
             secondListBtnVisibility = false;
             thirdListBtnVisibility = false;
             forthBtnVisbility = false;
+            resultprgs = .1;
+            resultvisi = true;
         }
 
+        public bool checkInternet()
+        {
+            var current = Connectivity.NetworkAccess;
+            if (current == NetworkAccess.Internet)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         #region populate list
-        public async void InsListPopulate()
+        public async Task InsListPopulate()
         {
             backUpFipName = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getInstitution".GetJsonAsync<ObservableCollection<Institution>>();
         }
-        public async void ClassListPopulate()
+        public async Task ClassListPopulate()
         {           
             AllclsList = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getClassInfo".GetJsonAsync<ObservableCollection<ClassInfo>>();
             secondListBtnVisibility = true;
         }
-        public async void UNameListPopulate()
+        public async Task UNameListPopulate()
         {
             AllUNameList = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getUniversityName".GetJsonAsync<ObservableCollection<UniversityName>>();
             secondListBtnVisibility = true;
         }
-        public async void DegreeListPopulate()
+        public async Task DegreeListPopulate()
         {
             AlldegreeList = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getDegree".GetJsonAsync<ObservableCollection<Degree>>();
-            thirdListBtnVisibility = true;
+            
         }
-        public async void SubjectListPopulate()
+        public async Task SubjectListPopulate()
         {
             AllsubList = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getSubject".GetJsonAsync<ObservableCollection<Subject>>();
-            thirdListBtnVisibility = true;
         }
-        public async void ChapterListPopulate()
+        public async Task ChapterListPopulate()
         {
             AllchpList = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getChapter".GetJsonAsync<ObservableCollection<Chapter>>();
-            forthBtnVisbility = true;
         }
-        public async void CourseListPopulate()
+        public async Task CourseListPopulate()
         {
             AllCrsList = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getCourse".GetJsonAsync<ObservableCollection<Course>>();
-            forthBtnVisbility = true;
         }
         #endregion
         //Click in select btn
         public ICommand selectInsCommand =>
-            new Command<string>((index) =>
+            new Command<string>(async(index) =>
             {
+                popupList.Clear();
                 popUpVisibility = true;
-
-                if(int.Parse(index) == 0)
+                if (int.Parse(index) == 0)
                 {
+                    if(backUpFipName == null)
+                    {
+                        resultvisi = true;
+                    }                   
+                    searchName = "Select Institution";
+                    SearchableVisibility = false;
+                    await InsListPopulate();
                     ObservableCollection<popupList> convertedList = new ObservableCollection<popupList>();
                     convertedList = ConvertInsTOPupUpList(backUpFipName);
+                    resultvisi = false;
                     popupList = convertedList;
-                    searchName = "Select Institution";                   
-                    SearchableVisibility = false;
+                    
                 }
                 //selecting list for 2nd popup
                 else if (int.Parse(index) == 1)
                 {
-                    
-                    if(selectedGlobalIns.institutionID == 101)
+
+                    if (selectedGlobalIns.institutionID == 101)
                     {
+                        resultvisi = true;
                         searchName = "Select Class";
                         ObservableCollection<ClassInfo> popupclsList = new ObservableCollection<ClassInfo>();
                         for (int i = 0; i < AllclsList.Count; i++)
@@ -128,10 +147,12 @@ namespace ShikkhanobishStudentApp.ViewModel
                         }
                         ObservableCollection<popupList> convertedList = new ObservableCollection<popupList>();
                         convertedList = ConvertClsTOPupUpList(popupclsList);
+                        resultvisi = false;
                         popupList = convertedList;
                     }
                     else if (selectedGlobalIns.institutionID == 102)
                     {
+                        resultvisi = true;
                         searchName = "Select Class";
                         ObservableCollection<ClassInfo> popupclsList = new ObservableCollection<ClassInfo>();
                         for (int i = 0; i < AllclsList.Count; i++)
@@ -142,39 +163,45 @@ namespace ShikkhanobishStudentApp.ViewModel
                             }
                         }
                         ObservableCollection<popupList> convertedList = new ObservableCollection<popupList>();
+                        resultvisi = false;
                         convertedList = ConvertClsTOPupUpList(popupclsList);
-                        
+
                         popupList = convertedList;
                     }
                     else if (selectedGlobalIns.institutionID == 103)
                     {
+                        resultvisi = true;
                         searchName = "Select University";
                         ObservableCollection<popupList> convertedList = new ObservableCollection<popupList>();
                         convertedList = ConvertUniNameTOPupUpList(AllUNameList);
+                        resultvisi = false;
                         popupList = convertedList;
-                    }               
-                    SearchableVisibility = false;                   
+                    }
+                    SearchableVisibility = false;
                 }
                 //selecting list for 3rd popup
                 else if (int.Parse(index) == 2)
                 {
-                    if(thirdTitle == "Subject")
+                    if (thirdTitle == "Subject")
                     {
+                        resultvisi = true;
                         searchName = "Select Subject";
                         ObservableCollection<Subject> popupclsList = new ObservableCollection<Subject>();
                         for (int i = 0; i < AllsubList.Count; i++)
                         {
-                            if(AllsubList[i].classID == selectedGlobalCls.classID)
+                            if (AllsubList[i].classID == selectedGlobalCls.classID)
                             {
                                 popupclsList.Add(AllsubList[i]);
                             }
                         }
                         ObservableCollection<popupList> convertedList = new ObservableCollection<popupList>();
                         convertedList = ConvertSubTOPupUpList(popupclsList);
+                        resultvisi = false;
                         popupList = convertedList;
                     }
                     else if (thirdTitle == "Degree")
                     {
+                        resultvisi = true;
                         searchName = "Select Degree";
                         ObservableCollection<Degree> popupclsList = new ObservableCollection<Degree>();
                         for (int i = 0; i < AlldegreeList.Count; i++)
@@ -186,6 +213,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                         }
                         ObservableCollection<popupList> convertedList = new ObservableCollection<popupList>();
                         convertedList = ConvertDegreeTOPupUpList(popupclsList);
+                        resultvisi = false;
                         popupList = convertedList;
                     }
 
@@ -195,6 +223,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                 {
                     if (forthTitle == "Chapter")
                     {
+                        resultvisi = true;
                         searchName = "Select Chapter";
                         ObservableCollection<Chapter> popupclsList = new ObservableCollection<Chapter>();
                         for (int i = 0; i < AllchpList.Count; i++)
@@ -206,11 +235,13 @@ namespace ShikkhanobishStudentApp.ViewModel
                         }
                         ObservableCollection<popupList> convertedList = new ObservableCollection<popupList>();
                         convertedList = ConvertChapterTOPupUpList(popupclsList);
+                        resultvisi = false;
                         popupList = convertedList;
-                        
+
                     }
                     else if (forthTitle == "Course")
                     {
+                        resultvisi = true;
                         searchName = "Select Course";
                         ObservableCollection<Course> popupclsList = new ObservableCollection<Course>();
                         for (int i = 0; i < AllCrsList.Count; i++)
@@ -222,14 +253,22 @@ namespace ShikkhanobishStudentApp.ViewModel
                         }
                         ObservableCollection<popupList> convertedList = new ObservableCollection<popupList>();
                         convertedList = ConvertCourseTOPupUpList(popupclsList);
+                        resultvisi = false;
                         popupList = convertedList;
                     }
 
                 }
+                
             });
+
+
+
+
+
+
         //click in selected item
         public ICommand SelectedItem =>
-             new Command<popupList>((thisList) =>
+             new Command<popupList>(async(thisList) =>
              {
 
                  popUpVisibility = false;
@@ -237,23 +276,9 @@ namespace ShikkhanobishStudentApp.ViewModel
                 
                  if (thisList.ListIndex == 1)
                  {
-                     if (thisList.name == "College" || thisList.name == "School")
-                     {
-                         secTitle = "Class";
-                         thirdTitle = "Subject";
-                         forthTitle = "Chapter";
-                         ClassListPopulate();
-                     }
-                     else
-                     {
-                         secTitle = "University";
-                         thirdTitle = "Degree";
-                         forthTitle = "Course";
-                         UNameListPopulate();
-                     }
                      if (selectedGlobalCls != null || selectedGlobalUniName != null)
                      {
-                         
+
                          resetList(1);
                      }
                      seletedCountTextVisibility = true;
@@ -269,6 +294,21 @@ namespace ShikkhanobishStudentApp.ViewModel
                      SelectedInsName = selectedIns.name;
                      TRequest = selectedIns.tuitionRequest;
                      avgratting = selectedIns.avgRatting;
+                     if (thisList.name == "College" || thisList.name == "School")
+                     {
+                         secTitle = "Class";
+                         thirdTitle = "Subject";
+                         forthTitle = "Chapter";
+                         await ClassListPopulate();
+                     }
+                     else
+                     {
+                         secTitle = "University";
+                         thirdTitle = "Degree";
+                         forthTitle = "Course";
+                         await UNameListPopulate();
+                     }
+                     
 
                  }
                  else if (thisList.ListIndex == 2 || thisList.ListIndex == 3)
@@ -277,46 +317,45 @@ namespace ShikkhanobishStudentApp.ViewModel
                      {
                          resetList(2);
                      }
+                     thirdListBtnVisibility = true;
+                     CLseletedCountTextVisibility = true;
+                     if (thisList.ListIndex == 2)
+                     {
+                         ClassInfo selectedList = new ClassInfo();
+                         for (int i = 0; i < AllclsList.Count; i++)
+                         {
+                             if (AllclsList[i].name == thisList.name)
+                             {
+                                 selectedList = AllclsList[i];
+                             }
+
+                         }
+                         selectedGlobalCls = selectedList;
+                         SelectedClassName = selectedList.name;
+                         CLTRequest = selectedList.tuitionRequest;
+                         CLavgratting = selectedList.avgRatting;
+                         await SubjectListPopulate();
+                         thirdListBtnVisibility = true;
+                     }
                      else
                      {
+                         UniversityName selectedList = new UniversityName();
+                         for (int i = 0; i < AllUNameList.Count; i++)
+                         {
+                             if (AllUNameList[i].name == thisList.name)
+                             {
+                                 selectedList = AllUNameList[i];
+                             }
+
+                         }
+                         selectedGlobalUniName = selectedList;
+                         SelectedClassName = selectedList.name;
+                         CLTRequest = selectedList.tuitionRequest;
+                         CLavgratting = selectedList.avgRatting;
+                         await DegreeListPopulate();
                          thirdListBtnVisibility = true;
-                         CLseletedCountTextVisibility = true;
-                         if (thisList.ListIndex == 2)
-                         {
-                             ClassInfo selectedList = new ClassInfo();
-                             for (int i = 0; i < AllclsList.Count; i++)
-                             {
-                                 if (AllclsList[i].name == thisList.name)
-                                 {
-                                     selectedList = AllclsList[i];
-                                 }
-
-                             }
-                             selectedGlobalCls = selectedList;
-                             SelectedClassName = selectedList.name;
-                             CLTRequest = selectedList.tuitionRequest;
-                             CLavgratting = selectedList.avgRatting;
-                             SubjectListPopulate();
-                         }
-                         else
-                         {
-                             UniversityName selectedList = new UniversityName();
-                             for (int i = 0; i < AllUNameList.Count; i++)
-                             {
-                                 if (AllUNameList[i].name == thisList.name)
-                                 {
-                                     selectedList = AllUNameList[i];
-                                 }
-
-                             }
-                             selectedGlobalUniName = selectedList;
-                             SelectedClassName = selectedList.name;
-                             CLTRequest = selectedList.tuitionRequest;
-                             CLavgratting = selectedList.avgRatting;
-                             DegreeListPopulate();
-                         }
                      }
-                     
+
 
                  }
                  else if(thisList.ListIndex == 4)
@@ -325,26 +364,24 @@ namespace ShikkhanobishStudentApp.ViewModel
                      {
                          resetList(3);
                      }
-                     else
+                     SubseletedCountTextVisibility = true;
+                     Subject selectedList = new Subject();
+                     for (int i = 0; i < AllclsList.Count; i++)
                      {
-                         SubseletedCountTextVisibility = true;
-                         Subject selectedList = new Subject();
-                         for (int i = 0; i < AllclsList.Count; i++)
+                         if (AllsubList[i].name == thisList.name)
                          {
-                             if (AllsubList[i].name == thisList.name)
-                             {
-                                 selectedList = AllsubList[i];
-                             }
-
+                             selectedList = AllsubList[i];
                          }
-                         selectedGlobalSub = selectedList;
-                         SelectedSubjectName = selectedList.name;
-                         SubTRequest = selectedList.tuitionRequest;
-                         Subavgratting = selectedList.avgRatting;
-                         forthBtnVisbility = true;
-                         ChapterListPopulate();
+
                      }
-                     
+                     selectedGlobalSub = selectedList;
+                     SelectedSubjectName = selectedList.name;
+                     SubTRequest = selectedList.tuitionRequest;
+                     Subavgratting = selectedList.avgRatting;
+                     forthBtnVisbility = true;
+                     await ChapterListPopulate();
+                     firstListBtnVisibility = true;
+
                  }
                  else if (thisList.ListIndex == 5)
                  {
@@ -352,27 +389,25 @@ namespace ShikkhanobishStudentApp.ViewModel
                      {
                          resetList(3);
                      }
-                     else
+                     SubseletedCountTextVisibility = true;
+                     Degree selectedList = new Degree();
+                     for (int i = 0; i < AlldegreeList.Count; i++)
                      {
-                         SubseletedCountTextVisibility = true;
-                         Degree selectedList = new Degree();
-                         for (int i = 0; i < AlldegreeList.Count; i++)
+                         if (AlldegreeList[i].name == thisList.name)
                          {
-                             if (AlldegreeList[i].name == thisList.name)
-                             {
-                                 selectedList = AlldegreeList[i];
-                             }
-
+                             selectedList = AlldegreeList[i];
                          }
-                         selectedGlobalDgr = selectedList;
-                         SelectedSubjectName = selectedList.name;
-                         SubTRequest = selectedList.tuitionRequest;
-                         Subavgratting = selectedList.avgRatting;
-                         forthBtnVisbility = true;
-                         CourseListPopulate();
+
                      }
-                     
-                     
+                     selectedGlobalDgr = selectedList;
+                     SelectedSubjectName = selectedList.name;
+                     SubTRequest = selectedList.tuitionRequest;
+                     Subavgratting = selectedList.avgRatting;
+                     forthBtnVisbility = true;
+                     await CourseListPopulate();
+                     firstListBtnVisibility = true;
+
+
                  }
                  else if (thisList.ListIndex == 6)
                  {
@@ -409,7 +444,6 @@ namespace ShikkhanobishStudentApp.ViewModel
                      SelectedChapterName = selectedList.name;
                      ChpTRequest = selectedList.tuitionRequest;
                      Chpavgratting = selectedList.avgRatting;
-                     CourseListPopulate();
                  }
 
                  CheckEverythign();
@@ -833,6 +867,18 @@ namespace ShikkhanobishStudentApp.ViewModel
         private string errortxt1;
 
         public string errortxt { get => errortxt1; set => SetProperty(ref errortxt1, value); }
+
+        private bool connectivitiVisibility1;
+
+        public bool connectivitiVisibility { get => connectivitiVisibility1; set => SetProperty(ref connectivitiVisibility1, value); }
+
+        private double resultprgs1;
+
+        public double resultprgs { get => resultprgs1; set => SetProperty(ref resultprgs1, value); }
+
+        private bool resultvisi1;
+
+        public bool resultvisi { get => resultvisi1; set => SetProperty(ref resultvisi1, value); }
         #endregion
     }
 }

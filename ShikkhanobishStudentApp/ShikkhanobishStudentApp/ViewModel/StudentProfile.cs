@@ -15,7 +15,7 @@ namespace ShikkhanobishStudentApp.ViewModel
         public ICommand closeWindow =>
             new Command(() =>
             {
-                Application.Current.MainPage.Navigation.PopAsync();
+                Application.Current.MainPage.Navigation.PopModalAsync();
             });
         #endregion
 
