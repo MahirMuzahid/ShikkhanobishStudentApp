@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodel="clr-namespace:ShikkhanobishStudentApp.ViewModel"
              xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin"
+             xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
              x:Name="tuitionView"
              xmlns:localEntry="clr-namespace:ShikkhanobishStudentApp.Custom_Rendarar"
              x:Class="ShikkhanobishStudentApp.View.TakeTuitionView">
@@ -49,7 +50,7 @@
                 </Grid.ColumnDefinitions>
                 <Image Source="newlogowhite.png" Grid.Column="0" Aspect="AspectFit"/>
 
-                <Button Text="Signout" Grid.Column="1" Grid.ColumnSpan="2" HorizontalOptions="End" VerticalOptions="Center" BackgroundColor="Transparent" FontAttributes="Bold" FontSize="13" TextColor="White" Clicked="Button_Clicked_3">
+                <Button Text="Signout" Grid.Column="1" Grid.ColumnSpan="2" HorizontalOptions="End" VerticalOptions="Center" BackgroundColor="Transparent" FontAttributes="Bold" FontSize="13" TextColor="White" Clicked="Button_Clicked_3" Command="{Binding logout}">
                 </Button>
 
             </Grid>
@@ -461,24 +462,7 @@
             
             
             
-            <!--Connection View -->
-            <Grid x:Name="connectivityGrid" Grid.Row="0" Grid.RowSpan="6" Grid.ColumnSpan="3" BackgroundColor="#90000000" IsVisible="{Binding connectivitiVisibility}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="3*"/>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="4*"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width=".6*"/>
-                    <ColumnDefinition Width="1*"/>
-                </Grid.ColumnDefinitions>
-                <Frame BackgroundColor="White"   Grid.Row="1" Grid.Column="1" CornerRadius="20" HasShadow="False"/>
-                <Image Source="nointernetconnection.png" HorizontalOptions="Center" VerticalOptions="Center" Aspect="AspectFit"  Grid.Row="1" Grid.Column="1" Margin="10"/>
-               
-
-            </Grid>
-            <!--Connection View-->
+           
         </Grid>
         
         
@@ -547,28 +531,12 @@
                 <ColumnDefinition Width="20*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            <BoxView x:Name="backBox" Grid.RowSpan="2" Grid.ColumnSpan="3" Scale="2">
-                <BoxView.Background>
-                    <LinearGradientBrush EndPoint="1,0">
-                        <GradientStop Color="#991190B6" Offset="1" />
-                        <GradientStop Color="#99864AE8" Offset=".01" />
-                    </LinearGradientBrush>
-                </BoxView.Background>
-            </BoxView>
-            <BoxView x:Name="backBox2" Grid.RowSpan="2" Grid.ColumnSpan="3" Scale="2">
-                <BoxView.Background>
-                    <LinearGradientBrush EndPoint="1,0">
-                        <GradientStop Color="#901190B6" Offset="1" />
-                        <GradientStop Color="#90864AE8" Offset=".01" />
-                    </LinearGradientBrush>
-                </BoxView.Background>
-            </BoxView>
+
             <BoxView  Grid.RowSpan="2" Grid.ColumnSpan="3">
                 <BoxView.Background>
                     <LinearGradientBrush EndPoint="1,0">
-                        <GradientStop Color="#801190B6" Offset="1" />
-                        <GradientStop Color="#80864AE8" Offset="1" />
-                        <GradientStop Color="#80864AE8" Offset=".01" />
+                        <GradientStop Color="#11AAD7" Offset="1" />
+                        <GradientStop Color="#864AE8" Offset=".01" />
                     </LinearGradientBrush>
                 </BoxView.Background>
             </BoxView>
@@ -628,7 +596,26 @@
             </Grid>
         </Grid>
         <!-- Login -->
+        
+        
+        <!--Connection View -->
+        <Grid x:Name="connectivityGrid"  BackgroundColor="#90000000" IsVisible="{Binding connectivitiVisibility}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="4*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width=".6*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Frame BackgroundColor="White"   Grid.Row="1" Grid.Column="1" CornerRadius="20" HasShadow="False"/>
+            <Image Source="nointernetconnection.png" HorizontalOptions="Center" VerticalOptions="Center" Aspect="AspectFit"  Grid.Row="1" Grid.Column="1" Margin="10"/>
 
+
+        </Grid>
+        <!--Connection View-->
 
     </Grid>
 </ContentPage>

@@ -13,6 +13,7 @@ namespace ShikkhanobishStudentApp
         public App()
         {
             InitializeComponent();
+            XF.Material.Forms.Material.Init(this);
             getInfo();
         }
         public async Task getInfo ()

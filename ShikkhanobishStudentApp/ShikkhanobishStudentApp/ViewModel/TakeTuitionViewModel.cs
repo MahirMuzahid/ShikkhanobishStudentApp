@@ -31,7 +31,11 @@ namespace ShikkhanobishStudentApp.ViewModel
         #region Methods
         public TakeTuitionViewModel()
         {
-            popUpVisibility = false;          
+            homeFirst();
+        }
+        public void homeFirst()
+        {
+            popUpVisibility = false;
             SelectedInsName = "Not Selected";
             SelectedClassName = "Not Selected";
             SelectedSubjectName = "Not Selected";
@@ -62,7 +66,6 @@ namespace ShikkhanobishStudentApp.ViewModel
             resultprgs = .1;
             resultvisi = true;
         }
-
         public bool checkInternet()
         {
             var current = Connectivity.NetworkAccess;
@@ -74,6 +77,10 @@ namespace ShikkhanobishStudentApp.ViewModel
             {
                 return false;
             }
+        }
+        private void Performlogout()
+        {
+            homeFirst();
         }
         #region populate list
         public async Task InsListPopulate()
@@ -874,6 +881,23 @@ namespace ShikkhanobishStudentApp.ViewModel
         private bool resultvisi1;
 
         public bool resultvisi { get => resultvisi1; set => SetProperty(ref resultvisi1, value); }
+
+        private Command logout1;
+
+        public ICommand logout
+        {
+            get
+            {
+                if (logout1 == null)
+                {
+                    logout1 = new Command(Performlogout);
+                }
+
+                return logout1;
+            }
+        }
+
+        
         #endregion
     }
 }
