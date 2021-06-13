@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using XF.Material.Forms.Resources;
+using XF.Material.Forms.UI.Dialogs;
+using XF.Material.Forms.UI.Dialogs.Configurations;
 
 namespace ShikkhanobishStudentApp.View
 {
@@ -42,6 +45,7 @@ namespace ShikkhanobishStudentApp.View
             else
             {
                 connectivityGrid.IsVisible = true;
+                ShowSnakeBarError();
             }
             
             Connectivity.ConnectivityChanged += Connectivity_ConnectivityChanged;
@@ -58,7 +62,29 @@ namespace ShikkhanobishStudentApp.View
             else
             {
                 connectivityGrid.IsVisible = true;
+                ShowSnakeBarError();
             }
+            
+        }
+        public async Task ShowSnakeBarError()
+        {
+            var alertDialogConfiguration = new MaterialSnackbarConfiguration
+            {
+                BackgroundColor = XF.Material.Forms.Material.GetResource<Color>(MaterialConstants.Color.ERROR),
+                MessageTextColor = XF.Material.Forms.Material.GetResource<Color>(MaterialConstants.Color.ON_PRIMARY).MultiplyAlpha(0.8),
+                CornerRadius = 8,
+                
+                ScrimColor = Color.FromHex("#FFFFFF").MultiplyAlpha(0.32),
+                ButtonAllCaps = false
+
+            };
+
+            await MaterialDialog.Instance.SnackbarAsync(message: "No Network Connection Avaiable",
+                                        actionButtonText: "Got It",
+                                        configuration: alertDialogConfiguration,
+                                        msDuration: MaterialSnackbar.DurationIndefinite);
+
+
         }
         async private void Button_Clicked(object sender, EventArgs e)
         {
@@ -87,7 +113,7 @@ namespace ShikkhanobishStudentApp.View
 
         private void Button_Clicked_2(object sender, EventArgs e)
         {            
-            Application.Current.MainPage.Navigation.PushAsync(new StudentProfile());
+            Application.Current.MainPage.Navigation.PushModalAsync(new StudentProfile());
         }
 
         private void Button_Clicked_3(object sender, EventArgs e)
@@ -109,48 +135,55 @@ namespace ShikkhanobishStudentApp.View
             var current = Connectivity.NetworkAccess;
             if ( current == NetworkAccess.Internet)
             {
-                errortxt.Text = "Wait... Loggin In";
-                errortxt.TextColor = Color.White;
-                if (pn.Text != null && pass.Text != null)
+                using (var dialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Checking..."))
                 {
-                    List<Student> allStudent = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getStudent".GetJsonAsync<List<Student>>();
-                    bool allOK = false; ;
-                    for (int i = 0; i < allStudent.Count; i++)
+                    errortxt.TextColor = Color.White;
+                    if (pn.Text != null && pass.Text != null)
                     {
-                        if (pn.Text == allStudent[i].phonenumber && pass.Text == allStudent[i].password)
+                        List<Student> allStudent = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getStudent".GetJsonAsync<List<Student>>();
+                        bool allOK = false; ;
+                        for (int i = 0; i < allStudent.Count; i++)
                         {
-                            if (chkBox.IsChecked)
+                            if (pn.Text == allStudent[i].phonenumber && pass.Text == allStudent[i].password)
                             {
-                                StaticPageToPassData.thisStudentInfo = allStudent[i];
-                                SecureStorage.SetAsync("phonenumber", pn.Text);
-                                SecureStorage.SetAsync("password", pass.Text);
+                                dialog.MessageText = "Loggin In...";
+                                if (chkBox.IsChecked)
+                                {
+                                    StaticPageToPassData.thisStudentInfo = allStudent[i];
+                                    SecureStorage.SetAsync("phonenumber", pn.Text);
+                                    SecureStorage.SetAsync("password", pass.Text);
+                                }
+                                loginView.TranslateTo(0, -1000, 1500, Easing.CubicIn);
+                                loginView.FadeTo(0, 1200, Easing.CubicIn);
+                                loginView.Opacity = 0;
+                                allOK = true;
+                                errortxt.Text = "";
+                                pn.Text = "";
+                                pass.Text = "";
+                                break;
                             }
-                            loginView.TranslateTo(0, -1000, 1500, Easing.CubicIn);
-                            loginView.FadeTo(0, 1200, Easing.CubicIn);
-                            loginView.Opacity = 0;
-                            allOK = true;
-                            errortxt.Text = "";
-                            pn.Text = "";
-                            pass.Text = "";
-                            break;
-                        }
 
-                    }
-                    if (!allOK)
-                    {
-                        errortxt.Text = "Phone Number Or Password Doesn't Match!";
-                        errortxt.TextColor = Color.Red;
+                        }
+                        if (!allOK)
+                        {
+                            pn.HasError = true;
+                            pn.ErrorText = "Incorrect Phone Number or Password!";
+                            pass.HasError = true;
+                        }
+                        else
+                        {
+                            errortxt.Text = "";
+                        }
                     }
                     else
                     {
-                        errortxt.Text = "";
+                        pn.HasError = true;
+                        pn.ErrorText = "Phone Number Or Password can't be empty!";
+                        pass.HasError = true;
                     }
+                    await dialog.DismissAsync();
                 }
-                else
-                {
-                    errortxt.Text = "Phone Number Or Password Can't Be Empty";
-                    errortxt.TextColor = Color.Red;
-                }
+                
             }
             else
             {
@@ -158,6 +191,20 @@ namespace ShikkhanobishStudentApp.View
                 errortxt.TextColor = Color.Red;
             }
             loginbtn.IsEnabled = true;
-        }       
+        }
+
+        private void pn_Focused(object sender, FocusEventArgs e)
+        {
+            pn.HasError = false;
+            pn.ErrorText = "";
+            pass.HasError = false;
+        }
+
+        private void pass_Focused(object sender, FocusEventArgs e)
+        {
+            pn.HasError = false;
+            pn.ErrorText = "";
+            pass.HasError = false;
+        }
     }
 }

@@ -48,8 +48,7 @@
                     <ColumnDefinition Width="2*"/>
                     <ColumnDefinition Width=".3*"/>
                 </Grid.ColumnDefinitions>
-                <Image Source="newlogowhite.png" Grid.Column="0" Aspect="AspectFit"/>
-
+                <Image Source="newlogowhite.png" Grid.Column="0" Aspect="AspectFit" Margin="0,0,50,0"/>
                 <Button Text="Signout" Grid.Column="1" Grid.ColumnSpan="2" HorizontalOptions="End" VerticalOptions="Center" BackgroundColor="Transparent" FontAttributes="Bold" FontSize="13" TextColor="White" Clicked="Button_Clicked_3" Command="{Binding logout}">
                 </Button>
 
@@ -353,7 +352,7 @@
                         <ColumnDefinition Width="10*"/>
                         <ColumnDefinition Width=".3*"/>
                     </Grid.ColumnDefinitions>
-                    <Frame BackgroundColor="White" Grid.RowSpan="2" Grid.ColumnSpan="3" CornerRadius="10" />
+                    <material:MaterialCard BackgroundColor="White" Grid.RowSpan="2" Grid.ColumnSpan="3" CornerRadius="10" Elevation="30"/>
                     <Label Text="Total Available Balance" Grid.Row="0" HorizontalOptions="Start" VerticalOptions="End" Grid.Column="1" FontSize="13"/>
                     <Label Text="500 Coin" Grid.Row="1" HorizontalOptions="Start" VerticalOptions="Start" FontSize="25" FontAttributes="Bold" Grid.Column="1"/>
                     <Label Text="Total Free Minute" Grid.Row="0" HorizontalOptions="End" VerticalOptions="End" Grid.Column="1" FontSize="13"/>
@@ -376,7 +375,6 @@
                         <ColumnDefinition Width="20*"/>
                         <ColumnDefinition Width=".1*"/>
                     </Grid.ColumnDefinitions>
-                    <Frame BackgroundColor="White" Grid.RowSpan="8" Grid.ColumnSpan="3" CornerRadius="10"/>
                     <Label Text="How to recharge coin in Shikkhanobish from Bkash" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" FontAttributes="Bold" FontSize="12" Grid.Column="1"/>
                     <Label FontSize="12" Grid.Row="1" Grid.Column="1">
                         <Label.FormattedText>
@@ -442,9 +440,9 @@
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <Frame BackgroundColor="#db126b" Grid.ColumnSpan="2" CornerRadius="10"/>
-                    <Entry Placeholder="Enter Bkash TrxID" Grid.Column="0" FontSize="14" TextColor="White" PlaceholderColor="#99F7F7F7" />
-                    <Button Text="Recharge Now" Grid.Column="1"  FontSize="11" CornerRadius="10" FontAttributes="Bold" BackgroundColor="#db126b" TextColor="White"/>
+                    <material:MaterialCard BackgroundColor="#db126b" Grid.ColumnSpan="2" CornerRadius="10" />
+                    <material:MaterialTextField Placeholder="Enter Bkash TrxID" Grid.Column="0" CardBackgroundColor="Transparent" Margin="10,2,10,2" TintColor="White" TextColor="White" PlaceholderColor="#99F7F7F7" />
+                    <material:MaterialButton ButtonType="Text" TextColor="White" Text="Recharge Now" Grid.Column="1"  FontSize="11" CornerRadius="10" FontAttributes="Bold" BackgroundColor="#db126b"/>
                 </Grid>
                 <CarouselView ItemsSource="{Binding offerList}" Grid.Row="7" Grid.Column="1" >
                     <CarouselView.ItemTemplate>
@@ -459,10 +457,28 @@
                 </CarouselView>
             </Grid>
             <!-- Payment View -->
-            
-            
-            
-           
+
+
+            <!--Connection View -->
+            <Grid x:Name="connectivityGrid" Grid.Row="1" Grid.RowSpan="5" Grid.ColumnSpan="3" BackgroundColor="White" IsVisible="{Binding connectivitiVisibility}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="4*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width=".6*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Frame BackgroundColor="#10000000"   Grid.Row="1" Grid.Column="1" CornerRadius="20" HasShadow="False"/>
+                <Image Source="nointernetconnection.png" HorizontalOptions="Center" VerticalOptions="End" Aspect="AspectFit"  Grid.Row="1" Grid.Column="1" Margin="15" />
+                <Label Text="Connection Lost" Grid.Row="2" Grid.ColumnSpan="3" HorizontalOptions="Center" VerticalOptions="Start" FontAttributes="Bold" FontSize="25" TextColor="#99000000"/>
+
+            </Grid>
+            <!--Connection View-->
+
         </Grid>
         
         
@@ -524,7 +540,7 @@
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
-                <RowDefinition Height="1.3*"/>
+                <RowDefinition Height="1.5*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
@@ -545,9 +561,9 @@
             <Label x:Name="errortxt"  Grid.Row="0" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="End" Margin="20,0,20,0" />
             <Grid Grid.Row="1" Grid.Column="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height=".8*"/>
-                    <RowDefinition Height=".8*"/>
-                    <RowDefinition Height=".4*"/>
+                    <RowDefinition Height="1.4*"/>
+                    <RowDefinition Height="1.2*"/>
+                    <RowDefinition Height=".5*"/>
                     <RowDefinition Height=".5*"/>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="3*"/>
@@ -558,13 +574,13 @@
                     <ColumnDefinition Width="20*"/>
                     <ColumnDefinition Width=".1*"/>
                 </Grid.ColumnDefinitions>
-                <Frame BackgroundColor="#30000000" Grid.Row="0" Margin="20,0,20,0" CornerRadius="20" Grid.ColumnSpan="3"/>
-                <localEntry:CustomEntry x:Name="pn" Placeholder="Phone Number" Grid.Row="0" Margin="20,0,20,0" FontSize="16" Grid.Column="1" PlaceholderColor="#E7E7E7" TextColor="White" IsSpellCheckEnabled="False" Keyboard="Numeric" Text="{Binding PhoneNumber}">
+                <material:MaterialTextField x:Name="pn" Placeholder="Phone Number" InputType="Numeric" MaxLength="11" Grid.Row="0"  Grid.Column="1" TextColor="White" IsSpellCheckEnabled="False" Text="{Binding PhoneNumber}" CardBackgroundColor="#20000000" FloatingPlaceholderColor="Black" TintColor="White" Focused="pn_Focused" >
 
-                </localEntry:CustomEntry>
+                </material:MaterialTextField>
 
-                <Frame BackgroundColor="#30000000" Grid.Row="1" Margin="20,0,20,0" CornerRadius="20" Grid.ColumnSpan="3"/>
-                <localEntry:CustomEntry x:Name="pass" Placeholder="Password" Grid.Row="1" Margin="20,0,20,0" FontSize="16" Grid.Column="1" IsPassword="True" PlaceholderColor="#E7E7E7" TextColor="White" Text="{Binding Password}"/>
+                <material:MaterialTextField x:Name="pass" Placeholder="Password" InputType="NumericPassword" Grid.Row="1"   Grid.Column="1"  TextColor="White" IsSpellCheckEnabled="False" Text="{Binding Password}"  CardBackgroundColor="#20000000" FloatingPlaceholderColor="Black" TintColor="White" Focused="pass_Focused">
+
+                </material:MaterialTextField>
 
 
                 <Button x:Name="loginbtn" Text="Login" Grid.Row="4" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="White" CornerRadius="10" TextColor="#1D64B4"  Clicked="Button_Clicked_4" />
@@ -598,24 +614,7 @@
         <!-- Login -->
         
         
-        <!--Connection View -->
-        <Grid x:Name="connectivityGrid"  BackgroundColor="#90000000" IsVisible="{Binding connectivitiVisibility}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="3*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="4*"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width=".6*"/>
-                <ColumnDefinition Width="1*"/>
-            </Grid.ColumnDefinitions>
-            <Frame BackgroundColor="White"   Grid.Row="1" Grid.Column="1" CornerRadius="20" HasShadow="False"/>
-            <Image Source="nointernetconnection.png" HorizontalOptions="Center" VerticalOptions="Center" Aspect="AspectFit"  Grid.Row="1" Grid.Column="1" Margin="10"/>
-
-
-        </Grid>
-        <!--Connection View-->
+        
 
     </Grid>
 </ContentPage>
