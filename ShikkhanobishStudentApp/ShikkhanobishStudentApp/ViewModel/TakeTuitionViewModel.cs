@@ -505,7 +505,7 @@ namespace ShikkhanobishStudentApp.ViewModel
         public ICommand CallTeacher =>
              new Command<Institution>((intName) =>
              {
-                 Application.Current.MainPage.Navigation.PushAsync(new VideoCallPage());
+                 Application.Current.MainPage.Navigation.PushModalAsync(new VideoCallPage());
              });
         public void CheckEverythign()
         {

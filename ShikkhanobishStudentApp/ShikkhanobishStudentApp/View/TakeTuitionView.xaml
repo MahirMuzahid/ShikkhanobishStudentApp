@@ -249,7 +249,7 @@
                         <ColumnDefinition Width="10*"/>
                         <ColumnDefinition Width=".3*"/>
                     </Grid.ColumnDefinitions>
-                    <material:MaterialCard BackgroundColor="White" Grid.RowSpan="2" Grid.ColumnSpan="3" CornerRadius="10" Elevation="30"/>
+                    <material:MaterialCard BackgroundColor="White" Grid.RowSpan="2" Grid.ColumnSpan="3" CornerRadius="10" Elevation="0"/>
                     <Label Text="Total Available Balance" Grid.Row="0" HorizontalOptions="Start" VerticalOptions="End" Grid.Column="1" FontSize="13"/>
                     <Label Text="500 Coin" Grid.Row="1" HorizontalOptions="Start" VerticalOptions="Start" FontSize="25" FontAttributes="Bold" Grid.Column="1"/>
                     <Label Text="Total Free Minute" Grid.Row="0" HorizontalOptions="End" VerticalOptions="End" Grid.Column="1" FontSize="13"/>
@@ -334,12 +334,12 @@
                 <Frame BackgroundColor="#50000000" Grid.Row="5" Grid.Column="1" HasShadow="False"/>
                 <Grid Grid.Row="6" Grid.Column="1" Margin="0,10,0,10">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="2*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <material:MaterialCard BackgroundColor="#db126b" Grid.ColumnSpan="2" CornerRadius="10" />
-                    <material:MaterialTextField Placeholder="Enter Bkash TrxID" Grid.Column="0" CardBackgroundColor="Transparent" Margin="10,2,10,2" TintColor="White" TextColor="White" PlaceholderColor="#99F7F7F7" />
-                    <material:MaterialButton ButtonType="Text" TextColor="White" Text="Recharge Now" Grid.Column="1"  FontSize="11" CornerRadius="10" FontAttributes="Bold" BackgroundColor="#db126b"/>
+                    <material:MaterialCard BackgroundColor="Transparent" Grid.ColumnSpan="2" CornerRadius="10" />
+                    <material:MaterialTextField Placeholder="Enter Bkash TrxID" Grid.Column="0" CardBackgroundColor="#10000000" Margin="10,2,10,2" TintColor="Black" TextColor="Black" PlaceholderColor="Black" FloatingPlaceholderFontSize="11" TextFontSize="14"  VerticalOptions="Center"/>
+                    <material:MaterialButton ButtonType="Outlined" TextColor="#db126b" Text="Recharge Now" Grid.Column="1"  BorderColor="#db126b"  FontSize="11" CornerRadius="10" FontAttributes="Bold" HorizontalOptions="End" VerticalOptions="Center" PressedBackgroundColor="#20db126b"/>
                 </Grid>
                 <CarouselView ItemsSource="{Binding offerList}" Grid.Row="7" Grid.Column="1" >
                     <CarouselView.ItemTemplate>
@@ -493,11 +493,11 @@
                     <ColumnDefinition Width="20*"/>
                     <ColumnDefinition Width=".1*"/>
                 </Grid.ColumnDefinitions>
-                <material:MaterialTextField x:Name="pn" Placeholder="Phone Number" InputType="Numeric" MaxLength="11" Grid.Row="0"  Grid.Column="1" TextColor="White" IsSpellCheckEnabled="False" Text="{Binding PhoneNumber}" CardBackgroundColor="#20000000" FloatingPlaceholderColor="Black" TintColor="White" Focused="pn_Focused" >
+                <material:MaterialTextField x:Name="pn" Placeholder="Phone Number" InputType="Numeric" MaxLength="11" Grid.Row="0"  Grid.Column="1" TextColor="White" IsSpellCheckEnabled="False" Text="{Binding PhoneNumber}" CardBackgroundColor="#20000000" FloatingPlaceholderColor="White" PlaceholderColor="White"  TintColor="White" Focused="pn_Focused" >
 
                 </material:MaterialTextField>
 
-                <material:MaterialTextField x:Name="pass" Placeholder="Password" InputType="NumericPassword" Grid.Row="1"   Grid.Column="1"  TextColor="White" IsSpellCheckEnabled="False" Text="{Binding Password}"  CardBackgroundColor="#20000000" FloatingPlaceholderColor="Black" TintColor="White" Focused="pass_Focused">
+                <material:MaterialTextField x:Name="pass" Placeholder="Password" InputType="NumericPassword" Grid.Row="1"   Grid.Column="1"  TextColor="White" IsSpellCheckEnabled="False" Text="{Binding Password}"  CardBackgroundColor="#20000000" FloatingPlaceholderColor="White" PlaceholderColor="White"  TintColor="White" Focused="pass_Focused">
 
                 </material:MaterialTextField>
 
@@ -509,9 +509,14 @@
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <CheckBox x:Name="chkBox" Grid.Column="0" HorizontalOptions="Start"/>
-                    <Label Text="Remeber Me" TextColor="White" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" FontAttributes="Bold"/>
-                    <Label Text="Forgot Information?" TextColor="White" Grid.Column="2" HorizontalOptions="End" VerticalOptions="Center" Margin="0,0,10,0" FontAttributes="Bold"/>
+                    <CheckBox x:Name="chkBox" Grid.Column="0" HorizontalOptions="Start" Color="White"/>
+                    <Label Text="Remeber Me" TextColor="White" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" />
+                    <Label Text="Forgot Password?" TextColor="White" Grid.Column="2" HorizontalOptions="End" VerticalOptions="Center" Margin="0,0,0,0" >
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped">
+                            </TapGestureRecognizer>
+                        </Label.GestureRecognizers>
+                    </Label>
                 </Grid>
                 
 

@@ -206,5 +206,10 @@ namespace ShikkhanobishStudentApp.View
             pn.ErrorText = "";
             pass.HasError = false;
         }
+
+        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        {
+            Application.Current.MainPage.Navigation.PushModalAsync(new ForgotPassword());
+        }
     }
 }
