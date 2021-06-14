@@ -47,6 +47,7 @@ namespace ShikkhanobishStudentApp.ViewModel
             ChpseletedCountTextVisibility = false;
 
             activebtn = false;
+            remainColopr = "Black";
 
             remainword = "Remain 300 Words";
             List<int> ggl = new List<int>();
@@ -538,12 +539,10 @@ namespace ShikkhanobishStudentApp.ViewModel
             else
             {
                 remainword = "Remain " + (300 - detailTxt.Length) + " Words";
-                remainColopr = "#E5E5E5";
+                remainColopr = "Black";
                 CheckEverythign();
             }
             
-
-
         }
 
         public ICommand goRegisterView =>
@@ -562,6 +561,8 @@ namespace ShikkhanobishStudentApp.ViewModel
             {
                 popupList popupobj = new popupList();
                 popupobj.name = insList[i].name;
+                popupobj.totalRequest = insList[i].tuitionRequest;
+                popupobj.avgRatting = insList[i].avgRatting;
                 popupobj.ListIndex = 1;
                 popuplist.Add(popupobj);
             }
@@ -576,6 +577,7 @@ namespace ShikkhanobishStudentApp.ViewModel
             {
                 popupList popupobj = new popupList();
                 popupobj.name = list[i].name;
+
                 popupobj.ListIndex = 2;
                 popuplist.Add(popupobj);
             }
@@ -590,6 +592,8 @@ namespace ShikkhanobishStudentApp.ViewModel
             {
                 popupList popupobj = new popupList();
                 popupobj.name = list[i].name;
+                popupobj.totalRequest = list[i].tuitionRequest;
+                popupobj.avgRatting = list[i].avgRatting;
                 popupobj.ListIndex = 3;
                 popuplist.Add(popupobj);
             }
@@ -604,6 +608,8 @@ namespace ShikkhanobishStudentApp.ViewModel
             {
                 popupList popupobj = new popupList();
                 popupobj.name = insList[i].name;
+                popupobj.totalRequest = insList[i].tuitionRequest;
+                popupobj.avgRatting = insList[i].avgRatting;
                 popupobj.ListIndex = 4;
                 popuplist.Add(popupobj);
             }
@@ -619,6 +625,8 @@ namespace ShikkhanobishStudentApp.ViewModel
             {
                 popupList popupobj = new popupList();
                 popupobj.name = insList[i].name;
+                popupobj.totalRequest = insList[i].tuitionRequest;
+                popupobj.avgRatting = insList[i].avgRatting;
                 popupobj.ListIndex =5;
                 popuplist.Add(popupobj);
             }
@@ -633,6 +641,8 @@ namespace ShikkhanobishStudentApp.ViewModel
             {
                 popupList popupobj = new popupList();
                 popupobj.name = insList[i].name;
+                popupobj.totalRequest = insList[i].tuitionRequest;
+                popupobj.avgRatting = insList[i].avgRatting;
                 popupobj.ListIndex = 6;
                 popuplist.Add(popupobj);
             }
@@ -647,6 +657,8 @@ namespace ShikkhanobishStudentApp.ViewModel
             {
                 popupList popupobj = new popupList();
                 popupobj.name = insList[i].name;
+                popupobj.totalRequest = insList[i].tuitionRequest;
+                popupobj.avgRatting = insList[i].avgRatting;
                 popupobj.ListIndex = 7;
                 popuplist.Add(popupobj);
             }
