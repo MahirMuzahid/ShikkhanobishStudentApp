@@ -21,6 +21,20 @@ namespace ShikkhanobishStudentApp.View
         public TakeTuitionView(bool fromLogin)
         {
             InitializeComponent();
+            getAllInfo(fromLogin);
+        }
+
+        public async Task getAllInfo(bool fromLogin)
+        {
+            if (!fromLogin)
+            {
+                StaticPageToPassData.thisStudentInfo = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/LoginStudent".PostUrlEncodedAsync(new { phonenumber = StaticPageToPassData.thisStPh, password = StaticPageToPassData.thisstPass })
+          .ReceiveJson<Student>();
+                loginView.Opacity = 0;
+                loginView.TranslateTo(0, -1000, 1500, Easing.CubicIn);
+                loginView.FadeTo(0, 1200, Easing.CubicIn);
+
+            }
             connectivityGrid.IsVisible = false;
             NavigationPage.SetHasNavigationBar(this, false);
             var mainDisplayInfo = DeviceDisplay.MainDisplayInfo;
@@ -30,13 +44,7 @@ namespace ShikkhanobishStudentApp.View
             coingrid.IsVisible = true;
             coingrid.TranslationX = width;
             coingrid.Opacity = 0;
-            if (!fromLogin)
-            {
-                loginView.Opacity = 0;
-                loginView.TranslateTo(0, -1000, 1500, Easing.CubicIn);
-                loginView.FadeTo(0, 1200, Easing.CubicIn);
-
-            }
+            
             var current = Connectivity.NetworkAccess;
             if (current == NetworkAccess.Internet)
             {
@@ -47,11 +55,9 @@ namespace ShikkhanobishStudentApp.View
                 connectivityGrid.IsVisible = true;
                 ShowSnakeBarError();
             }
-            
+
             Connectivity.ConnectivityChanged += Connectivity_ConnectivityChanged;
         }
-
-        
         void Connectivity_ConnectivityChanged(object sender, ConnectivityChangedEventArgs e)
         {
             var current = Connectivity.NetworkAccess;
@@ -88,6 +94,8 @@ namespace ShikkhanobishStudentApp.View
         }
         async private void Button_Clicked(object sender, EventArgs e)
         {
+            freeMin.Text = "" + StaticPageToPassData.thisStudentInfo.freemin;
+            avaiableCoin.Text = "" + StaticPageToPassData.thisStudentInfo.coin;
             coingrid.IsVisible = true;           
             ttlbl.TextColor = Color.FromHex("#C9C9C9");
             rclbl.TextColor = Color.Black;
@@ -140,40 +148,31 @@ namespace ShikkhanobishStudentApp.View
                     errortxt.TextColor = Color.White;
                     if (pn.Text != null && pass.Text != null)
                     {
-                        List<Student> allStudent = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getStudent".GetJsonAsync<List<Student>>();
-                        bool allOK = false; ;
-                        for (int i = 0; i < allStudent.Count; i++)
+                        Student thistudent = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/LoginStudent".PostUrlEncodedAsync(new {  phonenumber = pn.Text, password = pass.Text })
+          .ReceiveJson<Student>();
+                        if (pn.Text == thistudent.phonenumber && pass.Text == thistudent.password)
                         {
-                            if (pn.Text == allStudent[i].phonenumber && pass.Text == allStudent[i].password)
+                            StaticPageToPassData.thisStudentInfo = thistudent;
+                            dialog.MessageText = "Loggin In...";
+                            if (chkBox.IsChecked)
                             {
-                                dialog.MessageText = "Loggin In...";
-                                if (chkBox.IsChecked)
-                                {
-                                    StaticPageToPassData.thisStudentInfo = allStudent[i];
-                                    SecureStorage.SetAsync("phonenumber", pn.Text);
-                                    SecureStorage.SetAsync("password", pass.Text);
-                                }
-                                loginView.TranslateTo(0, -1000, 1500, Easing.CubicIn);
-                                loginView.FadeTo(0, 1200, Easing.CubicIn);
-                                loginView.Opacity = 0;
-                                allOK = true;
-                                errortxt.Text = "";
-                                pn.Text = "";
-                                pass.Text = "";
-                                break;
+                                SecureStorage.SetAsync("phonenumber", pn.Text);
+                                SecureStorage.SetAsync("passowrd", pass.Text);
                             }
-
+                            loginView.TranslateTo(0, -1000, 1500, Easing.CubicIn);
+                            loginView.FadeTo(0, 1200, Easing.CubicIn);
+                            loginView.Opacity = 0;
+                            errortxt.Text = "";
+                            pn.Text = "";
+                            pass.Text = "";
                         }
-                        if (!allOK)
+                        else
                         {
                             pn.HasError = true;
                             pn.ErrorText = "Incorrect Phone Number or Password!";
                             pass.HasError = true;
                         }
-                        else
-                        {
-                            errortxt.Text = "";
-                        }
+
                     }
                     else
                     {
@@ -181,6 +180,7 @@ namespace ShikkhanobishStudentApp.View
                         pn.ErrorText = "Phone Number Or Password can't be empty!";
                         pass.HasError = true;
                     }
+                    loginbtn.IsEnabled = true;
                     await dialog.DismissAsync();
                 }
                 

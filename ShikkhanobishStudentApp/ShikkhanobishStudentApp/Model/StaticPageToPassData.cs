@@ -7,6 +7,8 @@ namespace ShikkhanobishStudentApp.Model
     public class StaticPageToPassData
     {
         public static string RegisteredPhonenNumber;
+        public static string thisStPh;
+        public static string thisstPass;
         public static string otpcode;
         public static bool isLoginOK;
 

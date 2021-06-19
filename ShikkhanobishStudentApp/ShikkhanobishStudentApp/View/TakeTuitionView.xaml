@@ -6,6 +6,7 @@
              xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
              x:Name="tuitionView"
              xmlns:localEntry="clr-namespace:ShikkhanobishStudentApp.Custom_Rendarar"
+             
              x:Class="ShikkhanobishStudentApp.View.TakeTuitionView">
     <!--  x:DataType="viewmodel:TakeTuitionViewModel" !-->
     <ContentPage.BindingContext>
@@ -251,9 +252,9 @@
                     </Grid.ColumnDefinitions>
                     <material:MaterialCard BackgroundColor="White" Grid.RowSpan="2" Grid.ColumnSpan="3" CornerRadius="10" Elevation="0"/>
                     <Label Text="Total Available Balance" Grid.Row="0" HorizontalOptions="Start" VerticalOptions="End" Grid.Column="1" FontSize="13"/>
-                    <Label Text="500 Coin" Grid.Row="1" HorizontalOptions="Start" VerticalOptions="Start" FontSize="25" FontAttributes="Bold" Grid.Column="1"/>
+                    <Label x:Name="avaiableCoin" Grid.Row="1" HorizontalOptions="Start" VerticalOptions="Start" FontSize="25" FontAttributes="Bold" Grid.Column="1"/>
                     <Label Text="Total Free Minute" Grid.Row="0" HorizontalOptions="End" VerticalOptions="End" Grid.Column="1" FontSize="13"/>
-                    <Label Text="3" Grid.Row="1" HorizontalOptions="End" VerticalOptions="End" FontSize="25" FontAttributes="Bold" Grid.Column="1"/>
+                    <Label x:Name="freeMin" Grid.Row="1" HorizontalOptions="End" VerticalOptions="End" FontSize="25" FontAttributes="Bold" Grid.Column="1"/>
                 </Grid>
                 <Frame BackgroundColor="#50000000" Grid.Row="3" Grid.Column="1"/>
                 <Grid Grid.Row="4" Grid.Column="1" Margin="0,15,0,15">
@@ -416,7 +417,7 @@
                 <Label Text="Getting Result..." Grid.Row="5" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" TextColor="#9C9C9C" Margin="0,0,0,50" IsVisible="{Binding resultvisi}" FontAttributes="Bold"/>
                 
 
-                <ListView  ItemsSource="{Binding popupList}" Grid.Row="5" Grid.Column="1" RowHeight="50" SeparatorColor="Transparent" >
+                <ListView  ItemsSource="{Binding popupList}" Grid.Row="5" Grid.Column="1" RowHeight="60" SeparatorColor="#50000000" >
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell >

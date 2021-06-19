@@ -33,8 +33,9 @@ namespace ShikkhanobishStudentApp.ViewModel
         {
             homeFirst();
         }
-        public void homeFirst()
+        public async Task homeFirst()
         {
+            
             popUpVisibility = false;
             SelectedInsName = "Not Selected";
             SelectedClassName = "Not Selected";
@@ -66,7 +67,9 @@ namespace ShikkhanobishStudentApp.ViewModel
             forthBtnVisbility = false;
             resultprgs = .1;
             resultvisi = true;
+            
         }
+        
         public bool checkInternet()
         {
             var current = Connectivity.NetworkAccess;
@@ -909,7 +912,17 @@ namespace ShikkhanobishStudentApp.ViewModel
             }
         }
 
+        private string freeMin1;
+
+        public string freeMin { get => freeMin1; set => SetProperty(ref freeMin1, value); }
+
+        private string avaiableCoin1;
+
+        public string avaiableCoin { get => avaiableCoin1; set => SetProperty(ref avaiableCoin1, value); }
+
         
+
+
         #endregion
     }
 }
