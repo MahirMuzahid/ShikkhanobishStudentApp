@@ -31,7 +31,7 @@ namespace ShikkhanobishStudentApp.View
             if (current == NetworkAccess.Internet)
             {                
                 connectivityGrid.IsVisible = false;
-                getAllInfo(fromLogin);
+                getAllInfo();
             }
             else
             {
@@ -43,15 +43,9 @@ namespace ShikkhanobishStudentApp.View
            
         }
 
-        public async Task getAllInfo(bool fromLogin)
+        public async Task getAllInfo()
         {
             
-            if (!fromLogin)
-            {
-                StaticPageToPassData.thisStudentInfo = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/LoginStudent".PostUrlEncodedAsync(new { phonenumber = StaticPageToPassData.thisStPh, password = StaticPageToPassData.thisstPass })
-                     .ReceiveJson<Student>();
-
-            }
             connectivityGrid.IsVisible = false;
             NavigationPage.SetHasNavigationBar(this, false);
             var mainDisplayInfo = DeviceDisplay.MainDisplayInfo;
@@ -61,9 +55,10 @@ namespace ShikkhanobishStudentApp.View
             coingrid.IsVisible = true;
             coingrid.TranslationX = width;
             coingrid.Opacity = 0;
-            
-            
 
+
+            StaticPageToPassData.thisStudentInfo = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/LoginStudent".PostUrlEncodedAsync(new { phonenumber = StaticPageToPassData.thisStPh, password = StaticPageToPassData.thisstPass })
+          .ReceiveJson<Student>();
             Connectivity.ConnectivityChanged += Connectivity_ConnectivityChanged;
         }
         async void Connectivity_ConnectivityChanged(object sender, ConnectivityChangedEventArgs e)
@@ -227,7 +222,7 @@ namespace ShikkhanobishStudentApp.View
             var current = Connectivity.NetworkAccess;
             if (current == NetworkAccess.Internet)
             {
-                await getAllInfo(false);
+                await getAllInfo();
                 logoutBtn.IsEnabled = true;
                 loginbtn.IsEnabled = true;
                 connectivityGrid.IsVisible = false;

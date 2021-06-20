@@ -29,7 +29,8 @@ namespace ShikkhanobishStudentApp
             else
             {
                 StaticPageToPassData.thisstPass = pass;
-                StaticPageToPassData.thisStPh = pn;              
+                StaticPageToPassData.thisStPh = pn;
+                
                 MainPage =  new TakeTuitionView(false);
             }
             

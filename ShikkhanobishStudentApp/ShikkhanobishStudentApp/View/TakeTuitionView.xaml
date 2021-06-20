@@ -42,7 +42,7 @@
                     <ColumnDefinition Width=".3*"/>
                 </Grid.ColumnDefinitions>
                 <Image Source="newlogowhite.png" Grid.Column="0" Aspect="AspectFit" Margin="0,0,50,0"/>
-                <material:MaterialButton x:Name="logoutBtn" Text="Signout" Grid.Column="1" Grid.ColumnSpan="2" ButtonType="Elevated" HorizontalOptions="End"  VerticalOptions="Center" BorderWidth="2"  FontAttributes="Bold" FontSize="11" BackgroundColor="Transparent" TextColor="White" Clicked="Button_Clicked_3" Command="{Binding logout}">
+                <material:MaterialButton x:Name="logoutBtn" Text="Signout" Grid.Column="1" Grid.ColumnSpan="2" ButtonType="Elevated" HorizontalOptions="End"  VerticalOptions="Center" BorderWidth="2"  FontAttributes="Bold" FontSize="11" BackgroundColor="#20000000" TextColor="White" Clicked="Button_Clicked_3" Command="{Binding logout}">
                 </material:MaterialButton>
 
             </Grid>
@@ -166,20 +166,32 @@
 
             <Grid Grid.Row="3" Grid.RowSpan="2" Grid.Column="1" RowSpacing="0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height=".03*"/>
+                    <RowDefinition Height=".02*"/>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height=".7*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width=".4*"/>
-                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width=".5*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="2*"/>
                 </Grid.ColumnDefinitions>
+                <Line X1="0" Y1="0"
+                 X2="500"
+                 Y2="0"
+                 Stroke="#864AE8"
+                 StrokeDashArray="5,5"
+                 StrokeDashOffset="5" Grid.Row="0" Grid.ColumnSpan="3" IsVisible="{Binding activebtn}"/>
+                <Line X1="0" Y1="0"
+                 X2="500"
+                 Y2="0"
+                 Stroke="#864AE8"
+                 StrokeDashArray="5,5"
+                 StrokeDashOffset="5" Grid.Row="2" Grid.ColumnSpan="3" IsVisible="{Binding activebtn}"/>
 
-
-                <Frame BackgroundColor="#20000000" Grid.Row="0" Grid.ColumnSpan="2" Margin="0,0,0,0" HasShadow="False"/>
-                <Label Text="Cost:" Grid.Row="1" Grid.Column="0" FontSize="12" HorizontalOptions="Start" VerticalOptions="Start" />
-                <Label Grid.ColumnSpan="2" Grid.Row="3" HorizontalTextAlignment="End" VerticalTextAlignment="Center" FontSize="12" >
+                <Label Text="Cost:" Grid.Row="1" Grid.Column="0" FontSize="12" HorizontalOptions="End" VerticalOptions="Center" IsVisible="{Binding activebtn}"/>
+                
+                <Label Grid.ColumnSpan="3" Grid.Row="3" HorizontalTextAlignment="End" VerticalTextAlignment="Center" FontSize="12" >
                     <Label.FormattedText>
                         <FormattedString >
                             <Span Text="Active Teacher:"></Span>
@@ -187,18 +199,12 @@
                         </FormattedString>
                     </Label.FormattedText>
                 </Label>
-                <Label Text="{Binding perminCostText}" Grid.Row="1" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Start" FontAttributes="Bold" IsVisible="{Binding permincostVisibility}" FontSize="12"/>
-                <Button Text="Request Tuition" CornerRadius="5" TextColor="White" Grid.Column="1" Grid.Row="2" HorizontalOptions="End" VerticalOptions="Center"  FontSize="12" FontAttributes="Bold" BackgroundColor="#9D9D9D" IsEnabled="False" >
-                </Button>
-                <Button Text="Request Tuition" CornerRadius="5" TextColor="White" Grid.Column="1" Grid.Row="2" HorizontalOptions="End" VerticalOptions="Center" FontSize="12" FontAttributes="Bold" IsVisible="{Binding activebtn}" Command="{Binding CallTeacher}" >
-                    <Button.Background>
-                        <LinearGradientBrush EndPoint="1,0">
-                            <GradientStop Color="#48ACFF" Offset="0.1" />
-                            <GradientStop Color="#8748FF" Offset="1.0" />
-                        </LinearGradientBrush>
-                    </Button.Background>
-                </Button>
-                
+                <Label Text="{Binding perminCostText}" Grid.Row="1" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" FontAttributes="Bold" IsVisible="{Binding activebtn}" FontSize="16"  TextColor="#11AAD7"/>
+
+                <material:MaterialButton Text="Request Tuition" ButtonType="Outlined" Elevation="0"   CornerRadius="5" TextColor="White" Grid.Column="2" Grid.Row="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="10" FontAttributes="Bold" IsVisible="{Binding activebtn}" Command="{Binding CallTeacher}" BorderColor="#864AE8" PressedBackgroundColor="#50864AE8">
+
+                </material:MaterialButton>
+
             </Grid>
 
             <Grid Grid.Row="5" Grid.ColumnSpan="3">
@@ -211,6 +217,7 @@
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height=".3*"/>
                 </Grid.RowDefinitions>
+
                 <Image x:Name="ttimg" Source="taketuition.png" Grid.Column="0" Aspect="AspectFit" Margin="10" />
                 <Image x:Name="cpimg" Source="coinplus.png" Grid.Column="1" Aspect="AspectFit" Margin="2" />
                 <controls:CircleImage   
@@ -347,7 +354,7 @@
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
                     <material:MaterialCard BackgroundColor="Transparent" Grid.ColumnSpan="2" CornerRadius="10" />
-                    <material:MaterialTextField Placeholder="Enter Bkash TrxID" Grid.Column="0" CardBackgroundColor="#10000000" Margin="10,2,10,2" TintColor="Black" TextColor="Black" PlaceholderColor="Black" FloatingPlaceholderFontSize="11" TextFontSize="14"  VerticalOptions="Center"/>
+                    <material:MaterialTextField Placeholder="Enter Bkash TrxID" Grid.Column="0" CardBackgroundColor="#05000000" Margin="10,2,10,2" TintColor="Black" TextColor="Black" PlaceholderColor="Black" FloatingPlaceholderFontSize="11" TextFontSize="14"  VerticalOptions="Center"/>
                     <material:MaterialButton ButtonType="Outlined" TextColor="#db126b" Text="Recharge Now" Grid.Column="1"  BorderColor="#db126b"  FontSize="11" CornerRadius="10" FontAttributes="Bold" HorizontalOptions="End" VerticalOptions="Center" PressedBackgroundColor="#20db126b"/>
                 </Grid>
                 <CarouselView ItemsSource="{Binding offerList}" Grid.Row="7" Grid.Column="1" >
