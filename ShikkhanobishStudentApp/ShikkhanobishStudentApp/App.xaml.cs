@@ -5,6 +5,7 @@ using ShikkhanobishStudentApp.View;
 using Xamarin.Essentials;
 using System.Threading.Tasks;
 using ShikkhanobishStudentApp.Model;
+using Flurl.Http;
 
 namespace ShikkhanobishStudentApp
 {
@@ -28,7 +29,7 @@ namespace ShikkhanobishStudentApp
             else
             {
                 StaticPageToPassData.thisstPass = pass;
-                StaticPageToPassData.thisStPh = pn;
+                StaticPageToPassData.thisStPh = pn;              
                 MainPage =  new TakeTuitionView(false);
             }
             

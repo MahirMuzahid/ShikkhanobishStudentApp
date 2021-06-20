@@ -282,9 +282,9 @@ namespace ShikkhanobishStudentApp.ViewModel
              new Command<popupList>(async(thisList) =>
              {
 
-                 popUpVisibility = false;
-                 
-                
+
+
+                 popWaitVisiblity = true;
                  if (thisList.ListIndex == 1)
                  {
                      if (selectedGlobalCls != null || selectedGlobalUniName != null)
@@ -328,7 +328,6 @@ namespace ShikkhanobishStudentApp.ViewModel
                      {
                          resetList(2);
                      }
-                     thirdListBtnVisibility = true;
                      CLseletedCountTextVisibility = true;
                      if (thisList.ListIndex == 2)
                      {
@@ -456,9 +455,10 @@ namespace ShikkhanobishStudentApp.ViewModel
                      ChpTRequest = selectedList.tuitionRequest;
                      Chpavgratting = selectedList.avgRatting;
                  }
-
+                 
                  CheckEverythign();
-
+                 popWaitVisiblity = false;
+                 popUpVisibility = false;
                  searchText = "";
              });
         #region reset list
@@ -920,7 +920,11 @@ namespace ShikkhanobishStudentApp.ViewModel
 
         public string avaiableCoin { get => avaiableCoin1; set => SetProperty(ref avaiableCoin1, value); }
 
-        
+        private bool popWaitVisiblity1;
+
+        public bool popWaitVisiblity { get => popWaitVisiblity1; set => SetProperty(ref popWaitVisiblity1, value); }
+
+
 
 
         #endregion

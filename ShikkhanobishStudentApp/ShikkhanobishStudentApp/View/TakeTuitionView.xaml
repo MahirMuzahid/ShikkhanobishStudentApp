@@ -16,26 +16,33 @@
         <Grid BackgroundColor="White" x:Name="ttGrid">
             <Grid.RowDefinitions>
                 <RowDefinition Height=".7*"/>
-                <RowDefinition Height="2.5*"/>
-                <RowDefinition Height="4*"/>
-                <RowDefinition Height="1*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="3.5*"/>
+                <RowDefinition Height="2*"/>
                 <RowDefinition Height=".2*"/>
-                <RowDefinition Height=".8*"/>
+                <RowDefinition Height=".6*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width=".5*"/>
                 <ColumnDefinition Width="20*"/>
                 <ColumnDefinition Width=".5*"/>
             </Grid.ColumnDefinitions>
-
+            <BoxView  Grid.RowSpan="2" Grid.ColumnSpan="3">
+                <BoxView.Background>
+                    <LinearGradientBrush EndPoint="1,0">
+                        <GradientStop Color="#11AAD7" Offset="1" />
+                        <GradientStop Color="#864AE8" Offset=".01" />
+                    </LinearGradientBrush>
+                </BoxView.Background>
+            </BoxView>
             <Grid Grid.Row="0" Grid.Column="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="3*"/>
                     <ColumnDefinition Width="2*"/>
                     <ColumnDefinition Width=".3*"/>
                 </Grid.ColumnDefinitions>
-                <Image Source="newLogo.png" Grid.Column="0" Aspect="AspectFit" Margin="0,0,50,0"/>
-                <material:MaterialButton Text="Signout" Grid.Column="1" Grid.ColumnSpan="2" ButtonType="Elevated" HorizontalOptions="End"  VerticalOptions="Center" BorderWidth="2"  FontAttributes="Bold" FontSize="11" BackgroundColor="#EF2F2F" TextColor="White" Clicked="Button_Clicked_3" Command="{Binding logout}">
+                <Image Source="newlogowhite.png" Grid.Column="0" Aspect="AspectFit" Margin="0,0,50,0"/>
+                <material:MaterialButton x:Name="logoutBtn" Text="Signout" Grid.Column="1" Grid.ColumnSpan="2" ButtonType="Elevated" HorizontalOptions="End"  VerticalOptions="Center" BorderWidth="2"  FontAttributes="Bold" FontSize="11" BackgroundColor="Transparent" TextColor="White" Clicked="Button_Clicked_3" Command="{Binding logout}">
                 </material:MaterialButton>
 
             </Grid>
@@ -54,13 +61,14 @@
                     <ColumnDefinition Width=".1*"/>
                 </Grid.ColumnDefinitions>
 
-                <material:MaterialLabel Text="Detail about your question" Grid.Column="1" Grid.Row="1" HorizontalTextAlignment="Start" VerticalTextAlignment="Center"  FontSize="13"  TextColor="Black"/>
-                <material:MaterialLabel Text="What should I write here?" Grid.Column="2" Grid.Row="1"  FontSize="11" HorizontalTextAlignment="End" VerticalTextAlignment="Center" TextColor="Black"/>
+                <material:MaterialLabel Text="Detail about your question" Grid.Column="1" Grid.Row="1" HorizontalTextAlignment="Start" VerticalTextAlignment="Center"  FontSize="13"  TextColor="White"/>
+                <material:MaterialLabel Text="What should I write here?" Grid.Column="2" Grid.Row="1"  FontSize="11" HorizontalTextAlignment="End" VerticalTextAlignment="Center" TextColor="White"/>
                 <Frame BackgroundColor="#10000000" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" HasShadow="False"/>
-                <Editor Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" FontSize="14" Text='{Binding detailTxt}' TextColor="Black"/>
+                <Editor Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" FontSize="14" Text='{Binding detailTxt}' TextColor="White"/>
                 <Label Text="{Binding remainword}" Grid.Column="2" Grid.Row="3" HorizontalTextAlignment="End" VerticalTextAlignment="Start"  FontSize="11" TextColor="{Binding remainColopr}"/>
             </Grid>
 
+            
             <Grid Grid.Row="2" Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
@@ -209,16 +217,16 @@
                 Grid.Column="2" Grid.RowSpan="2"
                 HeightRequest="100"   
                 WidthRequest="100"               
-                Source="taketuition.png"   
+                Source="avatar.png"   
                 Aspect="AspectFit"
-                 Margin="15">
+                 Margin="10">
                 </controls:CircleImage>
                 <Button Grid.Column="0" BackgroundColor="Transparent" Clicked="Button_Clicked_1"/>
                 <Button Grid.Column="1" Clicked="Button_Clicked" BackgroundColor="Transparent"/>
                 <Button Grid.Column="2" Clicked="Button_Clicked_2" BackgroundColor="Transparent"/>
                 <Label x:Name="ttlbl" Text="Take Tuition" Grid.RowSpan="2" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="End" FontSize="11" FontAttributes="Bold" Margin="0,0,0,7"/>
                 <Label x:Name="rclbl" Text="Rechrage Coin" Grid.RowSpan="2" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="End" FontSize="11" FontAttributes="Bold" Margin="0,0,0,7"/>
-                
+
             </Grid>
             
             <!-- Payment View -->
@@ -363,6 +371,7 @@
                     <RowDefinition Height="3*"/>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
                     <RowDefinition Height="4*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
@@ -373,6 +382,7 @@
                 <Frame BackgroundColor="#10000000"   Grid.Row="1" Grid.Column="1" CornerRadius="20" HasShadow="False"/>
                 <Image Source="nointernetconnection.png" HorizontalOptions="Center" VerticalOptions="End" Aspect="AspectFit"  Grid.Row="1" Grid.Column="1" Margin="15" />
                 <Label Text="Connection Lost" Grid.Row="2" Grid.ColumnSpan="3" HorizontalOptions="Center" VerticalOptions="Start" FontAttributes="Bold" FontSize="25" TextColor="#99000000"/>
+                <Button Text="Retry" Grid.Row="3" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Start" BackgroundColor="#FF5D5D" TextColor="White" CornerRadius="15" Margin="0,15,0,15" Clicked="Button_Clicked_5"/>
 
             </Grid>
             <!--Connection View-->
@@ -392,6 +402,7 @@
                 <ColumnDefinition Width="10*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
+           
             <Button Grid.RowSpan="3" Grid.ColumnSpan="3" BackgroundColor="Transparent" Command="{Binding ClosePopUp}"/>
             <Grid Grid.Row="1" Grid.Column="1" BackgroundColor="White" >
                 <Grid.RowDefinitions>
@@ -417,40 +428,22 @@
                 <Label Text="Getting Result..." Grid.Row="5" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" TextColor="#9C9C9C" Margin="0,0,0,50" IsVisible="{Binding resultvisi}" FontAttributes="Bold"/>
                 
 
-                <ListView  ItemsSource="{Binding popupList}" Grid.Row="5" Grid.Column="1" RowHeight="60" SeparatorColor="#50000000" >
+                <ListView  ItemsSource="{Binding popupList}" Grid.Row="5" Grid.Column="1" RowHeight="50" SeparatorColor="Black" >
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell >
                                 <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="1*"/>
-                                        <RowDefinition Height="1*"/>
-                                        <RowDefinition Height=".03*"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="2*"/>
-                                        <ColumnDefinition Width="1*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <material:MaterialCard  Grid.RowSpan="2" Grid.ColumnSpan="2" IsClickable="True" ClickCommand="{Binding Source={x:Reference tuitionView}, Path=BindingContext.SelectedItem}" ClickCommandParameter="{Binding .}"/>
-                                    <material:MaterialLabel Text="{Binding name}"   FontSize="15" Grid.Row="0" Grid.Column="0" HorizontalOptions="Start" VerticalOptions="End" TextColor="#4B4B4B" />
-                                    <Label  Grid.Row="1" Grid.Column="0" HorizontalOptions="Start" VerticalOptions="Center" FontSize="11">
-                                        <Label.FormattedText>
-                                            <FormattedString >
-                                                <Span Text="Total Tuition Request:"/>
-                                                <Span Text="{Binding totalRequest}" TextColor="#4B4B4B"/>
-                                            </FormattedString>
-                                        </Label.FormattedText>
-                                    </Label>
-                                    <Label Text="Avg. Ratting:" Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" FontSize="11" >
-                  
-                                    </Label>
-                                    <Label Text="{Binding avgRatting}" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" FontSize="15"/>
+                                    <material:MaterialCard  IsClickable="True" ClickCommand="{Binding Source={x:Reference tuitionView}, Path=BindingContext.SelectedItem}" ClickCommandParameter="{Binding .}"/>
+                                    <material:MaterialLabel Text="{Binding name}"   FontSize="15"  HorizontalOptions="Start" VerticalOptions="Center" TextColor="#4B4B4B" />
+
                                 </Grid>
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
             </Grid>
+            <Frame BackgroundColor="#50000000" Grid.Row="1" Grid.Column="1" IsVisible="{Binding popWaitVisiblity}"/>
+            <Label Text="Please Wait..." Grid.Column="1" Grid.Row="1" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="{Binding popWaitVisiblity}"/>
         </Grid>
         <!-- PopUp End -->
 

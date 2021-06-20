@@ -21,18 +21,35 @@ namespace ShikkhanobishStudentApp.View
         public TakeTuitionView(bool fromLogin)
         {
             InitializeComponent();
-            getAllInfo(fromLogin);
+            if(!fromLogin)
+            {
+                loginView.Opacity = 0;
+                loginView.TranslateTo(0, -1000, 1500, Easing.CubicIn);
+                loginView.FadeTo(0, 1200, Easing.CubicIn);
+            }
+            var current = Connectivity.NetworkAccess;
+            if (current == NetworkAccess.Internet)
+            {                
+                connectivityGrid.IsVisible = false;
+                getAllInfo(fromLogin);
+            }
+            else
+            {
+                loginbtn.IsEnabled = false;
+                logoutBtn.IsEnabled = false;
+                connectivityGrid.IsVisible = true;
+                ShowSnakeBarError();
+            }
+           
         }
 
         public async Task getAllInfo(bool fromLogin)
         {
+            
             if (!fromLogin)
             {
                 StaticPageToPassData.thisStudentInfo = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/LoginStudent".PostUrlEncodedAsync(new { phonenumber = StaticPageToPassData.thisStPh, password = StaticPageToPassData.thisstPass })
-          .ReceiveJson<Student>();
-                loginView.Opacity = 0;
-                loginView.TranslateTo(0, -1000, 1500, Easing.CubicIn);
-                loginView.FadeTo(0, 1200, Easing.CubicIn);
+                     .ReceiveJson<Student>();
 
             }
             connectivityGrid.IsVisible = false;
@@ -45,24 +62,17 @@ namespace ShikkhanobishStudentApp.View
             coingrid.TranslationX = width;
             coingrid.Opacity = 0;
             
-            var current = Connectivity.NetworkAccess;
-            if (current == NetworkAccess.Internet)
-            {
-                connectivityGrid.IsVisible = false;
-            }
-            else
-            {
-                connectivityGrid.IsVisible = true;
-                ShowSnakeBarError();
-            }
+            
 
             Connectivity.ConnectivityChanged += Connectivity_ConnectivityChanged;
         }
-        void Connectivity_ConnectivityChanged(object sender, ConnectivityChangedEventArgs e)
+        async void Connectivity_ConnectivityChanged(object sender, ConnectivityChangedEventArgs e)
         {
             var current = Connectivity.NetworkAccess;
             if (current == NetworkAccess.Internet)
             {
+                logoutBtn.IsEnabled = true;
+                loginbtn.IsEnabled = true;
                 connectivityGrid.IsVisible = false;
             }
             else
@@ -210,6 +220,24 @@ namespace ShikkhanobishStudentApp.View
         private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
             Application.Current.MainPage.Navigation.PushModalAsync(new ForgotPassword());
+        }
+
+        private async void Button_Clicked_5(object sender, EventArgs e)
+        {
+            var current = Connectivity.NetworkAccess;
+            if (current == NetworkAccess.Internet)
+            {
+                await getAllInfo(false);
+                logoutBtn.IsEnabled = true;
+                loginbtn.IsEnabled = true;
+                connectivityGrid.IsVisible = false;
+                
+            }
+            else
+            {
+                connectivityGrid.IsVisible = true;
+                ShowSnakeBarError();
+            }
         }
     }
 }
