@@ -21,6 +21,7 @@ namespace ShikkhanobishStudentApp.View
         public TakeTuitionView(bool fromLogin)
         {
             InitializeComponent();
+            proImage.IsVisible = false;
             if(!fromLogin)
             {
                 loginView.Opacity = 0;
@@ -60,6 +61,7 @@ namespace ShikkhanobishStudentApp.View
             StaticPageToPassData.thisStudentInfo = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/LoginStudent".PostUrlEncodedAsync(new { phonenumber = StaticPageToPassData.thisStPh, password = StaticPageToPassData.thisstPass })
           .ReceiveJson<Student>();
             Connectivity.ConnectivityChanged += Connectivity_ConnectivityChanged;
+            proImage.IsVisible = true;
         }
         async void Connectivity_ConnectivityChanged(object sender, ConnectivityChangedEventArgs e)
         {

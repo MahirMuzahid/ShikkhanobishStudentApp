@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodel="clr-namespace:ShikkhanobishStudentApp.ViewModel"
              xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin"
+             xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
              x:DataType="viewmodel:StudentProfile"
              x:Class="ShikkhanobishStudentApp.View.StudentProfile">
     <!--   !-->
@@ -12,23 +13,23 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
-            <RowDefinition Height=".1*"/>
-            <RowDefinition Height="2.5*"/>
+            <RowDefinition Height="4*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="20*"/>
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
-        <Grid Grid.Row="0" Grid.Column="1">
+        <Grid Grid.Row="0" Grid.ColumnSpan="3">
             <Grid.RowDefinitions>
                 <RowDefinition Height="2*"/>
-                <RowDefinition Height="4*"/>
                 <RowDefinition Height="2*"/>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height=".01*"/>
 
             </Grid.RowDefinitions>
+            <Image Source="profilebac.jpg" Grid.Row="0" Aspect="AspectFill" Grid.RowSpan="4"/>
+            
             <Label Text="" Grid.Row="0" HorizontalOptions="Start" VerticalOptions="Center" FontSize="25" Margin="20,20,0,0">
                 <Label.FormattedText>
                     <FormattedString>
@@ -40,18 +41,11 @@
                     </FormattedString>
                 </Label.FormattedText>
             </Label>
-            <controls:CircleImage   
-            Grid.Row="1"
-            HeightRequest="200"   
-            WidthRequest="200"               
-            Source="taketuition.png"   
-            Aspect="AspectFit">
-            </controls:CircleImage>
-            <Label Text="{Binding name}" Grid.Row="2" HorizontalOptions="Center" VerticalOptions="Center" FontSize="25" FontAttributes="Bold"/>
-            <Label Text="{Binding phonenumber}" Grid.Row="3" HorizontalOptions="Center" VerticalOptions="Center" FontSize="13"/>
+            <Label Text="{Binding name}" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" FontSize="25" FontAttributes="Bold"/>
+            <Label Text="{Binding phonenumber}" Grid.Row="2" HorizontalOptions="Center" VerticalOptions="Start" FontSize="13"/>
         </Grid>
         
-        <Grid Grid.Row="2" Grid.ColumnSpan="3" BackgroundColor="#774CD5">
+        <Grid Grid.Row="1" Grid.ColumnSpan="3" BackgroundColor="#774CD5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="20*"/>
@@ -60,7 +54,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1.5*"/>
-                <RowDefinition Height="3.5*"/>
+                <RowDefinition Height="5*"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" Grid.Column="1" >
                 <Grid.RowDefinitions>
@@ -70,10 +64,12 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <Label Text="Edit Info" Grid.Row="0" FontSize="15" FontAttributes="Bold" TextColor="White" VerticalOptions="Center"/>
-                <Button Text="Change Phone Number" Grid.Row="1" Grid.Column="0" BackgroundColor="#7F54DE" TextColor="White" FontSize="12" Command="{Binding changepnCommand}"/>
-                <Button Text="Change Password" Grid.Row="1" Grid.Column="1" BackgroundColor="#7F54DE" TextColor="White" FontSize="12" Command="{Binding changepassCommand}"/>
+                <material:MaterialButton Text="Phone Number" Grid.Row="1" ButtonType="Text" Grid.Column="0" BackgroundColor="Transparent" TextColor="White" FontSize="12" HorizontalOptions="Center" VerticalOptions="Center" Command="{Binding changepnCommand}"/>
+                <material:MaterialButton Text="Password" Grid.Row="1" ButtonType="Text" Grid.Column="1" BackgroundColor="Transparent" HorizontalOptions="Center" VerticalOptions="Center" TextColor="White" FontSize="12" Command="{Binding changepassCommand}"/>
+                <material:MaterialButton Text="Name" ButtonType="Text" Grid.Row="1" Grid.Column="2" BackgroundColor="Transparent" HorizontalOptions="Center" VerticalOptions="Center" TextColor="White" FontSize="12" Command="{Binding changeNmaeCommand}"/>
             </Grid>
             <Grid Grid.Row="1" Grid.Column="1" >
                 <Grid.RowDefinitions>
@@ -109,7 +105,9 @@
                 
                 <Label Text="Tuition History" Grid.Column="1" Grid.Row="0" HorizontalOptions="Start" VerticalOptions="Center" TextColor="White"/>
                 <Label Text="Payment History" Grid.Column="3" Grid.Row="0" HorizontalOptions="Start" VerticalOptions="Center" TextColor="White"/>
-                <ListView x:Name="hislist" Grid.Row="1" Grid.ColumnSpan="5" RowHeight="100" SeparatorColor="#ffffff">
+                
+                <!--#region Tuition List-->
+                <ListView x:Name="hislist" Grid.Row="1" Grid.ColumnSpan="5" RowHeight="100" SeparatorColor="#ffffff" IsVisible="{Binding hisVisibility}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
@@ -127,13 +125,16 @@
                                             <RowDefinition Height="1*"/>
                                             <RowDefinition Height="1*"/>
                                         </Grid.RowDefinitions>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="1*"/>
-                                            <ColumnDefinition Width="1*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Label Text="Mahir Muzahid" Grid.Row="0" Grid.Column="0" HorizontalOptions="Start" VerticalOptions="Start" FontSize="14" FontAttributes="Bold" TextColor="White"/>
-                                        <Label Text="Date: 14.01.2022" Grid.Column="1" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" FontSize="10" TextColor="White"/>
-                                        <Label Text="10 Min" Grid.Row="1" Grid.Column="0" HorizontalOptions="Start" VerticalOptions="Center" TextColor="White" FontSize="10"/>
+                                        <Label  Grid.Row="0" HorizontalOptions="Start" VerticalOptions="Start" FontAttributes="Bold">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="Mahir Muzahid" TextColor="White" FontSize="14"/>
+                                                    <Span Text=" "/>
+                                                    <Span Text="14.01.2022 "  TextColor="#90FFFFFF" FontSize="10"/>
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                        <Label Text="10 Min" Grid.Row="1" HorizontalOptions="Start" VerticalOptions="Center" TextColor="White" FontSize="10"/>
                                     </Grid>
                                     <Grid Grid.Row="0" Grid.Column="1">
                                         <Grid.RowDefinitions>
@@ -166,8 +167,81 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
+                <!--#endregion-->
+                
+                <!--#region Payment List-->
+                <ListView x:Name="payList" Grid.Row="1" Grid.ColumnSpan="5" RowHeight="120" SeparatorColor="#ffffff" IsVisible="{Binding payVisiblity}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid Margin="0,10,0,10">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="1.5*"/>
+                                        <RowDefinition Height=".1*"/>
+                                        <RowDefinition Height="1*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid Grid.Row="0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="1*"/>
+                                            <RowDefinition Height="1*"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="2*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Grid.RowSpan="2" Grid.Column="0" HorizontalOptions="Start" VerticalOptions="Start" >
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="Bkash " TextColor="White" FontSize="14"/>
+                                                    <Span Text="20.02.2022, 5:40 PM" TextColor="#90FFFFFF" FontSize="10"/>
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                        <Label Grid.Row="0" Grid.Column="1"  HorizontalOptions="Center" VerticalOptions="Center" TextColor="#4CF766" FontSize="14" FontAttributes="Bold">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="+"/>
+                                                    <Span Text="50"/>
+                                                    <Span Text=" Coin"/>
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                        <Label  Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" FontSize="10" TextColor="White">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="Voucher: "/>
+                                                    <Span Text="First10"/>
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                    </Grid>
+                                    
+                                    <Grid Grid.Row="2">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="1*"/>
+                                            <RowDefinition Height="1*"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Text="PaymentID" Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" FontSize="10" TextColor="White"/>
+                                        <Label Text="Trans ID" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" FontSize="10" TextColor="White"/>
+                                        <Label Text="Cost (Taka)" Grid.Row="0" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" FontSize="10" TextColor="White"/>
+
+                                        <Label Text="P32S34FS3" Grid.Row="1" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center"  FontSize="10" TextColor="White"/>
+                                        <Label Text="TR4VB8XC1" Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center"  FontSize="10" TextColor="White"/>
+                                        <Label Text="50" Grid.Row="1" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center"  FontSize="10" FontAttributes="Bold" TextColor="White"/>
+                                    </Grid>
+
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
             </Grid>
-            
+            <!--#endregion-->    
         </Grid>
     </Grid>
 </ContentPage>

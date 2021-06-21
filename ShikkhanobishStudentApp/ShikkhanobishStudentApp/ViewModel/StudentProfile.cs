@@ -18,7 +18,11 @@ namespace ShikkhanobishStudentApp.ViewModel
             phonenumber = StaticPageToPassData.thisStudentInfo.phonenumber;
             coinSpent = ""+StaticPageToPassData.thisStudentInfo.totalSpent;
             totalTuition = "" + StaticPageToPassData.thisStudentInfo.totalTuitionTime;
-            
+            tuitionHisChanged = true;
+            paymentHistoryChaged = false;
+            hisVisibility = true;
+            payVisiblity = false;
+
         }
         public ICommand closeWindow =>
             new Command(() =>
@@ -30,6 +34,9 @@ namespace ShikkhanobishStudentApp.ViewModel
         {
         }
         private void changepn()
+        {
+        }
+        private void changeNmae()
         {
         }
         #endregion
@@ -85,12 +92,51 @@ namespace ShikkhanobishStudentApp.ViewModel
 
         private bool tuitionHisChanged1;
 
-        public bool tuitionHisChanged { get => tuitionHisChanged1; set => SetProperty(ref tuitionHisChanged1, value); }
+        public bool tuitionHisChanged { get { return tuitionHisChanged1; } set { tuitionHisChanged1 = value;
+                if(tuitionHisChanged == true)
+                {
+                    paymentHistoryChaged = false;
+                    hisVisibility = true;
+                    payVisiblity = false;
+                }
+                
+                OnPropertyChanged(); } }
 
         private bool paymentHistoryChaged1;
 
-        public bool paymentHistoryChaged { get => paymentHistoryChaged1; set => SetProperty(ref paymentHistoryChaged1, value); }
+        public bool paymentHistoryChaged { get { return paymentHistoryChaged1; } set { paymentHistoryChaged1 = value;
+                if (paymentHistoryChaged == true)
+                {
+                    tuitionHisChanged = false;
+                    hisVisibility = false;
+                    payVisiblity = true;
+                }
+                OnPropertyChanged(); } }
 
+        private Command changeNmaeCommand1;
+
+        public ICommand changeNmaeCommand
+        {
+            get
+            {
+                if (changeNmaeCommand1 == null)
+                {
+                    changeNmaeCommand1 = new Command(changeNmae);
+                }
+
+                return changeNmaeCommand1;
+            }
+        }
+
+       
+
+        private bool payVisiblity1;
+
+        public bool payVisiblity { get => payVisiblity1; set => SetProperty(ref payVisiblity1, value); }
+
+        private bool hisVisibility1;
+
+        public bool hisVisibility { get => hisVisibility1; set => SetProperty(ref hisVisibility1, value); }
 
         #endregion
     }

@@ -24,6 +24,7 @@ namespace ShikkhanobishStudentApp.View
             a.Add(4);
             a.Add(5);
             hislist.ItemsSource = a;
+            payList.ItemsSource = a;
         }
     }
 }

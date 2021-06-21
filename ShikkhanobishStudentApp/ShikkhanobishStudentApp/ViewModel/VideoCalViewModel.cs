@@ -16,7 +16,7 @@ namespace ShikkhanobishStudentApp.ViewModel
         public ICommand goRattingPage =>
             new Command(() =>
             {
-                Application.Current.MainPage.Navigation.PushAsync(new RattingPageView());
+                Application.Current.MainPage.Navigation.PushModalAsync(new RattingPageView());
             });
         #endregion
 
