@@ -41,7 +41,7 @@
                     </FormattedString>
                 </Label.FormattedText>
             </Label>
-            <Label Text="{Binding name}" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" FontSize="25" FontAttributes="Bold"/>
+            <Label Text="{Binding name}" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" FontSize="20" FontAttributes="Bold"/>
             <Label Text="{Binding phonenumber}" Grid.Row="2" HorizontalOptions="Center" VerticalOptions="Start" FontSize="13"/>
         </Grid>
         
@@ -242,6 +242,40 @@
                 </ListView>
             </Grid>
             <!--#endregion-->    
+        </Grid>
+
+        <Grid Grid.RowSpan="2" Grid.ColumnSpan="3" BackgroundColor="#50000000" IsVisible="{Binding popUpVisibility}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1.5*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="20*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Frame BackgroundColor="White" Grid.Row="1" Grid.Column="1"/>
+            <Button BackgroundColor="Transparent" Grid.RowSpan="3" Grid.ColumnSpan="3" Command="{Binding popOut}"/>
+            <Grid Grid.Row="1" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height=".5*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height=".2*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height=".1*"/>
+                    <RowDefinition Height=".7*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="20*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Label Text="{Binding popupTitle}" Grid.Row="0" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" FontFamily="16" TextColor="#373737"/>
+                <material:MaterialTextField Placeholder="{Binding popuptxtFieldPlcHolder}" Text="{Binding newInfoText}" Grid.Row="1" Grid.Column="1" CardBackgroundColor="#10000000" PlaceholderFontFamily="14" TextFontSize="14" ErrorText="{Binding errorTxtF}" HasError="{Binding hasErrorF}"/>
+                <material:MaterialTextField Placeholder="Current Password" Grid.Row="3" Text="{Binding passtext}" Grid.Column="1" CardBackgroundColor="#10000000" PlaceholderFontFamily="14" TextFontSize="14" ErrorText="{Binding errorTxtS}" HasError="{Binding hasErrorS}"/>
+                <material:MaterialButton Text="{Binding popBtnTxt}" Grid.Row="5" BackgroundColor="#03B91F" Grid.Column="1" DisabledBackgroundColor="#B6B6B6" TextColor="White" IsEnabled="{Binding popBtnEnabled}" IsVisible="{Binding popBtnEnabled}" Command="{Binding changeCommand}"/>
+            </Grid>
         </Grid>
     </Grid>
 </ContentPage>
