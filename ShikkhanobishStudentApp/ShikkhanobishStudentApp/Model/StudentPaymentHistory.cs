@@ -15,6 +15,7 @@ namespace ShikkhanobishStudentApp.Model
         public int medium { get; set; }
         public int isVoucherUsed { get; set; }
         public int voucherID { get; set; }
+        public string name { get; set; }
         public string Response { get; set; }
     }
 }

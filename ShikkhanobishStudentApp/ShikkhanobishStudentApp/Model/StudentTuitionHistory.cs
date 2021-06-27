@@ -16,6 +16,9 @@ namespace ShikkhanobishStudentApp.Model
         public string secondChoiceID { get; set; }
         public string thirdChoiceID { get; set; }
         public string forthChoiceID { get; set; }
+        public string date { get; set; }
+        public string studentName { get; set; }
+        public string teacherName { get; set; }
         public string Response { get; set; }
     }
 }
