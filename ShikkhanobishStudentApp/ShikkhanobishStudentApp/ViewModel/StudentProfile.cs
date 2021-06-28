@@ -19,6 +19,8 @@ namespace ShikkhanobishStudentApp.ViewModel
         Student thisStudent { get; set; }
         public StudentProfile()
         {
+            PopulatePaymentList();
+            PopulateTuitionList();
             thisStudent = StaticPageToPassData.thisStudentInfo;
             name = StaticPageToPassData.thisStudentInfo.name;
             phonenumber = StaticPageToPassData.thisStudentInfo.phonenumber;
@@ -86,6 +88,18 @@ namespace ShikkhanobishStudentApp.ViewModel
             errorTxtF = "";
             passtext = "";
             newInfoText = "";
+        }
+        public async Task PopulateTuitionList()
+        {
+            IEnumerable<StudentTuitionHistory> tuitionList = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getStudentTuitionHistoryWithID".PostUrlEncodedAsync(new { studentID = StaticPageToPassData.thisStudentInfo.studentID})
+        .ReceiveJson<IEnumerable<StudentTuitionHistory>>();
+            tuiListItemSource = tuitionList;
+        }
+        public async Task PopulatePaymentList()
+        {
+            IEnumerable<StudentPaymentHistory> payList = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getStudentPaymentHistoryWithID".PostUrlEncodedAsync(new { studentID = StaticPageToPassData.thisStudentInfo.studentID })
+        .ReceiveJson<IEnumerable<StudentPaymentHistory>>();
+            paymentList = payList;
         }
         public void Check()
         {
@@ -217,7 +231,12 @@ namespace ShikkhanobishStudentApp.ViewModel
                       StaticPageToPassData.thisStudentInfo = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/LoginStudent".PostUrlEncodedAsync(new { phonenumber = StaticPageToPassData.thisStPh, password = passtext })
          .ReceiveJson<Student>();
                   }
-                  else
+                  else if(changeFlag == 2)
+                  {
+                      StaticPageToPassData.thisStudentInfo = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/LoginStudent".PostUrlEncodedAsync(new { phonenumber = newInfoText, password = StaticPageToPassData.thisstPass })
+         .ReceiveJson<Student>();
+                  }
+                  else if (changeFlag == 3)
                   {
                       StaticPageToPassData.thisStudentInfo = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/LoginStudent".PostUrlEncodedAsync(new { phonenumber = StaticPageToPassData.thisStPh, password = StaticPageToPassData.thisstPass })
          .ReceiveJson<Student>();
@@ -394,6 +413,14 @@ namespace ShikkhanobishStudentApp.ViewModel
         private string popBtnTxt1;
 
         public string popBtnTxt { get => popBtnTxt1; set => SetProperty(ref popBtnTxt1, value); }
+
+        private System.Collections.IEnumerable tuiListItemSource1;
+
+        public System.Collections.IEnumerable tuiListItemSource { get => tuiListItemSource1; set => SetProperty(ref tuiListItemSource1, value); }
+
+        private System.Collections.IEnumerable paymentList1;
+
+        public System.Collections.IEnumerable paymentList { get => paymentList1; set => SetProperty(ref paymentList1, value); }
 
 
 

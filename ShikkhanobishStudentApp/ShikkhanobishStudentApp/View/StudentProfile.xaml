@@ -4,9 +4,9 @@
              xmlns:viewmodel="clr-namespace:ShikkhanobishStudentApp.ViewModel"
              xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin"
              xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
-             x:DataType="viewmodel:StudentProfile"
+             
              x:Class="ShikkhanobishStudentApp.View.StudentProfile">
-    <!--   !-->
+    <!--  x:DataType="viewmodel:StudentProfile" !-->
     <ContentPage.BindingContext>
         <viewmodel:StudentProfile/>
     </ContentPage.BindingContext>
@@ -107,7 +107,7 @@
                 <Label Text="Payment History" Grid.Column="3" Grid.Row="0" HorizontalOptions="Start" VerticalOptions="Center" TextColor="White"/>
                 
                 <!--#region Tuition List-->
-                <ListView x:Name="hislist" Grid.Row="1" Grid.ColumnSpan="5" RowHeight="100" SeparatorColor="#ffffff" IsVisible="{Binding hisVisibility}">
+                <ListView  ItemsSource="{Binding tuiListItemSource}" Grid.Row="1" Grid.ColumnSpan="5" RowHeight="100" SeparatorColor="#ffffff" IsVisible="{Binding hisVisibility}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
@@ -117,7 +117,7 @@
                                         <RowDefinition Height="1*"/>
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="3*"/>
                                         <ColumnDefinition Width="1*"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid Grid.Row="0" Grid.Column="0">
@@ -128,9 +128,9 @@
                                         <Label  Grid.Row="0" HorizontalOptions="Start" VerticalOptions="Start" FontAttributes="Bold">
                                             <Label.FormattedText>
                                                 <FormattedString>
-                                                    <Span Text="Mahir Muzahid" TextColor="White" FontSize="14"/>
+                                                    <Span Text="{Binding teacherName}" TextColor="White" FontSize="14"/>
                                                     <Span Text=" "/>
-                                                    <Span Text="14.01.2022 "  TextColor="#90FFFFFF" FontSize="10"/>
+                                                    <Span Text="{Binding date}"  TextColor="#90FFFFFF" FontSize="10"/>
                                                 </FormattedString>
                                             </Label.FormattedText>
                                         </Label>
@@ -142,7 +142,7 @@
                                             <RowDefinition Height="1*"/>
                                         </Grid.RowDefinitions>
                                         <Label Text="Ratting" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" TextColor="White" FontSize="10"/>
-                                        <Label Text="4.5" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" TextColor="White" FontSize="14" FontAttributes="Bold"/>
+                                        <Label Text="{Binding ratting}" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" TextColor="White" FontSize="14" FontAttributes="Bold"/>
                                     </Grid>
                                     <Grid Grid.Row="1" Grid.Column="1">
                                         <Grid.RowDefinitions>
@@ -150,17 +150,17 @@
                                             <RowDefinition Height="1*"/>
                                         </Grid.RowDefinitions>
                                         <Label Text="Cost" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" TextColor="White" FontSize="10"/>
-                                        <Label Text="30" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" TextColor="White" FontSize="14" FontAttributes="Bold"/>
+                                        <Label Text="{Binding cost}" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" TextColor="White" FontSize="14" FontAttributes="Bold"/>
                                     </Grid>
                                     <Grid Grid.Row="1" Grid.Column="0">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="1*"/>
-                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="2*"/>
                                             <ColumnDefinition Width="1*"/>
                                         </Grid.ColumnDefinitions>
-                                        <Label Text="Class 9" Grid.Column="0" HorizontalOptions="Start" VerticalOptions="Start" TextColor="White" FontSize="10" />
-                                        <Label Text="Physics" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Start" TextColor="White" FontSize="10"/>
-                                        <Label Text="Chapter 1" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Start" TextColor="White" FontSize="10"/>
+                                        <Label Text="{Binding secondChoiceName}" Grid.Column="0" HorizontalOptions="Start" VerticalOptions="Start" TextColor="White" FontSize="10" />
+                                        <Label Text="{Binding thirdChoiceName}" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Start" TextColor="White" FontSize="10"/>
+                                        <Label Text="{Binding forthChoiceName}" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Start" TextColor="White" FontSize="10"/>
                                     </Grid>
                                 </Grid>
                             </ViewCell>
@@ -170,7 +170,7 @@
                 <!--#endregion-->
                 
                 <!--#region Payment List-->
-                <ListView x:Name="payList" Grid.Row="1" Grid.ColumnSpan="5" RowHeight="120" SeparatorColor="#ffffff" IsVisible="{Binding payVisiblity}">
+                <ListView ItemsSource="{Binding paymentList}" Grid.Row="1" Grid.ColumnSpan="5" RowHeight="120" SeparatorColor="#ffffff" IsVisible="{Binding payVisiblity}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
@@ -193,7 +193,7 @@
                                             <Label.FormattedText>
                                                 <FormattedString>
                                                     <Span Text="Bkash " TextColor="White" FontSize="14"/>
-                                                    <Span Text="20.02.2022, 5:40 PM" TextColor="#90FFFFFF" FontSize="10"/>
+                                                    <Span Text="{Binding date}" TextColor="#90FFFFFF" FontSize="10"/>
                                                 </FormattedString>
                                             </Label.FormattedText>
                                         </Label>
@@ -201,7 +201,7 @@
                                             <Label.FormattedText>
                                                 <FormattedString>
                                                     <Span Text="+"/>
-                                                    <Span Text="50"/>
+                                                    <Span Text="{Binding amountCoin}"/>
                                                     <Span Text=" Coin"/>
                                                 </FormattedString>
                                             </Label.FormattedText>
@@ -210,7 +210,7 @@
                                             <Label.FormattedText>
                                                 <FormattedString>
                                                     <Span Text="Voucher: "/>
-                                                    <Span Text="First10"/>
+                                                    <Span Text="{Binding name}"/>
                                                 </FormattedString>
                                             </Label.FormattedText>
                                         </Label>
@@ -230,9 +230,9 @@
                                         <Label Text="Trans ID" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" FontSize="10" TextColor="White"/>
                                         <Label Text="Cost (Taka)" Grid.Row="0" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" FontSize="10" TextColor="White"/>
 
-                                        <Label Text="P32S34FS3" Grid.Row="1" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center"  FontSize="10" TextColor="White"/>
-                                        <Label Text="TR4VB8XC1" Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center"  FontSize="10" TextColor="White"/>
-                                        <Label Text="50" Grid.Row="1" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center"  FontSize="10" FontAttributes="Bold" TextColor="White"/>
+                                        <Label Text="{Binding paymentID}" Grid.Row="1" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center"  FontSize="10" TextColor="White"/>
+                                        <Label Text="{Binding trxID}" Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center"  FontSize="10" TextColor="White"/>
+                                        <Label Text="{Binding amountTaka}" Grid.Row="1" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center"  FontSize="10" FontAttributes="Bold" TextColor="White"/>
                                     </Grid>
 
                                 </Grid>
@@ -274,7 +274,7 @@
                 <Label Text="{Binding popupTitle}" Grid.Row="0" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" FontFamily="16" TextColor="#373737"/>
                 <material:MaterialTextField Placeholder="{Binding popuptxtFieldPlcHolder}" Text="{Binding newInfoText}" Grid.Row="1" Grid.Column="1" CardBackgroundColor="#10000000" PlaceholderFontFamily="14" TextFontSize="14" ErrorText="{Binding errorTxtF}" HasError="{Binding hasErrorF}"/>
                 <material:MaterialTextField Placeholder="Current Password" Grid.Row="3" Text="{Binding passtext}" Grid.Column="1" CardBackgroundColor="#10000000" PlaceholderFontFamily="14" TextFontSize="14" ErrorText="{Binding errorTxtS}" HasError="{Binding hasErrorS}"/>
-                <material:MaterialButton Text="{Binding popBtnTxt}" Grid.Row="5" BackgroundColor="#03B91F" Grid.Column="1" DisabledBackgroundColor="#B6B6B6" TextColor="White" IsEnabled="{Binding popBtnEnabled}" IsVisible="{Binding popBtnEnabled}" Command="{Binding changeCommand}"/>
+                <material:MaterialButton Text="{Binding popBtnTxt}" Grid.Row="5" BackgroundColor="#50D781" Grid.Column="1" DisabledBackgroundColor="#B6B6B6" TextColor="White" IsEnabled="{Binding popBtnEnabled}" IsVisible="{Binding popBtnEnabled}" Command="{Binding changeCommand}"/>
             </Grid>
         </Grid>
     </Grid>

@@ -74,6 +74,8 @@ namespace ShikkhanobishStudentApp.View
             }
             else
             {
+                loginbtn.IsEnabled = false;
+                logoutBtn.IsEnabled = false;
                 connectivityGrid.IsVisible = true;
                 ShowSnakeBarError();
             }
@@ -232,6 +234,8 @@ namespace ShikkhanobishStudentApp.View
             }
             else
             {
+                logoutBtn.IsEnabled = false;
+                loginbtn.IsEnabled = false;
                 connectivityGrid.IsVisible = true;
                 ShowSnakeBarError();
             }
