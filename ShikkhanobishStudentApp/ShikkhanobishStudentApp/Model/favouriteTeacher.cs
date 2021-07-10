@@ -1,0 +1,17 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace ShikkhanobishStudentApp.Model
+{
+    public class favouriteTeacher
+    {
+        public int teacherID { get; set; }
+        public int studentID { get; set; }
+        public string teacherName { get; set; }
+        public string studentName { get; set; }
+        public int teacherTotalTuition { get; set; }
+        public double teacherRatting { get; set; }
+        public string Response { get; set; }
+    }
+}

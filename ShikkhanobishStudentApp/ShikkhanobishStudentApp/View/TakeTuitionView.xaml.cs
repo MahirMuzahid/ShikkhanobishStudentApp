@@ -30,15 +30,15 @@ namespace ShikkhanobishStudentApp.View
             }
             var current = Connectivity.NetworkAccess;
             if (current == NetworkAccess.Internet)
-            {                
-                connectivityGrid.IsVisible = false;
+            {
                 getAllInfo();
             }
             else
             {
                 loginbtn.IsEnabled = false;
                 logoutBtn.IsEnabled = false;
-                connectivityGrid.IsVisible = true;
+                connectivityGrid.IsVisible = false;
+                
                 ShowSnakeBarError();
             }
            
@@ -46,6 +46,8 @@ namespace ShikkhanobishStudentApp.View
 
         public async Task getAllInfo()
         {
+            FavouriteTeacherGrid.IsVisible = false;
+            coingrid.IsVisible = false;
             connectivityGrid.IsVisible = false;
             NavigationPage.SetHasNavigationBar(this, false);
             var mainDisplayInfo = DeviceDisplay.MainDisplayInfo;
@@ -54,9 +56,6 @@ namespace ShikkhanobishStudentApp.View
             fvimg.Opacity = .3;
             rclbl.TextColor = Color.FromHex("#C9C9C9");
             fvlbl.TextColor = Color.FromHex("#C9C9C9");
-            coingrid.IsVisible = true;
-            coingrid.TranslationX = width;
-            coingrid.Opacity = 0;
 
             StaticPageToPassData.thisStudentInfo = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/LoginStudent".PostUrlEncodedAsync(new { phonenumber = StaticPageToPassData.thisStPh, password = StaticPageToPassData.thisstPass })
           .ReceiveJson<Student>();
@@ -101,43 +100,59 @@ namespace ShikkhanobishStudentApp.View
 
 
         }
-        async private void Button_Clicked(object sender, EventArgs e)
+        async private void paymentClicked(object sender, EventArgs e)
         {
             freeMin.Text = "" + StaticPageToPassData.thisStudentInfo.freemin;
             avaiableCoin.Text = "" + StaticPageToPassData.thisStudentInfo.coin;
-            coingrid.IsVisible = true;           
+            coingrid.IsVisible = true;
+            FavouriteTeacherGrid.IsVisible = false;
             ttlbl.TextColor = Color.FromHex("#C9C9C9");
             fvlbl.TextColor = Color.FromHex("#C9C9C9");
             rclbl.TextColor = Color.Black;
             cpimg.Opacity = 1;
             ttimg.Opacity = .3;
             fvimg.Opacity = .3;
-            coingrid.FadeTo(1,1500, Easing.CubicOut);
-            await coingrid.TranslateTo(0, 0, 1000, Easing.CubicOut);
+            
         }
 
-        async private void Button_Clicked_1(object sender, EventArgs e)
+        async private void homeClicked(object sender, EventArgs e)
         {
-            var mainDisplayInfo = DeviceDisplay.MainDisplayInfo;
-            var width = mainDisplayInfo.Width;    
-            
-           
+
+            FavouriteTeacherGrid.IsVisible = false;
+            coingrid.IsVisible = false;
             ttimg.Opacity = 1;
             cpimg.Opacity = .3;
             fvimg.Opacity = .3;
             ttlbl.TextColor = Color.Black;
             rclbl.TextColor = Color.FromHex("#C9C9C9");
             fvlbl.TextColor = Color.FromHex("#C9C9C9");
-            coingrid.FadeTo(0, 500, Easing.SinIn);
-            coingrid.Opacity = 0;
-            await coingrid.TranslateTo(width, 0, 1000, Easing.SinIn);
         }
 
-        private void Button_Clicked_2(object sender, EventArgs e)
+        private void profileClicked(object sender, EventArgs e)
         {            
             Application.Current.MainPage.Navigation.PushModalAsync(new StudentProfile());
         }
+        private void favouriteClicked(object sender, EventArgs e)
+        {
+            FavouriteTeacherGrid.IsVisible = true;
+            coingrid.IsVisible = false;
+            ttimg.Opacity = .3;
+            cpimg.Opacity = .3;
+            fvimg.Opacity = 1;
+            ttlbl.TextColor = Color.FromHex("#C9C9C9");
+            rclbl.TextColor = Color.FromHex("#C9C9C9");
+            fvlbl.TextColor = Color.Black;
+            studentstatus.Text = "Normal User";
+            maxnumteacher.Text = "1";
+            GetAllFavTeacher();
 
+        }
+        public async Task GetAllFavTeacher()
+        {
+            List<favouriteTeacher> favList = await "https://api.shikkhanobish.com/api/ShikkhanobishTeacher/getFavouriteTeacherwithStudentID".PostUrlEncodedAsync(new { studentID = StaticPageToPassData.thisStudentInfo.studentID })
+      .ReceiveJson<List<favouriteTeacher>>();
+            favteacherList.ItemsSource = favList;
+        }
         private void Button_Clicked_3(object sender, EventArgs e)
         {
             SecureStorage.RemoveAll();
@@ -246,14 +261,6 @@ namespace ShikkhanobishStudentApp.View
             }
         }
 
-        private void Button_Clicked_6(object sender, EventArgs e)
-        {
-            ttimg.Opacity = .3;
-            cpimg.Opacity = .3;
-            fvimg.Opacity = 1;
-            ttlbl.TextColor = Color.FromHex("#C9C9C9");
-            rclbl.TextColor = Color.FromHex("#C9C9C9");
-            fvlbl.TextColor = Color.Black;
-        }
+       
     }
 }
