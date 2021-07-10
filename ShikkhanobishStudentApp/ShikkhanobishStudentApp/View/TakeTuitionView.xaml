@@ -212,27 +212,32 @@
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width=".5*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height=".3*"/>
                 </Grid.RowDefinitions>
 
-                <Image x:Name="ttimg" Source="taketuition.png" Grid.Column="0" Aspect="AspectFit" Margin="10" />
-                <Image x:Name="cpimg" Source="coinplus.png" Grid.Column="1" Aspect="AspectFit" Margin="2" />
+                <Image x:Name="ttimg" Source="taketuition.png" Grid.Column="0" Aspect="AspectFit" Margin="9" />
+                <Image x:Name="cpimg" Source="coinplus.png" Grid.Column="1" Aspect="AspectFit" Margin="4" />
+                <Image x:Name="fvimg" Source="favouriteteacher.png" Grid.Column="2" Aspect="AspectFit" Margin="7" />
                 <controls:CircleImage  x:Name="proImage" 
-                Grid.Column="2" Grid.RowSpan="2"
+                Grid.Column="3" Grid.RowSpan="2"
                 HeightRequest="100"   
                 WidthRequest="100"               
                 Source="avatar.png"   
                 Aspect="AspectFit"
                  Margin="10">
                 </controls:CircleImage>
-                <Button Grid.Column="0" BackgroundColor="Transparent" Clicked="Button_Clicked_1"/>
-                <Button Grid.Column="1" Clicked="Button_Clicked" BackgroundColor="Transparent"/>
-                <Button Grid.Column="2" Clicked="Button_Clicked_2" BackgroundColor="Transparent"/>
                 <Label x:Name="ttlbl" Text="Take Tuition" Grid.RowSpan="2" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="End" FontSize="11" FontAttributes="Bold" Margin="0,0,0,7"/>
                 <Label x:Name="rclbl" Text="Rechrage Coin" Grid.RowSpan="2" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="End" FontSize="11" FontAttributes="Bold" Margin="0,0,0,7"/>
+                <Label x:Name="fvlbl" Text="Favourite Teacher" Grid.RowSpan="2" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="End" FontSize="11" FontAttributes="Bold" Margin="0,0,0,7"/>
+                <Button Grid.Column="0" BackgroundColor="Transparent" Grid.RowSpan="2" Clicked="Button_Clicked_1"/>
+                <Button Grid.Column="1" Clicked="Button_Clicked" BackgroundColor="Transparent" Grid.RowSpan="2"/>
+                <Button Grid.Column="2" Clicked="Button_Clicked_6" BackgroundColor="Transparent" Grid.RowSpan="2"/>
+                <Button Grid.Column="3" Clicked="Button_Clicked_2" BackgroundColor="Transparent" Grid.RowSpan="2"/>
+               
 
             </Grid>
             
@@ -393,6 +398,54 @@
 
             </Grid>
             <!--Connection View-->
+
+            <!--Favourite Teacher-->
+            <Grid x:Name="FavouriteTeacherGrid" BackgroundColor="#FFFFFF" Grid.Row="1" Grid.RowSpan="4" Grid.ColumnSpan="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height=".1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="3*"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="20*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Row="1" Grid.Column="1" RowSpacing="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height=".5*"/>
+                        <RowDefinition Height=".7*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width=".3*"/>
+                        <ColumnDefinition Width="10*"/>
+                        <ColumnDefinition Width=".3*"/>
+                    </Grid.ColumnDefinitions>
+                   
+                </Grid>
+
+                <Grid Grid.Row="2" Grid.Column="1" Margin="0,15,0,15">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height=".6*"/>
+                        <RowDefinition Height=".3*"/>
+                        <RowDefinition Height=".3*"/>
+                        <RowDefinition Height=".3*"/>
+                        <RowDefinition Height=".3*"/>
+                        <RowDefinition Height=".3*"/>
+                        <RowDefinition Height=".3*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width=".1*"/>
+                        <ColumnDefinition Width="20*"/>
+                        <ColumnDefinition Width=".1*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                </Grid>
+            </Grid>
 
         </Grid>
         

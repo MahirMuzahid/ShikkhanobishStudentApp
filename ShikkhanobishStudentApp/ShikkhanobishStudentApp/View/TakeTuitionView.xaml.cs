@@ -46,17 +46,17 @@ namespace ShikkhanobishStudentApp.View
 
         public async Task getAllInfo()
         {
-            
             connectivityGrid.IsVisible = false;
             NavigationPage.SetHasNavigationBar(this, false);
             var mainDisplayInfo = DeviceDisplay.MainDisplayInfo;
             var width = mainDisplayInfo.Width;
             cpimg.Opacity = .3;
+            fvimg.Opacity = .3;
             rclbl.TextColor = Color.FromHex("#C9C9C9");
+            fvlbl.TextColor = Color.FromHex("#C9C9C9");
             coingrid.IsVisible = true;
             coingrid.TranslationX = width;
             coingrid.Opacity = 0;
-
 
             StaticPageToPassData.thisStudentInfo = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/LoginStudent".PostUrlEncodedAsync(new { phonenumber = StaticPageToPassData.thisStPh, password = StaticPageToPassData.thisstPass })
           .ReceiveJson<Student>();
@@ -107,9 +107,11 @@ namespace ShikkhanobishStudentApp.View
             avaiableCoin.Text = "" + StaticPageToPassData.thisStudentInfo.coin;
             coingrid.IsVisible = true;           
             ttlbl.TextColor = Color.FromHex("#C9C9C9");
+            fvlbl.TextColor = Color.FromHex("#C9C9C9");
             rclbl.TextColor = Color.Black;
             cpimg.Opacity = 1;
             ttimg.Opacity = .3;
+            fvimg.Opacity = .3;
             coingrid.FadeTo(1,1500, Easing.CubicOut);
             await coingrid.TranslateTo(0, 0, 1000, Easing.CubicOut);
         }
@@ -119,10 +121,13 @@ namespace ShikkhanobishStudentApp.View
             var mainDisplayInfo = DeviceDisplay.MainDisplayInfo;
             var width = mainDisplayInfo.Width;    
             
-            ttlbl.TextColor = Color.Black;
+           
             ttimg.Opacity = 1;
-            cpimg.Opacity = .3;           
+            cpimg.Opacity = .3;
+            fvimg.Opacity = .3;
+            ttlbl.TextColor = Color.Black;
             rclbl.TextColor = Color.FromHex("#C9C9C9");
+            fvlbl.TextColor = Color.FromHex("#C9C9C9");
             coingrid.FadeTo(0, 500, Easing.SinIn);
             coingrid.Opacity = 0;
             await coingrid.TranslateTo(width, 0, 1000, Easing.SinIn);
@@ -239,6 +244,16 @@ namespace ShikkhanobishStudentApp.View
                 connectivityGrid.IsVisible = true;
                 ShowSnakeBarError();
             }
+        }
+
+        private void Button_Clicked_6(object sender, EventArgs e)
+        {
+            ttimg.Opacity = .3;
+            cpimg.Opacity = .3;
+            fvimg.Opacity = 1;
+            ttlbl.TextColor = Color.FromHex("#C9C9C9");
+            rclbl.TextColor = Color.FromHex("#C9C9C9");
+            fvlbl.TextColor = Color.Black;
         }
     }
 }
