@@ -59,6 +59,7 @@ namespace ShikkhanobishStudentApp.View
 
             StaticPageToPassData.thisStudentInfo = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/LoginStudent".PostUrlEncodedAsync(new { phonenumber = StaticPageToPassData.thisStPh, password = StaticPageToPassData.thisstPass })
           .ReceiveJson<Student>();
+           
             Connectivity.ConnectivityChanged += Connectivity_ConnectivityChanged;
             proImage.IsVisible = true;
         }
@@ -142,16 +143,13 @@ namespace ShikkhanobishStudentApp.View
             ttlbl.TextColor = Color.FromHex("#C9C9C9");
             rclbl.TextColor = Color.FromHex("#C9C9C9");
             fvlbl.TextColor = Color.Black;
-            studentstatus.Text = "Normal User";
-            maxnumteacher.Text = "1";
+           
             GetAllFavTeacher();
 
         }
         public async Task GetAllFavTeacher()
         {
-            List<favouriteTeacher> favList = await "https://api.shikkhanobish.com/api/ShikkhanobishTeacher/getFavouriteTeacherwithStudentID".PostUrlEncodedAsync(new { studentID = StaticPageToPassData.thisStudentInfo.studentID })
-      .ReceiveJson<List<favouriteTeacher>>();
-            favteacherList.ItemsSource = favList;
+            
         }
         private void Button_Clicked_3(object sender, EventArgs e)
         {

@@ -235,7 +235,7 @@
                 <Label x:Name="fvlbl" Text="Favourite Teacher" Grid.RowSpan="2" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="End" FontSize="11" FontAttributes="Bold" Margin="0,0,0,7"/>
                 <Button Grid.Column="0" BackgroundColor="Transparent" Grid.RowSpan="2" Clicked="homeClicked"/>
                 <Button Grid.Column="1" Clicked="paymentClicked" BackgroundColor="Transparent" Grid.RowSpan="2"/>
-                <Button Grid.Column="2" Clicked="favouriteClicked" BackgroundColor="Transparent" Grid.RowSpan="2"/>
+                <Button Grid.Column="2" Clicked="favouriteClicked" BackgroundColor="Transparent" Grid.RowSpan="2" Command="{Binding favGridCommand}"/>
                 <Button Grid.Column="3" Clicked="profileClicked" BackgroundColor="Transparent" Grid.RowSpan="2"/>
                
 
@@ -376,7 +376,102 @@
             </Grid>
             <!-- Payment View -->
 
+            
+            <!--Favourite Teacher-->
+            <Grid x:Name="FavouriteTeacherGrid" BackgroundColor="#FFFFFF" Grid.Row="1" Grid.RowSpan="4" Grid.ColumnSpan="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height=".1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="6*"/>
+                    <RowDefinition Height=".3*"/>
+                </Grid.RowDefinitions>
 
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="20*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Row="1" Grid.Column="1" RowSpacing="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height=".5*"/>
+                        <RowDefinition Height=".7*"/>
+
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width=".3*"/>
+                        <ColumnDefinition Width="10*"/>
+                        <ColumnDefinition Width=".3*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Text="Student Status" Grid.Row="0" HorizontalOptions="Start" VerticalOptions="End" Grid.Column="1" FontSize="12"/>
+                    <Label x:Name="studentstatus" Text="{Binding studentstatus}" Grid.Row="1" HorizontalOptions="Start" VerticalOptions="Start" FontSize="22" FontAttributes="Bold" Grid.Column="1" TextColor="{Binding studentstatusColor}" >
+                    </Label>
+                    <Label Text="Maximum Favourite Teacher" Grid.Row="0" HorizontalOptions="End" VerticalOptions="End" Grid.Column="1" FontSize="12"/>
+                    <Label x:Name="maxnumteacher" Grid.Row="1" HorizontalOptions="End" VerticalOptions="Start" FontSize="22" FontAttributes="Bold" Grid.Column="1" Text="{Binding maxnumteacher}"/>
+
+                </Grid>
+
+                <Grid Grid.Row="2" Grid.RowSpan="3" Grid.Column="1" Margin="0,15,0,15">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height=".3*"/>
+                        <RowDefinition Height=".006*"/>
+                        <RowDefinition Height="7*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width=".1*"/>
+                        <ColumnDefinition Width="20*"/>
+                        <ColumnDefinition Width=".1*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Text="List Of Favourite Teacher" Grid.Row="0" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Start" FontSize="12"/>
+                    <Frame BackgroundColor="Black"  Grid.Row="1" Grid.Column="1" HasShadow="False"/>
+                    <ListView x:Name="favteacherList" ItemsSource="{Binding favteacherItemSource}" Grid.Row="2" Grid.ColumnSpan="3" RowHeight="80" SeparatorColor="#ffffff" >
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Grid Margin="0,10,0,10">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="1*"/>
+                                            <RowDefinition Height=".5*"/>
+                                            <RowDefinition Height=".1*"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <material:MaterialCard Grid.RowSpan="3" Grid.ColumnSpan="4" Elevation="3" BackgroundColor="#06000000"/>
+                                        <Label Text="{Binding teacherName}" Grid.RowSpan="3" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" FontSize="12" FontAttributes="Bold"/>
+                                        <Label Text="{Binding teacherTotalTuition}" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" FontSize="12"  FontAttributes="Bold"/>
+                                        <Label Text="Total Tuition" Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" FontSize="12"/>
+                                        <Label Text="{Binding teacherRatting}" Grid.Row="0" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" FontSize="12" FontAttributes="Bold"/>
+                                        <Label Text="Ratting" Grid.Row="1" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" FontSize="12"/>
+                                        <material:MaterialButton Text="Remove" Grid.RowSpan="2" Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center" FontSize="9" ButtonType="Text" TextColor="Red" PressedBackgroundColor="#20000000"  Command="{Binding Source={x:Reference tuitionView}, Path=BindingContext.RemoveFavTeacher}" CommandParameter="{Binding .}"/>
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <Label Grid.Row="2" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" FontSize="11" IsVisible="{Binding prmStudentTextVisibility}">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span  Text="Get "/>
+                                <Span Text="Unlimited Favourite Teacher " />
+                                <Span Text="by becoming our "/>
+                                <Span Text="Premium Student. " />
+                                <Span Text="To become our premium student you have to buy our "/>
+                                <Span Text="Premium Pass "/>
+                                <Span Text="only with "/>
+                                <Span Text="100 Taka."/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </Grid>
+
+            </Grid>
+            
+            
             <!--Connection View -->
             <Grid x:Name="connectivityGrid" Grid.Row="1" Grid.RowSpan="5" Grid.ColumnSpan="3" BackgroundColor="White" IsVisible="{Binding connectivitiVisibility}">
                 <Grid.RowDefinitions>
@@ -397,98 +492,7 @@
                 <Button Text="Retry" Grid.Row="3" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Start" BackgroundColor="#FF5D5D" TextColor="White" CornerRadius="15" Margin="0,15,0,15" Clicked="Button_Clicked_5"/>
 
             </Grid>
-            <!--Connection View-->
-
-            <!--Favourite Teacher-->
-            <Grid x:Name="FavouriteTeacherGrid" BackgroundColor="#FFFFFF" Grid.Row="1" Grid.RowSpan="4" Grid.ColumnSpan="3">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height=".1*"/>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="3*"/>
-                    <RowDefinition Height="1*"/>
-                </Grid.RowDefinitions>
-
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="20*"/>
-                    <ColumnDefinition Width="1*"/>
-                </Grid.ColumnDefinitions>
-
-                <Grid Grid.Row="1" Grid.Column="1" RowSpacing="0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height=".5*"/>
-                        <RowDefinition Height=".7*"/>
-                        <RowDefinition Height=".2*"/>
-                        <RowDefinition Height="1*"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width=".3*"/>
-                        <ColumnDefinition Width="10*"/>
-                        <ColumnDefinition Width=".3*"/>
-                    </Grid.ColumnDefinitions>
-                    <Label Text="Student Status" Grid.Row="0" HorizontalOptions="Start" VerticalOptions="End" Grid.Column="1" FontSize="12"/>
-                    <Label x:Name="studentstatus" Grid.Row="1" HorizontalOptions="Start" VerticalOptions="Start" FontSize="22" FontAttributes="Bold" Grid.Column="1"/>
-                    <Label Text="Maximum Favourite Teacher" Grid.Row="0" HorizontalOptions="End" VerticalOptions="End" Grid.Column="1" FontSize="12"/>
-                    <Label x:Name="maxnumteacher" Grid.Row="1" HorizontalOptions="End" VerticalOptions="Start" FontSize="22" FontAttributes="Bold" Grid.Column="1"/>
-                    <Label Grid.Row="3" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Start" FontSize="11">
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span  Text="Get "/>
-                                <Span Text="Unlimited Favourite Teacher " FontAttributes="Bold"/>
-                                <Span Text="by becoming our "/>
-                                <Span Text="Premium Student. " FontAttributes="Bold"/>
-                                <Span Text="To become our premium student you have to buy our "/>
-                                <Span Text="Premium Pass " FontAttributes="Bold"/>
-                                <Span Text="only with "/>
-                                <Span Text="100 Taka." FontAttributes="Bold"/>
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>
-                </Grid>
-
-                <Grid Grid.Row="2" Grid.Column="1" Margin="0,15,0,15">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height=".6*"/>
-                        <RowDefinition Height=".01*"/>
-                        <RowDefinition Height="7*"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width=".1*"/>
-                        <ColumnDefinition Width="20*"/>
-                        <ColumnDefinition Width=".1*"/>
-                    </Grid.ColumnDefinitions>
-                   
-                    <Label Text="List Of Favourite Teacher" Grid.Row="0" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Start" FontSize="12"/>
-                    <Frame BackgroundColor="Black"  Grid.Row="1" Grid.Column="1" HasShadow="False"/>
-                    <ListView x:Name="favteacherList" Grid.Row="2" Grid.ColumnSpan="3" RowHeight="80" SeparatorColor="#ffffff" >
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <ViewCell>
-                                    <Grid Margin="0,10,0,10">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="1*"/>
-                                            <RowDefinition Height=".5*"/>
-                                            <RowDefinition Height=".1*"/>
-                                        </Grid.RowDefinitions>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="3*"/>
-                                            <ColumnDefinition Width="1*"/>
-                                            <ColumnDefinition Width="1*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <material:MaterialCard Grid.RowSpan="3" Grid.ColumnSpan="3" Elevation="3" BackgroundColor="#08000000"/>
-                                        <Label Text="{Binding teacherName}" Grid.RowSpan="3" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" FontSize="12" FontAttributes="Bold"/>
-                                        <Label Text="{Binding teacherTotalTuition}" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" FontSize="12"  FontAttributes="Bold"/>
-                                        <Label Text="Total Tuition" Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" FontSize="12"/>
-                                        <Label Text="{Binding teacherRatting}" Grid.Row="0" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" FontSize="12" FontAttributes="Bold"/>
-                                        <Label Text="Ratting" Grid.Row="1" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" FontSize="12"/>
-                                    </Grid>
-                                </ViewCell>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </Grid>
-            </Grid>
-
+            <!--Connection View-->         
         </Grid>
         
         

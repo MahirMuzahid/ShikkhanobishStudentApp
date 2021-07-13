@@ -554,7 +554,53 @@ namespace ShikkhanobishStudentApp.ViewModel
                   Application.Current.MainPage.Navigation.PushModalAsync(new ResgisterView());
               });
 
-
+        #region favourite Teacher
+        private void favGrid()
+        {          
+            getALlFavTeacher();
+        }
+        public async Task  getALlFavTeacher()
+        {
+            PremiumStudent prm = await "https://api.shikkhanobish.com/api/ShikkhanobishTeacher/getPremiumStudentWithID".PostUrlEncodedAsync(new { studentID = StaticPageToPassData.thisStudentInfo.studentID })
+    .ReceiveJson<PremiumStudent>();
+            if (prm.studentID == 0)
+            {
+                prmStudentText = "*";
+                studentstatus= "Normal";
+                studentstatusColor = Color.Black;
+                maxnumteacher= "1";
+                prmStudentTextVisibility = true;
+            }
+            else
+            {
+                prmStudentText = "*";
+                studentstatus = "Premium";
+                studentstatusColor = Color.FromHex("#864AE8");
+                maxnumteacher = "Unlimited";
+                prmStudentTextVisibility = false;
+            }
+            favteacherItemSource = await "https://api.shikkhanobish.com/api/ShikkhanobishTeacher/getFavouriteTeacherwithStudentID".PostUrlEncodedAsync(new { studentID = StaticPageToPassData.thisStudentInfo.studentID })
+      .ReceiveJson<List<favouriteTeacher>>();
+        }
+        public ICommand RemoveFavTeacher
+        {
+            get
+            {
+                return new Command<favouriteTeacher>((favteacher) =>
+                {
+                    Remove(favteacher);
+                });
+            }
+        }
+        public async Task Remove( favouriteTeacher favteacher)
+        {
+            Response res = await "https://api.shikkhanobish.com/api/ShikkhanobishTeacher/removeFavTeacherWithTeacherID".PostUrlEncodedAsync(new { teacherID = favteacher.teacherID })
+     .ReceiveJson<Response>();
+            favteacherItemSource.Clear();
+           favteacherItemSource =  await "https://api.shikkhanobish.com/api/ShikkhanobishTeacher/getFavouriteTeacherwithStudentID".PostUrlEncodedAsync(new { studentID = StaticPageToPassData.thisStudentInfo.studentID })
+      .ReceiveJson<List<favouriteTeacher>>();
+        }
+        #endregion
         #region Converter
         public ObservableCollection<popupList> ConvertInsTOPupUpList(ObservableCollection<Institution> insList)
         {
@@ -923,6 +969,46 @@ namespace ShikkhanobishStudentApp.ViewModel
         private bool popWaitVisiblity1;
 
         public bool popWaitVisiblity { get => popWaitVisiblity1; set => SetProperty(ref popWaitVisiblity1, value); }
+
+        private List<favouriteTeacher> favteacherItemSource1;
+
+        public List<favouriteTeacher> favteacherItemSource { get => favteacherItemSource1; set => SetProperty(ref favteacherItemSource1, value); }
+
+        private Command favGridCommand1;
+
+        public ICommand favGridCommand
+        {
+            get
+            {
+                if (favGridCommand1 == null)
+                {
+                    favGridCommand1 = new Command(favGrid);
+                }
+
+                return favGridCommand1;
+            }
+        }
+
+        private string prmStudentText1;
+
+        public string prmStudentText { get => prmStudentText1; set => SetProperty(ref prmStudentText1, value); }
+
+        private string studentstatus1;
+
+        public string studentstatus { get => studentstatus1; set => SetProperty(ref studentstatus1, value); }
+
+        private Color studentstatusColor1;
+
+        public Color studentstatusColor { get => studentstatusColor1; set => SetProperty(ref studentstatusColor1, value); }
+
+        private string maxnumteacher1;
+
+        public string maxnumteacher { get => maxnumteacher1; set => SetProperty(ref maxnumteacher1, value); }
+
+        private bool prmStudentTextVisibility1;
+
+        public bool prmStudentTextVisibility { get => prmStudentTextVisibility1; set => SetProperty(ref prmStudentTextVisibility1, value); }
+
 
 
 

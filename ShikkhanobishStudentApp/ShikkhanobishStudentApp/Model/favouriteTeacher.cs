@@ -12,6 +12,7 @@ namespace ShikkhanobishStudentApp.Model
         public string studentName { get; set; }
         public int teacherTotalTuition { get; set; }
         public double teacherRatting { get; set; }
+        public bool rmvBtnVisibility { get; set; }
         public string Response { get; set; }
     }
 }
