@@ -504,9 +504,9 @@
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width=".1*"/>
                 <ColumnDefinition Width="10*"/>
-                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width=".1*"/>
             </Grid.ColumnDefinitions>
            
             <Button Grid.RowSpan="3" Grid.ColumnSpan="3" BackgroundColor="Transparent" Command="{Binding ClosePopUp}"/>
@@ -514,27 +514,37 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height=".1*"/>
                     <RowDefinition Height=".7*"/>
-                    <RowDefinition Height=".7*"/>
+                    <RowDefinition Height="2*"/>
                     <RowDefinition Height=".01*"/>
-                    <RowDefinition Height=".001*"/>
                     <RowDefinition Height="15*"/>
-                    <RowDefinition Height="1.3*"/>
-                    <RowDefinition Height=".1*"/>
+
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width=".5*"/>
                     <ColumnDefinition Width="10*"/>
-                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width=".5*"/>
                 </Grid.ColumnDefinitions>
                 <Label Text="{Binding searchName}" Grid.Row="1" Grid.Column="1" FontSize="17"  HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
-                <SearchBar x:Name="searchBar" Text="{Binding searchText}" Grid.Row="2" Grid.Column="1" Placeholder="{Binding searchPlaceholder}" IsVisible="{Binding SearchableVisibility}"/>
-                <Label Text="Result" Grid.Row="4" Grid.Column="1"/>
-                <Frame BackgroundColor="Black" Grid.Row="4" Grid.Column="1" />
-
-                <Label Text="Getting Result..." Grid.Row="5" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" TextColor="#9C9C9C" Margin="0,0,0,50" IsVisible="{Binding resultvisi}" FontAttributes="Bold"/>
                 
+                <Grid Grid.Row="2" Grid.Column="1" IsVisible="{Binding groupChoiseVisibility}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="2*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width=".8*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Text="Choose Group" Grid.Row="0" Grid.ColumnSpan="3" HorizontalOptions="Start" VerticalOptions="Center"/>
+                    <material:MaterialButton Text="Science" ButtonType="Flat" Grid.Row="1" Grid.Column="0" HorizontalOptions="Center" TextColor="Black" VerticalOptions="Center" FontSize="9" BackgroundColor="{Binding scChoice}" PressedBackgroundColor="#20000000" Command="{Binding groupChoice}" CommandParameter="1"/>
+                    <material:MaterialButton Text="Commerce" ButtonType="Flat" Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" TextColor="Black" VerticalOptions="Center" FontSize="9" BackgroundColor="{Binding cmChoice}"  PressedBackgroundColor="#20000000" Command="{Binding groupChoice}" CommandParameter="2"/>
+                    <material:MaterialButton Text="Arts" ButtonType="Flat" Grid.Column="2" Grid.Row="1" HorizontalOptions="Center" TextColor="Black" VerticalOptions="Center" FontSize="9"  BackgroundColor="{Binding arChoice}" PressedBackgroundColor="#20000000" Command="{Binding groupChoice}" CommandParameter="3"/>
+                </Grid>
+                <Frame BackgroundColor="Black" Grid.Row="3" Grid.Column="1" />
 
-                <ListView  ItemsSource="{Binding popupList}" Grid.Row="5" Grid.Column="1" RowHeight="50" SeparatorColor="Black" >
+                <Label Text="Getting Result..." Grid.Row="4" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" TextColor="#9C9C9C" Margin="0,0,0,50" IsVisible="{Binding resultvisi}" FontAttributes="Bold"/>
+                <ListView  ItemsSource="{Binding popupList}" Grid.Row="4" Grid.Column="1" RowHeight="50" SeparatorColor="Black" >
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell >

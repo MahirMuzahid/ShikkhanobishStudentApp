@@ -35,7 +35,7 @@ namespace ShikkhanobishStudentApp.ViewModel
         }
         public async Task homeFirst()
         {
-            
+            groupChoiseVisibility = false;
             popUpVisibility = false;
             SelectedInsName = "Not Selected";
             SelectedClassName = "Not Selected";
@@ -86,13 +86,186 @@ namespace ShikkhanobishStudentApp.ViewModel
         {
             homeFirst();
         }
+       
+        public ICommand CallTeacher =>
+             new Command<Institution>((intName) =>
+             {
+                 Application.Current.MainPage.Navigation.PushModalAsync(new VideoCallPage());
+             });
+        public void CheckEverythign()
+        {
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                if(detailTxt != null)
+                {
+                    if (seletedCountTextVisibility & CLseletedCountTextVisibility & SubseletedCountTextVisibility & ChpseletedCountTextVisibility && detailTxt.Length < 101)
+                    {
+                        activebtn = true;
+                        permincostVisibility = true;
+                        perminCostText = "3 coin/min";                        
+                    }
+                }
+                
+               
+            });
+        }
+        
+        
+        public void countWord()
+        {
+            if (detailTxt.Length > 300)
+            {
+                remainword = "Extra " + (300 - detailTxt.Length)*(-1) + " Words";
+                remainColopr = "Red";
+            }
+            else
+            {
+                remainword = "Remain " + (300 - detailTxt.Length) + " Words";
+                remainColopr = "Black";
+                CheckEverythign();
+            }
+            
+        }
+
+        public ICommand goRegisterView =>
+              new Command(() =>
+              {
+                  Application.Current.MainPage.Navigation.PushModalAsync(new ResgisterView());
+              });
+        private void PerformgroupChoice(string index)
+        {
+            int indexno = int.Parse(index);
+            if (indexno == 1)
+            {
+                if (scChoice == Color.GreenYellow)
+                {
+                    scChoice = Color.Transparent;
+                    ObservableCollection<Subject> popupclsList = new ObservableCollection<Subject>();
+                    for (int i = 0; i < AllsubList.Count; i++)
+                    {
+                        if (AllsubList[i].classID == selectedGlobalCls.classID )
+                        {
+                            popupclsList.Add(AllsubList[i]);
+                        }
+                    }
+                    groupChoiseVisibility = true;
+                    ObservableCollection<popupList> convertedList = new ObservableCollection<popupList>();
+                    convertedList = ConvertSubTOPupUpList(popupclsList);
+                    resultvisi = false;
+                    popupList = convertedList;
+                }
+                else
+                {
+                    scChoice = Color.GreenYellow;
+                    cmChoice = Color.Transparent;
+                    arChoice = Color.Transparent;
+
+                    ObservableCollection<Subject> popupclsList = new ObservableCollection<Subject>();
+                    for (int i = 0; i < AllsubList.Count; i++)
+                    {
+                        if (AllsubList[i].classID == selectedGlobalCls.classID && AllsubList[i].groupName == "Science")
+                        {
+                            popupclsList.Add(AllsubList[i]);
+                        }
+                    }
+                    groupChoiseVisibility = true;
+                    ObservableCollection<popupList> convertedList = new ObservableCollection<popupList>();
+                    convertedList = ConvertSubTOPupUpList(popupclsList);
+                    resultvisi = false;
+                    popupList = convertedList;
+                }
+
+            }
+            if (indexno == 2)
+            {
+                if (cmChoice == Color.GreenYellow)
+                {
+                    cmChoice = Color.Transparent;
+                    ObservableCollection<Subject> popupclsList = new ObservableCollection<Subject>();
+                    for (int i = 0; i < AllsubList.Count; i++)
+                    {
+                        if (AllsubList[i].classID == selectedGlobalCls.classID )
+                        {
+                            popupclsList.Add(AllsubList[i]);
+                        }
+                    }
+                    groupChoiseVisibility = true;
+                    ObservableCollection<popupList> convertedList = new ObservableCollection<popupList>();
+                    convertedList = ConvertSubTOPupUpList(popupclsList);
+                    resultvisi = false;
+                    popupList = convertedList;
+                }
+                else
+                {
+                    cmChoice = Color.GreenYellow;
+                    arChoice = Color.Transparent;
+                    scChoice = Color.Transparent;
+                    ObservableCollection<Subject> popupclsList = new ObservableCollection<Subject>();
+                    for (int i = 0; i < AllsubList.Count; i++)
+                    {
+                        if (AllsubList[i].classID == selectedGlobalCls.classID && AllsubList[i].groupName == "Commerce")
+                        {
+                            popupclsList.Add(AllsubList[i]);
+                        }
+                    }
+                    groupChoiseVisibility = true;
+                    ObservableCollection<popupList> convertedList = new ObservableCollection<popupList>();
+                    convertedList = ConvertSubTOPupUpList(popupclsList);
+                    resultvisi = false;
+                    popupList = convertedList;
+                }
+
+            }
+            if (indexno == 3)
+            {
+                if (arChoice == Color.GreenYellow)
+                {
+                    arChoice = Color.Transparent;
+                    ObservableCollection<Subject> popupclsList = new ObservableCollection<Subject>();
+                    for (int i = 0; i < AllsubList.Count; i++)
+                    {
+                        if (AllsubList[i].classID == selectedGlobalCls.classID )
+                        {
+                            popupclsList.Add(AllsubList[i]);
+                        }
+                    }
+                    groupChoiseVisibility = true;
+                    ObservableCollection<popupList> convertedList = new ObservableCollection<popupList>();
+                    convertedList = ConvertSubTOPupUpList(popupclsList);
+                    resultvisi = false;
+                    popupList = convertedList;
+                }
+                else
+                {
+                    arChoice = Color.GreenYellow;
+                    scChoice = Color.Transparent;
+                    cmChoice = Color.Transparent;
+                    ObservableCollection<Subject> popupclsList = new ObservableCollection<Subject>();
+                    for (int i = 0; i < AllsubList.Count; i++)
+                    {
+                        if (AllsubList[i].classID == selectedGlobalCls.classID && AllsubList[i].groupName == "Arts")
+                        {
+                            popupclsList.Add(AllsubList[i]);
+                        }
+                    }
+                    groupChoiseVisibility = true;
+                    ObservableCollection<popupList> convertedList = new ObservableCollection<popupList>();
+                    convertedList = ConvertSubTOPupUpList(popupclsList);
+                    resultvisi = false;
+                    popupList = convertedList;
+                }
+
+            }
+        }
+
+
         #region populate list
         public async Task InsListPopulate()
         {
             backUpFipName = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getInstitution".GetJsonAsync<ObservableCollection<Institution>>();
         }
         public async Task ClassListPopulate()
-        {           
+        {
             AllclsList = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getClassInfo".GetJsonAsync<ObservableCollection<ClassInfo>>();
             secondListBtnVisibility = true;
         }
@@ -104,7 +277,7 @@ namespace ShikkhanobishStudentApp.ViewModel
         public async Task DegreeListPopulate()
         {
             AlldegreeList = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getDegree".GetJsonAsync<ObservableCollection<Degree>>();
-            
+
         }
         public async Task SubjectListPopulate()
         {
@@ -119,18 +292,20 @@ namespace ShikkhanobishStudentApp.ViewModel
             AllCrsList = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getCourse".GetJsonAsync<ObservableCollection<Course>>();
         }
         #endregion
+
+        #region Popup in take tuition
         //Click in select btn
         public ICommand selectInsCommand =>
-            new Command<string>(async(index) =>
+            new Command<string>(async (index) =>
             {
                 popupList.Clear();
                 popUpVisibility = true;
                 if (int.Parse(index) == 0)
                 {
-                    if(backUpFipName == null)
+                    if (backUpFipName == null)
                     {
                         resultvisi = true;
-                    }                   
+                    }
                     searchName = "Select Institution";
                     SearchableVisibility = false;
                     await InsListPopulate();
@@ -138,7 +313,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                     convertedList = ConvertInsTOPupUpList(backUpFipName);
                     resultvisi = false;
                     popupList = convertedList;
-                    
+
                 }
                 //selecting list for 2nd popup
                 else if (int.Parse(index) == 1)
@@ -195,6 +370,9 @@ namespace ShikkhanobishStudentApp.ViewModel
                 {
                     if (thirdTitle == "Subject")
                     {
+                        arChoice = Color.Transparent;
+                        scChoice = Color.Transparent;
+                        cmChoice = Color.Transparent;
                         resultvisi = true;
                         searchName = "Select Subject";
                         ObservableCollection<Subject> popupclsList = new ObservableCollection<Subject>();
@@ -205,6 +383,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                                 popupclsList.Add(AllsubList[i]);
                             }
                         }
+                        groupChoiseVisibility = true;
                         ObservableCollection<popupList> convertedList = new ObservableCollection<popupList>();
                         convertedList = ConvertSubTOPupUpList(popupclsList);
                         resultvisi = false;
@@ -269,21 +448,16 @@ namespace ShikkhanobishStudentApp.ViewModel
                     }
 
                 }
-                
+
             });
-
-
-
-
-
 
         //click in selected item
         public ICommand SelectedItem =>
-             new Command<popupList>(async(thisList) =>
+             new Command<popupList>(async (thisList) =>
              {
 
 
-
+                 groupChoiseVisibility = false;
                  popWaitVisiblity = true;
                  if (thisList.ListIndex == 1)
                  {
@@ -319,7 +493,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                          forthTitle = "Course";
                          await UNameListPopulate();
                      }
-                     
+
 
                  }
                  else if (thisList.ListIndex == 2 || thisList.ListIndex == 3)
@@ -368,7 +542,7 @@ namespace ShikkhanobishStudentApp.ViewModel
 
 
                  }
-                 else if(thisList.ListIndex == 4)
+                 else if (thisList.ListIndex == 4)
                  {
                      if (selectedGlobalCrs != null || selectedGlobalChp != null)
                      {
@@ -376,7 +550,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                      }
                      SubseletedCountTextVisibility = true;
                      Subject selectedList = new Subject();
-                     for (int i = 0; i < AllclsList.Count; i++)
+                     for (int i = 0; i < AllsubList.Count; i++)
                      {
                          if (AllsubList[i].name == thisList.name)
                          {
@@ -384,6 +558,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                          }
 
                      }
+
                      selectedGlobalSub = selectedList;
                      SelectedSubjectName = selectedList.name;
                      SubTRequest = selectedList.tuitionRequest;
@@ -455,104 +630,17 @@ namespace ShikkhanobishStudentApp.ViewModel
                      ChpTRequest = selectedList.tuitionRequest;
                      Chpavgratting = selectedList.avgRatting;
                  }
-                 
+
                  CheckEverythign();
                  popWaitVisiblity = false;
                  popUpVisibility = false;
                  searchText = "";
              });
-        #region reset list
-        public void resetSecondListlist()
-        {
-            selectedGlobalCls = null;
-            selectedGlobalUniName = null;
-            CLseletedCountTextVisibility = false;
-            SelectedClassName = "Not Selected";
-        }
-        public void resetThisrdListlist()
-        {
-            selectedGlobalSub = null;
-            selectedGlobalDgr = null;
-            SubseletedCountTextVisibility = false;
-            SelectedSubjectName = "Not Selected";
-        }
-        public void resetForthListlist()
-        {
-            selectedGlobalChp = null;
-            selectedGlobalCrs = null;
-            ChpseletedCountTextVisibility = false;
-            SelectedChapterName = "Not Selected";
-        }
-        public void resetList (int i)
-        {
-            if(i == 1)
-            {
-                resetSecondListlist();
-                resetThisrdListlist();
-                resetForthListlist();
-                thirdListBtnVisibility = false;
-                forthBtnVisbility = false;
-            }
-            else if (i == 2)
-            {
-                resetThisrdListlist();
-                resetForthListlist();
-                forthBtnVisbility = false;
-            }
-            else if (i == 3)
-            {
-                resetForthListlist();
-            }
-        }
-        #endregion
-        public ICommand CallTeacher =>
-             new Command<Institution>((intName) =>
-             {
-                 Application.Current.MainPage.Navigation.PushModalAsync(new VideoCallPage());
-             });
-        public void CheckEverythign()
-        {
-            MainThread.BeginInvokeOnMainThread(() =>
-            {
-                if(detailTxt != null)
-                {
-                    if (seletedCountTextVisibility & CLseletedCountTextVisibility & SubseletedCountTextVisibility & ChpseletedCountTextVisibility && detailTxt.Length < 101)
-                    {
-                        activebtn = true;
-                        permincostVisibility = true;
-                        perminCostText = "3 coin/min";                        
-                    }
-                }
-                
-               
-            });
-        }
         private void PerformClosePopUp()
         {
             popUpVisibility = false;
         }
-        
-        public void countWord()
-        {
-            if (detailTxt.Length > 300)
-            {
-                remainword = "Extra " + (300 - detailTxt.Length)*(-1) + " Words";
-                remainColopr = "Red";
-            }
-            else
-            {
-                remainword = "Remain " + (300 - detailTxt.Length) + " Words";
-                remainColopr = "Black";
-                CheckEverythign();
-            }
-            
-        }
-
-        public ICommand goRegisterView =>
-              new Command(() =>
-              {
-                  Application.Current.MainPage.Navigation.PushModalAsync(new ResgisterView());
-              });
+        #endregion
 
         #region favourite Teacher
         private void favGrid()
@@ -601,6 +689,7 @@ namespace ShikkhanobishStudentApp.ViewModel
       .ReceiveJson<List<favouriteTeacher>>();
         }
         #endregion
+       
         #region Converter
         public ObservableCollection<popupList> ConvertInsTOPupUpList(ObservableCollection<Institution> insList)
         {
@@ -713,6 +802,51 @@ namespace ShikkhanobishStudentApp.ViewModel
             }
 
             return popuplist;
+        }
+        #endregion
+
+        #region reset list
+        public void resetSecondListlist()
+        {
+            selectedGlobalCls = null;
+            selectedGlobalUniName = null;
+            CLseletedCountTextVisibility = false;
+            SelectedClassName = "Not Selected";
+        }
+        public void resetThisrdListlist()
+        {
+            selectedGlobalSub = null;
+            selectedGlobalDgr = null;
+            SubseletedCountTextVisibility = false;
+            SelectedSubjectName = "Not Selected";
+        }
+        public void resetForthListlist()
+        {
+            selectedGlobalChp = null;
+            selectedGlobalCrs = null;
+            ChpseletedCountTextVisibility = false;
+            SelectedChapterName = "Not Selected";
+        }
+        public void resetList(int i)
+        {
+            if (i == 1)
+            {
+                resetSecondListlist();
+                resetThisrdListlist();
+                resetForthListlist();
+                thirdListBtnVisibility = false;
+                forthBtnVisbility = false;
+            }
+            else if (i == 2)
+            {
+                resetThisrdListlist();
+                resetForthListlist();
+                forthBtnVisbility = false;
+            }
+            else if (i == 3)
+            {
+                resetForthListlist();
+            }
         }
         #endregion
 
@@ -1009,6 +1143,38 @@ namespace ShikkhanobishStudentApp.ViewModel
 
         public bool prmStudentTextVisibility { get => prmStudentTextVisibility1; set => SetProperty(ref prmStudentTextVisibility1, value); }
 
+        private bool groupChoiseVisibility1;
+
+        public bool groupChoiseVisibility { get => groupChoiseVisibility1; set => SetProperty(ref groupChoiseVisibility1, value); }
+
+        private Color scChoice1;
+
+        public Color scChoice { get => scChoice1; set => SetProperty(ref scChoice1, value); }
+
+        private Color cmChoice1;
+
+        public Color cmChoice { get => cmChoice1; set => SetProperty(ref cmChoice1, value); }
+
+        private Color arChoice1;
+
+        public Color arChoice { get => arChoice1; set => SetProperty(ref arChoice1, value); }
+
+        private Command groupChoice1;
+
+        public ICommand groupChoice
+        {
+            get
+            {
+                if (groupChoice1 == null)
+                {
+                    groupChoice1 = new Command<string>(PerformgroupChoice);
+                }
+
+                return groupChoice1;
+            }
+        }
+
+        
 
 
 
