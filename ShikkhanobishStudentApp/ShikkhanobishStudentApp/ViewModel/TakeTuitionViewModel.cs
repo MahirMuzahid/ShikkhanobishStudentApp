@@ -35,6 +35,7 @@ namespace ShikkhanobishStudentApp.ViewModel
         }
         public async Task homeFirst()
         {
+            hireteacherEnabled = false;
             groupChoiseVisibility = false;
             popUpVisibility = false;
             SelectedInsName = "Not Selected";
@@ -90,7 +91,7 @@ namespace ShikkhanobishStudentApp.ViewModel
         public ICommand CallTeacher =>
              new Command<Institution>((intName) =>
              {
-                 Application.Current.MainPage.Navigation.PushModalAsync(new VideoCallPage());
+                 hireteacherPopupVisibility = true;
              });
         public void CheckEverythign()
         {
@@ -257,7 +258,28 @@ namespace ShikkhanobishStudentApp.ViewModel
 
             }
         }
-
+        private void PerformClosePopUpHireTeacher()
+        {
+            hireteacherPopupVisibility = false;
+        }
+        private void PerformchooserndTeachercmd()
+        {
+            if(randonpopupTeacherbtnColor == Color.GreenYellow)
+            {
+                randonpopupTeacherbtnColor = Color.Transparent;
+                hireteacherEnabled = false;
+            }
+            else
+            {
+                randonpopupTeacherbtnColor = Color.GreenYellow;
+                hireteacherEnabled = true;
+            }
+            
+        }
+        private void PerformhireTeacherBtnCmd()
+        {
+            Application.Current.MainPage.Navigation.PushModalAsync(new VideoCallPage());
+        }
 
         #region populate list
         public async Task InsListPopulate()
@@ -1174,7 +1196,66 @@ namespace ShikkhanobishStudentApp.ViewModel
             }
         }
 
+        private bool hireteacherPopupVisibility1;
+
+        public bool hireteacherPopupVisibility { get => hireteacherPopupVisibility1; set => SetProperty(ref hireteacherPopupVisibility1, value); }
+
+        private Command closePopUpHireTeacher;
+
+        public ICommand ClosePopUpHireTeacher
+        {
+            get
+            {
+                if (closePopUpHireTeacher == null)
+                {
+                    closePopUpHireTeacher = new Command(PerformClosePopUpHireTeacher);
+                }
+
+                return closePopUpHireTeacher;
+            }
+        }
+
+        private Command hireTeacherBtnCmd1;
+
+        public ICommand hireTeacherBtnCmd
+        {
+            get
+            {
+                if (hireTeacherBtnCmd1 == null)
+                {
+                    hireTeacherBtnCmd1 = new Command(PerformhireTeacherBtnCmd);
+                }
+
+                return hireTeacherBtnCmd1;
+            }
+        }
+
         
+        private Color randonpopupTeacherbtnColor1;
+
+        public Color randonpopupTeacherbtnColor { get => randonpopupTeacherbtnColor1; set => SetProperty(ref randonpopupTeacherbtnColor1, value); }
+
+        private Command chooserndTeachercmd1;
+
+        public ICommand chooserndTeachercmd
+        {
+            get
+            {
+                if (chooserndTeachercmd1 == null)
+                {
+                    chooserndTeachercmd1 = new Command(PerformchooserndTeachercmd);
+                }
+
+                return chooserndTeachercmd1;
+            }
+        }
+
+        private bool hireteacherEnabled1;
+
+        public bool hireteacherEnabled { get => hireteacherEnabled1; set => SetProperty(ref hireteacherEnabled1, value); }
+
+
+
 
 
 
