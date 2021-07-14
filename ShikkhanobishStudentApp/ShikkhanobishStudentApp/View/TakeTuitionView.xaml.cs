@@ -260,6 +260,6 @@ namespace ShikkhanobishStudentApp.View
             }
         }
 
-       
+        
     }
 }

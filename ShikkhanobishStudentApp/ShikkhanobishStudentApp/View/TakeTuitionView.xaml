@@ -568,7 +568,7 @@
         <Grid BackgroundColor="#50000000" IsVisible="{Binding hireteacherPopupVisibility}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
-                <RowDefinition Height="2*"/>
+                <RowDefinition Height="3*"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -584,7 +584,7 @@
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height=".01*"/>
                     <RowDefinition Height=".5*"/>
-                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="5*"/>
                     <RowDefinition Height=".5*"/>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
@@ -606,38 +606,37 @@
                 <Frame BackgroundColor="Black" Grid.Row="2" Grid.Column="1" HasShadow="False"/>
                 <Label Text="Choose from your favourite teacher" Grid.Row="3" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center"  IsVisible="{Binding choosefavteacherlbl}"/>
                 <Label Text="You do not have any favourite teacher of this subject" Grid.Row="4" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="{Binding nofavteacherlbl}" TextColor="#40000000"/>
-                <ListView  ItemsSource="{Binding popupfavteacheritemSource}" Grid.Row="4"  RowHeight="80" SeparatorColor="#ffffff" >
+                <ListView  ItemsSource="{Binding popupfavteacheritemSource}" Grid.Row="4" Grid.Column="1"  RowHeight="80" SeparatorColor="#ffffff"   >
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <Grid Margin="0,10,0,10">
+                                <Grid Margin="0,10,0,10" BackgroundColor="{Binding popupfavSelectedbackground}">
                                     <Grid.RowDefinitions>
+                                        <RowDefinition Height=".1*"/>
                                         <RowDefinition Height="1*"/>
-                                        <RowDefinition Height=".5*"/>
+                                        <RowDefinition Height="1*"/>
                                         <RowDefinition Height=".1*"/>
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="1*"/>
                                         <ColumnDefinition Width="1*"/>
                                         <ColumnDefinition Width="1*"/>
-                                        <ColumnDefinition Width="1*"/>
                                     </Grid.ColumnDefinitions>
-                                    <material:MaterialCard Grid.RowSpan="3" Grid.ColumnSpan="4" Elevation="3" BackgroundColor="#06000000"/>
-                                    <Label Text="{Binding teacherName}" Grid.RowSpan="3" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" FontSize="12" FontAttributes="Bold"/>
-                                    <Label Text="{Binding teacherTotalTuition}" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" FontSize="12"  FontAttributes="Bold"/>
-                                    <Label Text="Total Tuition" Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" FontSize="12"/>
-                                    <Label Text="{Binding teacherRatting}" Grid.Row="0" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" FontSize="12" FontAttributes="Bold"/>
-                                    <Label Text="Ratting" Grid.Row="1" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" FontSize="12"/>
-
+                                    <Label Text="{Binding teacherName}" Grid.Row="1"  Grid.RowSpan="2" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" FontSize="12" FontAttributes="Bold"/>
+                                    <Label Text="{Binding teacherTotalTuition}" Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" FontSize="12"  FontAttributes="Bold"/>
+                                    <Label Text="Total Tuition" Grid.Row="2" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" FontSize="12"/>
+                                    <Label Text="{Binding teacherRatting}" Grid.Row="1" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" FontSize="12" FontAttributes="Bold"/>
+                                    <Label Text="Ratting" Grid.Row="2" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" FontSize="12"/>
+                                    <material:MaterialButton Grid.RowSpan="4" Grid.ColumnSpan="3" ButtonType="Text" PressedBackgroundColor="#20000000" Command="{Binding Source={x:Reference tuitionView}, Path=BindingContext.SeletecFavpopupTeacher}" CommandParameter="{Binding .}"/>
                                 </Grid>
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                
+
                 <Label Text="Choose rendom teacher" Grid.Row="5" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center"/>
                 <material:MaterialButton Text="Rendom Teacher" TextColor="Black" Grid.Row="6" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Start" ButtonType="Flat" BackgroundColor="{Binding randonpopupTeacherbtnColor}" PressedBackgroundColor="#20000000" FontSize="12" Command="{Binding chooserndTeachercmd}"/>
-                <material:MaterialButton Text="Hire Teacher" Grid.Row="7" Grid.Column="1" Command="{Binding hireTeacherBtnCmd}" IsEnabled="{Binding hireteacherEnabled}"/>
+                <material:MaterialButton x:Name="popuphireteacher" Text="Hire Teacher" Grid.Row="7" Grid.Column="1" Command="{Binding hireTeacherBtnCmd}" IsEnabled="{Binding hireteacherEnabled}"/>
             </Grid>
         </Grid>
 

@@ -13,6 +13,7 @@ namespace ShikkhanobishStudentApp.Model
         public int teacherTotalTuition { get; set; }
         public double teacherRatting { get; set; }
         public bool rmvBtnVisibility { get; set; }
+        public string popupfavSelectedbackground { get; set; }
         public string Response { get; set; }
     }
 }
