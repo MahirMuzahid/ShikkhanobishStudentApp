@@ -29,6 +29,8 @@ namespace ShikkhanobishStudentApp.View
                 loginView.FadeTo(0, 1200, Easing.CubicIn);
             }
             var current = Connectivity.NetworkAccess;
+            FavouriteTeacherGrid.IsVisible = false;
+            coingrid.IsVisible = false;
             if (current == NetworkAccess.Internet)
             {
                 getAllInfo();
@@ -37,7 +39,7 @@ namespace ShikkhanobishStudentApp.View
             {
                 loginbtn.IsEnabled = false;
                 logoutBtn.IsEnabled = false;
-                connectivityGrid.IsVisible = false;
+                connectivityGrid.IsVisible = true;
                 
                 ShowSnakeBarError();
             }
@@ -46,8 +48,7 @@ namespace ShikkhanobishStudentApp.View
 
         public async Task getAllInfo()
         {
-            FavouriteTeacherGrid.IsVisible = false;
-            coingrid.IsVisible = false;
+            
             connectivityGrid.IsVisible = false;
             NavigationPage.SetHasNavigationBar(this, false);
             var mainDisplayInfo = DeviceDisplay.MainDisplayInfo;

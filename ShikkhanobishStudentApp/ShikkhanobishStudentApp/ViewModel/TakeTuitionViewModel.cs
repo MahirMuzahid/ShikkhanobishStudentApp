@@ -25,6 +25,7 @@ namespace ShikkhanobishStudentApp.ViewModel
         ObservableCollection<Degree> AlldegreeList = new ObservableCollection<Degree>();
         ObservableCollection<Chapter> AllchpList = new ObservableCollection<Chapter>();
         ObservableCollection<Course> AllCrsList = new ObservableCollection<Course>();
+        List<favouriteTeacher> thisfavteacher = new List<favouriteTeacher>();
         private int popupFirstIndex;
        
 
@@ -68,7 +69,8 @@ namespace ShikkhanobishStudentApp.ViewModel
             forthBtnVisbility = false;
             resultprgs = .1;
             resultvisi = true;
-            
+
+
         }
         
         public bool checkInternet()
@@ -92,6 +94,8 @@ namespace ShikkhanobishStudentApp.ViewModel
              new Command<Institution>((intName) =>
              {
                  hireteacherPopupVisibility = true;
+                 GetFavouriteTeaacherList();
+
              });
         public void CheckEverythign()
         {
@@ -669,10 +673,29 @@ namespace ShikkhanobishStudentApp.ViewModel
         {          
             getALlFavTeacher();
         }
+        public async Task GetFavouriteTeaacherList()
+        {
+            thisfavteacher = await "https://api.shikkhanobish.com/api/ShikkhanobishTeacher/getFavouriteTeacherwithStudentID".PostUrlEncodedAsync(new { studentID = StaticPageToPassData.thisStudentInfo.studentID })
+       .ReceiveJson<List<favouriteTeacher>>();
+            if (thisfavteacher.Count == 0) {
+                nofavteacherlbl = true;
+                choosefavteacherlbl = false;
+            }
+            else
+            {
+                nofavteacherlbl = false;
+                choosefavteacherlbl = true;
+            }
+            popupfavteacheritemSource = thisfavteacher;
+            favteacherItemSource = thisfavteacher;
+
+
+        }
         public async Task  getALlFavTeacher()
         {
-            PremiumStudent prm = await "https://api.shikkhanobish.com/api/ShikkhanobishTeacher/getPremiumStudentWithID".PostUrlEncodedAsync(new { studentID = StaticPageToPassData.thisStudentInfo.studentID })
-    .ReceiveJson<PremiumStudent>();
+            
+            var prm = await "https://api.shikkhanobish.com/api/ShikkhanobishTeacher/getPremiumStudentWithID".PostUrlEncodedAsync(new { studentID = StaticPageToPassData.thisStudentInfo.studentID })
+ .ReceiveJson<PremiumStudent>();
             if (prm.studentID == 0)
             {
                 prmStudentText = "*";
@@ -689,8 +712,9 @@ namespace ShikkhanobishStudentApp.ViewModel
                 maxnumteacher = "Unlimited";
                 prmStudentTextVisibility = false;
             }
-            favteacherItemSource = await "https://api.shikkhanobish.com/api/ShikkhanobishTeacher/getFavouriteTeacherwithStudentID".PostUrlEncodedAsync(new { studentID = StaticPageToPassData.thisStudentInfo.studentID })
-      .ReceiveJson<List<favouriteTeacher>>();
+            await GetFavouriteTeaacherList();
+            
+
         }
         public ICommand RemoveFavTeacher
         {
@@ -1087,9 +1111,6 @@ namespace ShikkhanobishStudentApp.ViewModel
 
         public string errortxt { get => errortxt1; set => SetProperty(ref errortxt1, value); }
 
-        private bool connectivitiVisibility1;
-
-        public bool connectivitiVisibility { get => connectivitiVisibility1; set => SetProperty(ref connectivitiVisibility1, value); }
 
         private double resultprgs1;
 
@@ -1253,6 +1274,18 @@ namespace ShikkhanobishStudentApp.ViewModel
         private bool hireteacherEnabled1;
 
         public bool hireteacherEnabled { get => hireteacherEnabled1; set => SetProperty(ref hireteacherEnabled1, value); }
+
+        private List<favouriteTeacher> popupfavteacheritemSource1;
+
+        public List<favouriteTeacher> popupfavteacheritemSource { get => popupfavteacheritemSource1; set => SetProperty(ref popupfavteacheritemSource1, value); }
+
+        private bool nofavteacherlbl1;
+
+        public bool nofavteacherlbl { get => nofavteacherlbl1; set => SetProperty(ref nofavteacherlbl1, value); }
+
+        private bool choosefavteacherlbl1;
+
+        public bool choosefavteacherlbl { get => choosefavteacherlbl1; set => SetProperty(ref choosefavteacherlbl1, value); }
 
 
 
