@@ -27,6 +27,7 @@ namespace ShikkhanobishStudentApp.ViewModel
         ObservableCollection<Course> AllCrsList = new ObservableCollection<Course>();
         List<favouriteTeacher> thisfavteacher = new List<favouriteTeacher>();
         private int popupFirstIndex;
+        private int thisSearcherSubId;
        
 
         #region Methods
@@ -34,6 +35,7 @@ namespace ShikkhanobishStudentApp.ViewModel
         {
             homeFirst();
         }
+        #region Methods
         public async Task homeFirst()
         {
             hireteacherEnabled = false;
@@ -296,6 +298,7 @@ namespace ShikkhanobishStudentApp.ViewModel
         {
             Application.Current.MainPage.Navigation.PushModalAsync(new VideoCallPage());
         }
+        #endregion
 
         #region populate list
         public async Task InsListPopulate()
@@ -549,9 +552,11 @@ namespace ShikkhanobishStudentApp.ViewModel
                              if (AllclsList[i].name == thisList.name)
                              {
                                  selectedList = AllclsList[i];
+                                
                              }
 
                          }
+                        
                          selectedGlobalCls = selectedList;
                          SelectedClassName = selectedList.name;
                          CLTRequest = selectedList.tuitionRequest;
@@ -593,6 +598,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                          if (AllsubList[i].name == thisList.name)
                          {
                              selectedList = AllsubList[i];
+                             thisSearcherSubId = AllsubList[i].subjectID;
                          }
 
                      }
@@ -688,7 +694,7 @@ namespace ShikkhanobishStudentApp.ViewModel
         public async Task GetFavouriteTeaacherList()
         {
             List<favouriteTeacher> Beforthisfavteacher = await "https://api.shikkhanobish.com/api/ShikkhanobishTeacher/getFavouriteTeacherwithStudentID".PostUrlEncodedAsync(new { studentID = StaticPageToPassData.thisStudentInfo.studentID })
-       .ReceiveJson<List<favouriteTeacher>>();sdad
+       .ReceiveJson<List<favouriteTeacher>>();
 
             ///macth Favourite teacher list in popup
 
@@ -780,8 +786,9 @@ namespace ShikkhanobishStudentApp.ViewModel
         public async Task Remove( favouriteTeacher favteacher)
         {
            favteacherItemSource.Clear();
-           favteacherItemSource =  await "https://api.shikkhanobish.com/api/ShikkhanobishTeacher/getFavouriteTeacherwithStudentID".PostUrlEncodedAsync(new { studentID = StaticPageToPassData.thisStudentInfo.studentID })
-      .ReceiveJson<List<favouriteTeacher>>();
+            var res = await "https://api.shikkhanobish.com/api/ShikkhanobishTeacher/removeFavTeacherWithTeacherID".PostUrlEncodedAsync(new { teacherID = favteacher.teacherID })
+     .ReceiveJson<Response>();
+            
         }
         #endregion
        
