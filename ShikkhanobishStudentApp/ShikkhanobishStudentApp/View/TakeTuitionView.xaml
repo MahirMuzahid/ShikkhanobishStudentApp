@@ -94,7 +94,7 @@
                     <Image Source="inst.jpg" Grid.Column="0" Grid.RowSpan="2" Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center" Opacity=".8" />
 
                     <Label Text="Institution" Grid.Column="1" Grid.Row="0" HorizontalTextAlignment="Start" VerticalTextAlignment="End" FontSize="17" TextColor="#3B3B3B"/>
-                    <Label Text="{Binding SelectedInsName}" Grid.Row="1" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Start" FontSize="13"  />
+                    <Label Text="{Binding SelectedInsName}" Grid.Row="1" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Start" FontSize="12"  />
 
                     <material:MaterialButton Text="Select"  CornerRadius="5" HorizontalOptions="End" VerticalOptions="Center" ButtonType="Text" BorderWidth="1" BorderColor="#30000000" TextColor="#864AE8" Grid.Column="1" Grid.RowSpan="2" FontSize="10" FontAttributes="Bold"  Command="{Binding selectInsCommand}" CommandParameter="0" IsVisible="{Binding firstListBtnVisibility}">
 
@@ -115,7 +115,7 @@
                     <Image Source="clss.png" Grid.Column="0" Grid.RowSpan="2" Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center" Opacity=".7" />
 
                     <Label Text="{Binding secTitle}" Grid.Column="1" Grid.Row="0" HorizontalTextAlignment="Start" VerticalTextAlignment="End" FontSize="17" TextColor="#3B3B3B"/>
-                    <Label Text="{Binding SelectedClassName}" Grid.Row="1" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Start" FontSize="13"  />
+                    <Label Text="{Binding SelectedClassName}" Grid.Row="1" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Start" FontSize="12"  />
 
                     <material:MaterialButton Text="Select"  CornerRadius="5" HorizontalOptions="End" VerticalOptions="Center" ButtonType="Text" BorderWidth="2" BorderColor="#30000000"  TextColor="#864AE8" Grid.Column="1" Grid.RowSpan="2" FontSize="10" FontAttributes="Bold"  Command="{Binding selectInsCommand}" CommandParameter="1" IsVisible="{Binding secondListBtnVisibility}">
 
@@ -135,7 +135,7 @@
                     <Image Source="sub.png" Grid.Column="0" Grid.RowSpan="2" Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center" Opacity=".8" />
 
                     <Label Text="{Binding thirdTitle}" Grid.Column="1" Grid.Row="0" HorizontalTextAlignment="Start" VerticalTextAlignment="End" FontSize="17" TextColor="#3B3B3B"/>
-                    <Label Text="{Binding SelectedSubjectName}" Grid.Row="1" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Start" FontSize="13"  />
+                    <Label Text="{Binding SelectedSubjectName}" Grid.Row="1" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Start" FontSize="12"  />
 
                     <material:MaterialButton Text="Select"  CornerRadius="5" HorizontalOptions="End" VerticalOptions="Center" ButtonType="Text" BorderWidth="2" BorderColor="#30000000" TextColor="#864AE8" Grid.Column="1" Grid.RowSpan="2" FontSize="10" FontAttributes="Bold"  Command="{Binding selectInsCommand}" CommandParameter="2" IsVisible="{Binding thirdListBtnVisibility}">
 
@@ -155,7 +155,7 @@
                     <Image Source="chapter.png" Grid.Column="0" Grid.RowSpan="2" Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center" Opacity=".8" />
 
                     <Label Text="{Binding forthTitle}" Grid.Column="1" Grid.Row="0" HorizontalTextAlignment="Start" VerticalTextAlignment="End" FontSize="17" TextColor="#3B3B3B"/>
-                    <Label Text="{Binding SelectedChapterName}" Grid.Row="1" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Start" FontSize="13"  />
+                    <Label Text="{Binding SelectedChapterName}" Grid.Row="1" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Start" FontSize="12"  />
 
                     <material:MaterialButton Text="Select"  CornerRadius="5" HorizontalOptions="End" VerticalOptions="Center" ButtonType="Text" BorderWidth="2" BorderColor="#30000000" TextColor="#864AE8" Grid.Column="1" Grid.RowSpan="2" FontSize="10" FontAttributes="Bold"  Command="{Binding selectInsCommand}" CommandParameter="3" IsVisible="{Binding forthBtnVisbility}">
 
@@ -201,7 +201,7 @@
                 </Label>
                 <Label Text="{Binding perminCostText}" Grid.Row="1" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" FontAttributes="Bold" IsVisible="{Binding activebtn}" FontSize="16"  TextColor="#11AAD7"/>
 
-                <material:MaterialButton Text="Choose Teacher" ButtonType="Outlined" Elevation="0"   CornerRadius="5" TextColor="#864AE8" Grid.Column="2" Grid.Row="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="10" FontAttributes="Bold" IsVisible="{Binding activebtn}" Command="{Binding CallTeacher}" BorderColor="#864AE8" PressedBackgroundColor="#50864AE8">
+                <material:MaterialButton Text="Choose Teacher" ButtonType="Outlined" Elevation="0"   CornerRadius="5" TextColor="#864AE8" Grid.Column="2" Grid.Row="1" HorizontalOptions="End" VerticalOptions="Center" FontSize="10" FontAttributes="Bold" IsVisible="{Binding activebtn}" Command="{Binding ChooseTeacherPopUp}" BorderColor="#864AE8" PressedBackgroundColor="#50864AE8">
 
                 </material:MaterialButton>
 
@@ -606,7 +606,7 @@
                 <Frame BackgroundColor="Black" Grid.Row="2" Grid.Column="1" HasShadow="False"/>
                 <Label Text="Choose from your favourite teacher" Grid.Row="3" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center"  IsVisible="{Binding choosefavteacherlbl}"/>
                 <Label Text="You do not have any favourite teacher of this subject" Grid.Row="4" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="{Binding nofavteacherlbl}" TextColor="#40000000"/>
-                <ListView  ItemsSource="{Binding popupfavteacheritemSource}" Grid.Row="4" Grid.Column="1"  RowHeight="80" SeparatorColor="#ffffff"   >
+                <ListView  ItemsSource="{Binding popupfavteacheritemSource}" Grid.Row="4" Grid.Column="1"  RowHeight="80" SeparatorColor="Black"   >
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
@@ -621,13 +621,16 @@
                                         <ColumnDefinition Width="1*"/>
                                         <ColumnDefinition Width="1*"/>
                                         <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="1*"/>
                                     </Grid.ColumnDefinitions>
                                     <Label Text="{Binding teacherName}" Grid.Row="1"  Grid.RowSpan="2" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" FontSize="12" FontAttributes="Bold"/>
                                     <Label Text="{Binding teacherTotalTuition}" Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" FontSize="12"  FontAttributes="Bold"/>
                                     <Label Text="Total Tuition" Grid.Row="2" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" FontSize="12"/>
                                     <Label Text="{Binding teacherRatting}" Grid.Row="1" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" FontSize="12" FontAttributes="Bold"/>
                                     <Label Text="Ratting" Grid.Row="2" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" FontSize="12"/>
-                                    <material:MaterialButton Grid.RowSpan="4" Grid.ColumnSpan="3" ButtonType="Text" PressedBackgroundColor="#20000000" Command="{Binding Source={x:Reference tuitionView}, Path=BindingContext.SeletecFavpopupTeacher}" CommandParameter="{Binding .}"/>
+                                    <Label Text="Online" Grid.Row="1" Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center" FontSize="12" FontAttributes="Bold" TextColor="Green"/>
+                                    <Label Text="Activity" Grid.Row="2" Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center" FontSize="12" />
+                                    <material:MaterialButton Grid.RowSpan="4" Grid.ColumnSpan="4" ButtonType="Text" PressedBackgroundColor="#20000000" Command="{Binding Source={x:Reference tuitionView}, Path=BindingContext.SeletecFavpopupTeacher}" CommandParameter="{Binding .}"/>
                                 </Grid>
                             </ViewCell>
                         </DataTemplate>
