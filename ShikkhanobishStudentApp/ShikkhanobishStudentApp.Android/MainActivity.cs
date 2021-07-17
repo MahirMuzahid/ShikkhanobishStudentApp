@@ -4,6 +4,7 @@ using Android.App;
 using Android.Content.PM;
 using Android.Runtime;
 using Android.OS;
+using Xamarin.Forms.Vonage.Android;
 using ImageCircle.Forms.Plugin.Droid;
 
 namespace ShikkhanobishStudentApp.Droid
@@ -14,7 +15,7 @@ namespace ShikkhanobishStudentApp.Droid
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-
+            PlatformVonage.Init(this);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             XF.Material.Droid.Material.Init(this, savedInstanceState);

@@ -12,6 +12,7 @@ using ShikkhanobishStudentApp.View;
 using ShikkhanobishStudentApp.Server_Connection;
 using Flurl.Http;
 using System.Threading.Tasks;
+using Xamarin.Forms.Vonage;
 
 namespace ShikkhanobishStudentApp.ViewModel
 {
@@ -72,7 +73,7 @@ namespace ShikkhanobishStudentApp.ViewModel
             forthBtnVisbility = false;
             resultprgs = .1;
             resultvisi = true;
-
+            
 
         }
         
@@ -96,6 +97,7 @@ namespace ShikkhanobishStudentApp.ViewModel
         public ICommand ChooseTeacherPopUp =>
              new Command(async() =>
              {
+                 
                  hireteacherPopupVisibility = true;
                  hireteacherEnabled = false;
 
@@ -315,9 +317,25 @@ namespace ShikkhanobishStudentApp.ViewModel
             }
             
         }
-        private void PerformhireTeacherBtnCmd()
+        private async Task PerformhireTeacherBtnCmdAsync()
         {
+            CrossVonage.Current.ApiKey = "47280234";
+            CrossVonage.Current.SessionId = "1_MX40NzI4MDIzNH5-MTYyNjU1MDA2MTI1MX5QUGdZcWdZUGlzMmh3RU9ROC9tc3R5ZWx-fg";
+            CrossVonage.Current.UserToken = "T1==cGFydG5lcl9pZD00NzI4MDIzNCZzaWc9NmZjMDA3MzJmOWUxOTRkNzAwMTJjMWRjNzllZGY4MDYyNzg4YmFlMDpzZXNzaW9uX2lkPTFfTVg0ME56STRNREl6Tkg1LU1UWXlOalUxTURBMk1USTFNWDVRVUdkWmNXZFpVR2x6TW1oM1JVOVJPQzl0YzNSNVpXeC1mZyZjcmVhdGVfdGltZT0xNjI2NTUwMDc1Jm5vbmNlPTAuMjI3NTA0NDQ0NTg1NDAzNzUmcm9sZT1wdWJsaXNoZXImZXhwaXJlX3RpbWU9MTYyNjU1MzY3MyZpbml0aWFsX2xheW91dF9jbGFzc19saXN0PQ==";
+            
+            //bool x =CrossVonage.Current.IsPublishingStarted;
+
+            if (!CrossVonage.Current.TryStartSession())
+            {
+                return;
+            }
             Application.Current.MainPage.Navigation.PushModalAsync(new VideoCallPage());
+
+        }
+
+        public async Task requestPermission()
+        {
+            var status = await Permissions.RequestAsync<Permissions.Camera>();
         }
         #endregion
 
@@ -1320,7 +1338,7 @@ namespace ShikkhanobishStudentApp.ViewModel
             {
                 if (hireTeacherBtnCmd1 == null)
                 {
-                    hireTeacherBtnCmd1 = new Command(PerformhireTeacherBtnCmd);
+                    hireTeacherBtnCmd1 = new Command(async => PerformhireTeacherBtnCmdAsync());
                 }
 
                 return hireTeacherBtnCmd1;
