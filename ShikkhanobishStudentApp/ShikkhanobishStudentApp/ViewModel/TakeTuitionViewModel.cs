@@ -13,6 +13,7 @@ using ShikkhanobishStudentApp.Server_Connection;
 using Flurl.Http;
 using System.Threading.Tasks;
 using Xamarin.Forms.Vonage;
+using System.Net.Http;
 
 namespace ShikkhanobishStudentApp.ViewModel
 {
@@ -27,9 +28,9 @@ namespace ShikkhanobishStudentApp.ViewModel
         ObservableCollection<Chapter> AllchpList = new ObservableCollection<Chapter>();
         ObservableCollection<Course> AllCrsList = new ObservableCollection<Course>();
         List<favouriteTeacher> thisfavteacher = new List<favouriteTeacher>();
-        private int popupFirstIndex;
+        RealTimeApiMethods realtimeapi = new RealTimeApiMethods();
         private int thisSearcherSubId;
-       
+        private int thisSelectedFavPopUpTeacher;
 
         #region Methods
         public TakeTuitionViewModel()
@@ -110,7 +111,6 @@ namespace ShikkhanobishStudentApp.ViewModel
 
                  if(popupfavteacheritemSource.Count != 0)
                  {
-                     popupfavteacheritemSource = popupfavteacheritemSource;
                      choosefavteacherlbl = true;
                      nofavteacherlbl = false;
                  }
@@ -314,15 +314,33 @@ namespace ShikkhanobishStudentApp.ViewModel
                 popupfavteacheritemSource = newfavTeacher;
                 thisfavteacher = newfavTeacher;
                 hireteacherEnabled = true;
+                thisSelectedFavPopUpTeacher = 0;
             }
             
         }
         private async Task PerformhireTeacherBtnCmdAsync()
         {
+            int teacherisSelected;
+            if(thisSelectedFavPopUpTeacher == 0)
+            {
+                Teacher SelectedTeacher = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/HireTeacherAsync".PostUrlEncodedAsync(new { subID = thisSearcherSubId })
+       .ReceiveJson<Teacher>();
+                teacherisSelected = SelectedTeacher.teacherID;
+            }
+            else
+            {
+                teacherisSelected = thisSelectedFavPopUpTeacher;
+            }
+            
+            string uriToCAllTeacher = "https://shikkhanobishrealtimeapi.shikkhanobish.com/api/ShikkhanobishSignalR/CallSelectedTeacher?&teacherID=" + teacherisSelected + "&des=" + detailTxt + "&cls=" + SelectedClassName + "&sub=" + thisSearcherSubId + "&chapter=" + selectedChapterName + "&cost=" + "3" + "&name=" + StaticPageToPassData.thisStudentInfo.name;
+            await realtimeapi.CallSelectedTeacher(uriToCAllTeacher);
+        }
+        public async Task GoTOVideoCallPage()
+        {
             CrossVonage.Current.ApiKey = "47280234";
             CrossVonage.Current.SessionId = "1_MX40NzI4MDIzNH5-MTYyNjU1MDA2MTI1MX5QUGdZcWdZUGlzMmh3RU9ROC9tc3R5ZWx-fg";
             CrossVonage.Current.UserToken = "T1==cGFydG5lcl9pZD00NzI4MDIzNCZzaWc9NmZjMDA3MzJmOWUxOTRkNzAwMTJjMWRjNzllZGY4MDYyNzg4YmFlMDpzZXNzaW9uX2lkPTFfTVg0ME56STRNREl6Tkg1LU1UWXlOalUxTURBMk1USTFNWDVRVUdkWmNXZFpVR2x6TW1oM1JVOVJPQzl0YzNSNVpXeC1mZyZjcmVhdGVfdGltZT0xNjI2NTUwMDc1Jm5vbmNlPTAuMjI3NTA0NDQ0NTg1NDAzNzUmcm9sZT1wdWJsaXNoZXImZXhwaXJlX3RpbWU9MTYyNjU1MzY3MyZpbml0aWFsX2xheW91dF9jbGFzc19saXN0PQ==";
-            
+
             //bool x =CrossVonage.Current.IsPublishingStarted;
 
             if (!CrossVonage.Current.TryStartSession())
@@ -330,9 +348,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                 return;
             }
             Application.Current.MainPage.Navigation.PushModalAsync(new VideoCallPage());
-
         }
-
         public async Task requestPermission()
         {
             var status = await Permissions.RequestAsync<Permissions.Camera>();
@@ -800,6 +816,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                         if(newfavTeacher[i].teacherID == favteacher.teacherID)
                         {
                             newfavTeacher[i].popupfavSelectedbackground = "#5098E87F";
+                            thisSelectedFavPopUpTeacher = newfavTeacher[i].teacherID;
                         }
                         else
                         {
