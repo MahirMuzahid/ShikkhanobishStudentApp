@@ -577,10 +577,11 @@
                 <ColumnDefinition Width=".1*"/>
             </Grid.ColumnDefinitions>
 
-            <Button Grid.RowSpan="3" Grid.ColumnSpan="3" BackgroundColor="Transparent" Command="{Binding ClosePopUpHireTeacher}"/>
-            <Grid Grid.Row="1" Grid.Column="1" BackgroundColor="White" >
+          
+            
+            <Grid Grid.Row="1" Grid.Column="1" IsVisible="{Binding chooseTeacherVisibility}">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="2*"/>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height=".01*"/>
                     <RowDefinition Height=".5*"/>
@@ -594,6 +595,8 @@
                     <ColumnDefinition Width="20*"/>
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
+                <material:MaterialCard BackgroundColor="White" Elevation="20" Grid.RowSpan="8" Grid.ColumnSpan="3" CornerRadius="15" />
+                <material:MaterialButton Grid.Row="0" Grid.Column="1" Text="Close" ButtonType="Text" HorizontalOptions="End" VerticalOptions="Center" Command="{Binding ClosePopUpHireTeacher}" FontSize="10"/>
                 <Label Text="Hire Teacher" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" FontAttributes="Bold"/>
                 <Label Grid.Row="1" HorizontalOptions="Start" VerticalOptions="Center" Grid.Column="1">
                     <Label.FormattedText>
@@ -618,18 +621,18 @@
                                         <RowDefinition Height=".1*"/>
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="2*"/>
                                         <ColumnDefinition Width="1*"/>
                                         <ColumnDefinition Width="1*"/>
                                         <ColumnDefinition Width="1*"/>
                                     </Grid.ColumnDefinitions>
-                                    <Label Text="{Binding teacherName}" Grid.Row="1"  Grid.RowSpan="2" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" FontSize="12" FontAttributes="Bold"/>
-                                    <Label Text="{Binding teacherTotalTuition}" Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" FontSize="12"  FontAttributes="Bold"/>
-                                    <Label Text="Total Tuition" Grid.Row="2" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" FontSize="12"/>
-                                    <Label Text="{Binding teacherRatting}" Grid.Row="1" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" FontSize="12" FontAttributes="Bold"/>
-                                    <Label Text="Ratting" Grid.Row="2" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" FontSize="12"/>
-                                    <Label Text="Online" Grid.Row="1" Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center" FontSize="12" FontAttributes="Bold" TextColor="Green"/>
-                                    <Label Text="Activity" Grid.Row="2" Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center" FontSize="12" />
+                                    <Label Text="{Binding teacherName}" Grid.Row="1"  Grid.RowSpan="2" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" FontSize="11" FontAttributes="Bold"/>
+                                    <Label Text="{Binding teacherTotalTuition}" Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" FontSize="10"  FontAttributes="Bold"/>
+                                    <Label Text="Total Tuition" Grid.Row="2" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" FontSize="10"/>
+                                    <Label Text="{Binding teacherRatting}" Grid.Row="1" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" FontSize="10" FontAttributes="Bold"/>
+                                    <Label Text="Ratting" Grid.Row="2" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" FontSize="10"/>
+                                    <Label Text="Online" Grid.Row="1" Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center" FontSize="10" FontAttributes="Bold" TextColor="Green"/>
+                                    <Label Text="Activity" Grid.Row="2" Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center" FontSize="10" />
                                     <material:MaterialButton Grid.RowSpan="4" Grid.ColumnSpan="4" ButtonType="Text" PressedBackgroundColor="#20000000" Command="{Binding Source={x:Reference tuitionView}, Path=BindingContext.SeletecFavpopupTeacher}" CommandParameter="{Binding .}"/>
                                 </Grid>
                             </ViewCell>
@@ -640,6 +643,17 @@
                 <Label Text="Choose rendom teacher" Grid.Row="5" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center"/>
                 <material:MaterialButton Text="Rendom Teacher" TextColor="Black" Grid.Row="6" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Start" ButtonType="Flat" BackgroundColor="{Binding randonpopupTeacherbtnColor}" PressedBackgroundColor="#20000000" FontSize="12" Command="{Binding chooserndTeachercmd}"/>
                 <material:MaterialButton x:Name="popuphireteacher" Text="Hire Teacher" Grid.Row="7" Grid.Column="1" Command="{Binding hireTeacherBtnCmd}" IsEnabled="{Binding hireteacherEnabled}"/>
+            </Grid>
+            <Grid Grid.Row="1" Grid.Column="1" IsVisible="{Binding selectedTeacherConnectingVisibility}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="5*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="5*"/>
+                </Grid.RowDefinitions>
+                <material:MaterialCard BackgroundColor="White" Elevation="20" Grid.Row="1" Grid.RowSpan="2" CornerRadius="15" />
+                <Label Text="{Binding connectingTeachertxt}" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="End" FontSize="12"/>
+                <material:MaterialButton Text="Cancle" ButtonType="Text" Grid.Row="2" TextColor="red" Command="{Binding cancleTeacherSearch}"/>
             </Grid>
         </Grid>
 

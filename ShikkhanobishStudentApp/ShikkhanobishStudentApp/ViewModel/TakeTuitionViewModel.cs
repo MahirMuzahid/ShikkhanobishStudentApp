@@ -14,6 +14,7 @@ using Flurl.Http;
 using System.Threading.Tasks;
 using Xamarin.Forms.Vonage;
 using System.Net.Http;
+using Microsoft.AspNetCore.SignalR.Client;
 
 namespace ShikkhanobishStudentApp.ViewModel
 {
@@ -31,6 +32,9 @@ namespace ShikkhanobishStudentApp.ViewModel
         RealTimeApiMethods realtimeapi = new RealTimeApiMethods();
         private int thisSearcherSubId;
         private int thisSelectedFavPopUpTeacher;
+        HubConnection _connection = null;
+        Teacher SelectedTeacher = new Teacher();
+        string url = "https://shikkhanobishrealtimeapi.shikkhanobish.com/ShikkhanobishHub";
 
         #region Methods
         public TakeTuitionViewModel()
@@ -40,6 +44,7 @@ namespace ShikkhanobishStudentApp.ViewModel
         #region Methods
         public async Task homeFirst()
         {
+            selectedTeacherConnectingVisibility = false;
             prmStudentTextVisibility = false;
             hireteacherEnabled = false;
             groupChoiseVisibility = false;
@@ -74,7 +79,7 @@ namespace ShikkhanobishStudentApp.ViewModel
             forthBtnVisbility = false;
             resultprgs = .1;
             resultvisi = true;
-            
+            ConnectToRealTimeApiServer();
 
         }
         
@@ -98,7 +103,7 @@ namespace ShikkhanobishStudentApp.ViewModel
         public ICommand ChooseTeacherPopUp =>
              new Command(async() =>
              {
-                 
+                 chooseTeacherVisibility = true;
                  hireteacherPopupVisibility = true;
                  hireteacherEnabled = false;
 
@@ -320,10 +325,14 @@ namespace ShikkhanobishStudentApp.ViewModel
         }
         private async Task PerformhireTeacherBtnCmdAsync()
         {
+            chooseTeacherVisibility = false;
+            selectedTeacherConnectingVisibility = true;
+            connectingTeachertxt = "Conneting with Shikkhanobish Teacher Server. Please Wait...";
             int teacherisSelected;
-            if(thisSelectedFavPopUpTeacher == 0)
+            
+            if (thisSelectedFavPopUpTeacher == 0)
             {
-                Teacher SelectedTeacher = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/HireTeacherAsync".PostUrlEncodedAsync(new { subID = thisSearcherSubId })
+                SelectedTeacher = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/HireTeacherAsync".PostUrlEncodedAsync(new { subID = thisSearcherSubId })
        .ReceiveJson<Teacher>();
                 teacherisSelected = SelectedTeacher.teacherID;
             }
@@ -332,7 +341,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                 teacherisSelected = thisSelectedFavPopUpTeacher;
             }
             
-            string uriToCAllTeacher = "https://shikkhanobishrealtimeapi.shikkhanobish.com/api/ShikkhanobishSignalR/CallSelectedTeacher?&teacherID=" + teacherisSelected + "&des=" + detailTxt + "&cls=" + SelectedClassName + "&sub=" + thisSearcherSubId + "&chapter=" + selectedChapterName + "&cost=" + "3" + "&name=" + StaticPageToPassData.thisStudentInfo.name;
+            string uriToCAllTeacher = "https://shikkhanobishrealtimeapi.shikkhanobish.com/api/ShikkhanobishSignalR/CallSelectedTeacher?&teacherID=" + teacherisSelected + "&des=" + detailTxt + "&cls=" + SelectedClassName + "&sub=" + thisSearcherSubId + "&chapter=" + selectedChapterName + "&cost=" + "3" + "&name=" + StaticPageToPassData.thisStudentInfo.name+ "&studentID=" + StaticPageToPassData.thisStudentInfo.studentID;
             await realtimeapi.CallSelectedTeacher(uriToCAllTeacher);
         }
         public async Task GoTOVideoCallPage()
@@ -349,9 +358,43 @@ namespace ShikkhanobishStudentApp.ViewModel
             }
             Application.Current.MainPage.Navigation.PushModalAsync(new VideoCallPage());
         }
+        private void PerformcancleTeacherSearch()
+        {
+            selectedTeacherConnectingVisibility = false;
+            chooseTeacherVisibility = true;           
+        }
         public async Task requestPermission()
         {
             var status = await Permissions.RequestAsync<Permissions.Camera>();
+        }
+        public async Task ConnectToRealTimeApiServer()
+        {
+            _connection = new HubConnectionBuilder()
+                 .WithUrl(url)
+                 .Build();
+            await _connection.StartAsync();
+
+
+            _connection.Closed += async (s) =>
+            {
+                await _connection.StartAsync();
+            };
+
+            _connection.On<int , int, bool>("SelectedTeacherResponse", async (teacherID, studentID, response) =>
+            {
+                if(teacherID == thisSelectedFavPopUpTeacher && studentID == StaticPageToPassData.thisStudentInfo.studentID)
+                {
+                    if(response == false)
+                    {
+                        selectedTeacherConnectingVisibility = false;
+                        chooseTeacherVisibility = true;
+                    }
+                    else
+                    {
+                        //make session and token for video call
+                    }
+                }
+            });
         }
         #endregion
 
@@ -1401,6 +1444,34 @@ namespace ShikkhanobishStudentApp.ViewModel
         private favouriteTeacher seletectedFavTeacherFrompopUp1;
 
         public favouriteTeacher seletectedFavTeacherFrompopUp { get { return seletectedFavTeacherFrompopUp1; } set { seletectedFavTeacherFrompopUp1 = value; SetProperty(ref seletectedFavTeacherFrompopUp1, value); } }
+
+        private bool selectedTeacherConnectingVisibility1;
+
+        public bool selectedTeacherConnectingVisibility { get => selectedTeacherConnectingVisibility1; set => SetProperty(ref selectedTeacherConnectingVisibility1, value); }
+
+        private bool chooseTeacherVisibility1;
+
+        public bool chooseTeacherVisibility { get => chooseTeacherVisibility1; set => SetProperty(ref chooseTeacherVisibility1, value); }
+
+        private Command cancleTeacherSearch1;
+
+        public ICommand cancleTeacherSearch
+        {
+            get
+            {
+                if (cancleTeacherSearch1 == null)
+                {
+                    cancleTeacherSearch1 = new Command(PerformcancleTeacherSearch);
+                }
+
+                return cancleTeacherSearch1;
+            }
+        }
+
+        private string connectingTeachertxt1;
+
+        public string connectingTeachertxt { get => connectingTeachertxt1; set => SetProperty(ref connectingTeachertxt1, value); }
+
 
 
 
