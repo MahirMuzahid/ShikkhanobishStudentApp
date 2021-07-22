@@ -8,7 +8,7 @@ namespace ShikkhanobishStudentApp.Model
 {
     public class RealTimeApiMethods
     {
-        public async Task CallSelectedTeacher(string uri)
+        public async Task ExecuteRealTimeApi(string uri)
         {
             HttpClient client = new HttpClient();
             StringContent content = new StringContent("", Encoding.UTF8, "application/json");

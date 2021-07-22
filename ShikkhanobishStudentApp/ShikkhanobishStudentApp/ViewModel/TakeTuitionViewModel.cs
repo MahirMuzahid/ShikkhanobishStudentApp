@@ -342,22 +342,9 @@ namespace ShikkhanobishStudentApp.ViewModel
             }
             
             string uriToCAllTeacher = "https://shikkhanobishrealtimeapi.shikkhanobish.com/api/ShikkhanobishSignalR/CallSelectedTeacher?&teacherID=" + teacherisSelected + "&des=" + detailTxt + "&cls=" + SelectedClassName + "&sub=" + thisSearcherSubId + "&chapter=" + selectedChapterName + "&cost=" + "3" + "&name=" + StaticPageToPassData.thisStudentInfo.name+ "&studentID=" + StaticPageToPassData.thisStudentInfo.studentID;
-            await realtimeapi.CallSelectedTeacher(uriToCAllTeacher);
+            await realtimeapi.ExecuteRealTimeApi(uriToCAllTeacher);
         }
-        public async Task GoTOVideoCallPage()
-        {
-            CrossVonage.Current.ApiKey = "47280234";
-            CrossVonage.Current.SessionId = "1_MX40NzI4MDIzNH5-MTYyNjU1MDA2MTI1MX5QUGdZcWdZUGlzMmh3RU9ROC9tc3R5ZWx-fg";
-            CrossVonage.Current.UserToken = "T1==cGFydG5lcl9pZD00NzI4MDIzNCZzaWc9NmZjMDA3MzJmOWUxOTRkNzAwMTJjMWRjNzllZGY4MDYyNzg4YmFlMDpzZXNzaW9uX2lkPTFfTVg0ME56STRNREl6Tkg1LU1UWXlOalUxTURBMk1USTFNWDVRVUdkWmNXZFpVR2x6TW1oM1JVOVJPQzl0YzNSNVpXeC1mZyZjcmVhdGVfdGltZT0xNjI2NTUwMDc1Jm5vbmNlPTAuMjI3NTA0NDQ0NTg1NDAzNzUmcm9sZT1wdWJsaXNoZXImZXhwaXJlX3RpbWU9MTYyNjU1MzY3MyZpbml0aWFsX2xheW91dF9jbGFzc19saXN0PQ==";
-
-            //bool x =CrossVonage.Current.IsPublishingStarted;
-
-            if (!CrossVonage.Current.TryStartSession())
-            {
-                return;
-            }
-            Application.Current.MainPage.Navigation.PushModalAsync(new VideoCallPage());
-        }
+        
         private void PerformcancleTeacherSearch()
         {
             selectedTeacherConnectingVisibility = false;
@@ -391,7 +378,18 @@ namespace ShikkhanobishStudentApp.ViewModel
                     }
                     else
                     {
-                        //make session and token for video call
+                        VideoApiInfo info = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/GetVideoCallInfo".GetJsonAsync<VideoApiInfo>();
+                        CrossVonage.Current.ApiKey = info.apiKey+"";
+                        CrossVonage.Current.SessionId = info.SessionID;
+                        CrossVonage.Current.UserToken = info.token;
+
+                        if (!CrossVonage.Current.TryStartSession())
+                        {
+                            return;
+                        }
+                        string url = "https://shikkhanobishrealtimeapi.shikkhanobish.com/api/ShikkhanobishSignalR/NowStartVieoCall?&enter=" + true + "&studentID=" + StaticPageToPassData.thisStudentInfo.studentID + "&teacherID=" + thisSelectedFavPopUpTeacher + "&apikey=" + info.apiKey + "&sessionID=" + info.SessionID + "&token=" + info.token;
+                        await realtimeapi.ExecuteRealTimeApi(url);
+                        Application.Current.MainPage.Navigation.PushModalAsync(new VideoCallPage());
                     }
                 }
             });
