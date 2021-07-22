@@ -21,8 +21,8 @@
             <ColumnDefinition Width="1*" />
 
         </Grid.ColumnDefinitions>
-        <vonage:VonageSubscriberView Grid.RowSpan="4" Grid.ColumnSpan="2" StreamId="{Binding .}" />
-        <vonage:VonagePublisherView x:Name="ownvideo" Grid.Column="1" Grid.Row="2" Margin="20"/>
+        <vonage:VonagePublisherView Grid.RowSpan="4" Grid.ColumnSpan="2"  />
+        <vonage:VonageSubscriberView x:Name="ownvideo" Grid.Column="1" Grid.Row="2" Margin="20" StreamId="{Binding .}"/>
 
         
     </Grid>

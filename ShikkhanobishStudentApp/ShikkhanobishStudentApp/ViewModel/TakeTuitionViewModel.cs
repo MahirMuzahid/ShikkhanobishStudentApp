@@ -367,7 +367,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                 await _connection.StartAsync();
             };
 
-            _connection.On<int , int, bool>("SelectedTeacherResponse", async (teacherID, studentID, response) =>
+            _connection.On<int , int, bool,int, string , string>("SelectedTeacherResponse", async (teacherID, studentID, response, apikey, sessionID, token) =>
             {
                 if(teacherID == thisSelectedFavPopUpTeacher && studentID == StaticPageToPassData.thisStudentInfo.studentID)
                 {
@@ -378,17 +378,13 @@ namespace ShikkhanobishStudentApp.ViewModel
                     }
                     else
                     {
-                        VideoApiInfo info = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/GetVideoCallInfo".GetJsonAsync<VideoApiInfo>();
-                        CrossVonage.Current.ApiKey = info.apiKey+"";
-                        CrossVonage.Current.SessionId = info.SessionID;
-                        CrossVonage.Current.UserToken = info.token;
-
+                        CrossVonage.Current.ApiKey = apikey+"";
+                        CrossVonage.Current.SessionId = sessionID;
+                        CrossVonage.Current.UserToken = token;
                         if (!CrossVonage.Current.TryStartSession())
                         {
                             return;
                         }
-                        string url = "https://shikkhanobishrealtimeapi.shikkhanobish.com/api/ShikkhanobishSignalR/NowStartVieoCall?&enter=" + true + "&studentID=" + StaticPageToPassData.thisStudentInfo.studentID + "&teacherID=" + thisSelectedFavPopUpTeacher + "&apikey=" + info.apiKey + "&sessionID=" + info.SessionID + "&token=" + info.token;
-                        await realtimeapi.ExecuteRealTimeApi(url);
                         Application.Current.MainPage.Navigation.PushModalAsync(new VideoCallPage());
                     }
                 }
