@@ -325,6 +325,7 @@ namespace ShikkhanobishStudentApp.ViewModel
         }
         private async Task PerformhireTeacherBtnCmdAsync()
         {
+           
             chooseTeacherVisibility = false;
             selectedTeacherConnectingVisibility = true;
             connectingTeachertxt = "Conneting with Shikkhanobish Teacher Server. Please Wait...";
@@ -345,10 +346,16 @@ namespace ShikkhanobishStudentApp.ViewModel
             await realtimeapi.ExecuteRealTimeApi(uriToCAllTeacher);
         }
         
-        private void PerformcancleTeacherSearch()
+        private void PerformcancleTeacherSearch()//i have to change thissssssssssssssssssssssssssssssss
         {
+            if (!CrossVonage.Current.TryStartSession())
+            {
+                return;
+            }
+            Application.Current.MainPage.Navigation.PushModalAsync(new VideoCallPage());
             selectedTeacherConnectingVisibility = false;
-            chooseTeacherVisibility = true;           
+            chooseTeacherVisibility = true;   
+            
         }
         public async Task requestPermission()
         {
@@ -381,11 +388,8 @@ namespace ShikkhanobishStudentApp.ViewModel
                         CrossVonage.Current.ApiKey = apikey+"";
                         CrossVonage.Current.SessionId = sessionID;
                         CrossVonage.Current.UserToken = token;
-                        if (!CrossVonage.Current.TryStartSession())
-                        {
-                            return;
-                        }
-                        Application.Current.MainPage.Navigation.PushModalAsync(new VideoCallPage());
+                       
+                        
                     }
                 }
             });
