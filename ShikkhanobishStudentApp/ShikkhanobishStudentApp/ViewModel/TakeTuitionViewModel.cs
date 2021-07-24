@@ -373,6 +373,7 @@ namespace ShikkhanobishStudentApp.ViewModel
             perminPass.secondChoiceName = SelectedClassName;
             perminPass.thirdChoiceName = SelectedSubjectName;
             perminPass.forthChoiceName = selectedChapterName;
+            StaticPageToPassData.perMinCall = perminPass;
             Application.Current.MainPage.Navigation.PushModalAsync(new VideoCallPage());
         }
         public async Task requestPermission()
@@ -403,6 +404,8 @@ namespace ShikkhanobishStudentApp.ViewModel
                     }
                     else
                     {
+                        connectingTeachertxt = "A teacher has been connected...";
+                        thisSesionID = sessionID;
                         acceptTeacherVisibility = true;
                         CrossVonage.Current.ApiKey = apikey+"";
                         CrossVonage.Current.SessionId = sessionID;

@@ -18,6 +18,7 @@ namespace ShikkhanobishStudentApp.ViewModel
         bool TimerContinue;
         int timerSecCounter,timerMinCounter, totalCostCount;
         bool isSafeTiemAvailable;
+
         public VideoCalViewModel()
         {
             TimerContinue = true;
@@ -35,6 +36,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                     time = timerMinCounter + " : " + timerSecCounter+"";
                     if(timerSecCounter == 0 & timerMinCounter == 0 && isSafeTiemAvailable)
                     {
+                        SendApiCall();
                         timeColor = Color.White;
                         isSafeTiemAvailable = false;
                     }
@@ -42,10 +44,10 @@ namespace ShikkhanobishStudentApp.ViewModel
                 else
                 {
                     if(timerSecCounter == 59)
-                    {
-                        SendApiCall();
+                    {                      
                         timerSecCounter = -1;
                         timerMinCounter++;
+                        SendApiCall();
                     }
                     timerSecCounter++;
                     time = timerMinCounter + " : " + timerSecCounter + "";
@@ -57,11 +59,22 @@ namespace ShikkhanobishStudentApp.ViewModel
         public async Task SendApiCall()
         {
             PerMinPassModel perminCall = StaticPageToPassData.perMinCall;
+            int time = timerMinCounter + 1;
+            if(perminCall.firstChoiceID == "101")
+            {
+                totalCostCount = totalCostCount + 3;
+                totaolCost = totalCostCount + "";
+            }
+            if(perminCall.firstChoiceID == "102")
+            {
+                totalCostCount = totalCostCount + 4;
+                totaolCost = totalCostCount + "";
+            }
             var res = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/PerMinPassCall".PostUrlEncodedAsync(new
             {
                 studentID = perminCall.studentID,
                 teacherID = perminCall.teacherID,
-                time = timerMinCounter + 1,
+                time = time,
                 sessionID = perminCall.sessionID,
                 firstChoiceID = perminCall.firstChoiceID,
                 secondChoiceID = perminCall.secondChoiceID,
@@ -69,9 +82,11 @@ namespace ShikkhanobishStudentApp.ViewModel
                 forthChoiceID = perminCall.forthChoiceID,
                 firstChoiceName = perminCall.firstChoiceName,
                 secondChoiceName = perminCall.secondChoiceName,
-                thirdChoiceName = perminCall.forthChoiceName
+                thirdChoiceName = perminCall.thirdChoiceName,
+                forthChoiceName = perminCall.forthChoiceName
             })
-     .ReceiveJson<Response>();
+     .ReceiveJson<PerMinCallResponse>();
+            
         }
         public ICommand goRattingPage =>
             new Command(() =>
