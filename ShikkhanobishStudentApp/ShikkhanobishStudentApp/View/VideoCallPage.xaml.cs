@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Vonage;
 using Xamarin.Forms.Xaml;
+using XF.Material.Forms.UI.Dialogs;
 
 namespace ShikkhanobishStudentApp.View
 {
@@ -23,11 +24,22 @@ namespace ShikkhanobishStudentApp.View
         }
         private void OnEndCall(object sender, EventArgs e)
         {
-            CrossVonage.Current.EndSession();
-            CrossVonage.Current.MessageReceived -= OnMessageReceived;
-            Navigation.PopModalAsync();
+            EndOrBackBtn();
         }
+        public async Task EndOrBackBtn()
+        {
+           var result =  await MaterialDialog.Instance.ConfirmAsync(message: "Do you want to sign in?",
+                                   confirmingText: "Sign In",
+                                   dismissiveText: "No");
+            if (result == true)
+            {
+                CrossVonage.Current.EndSession();
+                CrossVonage.Current.MessageReceived -= OnMessageReceived;
+                Navigation.PushModalAsync(new RattingPageView());
+            }
 
+            
+        }
         private void OnMessage(object sender, EventArgs e)
             => CrossVonage.Current.TrySendMessage($"Path.GetRandomFileName: {Path.GetRandomFileName()}");
 
@@ -55,6 +67,11 @@ namespace ShikkhanobishStudentApp.View
                     OnEndCall(this, EventArgs.Empty);
                 }
             }
+        }
+        protected override bool OnBackButtonPressed()
+        {
+            EndOrBackBtn();
+            return true;
         }
     }
 }
