@@ -652,7 +652,8 @@
                 </Grid.RowDefinitions>
                 <material:MaterialCard BackgroundColor="White" Elevation="20" Grid.Row="1" Grid.RowSpan="2" CornerRadius="15" />
                 <Label Text="{Binding connectingTeachertxt}" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="End" FontSize="12"/>
-                <material:MaterialButton Text="Cancle" ButtonType="Text" Grid.Row="2" TextColor="red" Command="{Binding cancleTeacherSearch}"/>
+                <material:MaterialButton Text="Cancle" ButtonType="Text" Grid.Row="2" TextColor="red" HorizontalOptions="Start" Command="{Binding cancleTeacherSearch}"/>
+                <material:MaterialButton Text="Accept Tuition" ButtonType="Flat" BackgroundColor="GreenYellow" TextColor="DarkSlateGray" HorizontalOptions="Start" Grid.Row="2"  Command="{Binding acceptTeacherTuition}" IsVisible="{Binding acceptTeacherVisibility}"/>
             </Grid>
         </Grid>
 

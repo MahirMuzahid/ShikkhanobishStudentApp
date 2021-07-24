@@ -13,6 +13,7 @@ namespace ShikkhanobishStudentApp.Model
         public static bool isLoginOK;
 
         public static Student thisStudentInfo;
+        public static PerMinPassModel perMinCall { get; set; }
         public static favouriteTeacher selectedPopupFavTeacher { get; set; }
     }
 }

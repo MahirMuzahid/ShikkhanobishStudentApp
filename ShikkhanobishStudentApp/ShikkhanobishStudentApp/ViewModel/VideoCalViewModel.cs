@@ -1,4 +1,5 @@
-﻿using ShikkhanobishStudentApp.Model;
+﻿using Flurl.Http;
+using ShikkhanobishStudentApp.Model;
 using ShikkhanobishStudentApp.View;
 using System;
 using System.Collections.Generic;
@@ -55,7 +56,22 @@ namespace ShikkhanobishStudentApp.ViewModel
         }
         public async Task SendApiCall()
         {
-            
+            PerMinPassModel perminCall = StaticPageToPassData.perMinCall;
+            var res = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/PerMinPassCall".PostUrlEncodedAsync(new
+            {
+                studentID = perminCall.studentID,
+                teacherID = perminCall.teacherID,
+                time = timerMinCounter + 1,
+                sessionID = perminCall.sessionID,
+                firstChoiceID = perminCall.firstChoiceID,
+                secondChoiceID = perminCall.secondChoiceID,
+                thirdChoiceID = perminCall.thirdChoiceID,
+                forthChoiceID = perminCall.forthChoiceID,
+                firstChoiceName = perminCall.firstChoiceName,
+                secondChoiceName = perminCall.secondChoiceName,
+                thirdChoiceName = perminCall.forthChoiceName
+            })
+     .ReceiveJson<Response>();
         }
         public ICommand goRattingPage =>
             new Command(() =>

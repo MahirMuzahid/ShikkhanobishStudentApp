@@ -44,6 +44,7 @@ namespace ShikkhanobishStudentApp.ViewModel
         #region Methods
         public async Task homeFirst()
         {
+            acceptTeacherVisibility = false;
             selectedTeacherConnectingVisibility = false;
             prmStudentTextVisibility = false;
             hireteacherEnabled = false;
@@ -348,14 +349,31 @@ namespace ShikkhanobishStudentApp.ViewModel
         
         private void PerformcancleTeacherSearch()//i have to change thissssssssssssssssssssssssssssssss
         {
+           
+            selectedTeacherConnectingVisibility = false;
+            chooseTeacherVisibility = true;   
+            
+        }
+        private void PerformacceptTeacherTuition()
+        {
             if (!CrossVonage.Current.TryStartSession())
             {
                 return;
             }
+            PerMinPassModel perminPass = new PerMinPassModel();
+            perminPass.studentID = StaticPageToPassData.thisStudentInfo.studentID;
+            perminPass.teacherID = thisSelectedFavPopUpTeacher;
+            perminPass.time = 0;
+            perminPass.sessionID = thisSesionID;
+            perminPass.firstChoiceID = firstChoiceID + "";
+            perminPass.secondChoiceID = secondChoiceID + "";
+            perminPass.thirdChoiceID = thirdChoiceID + "";
+            perminPass.forthChoiceID = forthChoiceID + "";
+            perminPass.firstChoiceName = SelectedInsName;
+            perminPass.secondChoiceName = SelectedClassName;
+            perminPass.thirdChoiceName = SelectedSubjectName;
+            perminPass.forthChoiceName = selectedChapterName;
             Application.Current.MainPage.Navigation.PushModalAsync(new VideoCallPage());
-            selectedTeacherConnectingVisibility = false;
-            chooseTeacherVisibility = true;   
-            
         }
         public async Task requestPermission()
         {
@@ -385,6 +403,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                     }
                     else
                     {
+                        acceptTeacherVisibility = true;
                         CrossVonage.Current.ApiKey = apikey+"";
                         CrossVonage.Current.SessionId = sessionID;
                         CrossVonage.Current.UserToken = token;
@@ -610,6 +629,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                          if (backUpFipName[i].name == thisList.name)
                          {
                              selectedIns = backUpFipName[i];
+                             firstChoiceID = backUpFipName[i].institutionID+"";
                          }
                      }
                      selectedGlobalIns = selectedIns;
@@ -648,7 +668,8 @@ namespace ShikkhanobishStudentApp.ViewModel
                              if (AllclsList[i].name == thisList.name)
                              {
                                  selectedList = AllclsList[i];
-                                
+                                 secondChoiceID = AllclsList[i].classID + "";
+
                              }
 
                          }
@@ -668,6 +689,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                              if (AllUNameList[i].name == thisList.name)
                              {
                                  selectedList = AllUNameList[i];
+                                 secondChoiceID = AllUNameList[i].uniNameID + "";
                              }
 
                          }
@@ -695,6 +717,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                          {
                              selectedList = AllsubList[i];
                              thisSearcherSubId = AllsubList[i].subjectID;
+                             thirdChoiceID = AllsubList[i].subjectID + "";
                          }
 
                      }
@@ -721,6 +744,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                          if (AlldegreeList[i].name == thisList.name)
                          {
                              selectedList = AlldegreeList[i];
+                             thirdChoiceID = AlldegreeList[i].degreeID + "";
                          }
 
                      }
@@ -743,6 +767,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                          if (AllchpList[i].name == thisList.name)
                          {
                              selectedList = AllchpList[i];
+                             forthChoiceID = AllchpList[i].chapterID + "";
                          }
 
                      }
@@ -761,6 +786,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                          if (AllCrsList[i].name == thisList.name)
                          {
                              selectedList = AllCrsList[i];
+                             forthChoiceID = AllCrsList[i].courseID + "";
                          }
 
                      }
@@ -1467,8 +1493,33 @@ namespace ShikkhanobishStudentApp.ViewModel
         }
 
         private string connectingTeachertxt1;
+        private string thisSesionID;
+        private string firstChoiceID;
+        private string secondChoiceID;
+        private string thirdChoiceID;
+        private string forthChoiceID;
 
         public string connectingTeachertxt { get => connectingTeachertxt1; set => SetProperty(ref connectingTeachertxt1, value); }
+
+        private Command acceptTeacherTuition1;
+
+        public ICommand acceptTeacherTuition
+        {
+            get
+            {
+                if (acceptTeacherTuition1 == null)
+                {
+                    acceptTeacherTuition1 = new Command(PerformacceptTeacherTuition);
+                }
+
+                return acceptTeacherTuition1;
+            }
+        }
+
+        private bool acceptTeacherVisibility1;
+
+        public bool acceptTeacherVisibility { get => acceptTeacherVisibility1; set => SetProperty(ref acceptTeacherVisibility1, value); }
+
 
 
 
