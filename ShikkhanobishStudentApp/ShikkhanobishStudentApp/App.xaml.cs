@@ -16,7 +16,8 @@ namespace ShikkhanobishStudentApp
         {
             InitializeComponent();
             XF.Material.Forms.Material.Init(this);
-            getInfo();
+            MainPage = new RattingPageView();
+            //getInfo();
         }
         public async Task getInfo ()
         {

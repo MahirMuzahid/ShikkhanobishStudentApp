@@ -28,8 +28,8 @@ namespace ShikkhanobishStudentApp.View
         }
         public async Task EndOrBackBtn()
         {
-           var result =  await MaterialDialog.Instance.ConfirmAsync(message: "Do you want to sign in?",
-                                   confirmingText: "Sign In",
+           var result =  await MaterialDialog.Instance.ConfirmAsync(message: "Do you want to cut the call?",
+                                   confirmingText: "Yes",
                                    dismissiveText: "No");
             if (result == true)
             {
