@@ -1,8 +1,10 @@
-﻿using ShikkhanobishStudentApp.Model;
+﻿using Flurl.Http;
+using ShikkhanobishStudentApp.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -10,6 +12,7 @@ namespace ShikkhanobishStudentApp.ViewModel
 {
     public class RattingPageViewModel: BaseViewModel, INotifyPropertyChanged
     {
+        int selectedRating;
         public RattingPageViewModel()
         {
             reportVisibility = false;
@@ -20,6 +23,18 @@ namespace ShikkhanobishStudentApp.ViewModel
             fiveStartVisibility = false;
             rateBtnEnabled = false;
             reportSubmitEnabled = false;
+        }
+        public async Task GetAllInfo()
+        {
+            var historyInfo = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getTuitionHistoryWithTuitionID".PostUrlEncodedAsync(new { tuitionID = StaticPageToPassData.lastTuitionHistoryID })
+      .ReceiveJson<StudentTuitionHistory>();
+            TeacherName = historyInfo.teacherName;
+            totalCost = historyInfo.cost+"";
+            tuitionID = historyInfo.tuitionID;
+            time = historyInfo.time;
+            cls = historyInfo.secondChoiceName;
+            subject = historyInfo.thirdChoiceName;
+            chapter = historyInfo.forthChoiceName;
         }
         private void PerformStartClick(string index)
         {
@@ -32,6 +47,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                 fourStartVisibility = false;
                 fiveStartVisibility = false;
                 rattingName = "Unexpected!";
+                selectedRating = 1;
             }
             if (index == "2")
             {
@@ -41,6 +57,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                 fourStartVisibility = false;
                 fiveStartVisibility = false;
                 rattingName = "Room For Improve!";
+                selectedRating = 2;
             }
             if (index == "3")
             {
@@ -50,6 +67,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                 fourStartVisibility = false;
                 fiveStartVisibility = false;
                 rattingName = "Good Teacher!";
+                selectedRating = 3;
             }
             if (index == "4")
             {
@@ -59,6 +77,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                 fourStartVisibility = true;
                 fiveStartVisibility = false;
                 rattingName = "Excelent Teacher!";
+                selectedRating = 4;
             }
             if (index == "5")
             {
@@ -68,6 +87,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                 fourStartVisibility = true;
                 fiveStartVisibility = true;
                 rattingName = "My Favourite Teacher!";
+                selectedRating = 5;
             }
         }
         public void checkReportBtn()
@@ -191,6 +211,34 @@ namespace ShikkhanobishStudentApp.ViewModel
         private bool forthChecked1;
 
         public bool forthChecked { get => forthChecked1; set { forthChecked1 = value; checkReportBtn(); SetProperty(ref forthChecked1, value); } }
+
+        private string teacherName;
+
+        public string TeacherName { get => teacherName; set => SetProperty(ref teacherName, value); }
+
+        private string totalCost;
+
+        public string TotalCost { get => totalCost; set => SetProperty(ref totalCost, value); }
+
+        private string tuitionID;
+
+        public string TuitionID { get => tuitionID; set => SetProperty(ref tuitionID, value); }
+
+        private string time;
+
+        public string Time { get => time; set => SetProperty(ref time, value); }
+
+        private string cls1;
+
+        public string cls { get => cls1; set => SetProperty(ref cls1, value); }
+
+        private string subject1;
+
+        public string subject { get => subject1; set => SetProperty(ref subject1, value); }
+
+        private string chapter1;
+
+        public string chapter { get => chapter1; set => SetProperty(ref chapter1, value); }
         #endregion
 
     }

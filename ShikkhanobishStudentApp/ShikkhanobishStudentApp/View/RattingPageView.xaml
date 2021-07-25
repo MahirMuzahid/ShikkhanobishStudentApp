@@ -45,10 +45,10 @@
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
             <Label Text="Techer Name" Grid.Row="0" Grid.Column="0" HorizontalOptions="Start" VerticalOptions="End" FontSize="14" TextColor="#AAAAAA" Margin="10,0,0,0" />
-            <Label Text="Mahim Hasan" Grid.Row="1" Grid.Column="0" HorizontalOptions="Start" VerticalOptions="Start" FontSize="18" FontAttributes="Bold" Margin="10,0,0,0"/>
+            <Label Text="{Binding TeacherName}" Grid.Row="1" Grid.Column="0" HorizontalOptions="Start" VerticalOptions="Start" FontSize="18" FontAttributes="Bold" Margin="10,0,0,0"/>
 
             <Label Text="Total Cost" Grid.Row="0" Grid.Column="1" HorizontalOptions="End" VerticalOptions="End" FontSize="14" TextColor="#AAAAAA" Margin="0,0,10,0"/>
-            <Label Text="50 Coin" Grid.Row="1" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Start" FontSize="18" FontAttributes="Bold" Margin="0,0,10,0"/>
+            <Label Text="{Binding TotalCost}" Grid.Row="1" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Start" FontSize="18" FontAttributes="Bold" Margin="0,0,10,0"/>
         </Grid>
         <Grid Grid.Row="3" Grid.Column="1">
             <Grid.RowDefinitions>
@@ -70,7 +70,7 @@
                 <Label.FormattedText>
                     <FormattedString>
                         <Span Text="TuitinoID: " FontAttributes="Bold" FontSize="11"/>
-                        <Span Text="2=SDDSF776DF98SFFS76F676GFSG98696SG07987GSD" FontSize="11"/>
+                        <Span Text="{Binding TuitionID}" FontSize="11"/>
                     </FormattedString>
                 </Label.FormattedText>
             </Label>
@@ -78,7 +78,7 @@
                 <Label.FormattedText>
                     <FormattedString>
                         <Span Text="Time: " FontAttributes="Bold" FontSize="11"/>
-                        <Span Text="4 minuites" FontSize="11"/>
+                        <Span Text="{Binding Time}" FontSize="11"/>
                     </FormattedString>
                 </Label.FormattedText>
             </Label>
@@ -86,7 +86,7 @@
                 <Label.FormattedText>
                     <FormattedString>
                         <Span Text="Class: " FontAttributes="Bold" FontSize="11"/>
-                        <Span Text="Class 6" FontSize="11"/>
+                        <Span Text="{Binding cls}" FontSize="11"/>
                     </FormattedString>
                 </Label.FormattedText>
             </Label>
@@ -94,7 +94,7 @@
                 <Label.FormattedText>
                     <FormattedString>
                         <Span Text="Subject: " FontAttributes="Bold" FontSize="11"/>
-                        <Span Text="Physics First Paper" FontSize="11"/>
+                        <Span Text="{Binding subject}" FontSize="11"/>
                     </FormattedString>
                 </Label.FormattedText>
             </Label>
@@ -102,7 +102,7 @@
                 <Label.FormattedText>
                     <FormattedString>
                         <Span Text="Chapter: " FontAttributes="Bold" FontSize="11"/>
-                        <Span Text="Chapter 4" FontSize="11"/>
+                        <Span Text="{Binding chapter}" FontSize="11"/>
                     </FormattedString>
                 </Label.FormattedText>
             </Label>
@@ -198,7 +198,7 @@
                     <Label Text="Other" Grid.Column="1" Grid.Row="4" HorizontalOptions="Start" VerticalOptions="Center"/>
                 </Grid>
                 <Editor Grid.Row="1" Placeholder="Description" Grid.Column="1" FontSize="13"/>
-                <Button Text="Submit" Grid.Row="2" BackgroundColor="#F64747" Grid.Column="1" TextColor="White" Margin="0,0,0,10" IsEnabled="{Binding reportSubmitEnabled}"/>
+                <Button Text="Submit" Grid.Row="2" BackgroundColor="#F64747" Grid.Column="1" TextColor="White" Margin="0,0,0,10" IsVisible="{Binding reportSubmitEnabled}"/>
             </Grid>
         </Grid>
     </Grid>

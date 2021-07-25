@@ -70,6 +70,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                 totalCostCount = totalCostCount + 4;
                 totaolCost = totalCostCount + "";
             }
+            StaticPageToPassData.lastTuitionHistoryID = perminCall.sessionID;
             var res = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/PerMinPassCall".PostUrlEncodedAsync(new
             {
                 studentID = perminCall.studentID,
