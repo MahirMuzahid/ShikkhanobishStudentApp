@@ -35,6 +35,7 @@ namespace ShikkhanobishStudentApp.ViewModel
             cls = historyInfo.secondChoiceName;
             subject = historyInfo.thirdChoiceName;
             chapter = historyInfo.forthChoiceName;
+            StaticPageToPassData.lastTeacherID = historyInfo.teacherID;
         }
         private void PerformStartClick(string index)
         {
@@ -89,6 +90,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                 rattingName = "My Favourite Teacher!";
                 selectedRating = 5;
             }
+            StaticPageToPassData.lastRate = selectedRating;
         }
         public void checkReportBtn()
         {
@@ -239,6 +241,25 @@ namespace ShikkhanobishStudentApp.ViewModel
         private string chapter1;
 
         public string chapter { get => chapter1; set => SetProperty(ref chapter1, value); }
+
+        private Command rateTeacher1;
+
+        public ICommand rateTeacher
+        {
+            get
+            {
+                if (rateTeacher1 == null)
+                {
+                    rateTeacher1 = new Command(PerformrateTeacher);
+                }
+
+                return rateTeacher1;
+            }
+        }
+
+        private void PerformrateTeacher()
+        {
+        }
         #endregion
 
     }

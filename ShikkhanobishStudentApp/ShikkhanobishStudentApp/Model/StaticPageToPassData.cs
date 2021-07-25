@@ -14,6 +14,8 @@ namespace ShikkhanobishStudentApp.Model
 
         public static Student thisStudentInfo;
         public static string lastTuitionHistoryID { get; set; }
+        public static int lastRate { get; set; }
+        public static int lastTeacherID { get; set; }
         public static PerMinPassModel perMinCall { get; set; }
         public static favouriteTeacher selectedPopupFavTeacher { get; set; }
     }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Flurl.Http;
+using ShikkhanobishStudentApp.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,24 +23,34 @@ namespace ShikkhanobishStudentApp.View
         public async Task EndOrBackBtn()
         {
 
-            var result = await MaterialDialog.Instance.ConfirmAsync(message: "Do you want to close app?",
-                                  confirmingText: "Yes",
-                                  dismissiveText: "No");
-            if (result == true)
-            {
-                var existingPages = Navigation.NavigationStack.ToList();
-                foreach (var page in existingPages)
-                {
-                    Navigation.RemovePage(page);
-                }
-                System.Diagnostics.Process.GetCurrentProcess().Kill();
-            }
+            var result = await MaterialDialog.Instance.ConfirmAsync(message: "Please rate teacher first",
+                                  confirmingText: "OK"
+                                  );         
         }
 
         protected override bool OnBackButtonPressed()
         {
             EndOrBackBtn();
             return true;
+        }
+        public async Task FinalRate()
+        {
+            using (var dialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Please Wait..."))
+            {
+                var res = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/FinalizeTuitionHistory".PostUrlEncodedAsync(new { tuitionID = StaticPageToPassData.lastTuitionHistoryID , ratting = StaticPageToPassData.lastRate, teacherID = StaticPageToPassData.lastTeacherID })
+         .ReceiveJson<Response>();
+                var existingPages = Navigation.NavigationStack.ToList();
+                foreach (var page in existingPages)
+                {
+                    Navigation.RemovePage(page);
+                }
+                await Application.Current.MainPage.Navigation.PushModalAsync(new TakeTuitionView(false));
+                await dialog.DismissAsync();
+            }
+        }
+        private void Button_Clicked(object sender, EventArgs e)
+        {
+            FinalRate();
         }
     }
 }
