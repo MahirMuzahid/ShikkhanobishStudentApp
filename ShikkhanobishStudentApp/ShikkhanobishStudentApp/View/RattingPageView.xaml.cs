@@ -69,7 +69,11 @@ namespace ShikkhanobishStudentApp.View
             }
         }
 
-        private async Task ReportButton_Clicked_1(object sender, EventArgs e)
+        private void ReportButton_Clicked_1(object sender, EventArgs e)
+        {
+            ReportTeacher();
+        }
+        public async Task ReportTeacher()
         {
             reportGrid.IsVisible = false;
             using (var dialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Thank you for your feedback. We are adding this issue in our server and will take action according to Shikkhanobish Terms And Condition..."))

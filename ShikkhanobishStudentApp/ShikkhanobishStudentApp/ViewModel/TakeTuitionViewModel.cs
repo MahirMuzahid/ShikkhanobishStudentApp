@@ -114,7 +114,10 @@ namespace ShikkhanobishStudentApp.ViewModel
                  }
                  popupfavteacheritemSource = await "https://api.shikkhanobish.com/api/ShikkhanobishTeacher/getFavouriteTeacherwithStudentIDForPopUp".PostUrlEncodedAsync(new { studentID = StaticPageToPassData.thisStudentInfo.studentID, subjectID = thisSearcherSubId })
        .ReceiveJson<List<favouriteTeacher>>();
-
+                 for(int i = 0; i < popupfavteacheritemSource.Count;i++)
+                 {
+                     popupfavteacheritemSource[i].teacherRatting= Math.Round(popupfavteacheritemSource[i].teacherRatting, 2);
+                 }
                  if(popupfavteacheritemSource.Count != 0)
                  {
                      choosefavteacherlbl = true;
