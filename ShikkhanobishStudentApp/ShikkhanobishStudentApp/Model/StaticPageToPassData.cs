@@ -16,7 +16,15 @@ namespace ShikkhanobishStudentApp.Model
         public static string lastTuitionHistoryID { get; set; }
         public static int lastRate { get; set; }
         public static int lastTeacherID { get; set; }
+        public static int reportIndex { get; set; }
+        public static string reportDes { get; set; }
         public static PerMinPassModel perMinCall { get; set; }
         public static favouriteTeacher selectedPopupFavTeacher { get; set; }
+        public static int GenarateNewID()
+        {
+            Random rnd = new Random();
+            int newID = rnd.Next(10000000, 99999999);
+            return newID;
+        }
     }
 }

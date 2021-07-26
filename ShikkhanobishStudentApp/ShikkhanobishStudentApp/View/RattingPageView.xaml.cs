@@ -52,5 +52,39 @@ namespace ShikkhanobishStudentApp.View
         {
             FinalRate();
         }
+
+        private void AddFavTeacherButton_Clicked(object sender, EventArgs e)
+        {
+
+        }
+        public async Task AddFavTeacher()
+        {
+            using (var dialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Adding Favourite Teacher..."))
+            {
+                var res = await "https://api.shikkhanobish.com/api/ShikkhanobishTeacher/addasFavouriteTeacher".PostUrlEncodedAsync(new { teacherID = StaticPageToPassData.lastTeacherID, studentID = StaticPageToPassData.thisStudentInfo.studentID })
+         .ReceiveJson<Response>();
+                favbyn.IsVisible = false;
+                nofavlbl.IsVisible = true;
+                await dialog.DismissAsync();
+            }
+        }
+
+        private async Task ReportButton_Clicked_1(object sender, EventArgs e)
+        {
+            reportGrid.IsVisible = false;
+            using (var dialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Thank you for your feedback. We are adding this issue in our server and will take action according to Shikkhanobish Terms And Condition..."))
+            {
+                var res = await "https://api.shikkhanobish.com/api/ShikkhanobishTeacher/setReport".PostUrlEncodedAsync(new
+                {
+                    reportID = StaticPageToPassData.GenarateNewID(),
+                    studentID = StaticPageToPassData.thisStudentInfo.studentID,
+                    teacherID = StaticPageToPassData.lastTeacherID,
+                    reportIndex = StaticPageToPassData.reportIndex,
+                    description = StaticPageToPassData.reportDes,
+                })
+         .ReceiveJson<Response>();
+                await dialog.DismissAsync();
+            }
+        }
     }
 }

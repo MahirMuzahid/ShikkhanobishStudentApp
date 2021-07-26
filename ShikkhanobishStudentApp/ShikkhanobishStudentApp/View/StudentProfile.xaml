@@ -134,7 +134,14 @@
                                                 </FormattedString>
                                             </Label.FormattedText>
                                         </Label>
-                                        <Label Text="10 Min" Grid.Row="1" HorizontalOptions="Start" VerticalOptions="Center" TextColor="White" FontSize="10"/>
+                                        <Label  Grid.Row="1" HorizontalOptions="Start" VerticalOptions="Center" TextColor="White" FontSize="10">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="{Binding time}"/>
+                                                    <Span Text=" Minuite"/>
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
                                     </Grid>
                                     <Grid Grid.Row="0" Grid.Column="1">
                                         <Grid.RowDefinitions>

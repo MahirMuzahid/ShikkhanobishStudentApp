@@ -23,11 +23,32 @@ namespace ShikkhanobishStudentApp.ViewModel
             fiveStartVisibility = false;
             rateBtnEnabled = false;
             reportSubmitEnabled = false;
+            addFavteacherVisbility = true;
+            nofavTeacherTextVisbility = false;
+            GetAllInfo();
         }
         public async Task GetAllInfo()
         {
             var historyInfo = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getTuitionHistoryWithTuitionID".PostUrlEncodedAsync(new { tuitionID = StaticPageToPassData.lastTuitionHistoryID })
       .ReceiveJson<StudentTuitionHistory>();
+            var FavstudentList = await "https://api.shikkhanobish.com/api/ShikkhanobishTeacher/getReportWithTeacherID".PostUrlEncodedAsync(new {
+                teacherID = historyInfo.teacherID 
+            })
+     .ReceiveJson<List<ReportTeacherTable>>();
+            for(int i =0; i < FavstudentList.Count; i++)
+            {
+                if(FavstudentList[i].studentID == StaticPageToPassData.thisStudentInfo.studentID)
+                {
+                    //addFavteacherVisbility = false;
+                    //nofavTeacherTextVisbility = true;
+                    break;
+                }
+                if(i == FavstudentList.Count - 1)
+                {
+                    addFavteacherVisbility = true;
+                    nofavTeacherTextVisbility = false;
+                }
+            }
             TeacherName = historyInfo.teacherName;
             totalCost = historyInfo.cost+"";
             tuitionID = historyInfo.tuitionID;
@@ -37,6 +58,7 @@ namespace ShikkhanobishStudentApp.ViewModel
             chapter = historyInfo.forthChoiceName;
             StaticPageToPassData.lastTeacherID = historyInfo.teacherID;
         }
+
         private void PerformStartClick(string index)
         {
             rateBtnEnabled = true;
@@ -97,12 +119,32 @@ namespace ShikkhanobishStudentApp.ViewModel
             if(firstChecked || secondChecked || thiedChecked|| forthChecked)
             {
                 reportSubmitEnabled = true;
+                if(firstChecked)
+                {
+                    StaticPageToPassData.reportIndex = 1;
+                }
+                if (secondChecked)
+                {
+                    StaticPageToPassData.reportIndex = 2;
+                }
+                if (thiedChecked)
+                {
+                    StaticPageToPassData.reportIndex = 3;
+                }
+                if (forthChecked)
+                {
+                    StaticPageToPassData.reportIndex = 4;
+                }
+                if (firstChecked)
+                {
+                    StaticPageToPassData.reportIndex = 5;
+                }
             }
             else
             {
                 reportSubmitEnabled = false;
             }
-           
+          
         }
         private void PerformpopUpReport()
         {
@@ -260,6 +302,32 @@ namespace ShikkhanobishStudentApp.ViewModel
         private void PerformrateTeacher()
         {
         }
+
+    
+
+
+        
+
+        private bool addFavteacherVisbility1;
+
+        public bool addFavteacherVisbility { get => addFavteacherVisbility1; set => SetProperty(ref addFavteacherVisbility1, value); }
+
+        private bool nofavTeacherTextVisbility1;
+
+        public bool nofavTeacherTextVisbility { get => nofavTeacherTextVisbility1; set => SetProperty(ref nofavTeacherTextVisbility1, value); }
+
+        private string reportDescription1;
+
+        public string reportDescription { get => reportDescription1; set { reportDescription1 = value; 
+                if (reportDescription == null || reportDescription == "")
+                {
+                    StaticPageToPassData.reportDes = "N/A";
+                }
+                else
+                {
+                    StaticPageToPassData.reportDes = reportDescription;
+                }
+                SetProperty(ref reportDescription1, value); } }
         #endregion
 
     }

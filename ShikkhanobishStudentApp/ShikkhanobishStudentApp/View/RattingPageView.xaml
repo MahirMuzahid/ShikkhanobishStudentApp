@@ -30,9 +30,9 @@
         </Grid.ColumnDefinitions>
         <Label Text="Rate Teacher" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="1" FontSize="16" FontAttributes="Bold"/>
         <Label />
-        
-       
-        <material:MaterialButton Text="+ Add As Favourite Teacher" Grid.Row="1" HorizontalOptions="Center" ButtonType="Flat"  Grid.Column="1" FontSize="9" FontAttributes="Bold" TextColor="White"  PressedBackgroundColor="#30FF0000 ">
+
+        <Label x:Name="nofavlbl" Text="Already added as favourite teacher!" Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" TextColor="#60000000" VerticalOptions="Center" FontSize="10" IsVisible="{Binding nofavTeacherTextVisbility}"/>
+        <material:MaterialButton x:Name="favbyn" Text="+ Add As Favourite Teacher" Grid.Row="1" HorizontalOptions="Center" ButtonType="Flat"  Grid.Column="1" FontSize="9" FontAttributes="Bold" TextColor="White"  PressedBackgroundColor="#30FF0000" Clicked="AddFavTeacherButton_Clicked" IsVisible="{Binding addFavteacherVisbility }">
         </material:MaterialButton>
         
         <Grid Grid.Row="2" Grid.Column="1">
@@ -152,7 +152,7 @@
         <Button Text="Rate"  Grid.Row="10" Grid.ColumnSpan="3"  Margin="0,10,0,0" FontAttributes="13" BackgroundColor="#A231F6" TextColor="White" IsEnabled="{Binding rateBtnEnabled}" Clicked="Button_Clicked"/>
 
 
-        <Grid Grid.RowSpan="11" Grid.ColumnSpan="3" BackgroundColor="#30000000" IsVisible="{Binding reportVisibility}">
+        <Grid x:Name="reportGrid" Grid.RowSpan="11" Grid.ColumnSpan="3" BackgroundColor="#30000000" IsVisible="{Binding reportVisibility}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
@@ -197,8 +197,8 @@
                     <Label Text="Bad Internet Connection" Grid.Column="1" Grid.Row="3" HorizontalOptions="Start" VerticalOptions="Center"/>
                     <Label Text="Other" Grid.Column="1" Grid.Row="4" HorizontalOptions="Start" VerticalOptions="Center"/>
                 </Grid>
-                <Editor Grid.Row="1" Placeholder="Description" Grid.Column="1" FontSize="13"/>
-                <Button Text="Submit" Grid.Row="2" BackgroundColor="#F64747" Grid.Column="1" TextColor="White" Margin="0,0,0,10" IsVisible="{Binding reportSubmitEnabled}"/>
+                <Editor Grid.Row="1" Text="{Binding reportDescription}" Placeholder="Description" Grid.Column="1" FontSize="13"/>
+                <Button Text="Submit" Grid.Row="2" BackgroundColor="#F64747" Grid.Column="1" TextColor="White" Margin="0,0,0,10" IsVisible="{Binding reportSubmitEnabled}" Clicked="ReportButton_Clicked_1"/>
             </Grid>
         </Grid>
     </Grid>
