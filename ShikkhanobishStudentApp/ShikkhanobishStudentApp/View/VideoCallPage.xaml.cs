@@ -26,24 +26,8 @@ namespace ShikkhanobishStudentApp.View
         }
         private void OnEndCall(object sender, EventArgs e)
         {
-            EndOrBackBtn();
         }
-        public async Task EndOrBackBtn()
-        {
-           var result =  await MaterialDialog.Instance.ConfirmAsync(message: "Do you want to cut the call?",
-                                   confirmingText: "Yes",
-                                   dismissiveText: "No");
-            string cutUrlCall = "https://shikkhanobishrealtimeapi.shikkhanobish.com/api/ShikkhanobishSignalR/CutVideoCall?&teacherID=" + StaticPageToPassData.lastTeacherID + "&studentID=" + StaticPageToPassData.thisStudentInfo.studentID + "&isCut=" + true;
-            await realtimeapi.ExecuteRealTimeApi(cutUrlCall);
-            if (result == true)
-            {
-                CrossVonage.Current.EndSession();
-                CrossVonage.Current.MessageReceived -= OnMessageReceived;
-                Navigation.PushModalAsync(new RattingPageView());
-            }
-
-            
-        }
+        
         private void OnMessage(object sender, EventArgs e)
             => CrossVonage.Current.TrySendMessage($"Path.GetRandomFileName: {Path.GetRandomFileName()}");
 
@@ -74,7 +58,6 @@ namespace ShikkhanobishStudentApp.View
         }
         protected override bool OnBackButtonPressed()
         {
-            EndOrBackBtn();
             return true;
         }
     }

@@ -147,6 +147,27 @@ namespace ShikkhanobishStudentApp.ViewModel
            
 
         }
+        public async Task EndOrBackBtn()
+        {
+            var result = await MaterialDialog.Instance.ConfirmAsync(message: "Do you want to cut the call?",
+                                    confirmingText: "Yes",
+                                    dismissiveText: "No");           
+            if (result == true)
+            {
+                string cutUrlCall = "https://shikkhanobishrealtimeapi.shikkhanobish.com/api/ShikkhanobishSignalR/CutVideoCall?&teacherID=" + StaticPageToPassData.lastTeacherID + "&studentID=" + StaticPageToPassData.thisStudentInfo.studentID + "&isCut=" + true;
+                realtimeapi.ExecuteRealTimeApi(cutUrlCall);
+                TimerContinue = false;
+                CrossVonage.Current.EndSession();
+                //CrossVonage.Current.MessageReceived -= OnMessageReceived;
+               Application.Current.MainPage.Navigation.PushModalAsync(new RattingPageView());
+            }
+
+
+        }
+        private void PerformEndCall()
+        {
+            EndOrBackBtn();
+        }
         public ICommand goRattingPage =>
             new Command(() =>
             {
@@ -168,6 +189,23 @@ namespace ShikkhanobishStudentApp.ViewModel
         private Color timeColor1;
 
         public Color timeColor { get => timeColor1; set => SetProperty(ref timeColor1, value); }
+
+        private Command endCall;
+
+        public ICommand EndCall
+        {
+            get
+            {
+                if (endCall == null)
+                {
+                    endCall = new Command(PerformEndCall);
+                }
+
+                return endCall;
+            }
+        }
+
+        
         #endregion
     }
 }
