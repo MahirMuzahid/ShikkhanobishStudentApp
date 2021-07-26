@@ -55,7 +55,7 @@ namespace ShikkhanobishStudentApp.View
 
         private void AddFavTeacherButton_Clicked(object sender, EventArgs e)
         {
-
+            AddFavTeacher();
         }
         public async Task AddFavTeacher()
         {

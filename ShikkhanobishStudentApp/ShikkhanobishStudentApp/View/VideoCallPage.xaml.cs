@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ShikkhanobishStudentApp.Model;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace ShikkhanobishStudentApp.View
     public partial class VideoCallPage : ContentPage
     {
         private bool _isRendererSet;
+        RealTimeApiMethods realtimeapi = new RealTimeApiMethods();
         public VideoCallPage()
         {
             InitializeComponent();
@@ -31,6 +33,8 @@ namespace ShikkhanobishStudentApp.View
            var result =  await MaterialDialog.Instance.ConfirmAsync(message: "Do you want to cut the call?",
                                    confirmingText: "Yes",
                                    dismissiveText: "No");
+            string cutUrlCall = "https://shikkhanobishrealtimeapi.shikkhanobish.com/api/ShikkhanobishSignalR/CutVideoCall?&teacherID=" + StaticPageToPassData.lastTeacherID + "&studentID=" + StaticPageToPassData.thisStudentInfo.studentID + "&isCut=" + true;
+            await realtimeapi.ExecuteRealTimeApi(cutUrlCall);
             if (result == true)
             {
                 CrossVonage.Current.EndSession();

@@ -7,6 +7,7 @@ namespace ShikkhanobishStudentApp.Model
     public class PremiumStudent
     {
         public int studentID { get; set; }
+        public int buyingAmount { get; set; }
         public string Response { get; set; }
     }
 }

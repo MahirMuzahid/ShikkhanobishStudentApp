@@ -31,7 +31,7 @@
         <Label Text="Rate Teacher" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="1" FontSize="16" FontAttributes="Bold"/>
         <Label />
 
-        <Label x:Name="nofavlbl" Text="Already added as favourite teacher!" Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" TextColor="#60000000" VerticalOptions="Center" FontSize="10" IsVisible="{Binding nofavTeacherTextVisbility}"/>
+        <Label x:Name="nofavlbl" Text="{Binding nofavTeacherTxt}" Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" TextColor="#60000000" VerticalOptions="Center" FontSize="10" IsVisible="{Binding nofavTeacherTextVisbility}"/>
         <material:MaterialButton x:Name="favbyn" Text="+ Add As Favourite Teacher" Grid.Row="1" HorizontalOptions="Center" ButtonType="Flat"  Grid.Column="1" FontSize="9" FontAttributes="Bold" TextColor="White"  PressedBackgroundColor="#30FF0000" Clicked="AddFavTeacherButton_Clicked" IsVisible="{Binding addFavteacherVisbility }">
         </material:MaterialButton>
         

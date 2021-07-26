@@ -16,5 +16,10 @@ namespace ShikkhanobishStudentApp.View
         {
             InitializeComponent();
         }
+
+        private void ImageButton_Clicked(object sender, EventArgs e)
+        {
+            Application.Current.MainPage.Navigation.PopModalAsync();
+        }
     }
 }

@@ -35,12 +35,21 @@ namespace ShikkhanobishStudentApp.ViewModel
                 teacherID = historyInfo.teacherID 
             })
      .ReceiveJson<List<favouriteTeacher>>();
-            for(int i =0; i < FavstudentList.Count; i++)
+            var prm = await "https://api.shikkhanobish.com/api/ShikkhanobishTeacher/getPremiumStudentWithID".PostUrlEncodedAsync(new { studentID = StaticPageToPassData.thisStudentInfo.studentID })
+ .ReceiveJson<PremiumStudent>();
+            if(prm.studentID == 0)
+            {
+                addFavteacherVisbility = false;
+                nofavTeacherTextVisbility = true;
+                nofavTeacherTxt = "You cannot add more then 1 favourite teacher. To add unlimited favourite teacher please subcrite to our premium student feature only with "+ prm.buyingAmount+" taka";
+            }
+            for (int i =0; i < FavstudentList.Count; i++)
             {
                 if(FavstudentList[i].studentID == StaticPageToPassData.thisStudentInfo.studentID)
                 {
-                    //addFavteacherVisbility = false;
-                    //nofavTeacherTextVisbility = true;
+                    addFavteacherVisbility = false;
+                    nofavTeacherTextVisbility = true;
+                    nofavTeacherTxt = "Already added as favourite teacher.";
                     break;
                 }
                 if(i == FavstudentList.Count - 1)
@@ -328,6 +337,10 @@ namespace ShikkhanobishStudentApp.ViewModel
                     StaticPageToPassData.reportDes = reportDescription;
                 }
                 SetProperty(ref reportDescription1, value); } }
+
+        private string nofavTeacherTxt1;
+
+        public string nofavTeacherTxt { get => nofavTeacherTxt1; set => SetProperty(ref nofavTeacherTxt1, value); }
         #endregion
 
     }
