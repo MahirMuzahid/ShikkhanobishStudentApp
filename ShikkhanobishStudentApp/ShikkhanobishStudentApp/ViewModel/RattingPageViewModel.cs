@@ -31,10 +31,10 @@ namespace ShikkhanobishStudentApp.ViewModel
         {
             var historyInfo = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getTuitionHistoryWithTuitionID".PostUrlEncodedAsync(new { tuitionID = StaticPageToPassData.lastTuitionHistoryID })
       .ReceiveJson<StudentTuitionHistory>();
-            var FavstudentList = await "https://api.shikkhanobish.com/api/ShikkhanobishTeacher/getReportWithTeacherID".PostUrlEncodedAsync(new {
+            var FavstudentList = await "https://api.shikkhanobish.com/api/ShikkhanobishTeacher/getFavouriteTeacherwithTeacherID".PostUrlEncodedAsync(new {
                 teacherID = historyInfo.teacherID 
             })
-     .ReceiveJson<List<ReportTeacherTable>>();
+     .ReceiveJson<List<favouriteTeacher>>();
             for(int i =0; i < FavstudentList.Count; i++)
             {
                 if(FavstudentList[i].studentID == StaticPageToPassData.thisStudentInfo.studentID)
@@ -50,9 +50,9 @@ namespace ShikkhanobishStudentApp.ViewModel
                 }
             }
             TeacherName = historyInfo.teacherName;
-            totalCost = historyInfo.cost+"";
-            tuitionID = historyInfo.tuitionID;
-            time = historyInfo.time;
+            TotalCost = historyInfo.cost+"";
+            TuitionID = historyInfo.tuitionID;
+            Time = historyInfo.time;
             cls = historyInfo.secondChoiceName;
             subject = historyInfo.thirdChoiceName;
             chapter = historyInfo.forthChoiceName;
@@ -324,7 +324,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                     StaticPageToPassData.reportDes = "N/A";
                 }
                 else
-                {
+                { 
                     StaticPageToPassData.reportDes = reportDescription;
                 }
                 SetProperty(ref reportDescription1, value); } }

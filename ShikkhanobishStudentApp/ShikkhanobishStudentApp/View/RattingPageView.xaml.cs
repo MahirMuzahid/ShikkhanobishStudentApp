@@ -76,6 +76,9 @@ namespace ShikkhanobishStudentApp.View
         public async Task ReportTeacher()
         {
             reportGrid.IsVisible = false;
+            if(StaticPageToPassData.reportDes == null || StaticPageToPassData.reportDes == "") {
+                StaticPageToPassData.reportDes = "N/A";
+            }
             using (var dialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Thank you for your feedback. We are adding this issue in our server and will take action according to Shikkhanobish Terms And Condition..."))
             {
                 var res = await "https://api.shikkhanobish.com/api/ShikkhanobishTeacher/setReport".PostUrlEncodedAsync(new

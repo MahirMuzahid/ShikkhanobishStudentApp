@@ -890,6 +890,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                         {
                             newfavTeacher[i].popupfavSelectedbackground = "#5098E87F";
                             thisSelectedFavPopUpTeacher = newfavTeacher[i].teacherID;
+                            newfavTeacher[i].teacherRatting = Math.Round(newfavTeacher[i].teacherRatting, 2);
                         }
                         else
                         {
