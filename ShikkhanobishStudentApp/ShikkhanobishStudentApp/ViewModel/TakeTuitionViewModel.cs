@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms.Vonage;
 using System.Net.Http;
 using Microsoft.AspNetCore.SignalR.Client;
+using XF.Material.Forms.UI.Dialogs;
 
 namespace ShikkhanobishStudentApp.ViewModel
 {
@@ -30,6 +31,7 @@ namespace ShikkhanobishStudentApp.ViewModel
         ObservableCollection<Course> AllCrsList = new ObservableCollection<Course>();
         List<favouriteTeacher> thisfavteacher = new List<favouriteTeacher>();
         RealTimeApiMethods realtimeapi = new RealTimeApiMethods();
+        CostClass Allcost = new CostClass();
         private int thisSearcherSubId;
         private int thisSelectedFavPopUpTeacher;
         HubConnection _connection = null;
@@ -41,9 +43,10 @@ namespace ShikkhanobishStudentApp.ViewModel
         {
             homeFirst();
         }
-        #region Methods
+        
         public async Task homeFirst()
         {
+            prmStudentTextVisibility = false;
             acceptTeacherVisibility = false;
             selectedTeacherConnectingVisibility = false;
             prmStudentTextVisibility = false;
@@ -81,9 +84,13 @@ namespace ShikkhanobishStudentApp.ViewModel
             resultprgs = .1;
             resultvisi = true;
             ConnectToRealTimeApiServer();
-
+            GetAllCost();
         }
-        
+        #region Methods
+        public async Task GetAllCost()
+        {
+             Allcost = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/GetCost".GetJsonAsync<CostClass>();
+        }
         public bool checkInternet()
         {
             var current = Connectivity.NetworkAccess;
@@ -101,48 +108,30 @@ namespace ShikkhanobishStudentApp.ViewModel
             homeFirst();
         }
        
-        public ICommand ChooseTeacherPopUp =>
-             new Command(async() =>
-             {
-                 chooseTeacherVisibility = true;
-                 hireteacherPopupVisibility = true;
-                 hireteacherEnabled = false;
 
-                 if (popupfavteacheritemSource != null)
-                 {
-                     popupfavteacheritemSource.Clear();
-                 }
-                 popupfavteacheritemSource = await "https://api.shikkhanobish.com/api/ShikkhanobishTeacher/getFavouriteTeacherwithStudentIDForPopUp".PostUrlEncodedAsync(new { studentID = StaticPageToPassData.thisStudentInfo.studentID, subjectID = thisSearcherSubId })
-       .ReceiveJson<List<favouriteTeacher>>();
-                 for(int i = 0; i < popupfavteacheritemSource.Count;i++)
-                 {
-                     popupfavteacheritemSource[i].teacherRatting= Math.Round(popupfavteacheritemSource[i].teacherRatting, 2);
-                 }
-                 if(popupfavteacheritemSource.Count != 0)
-                 {
-                     choosefavteacherlbl = true;
-                     nofavteacherlbl = false;
-                 }
-                 else
-                 {
-                     
-                     choosefavteacherlbl = false;
-                     nofavteacherlbl = true;
-
-                 }
-
-             });
         public void CheckEverythign()
         {
             MainThread.BeginInvokeOnMainThread(() =>
             {
                 if(detailTxt != null)
                 {
-                    if (seletedCountTextVisibility & CLseletedCountTextVisibility & SubseletedCountTextVisibility & ChpseletedCountTextVisibility && detailTxt.Length < 101)
+                    if (SelectedInsName != "Not Selected" & SelectedClassName != "Not Selected" & SelectedSubjectName != "Not Selected" & SelectedChapterName != "Not Selected"  && detailTxt.Length < 300 && detailTxt != "" && detailTxt != null)
                     {
                         activebtn = true;
                         permincostVisibility = true;
-                        perminCostText = "3 coin/min";                        
+                        if(selectedInsName == "School")
+                        {
+                            perminCostText = Allcost.SchoolCost+ " coin/min";
+                        }
+                        if(SelectedInsName == "College")
+                        {
+                            perminCostText = Allcost.CollegeCost + " coin/min";
+                        }                     
+                    }
+                    else
+                    {
+                        activebtn = false;
+                        permincostVisibility = false;
                     }
                 }
                 
@@ -166,12 +155,69 @@ namespace ShikkhanobishStudentApp.ViewModel
             }
             
         }
+        private async Task PerformrechargeCoin()
+        {
+            var input = await MaterialDialog.Instance.InputAsync("Enter Password","","","Password","Confirm","Cancle");
+            if(input == StaticPageToPassData.thisStudentInfo.password)
+            {
+                var trxID = await MaterialDialog.Instance.InputAsync("Enter Transaction ID", "", "", "TrxID", "Confirm", "Cancle");
+                if(trxID != null || trxID != "")
+                {
+                    var bkashpn = await MaterialDialog.Instance.InputAsync("Enter Bkash Phone Number", "This is not your login phone number. Enter bkash number from which you paid the payment.", "", "Phone Number", "Confirm", "Cancle");
+                    if(bkashpn != null || bkashpn != "")
+                    {
+                        using (await MaterialDialog.Instance.LoadingDialogAsync(message: "Checking..."))
+                        {
+                            await Task.Delay(2000);
+                        }
+                        await MaterialDialog.Instance.AlertAsync(message: "Successfully recharged 100 coin! Thank you.",
+                                            title: "Congretulation");
+                    }
+                }
+                
+            }
+        }
 
         public ICommand goRegisterView =>
               new Command(() =>
               {
                   Application.Current.MainPage.Navigation.PushModalAsync(new ResgisterView());
               });
+
+        #endregion
+
+        #region Favteacher PopUp
+        public ICommand ChooseTeacherPopUp =>
+             new Command(async () =>
+             {
+                 chooseTeacherVisibility = true;
+                 hireteacherPopupVisibility = true;
+                 hireteacherEnabled = false;
+
+                 if (popupfavteacheritemSource != null)
+                 {
+                     popupfavteacheritemSource.Clear();
+                 }
+                 popupfavteacheritemSource = await "https://api.shikkhanobish.com/api/ShikkhanobishTeacher/getFavouriteTeacherwithStudentIDForPopUp".PostUrlEncodedAsync(new { studentID = StaticPageToPassData.thisStudentInfo.studentID, subjectID = thisSearcherSubId })
+       .ReceiveJson<List<favouriteTeacher>>();
+                 for (int i = 0; i < popupfavteacheritemSource.Count; i++)
+                 {
+                     popupfavteacheritemSource[i].teacherRatting = Math.Round(popupfavteacheritemSource[i].teacherRatting, 2);
+                 }
+                 if (popupfavteacheritemSource.Count != 0)
+                 {
+                     choosefavteacherlbl = true;
+                     nofavteacherlbl = false;
+                 }
+                 else
+                 {
+
+                     choosefavteacherlbl = false;
+                     nofavteacherlbl = true;
+
+                 }
+
+             });
         private void PerformgroupChoice(string index)
         {
             int indexno = int.Parse(index);
@@ -183,7 +229,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                     ObservableCollection<Subject> popupclsList = new ObservableCollection<Subject>();
                     for (int i = 0; i < AllsubList.Count; i++)
                     {
-                        if (AllsubList[i].classID == selectedGlobalCls.classID )
+                        if (AllsubList[i].classID == selectedGlobalCls.classID)
                         {
                             popupclsList.Add(AllsubList[i]);
                         }
@@ -224,7 +270,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                     ObservableCollection<Subject> popupclsList = new ObservableCollection<Subject>();
                     for (int i = 0; i < AllsubList.Count; i++)
                     {
-                        if (AllsubList[i].classID == selectedGlobalCls.classID )
+                        if (AllsubList[i].classID == selectedGlobalCls.classID)
                         {
                             popupclsList.Add(AllsubList[i]);
                         }
@@ -264,7 +310,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                     ObservableCollection<Subject> popupclsList = new ObservableCollection<Subject>();
                     for (int i = 0; i < AllsubList.Count; i++)
                     {
-                        if (AllsubList[i].classID == selectedGlobalCls.classID )
+                        if (AllsubList[i].classID == selectedGlobalCls.classID)
                         {
                             popupclsList.Add(AllsubList[i]);
                         }
@@ -303,7 +349,7 @@ namespace ShikkhanobishStudentApp.ViewModel
         }
         private async Task PerformchooserndTeachercmd()
         {
-            if(randonpopupTeacherbtnColor == Color.FromHex("#5098E87F"))
+            if (randonpopupTeacherbtnColor == Color.FromHex("#5098E87F"))
             {
                 randonpopupTeacherbtnColor = Color.Transparent;
                 hireteacherEnabled = false;
@@ -317,7 +363,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                 for (int i = 0; i < newfavTeacher.Count; i++)
                 {
                     newfavTeacher[i].popupfavSelectedbackground = "#Transparent";
-
+                    newfavTeacher[i].teacherRatting = Math.Round(newfavTeacher[i].teacherRatting, 2);
                 }
                 popupfavteacheritemSource.Clear();
                 popupfavteacheritemSource = newfavTeacher;
@@ -325,16 +371,16 @@ namespace ShikkhanobishStudentApp.ViewModel
                 hireteacherEnabled = true;
                 thisSelectedFavPopUpTeacher = 0;
             }
-            
+
         }
         private async Task PerformhireTeacherBtnCmdAsync()
         {
-           
+
             chooseTeacherVisibility = false;
             selectedTeacherConnectingVisibility = true;
             connectingTeachertxt = "Conneting with Shikkhanobish Teacher Server. Please Wait...";
             int teacherisSelected;
-            
+
             if (thisSelectedFavPopUpTeacher == 0)
             {
                 SelectedTeacher = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/HireTeacherAsync".PostUrlEncodedAsync(new { subID = thisSearcherSubId })
@@ -345,17 +391,17 @@ namespace ShikkhanobishStudentApp.ViewModel
             {
                 teacherisSelected = thisSelectedFavPopUpTeacher;
             }
-            
-            string uriToCAllTeacher = "https://shikkhanobishrealtimeapi.shikkhanobish.com/api/ShikkhanobishSignalR/CallSelectedTeacher?&teacherID=" + teacherisSelected + "&des=" + detailTxt + "&cls=" + SelectedClassName + "&sub=" + thisSearcherSubId + "&chapter=" + selectedChapterName + "&cost=" + "3" + "&name=" + StaticPageToPassData.thisStudentInfo.name+ "&studentID=" + StaticPageToPassData.thisStudentInfo.studentID;
+
+            string uriToCAllTeacher = "https://shikkhanobishrealtimeapi.shikkhanobish.com/api/ShikkhanobishSignalR/CallSelectedTeacher?&teacherID=" + teacherisSelected + "&des=" + detailTxt + "&cls=" + SelectedClassName + "&sub=" + thisSearcherSubId + "&chapter=" + selectedChapterName + "&cost=" + "3" + "&name=" + StaticPageToPassData.thisStudentInfo.name + "&studentID=" + StaticPageToPassData.thisStudentInfo.studentID;
             await realtimeapi.ExecuteRealTimeApi(uriToCAllTeacher);
         }
-        
-        private void PerformcancleTeacherSearch()//i have to change thissssssssssssssssssssssssssssssss
+
+        private void PerformcancleTeacherSearch()
         {
-           
+
             selectedTeacherConnectingVisibility = false;
-            chooseTeacherVisibility = true;   
-            
+            chooseTeacherVisibility = true;
+
         }
         private void PerformacceptTeacherTuition()
         {
@@ -396,11 +442,11 @@ namespace ShikkhanobishStudentApp.ViewModel
                 await _connection.StartAsync();
             };
 
-            _connection.On<int , int, bool,int, string , string>("SelectedTeacherResponse", async (teacherID, studentID, response, apikey, sessionID, token) =>
+            _connection.On<int, int, bool, int, string, string>("SelectedTeacherResponse", async (teacherID, studentID, response, apikey, sessionID, token) =>
             {
-                if(teacherID == thisSelectedFavPopUpTeacher && studentID == StaticPageToPassData.thisStudentInfo.studentID)
+                if (teacherID == thisSelectedFavPopUpTeacher && studentID == StaticPageToPassData.thisStudentInfo.studentID)
                 {
-                    if(response == false)
+                    if (response == false)
                     {
                         selectedTeacherConnectingVisibility = false;
                         chooseTeacherVisibility = true;
@@ -410,11 +456,11 @@ namespace ShikkhanobishStudentApp.ViewModel
                         connectingTeachertxt = "A teacher has been connected...";
                         thisSesionID = sessionID;
                         acceptTeacherVisibility = true;
-                        CrossVonage.Current.ApiKey = apikey+"";
+                        CrossVonage.Current.ApiKey = apikey + "";
                         CrossVonage.Current.SessionId = sessionID;
                         CrossVonage.Current.UserToken = token;
-                       
-                        
+
+
                     }
                 }
             });
@@ -828,6 +874,7 @@ namespace ShikkhanobishStudentApp.ViewModel
             for(int i = 0; i < thisfavteacher.Count; i++)
             {
                 thisfavteacher[i].popupfavSelectedbackground = "Transparent";
+                thisfavteacher[i].teacherRatting = Math.Round(thisfavteacher[i].teacherRatting, 2);
             }
             if (thisfavteacher.Count == 0) {
                 prmStudentTextVisibility = true;
@@ -843,14 +890,14 @@ namespace ShikkhanobishStudentApp.ViewModel
         public async Task  getALlFavTeacher()
         {
             
-            var prm = await "https://api.shikkhanobish.com/api/ShikkhanobishTeacher/getPremiumStudentWithID".PostUrlEncodedAsync(new { studentID = StaticPageToPassData.thisStudentInfo.studentID })
+           var prm = await "https://api.shikkhanobish.com/api/ShikkhanobishTeacher/getPremiumStudentWithID".PostUrlEncodedAsync(new { studentID = StaticPageToPassData.thisStudentInfo.studentID })
  .ReceiveJson<PremiumStudent>();
             if (prm.studentID == 0)
             {
                 prmStudentText = "*";
                 studentstatus= "Normal";
                 studentstatusColor = Color.Black;
-                maxnumteacher= "1";
+                maxnumteacher= prm.maxNumberofFavouriteTeacher;
                 prmStudentTextVisibility = true;
             }
             else
@@ -858,12 +905,12 @@ namespace ShikkhanobishStudentApp.ViewModel
                 prmStudentText = "*";
                 studentstatus = "Premium";
                 studentstatusColor = Color.FromHex("#864AE8");
-                maxnumteacher = "Unlimited";
+                maxnumteacher = prm.maxNumberofFavouriteTeacher;
                 prmStudentTextVisibility = false;
             }
             await GetFavouriteTeaacherList();
-            
 
+           
         }
         public ICommand RemoveFavTeacher
         {
@@ -916,6 +963,10 @@ namespace ShikkhanobishStudentApp.ViewModel
      .ReceiveJson<Response>();
             favteacherItemSource =  await "https://api.shikkhanobish.com/api/ShikkhanobishTeacher/getFavouriteTeacherwithStudentID".PostUrlEncodedAsync(new { studentID = StaticPageToPassData.thisStudentInfo.studentID })
       .ReceiveJson<List<favouriteTeacher>>();
+            for (int i = 0; i < favteacherItemSource.Count; i++)
+            {
+                favteacherItemSource[i].teacherRatting = Math.Round(favteacherItemSource[i].teacherRatting, 2);
+            }
 
 
         }
@@ -1527,6 +1578,22 @@ namespace ShikkhanobishStudentApp.ViewModel
 
         public bool acceptTeacherVisibility { get => acceptTeacherVisibility1; set => SetProperty(ref acceptTeacherVisibility1, value); }
 
+        private Command rechargeCoin1;
+
+        public ICommand rechargeCoin
+        {
+            get
+            {
+                if (rechargeCoin1 == null)
+                {
+                    rechargeCoin1 = new Command(async =>PerformrechargeCoin());
+                }
+
+                return rechargeCoin1;
+            }
+        }
+
+       
 
 
 

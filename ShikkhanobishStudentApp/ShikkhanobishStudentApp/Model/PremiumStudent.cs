@@ -8,6 +8,7 @@ namespace ShikkhanobishStudentApp.Model
     {
         public int studentID { get; set; }
         public int buyingAmount { get; set; }
+        public string maxNumberofFavouriteTeacher { get; set; }
         public string Response { get; set; }
     }
 }
