@@ -86,8 +86,15 @@ namespace ShikkhanobishStudentApp.ViewModel
             errorTxtS = "";
             hasErrorF = false;
             errorTxtF = "";
-            passtext = "";
-            newInfoText = "";
+            if (passtext != null)
+            {
+                passtext = "";
+            }
+            if (newInfoText != null)
+            {
+                newInfoText = "";
+
+            }
         }
         public async Task PopulateTuitionList()
         {

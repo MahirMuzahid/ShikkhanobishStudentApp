@@ -168,6 +168,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                     {
                         using (await MaterialDialog.Instance.LoadingDialogAsync(message: "Checking..."))
                         {
+                            //////// bkash api to check trxID
                             await Task.Delay(2000);
                         }
                         await MaterialDialog.Instance.AlertAsync(message: "Successfully recharged 100 coin! Thank you.",
