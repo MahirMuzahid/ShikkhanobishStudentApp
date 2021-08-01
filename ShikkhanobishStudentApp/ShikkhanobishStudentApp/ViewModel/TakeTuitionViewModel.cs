@@ -161,21 +161,54 @@ namespace ShikkhanobishStudentApp.ViewModel
             if(input == StaticPageToPassData.thisStudentInfo.password)
             {
                 var trxID = await MaterialDialog.Instance.InputAsync("Enter Transaction ID", "", "", "TrxID", "Confirm", "Cancle");
-                if(trxID != null || trxID != "")
+                if(trxID != null && trxID != "")
                 {
-                    var bkashpn = await MaterialDialog.Instance.InputAsync("Enter Bkash Phone Number", "This is not your login phone number. Enter bkash number from which you paid the payment.", "", "Phone Number", "Confirm", "Cancle");
-                    if(bkashpn != null || bkashpn != "")
+                    var actions = new string[] { "Yes", "No" };
+                    var result = await MaterialDialog.Instance.SelectActionAsync(title: "Do you want to use promo code?",
+                                                             actions: actions);
+                    if(result == 0)
                     {
-                        using (await MaterialDialog.Instance.LoadingDialogAsync(message: "Checking..."))
+                        var promotcode = await MaterialDialog.Instance.InputAsync("Enter Promo Code", "", "", "", "Confirm");
+                        if(promotcode == "1")
                         {
-                            //////// bkash api to check trxID
-                            await Task.Delay(2000);
+                            var bkashpn = await MaterialDialog.Instance.InputAsync("Enter Bkash Phone Number", "This is not your login phone number. Enter bkash number from which you paid the payment.", "", "Phone Number", "Confirm", "Cancle");
+                            if (bkashpn != null || bkashpn != "")
+                            {
+                                using (await MaterialDialog.Instance.LoadingDialogAsync(message: "Checking..."))
+                                {
+                                    //////// bkash api to check trxID
+                                    await Task.Delay(2000);
+                                }
+                                await MaterialDialog.Instance.AlertAsync(message: "Successfully recharged 100 coin! Thank you.",
+                                                    title: "Congretulation");
+                            }
                         }
-                        await MaterialDialog.Instance.AlertAsync(message: "Successfully recharged 100 coin! Thank you.",
-                                            title: "Congretulation");
+                        else
+                        {
+                            await MaterialDialog.Instance.AlertAsync(message: "Promo Code is not valid");
+                        }
                     }
+                    else
+                    {
+                        var bkashpn = await MaterialDialog.Instance.InputAsync("Enter Bkash Phone Number", "This is not your login phone number. Enter bkash number from which you paid the payment.", "", "Phone Number", "Confirm", "Cancle");
+                        if (bkashpn != null && bkashpn != "")
+                        {
+                            using (await MaterialDialog.Instance.LoadingDialogAsync(message: "Checking..."))
+                            {
+                                //////// bkash api to check trxID
+                                await Task.Delay(2000);
+                            }
+                            await MaterialDialog.Instance.AlertAsync(message: "Successfully recharged 100 coin! Thank you.",
+                                                title: "Congretulation");
+                        }
+                    }
+                    
                 }
                 
+            }
+            else
+            {
+                await MaterialDialog.Instance.AlertAsync(message: "Pawssword Doesn't Match");
             }
         }
 
