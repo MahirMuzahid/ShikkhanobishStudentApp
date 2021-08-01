@@ -449,8 +449,26 @@ namespace ShikkhanobishStudentApp.ViewModel
                 {
                     if (response == false)
                     {
-                        selectedTeacherConnectingVisibility = false;
-                        chooseTeacherVisibility = true;
+                        
+                        int teacherisSelected;
+                        if (thisSelectedFavPopUpTeacher == 0)
+                        {
+                            SelectedTeacher = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/HireTeacherAsync".PostUrlEncodedAsync(new { subID = thisSearcherSubId })
+                   .ReceiveJson<Teacher>();
+                            teacherisSelected = SelectedTeacher.teacherID;
+                            string uriToCAllTeacher = "https://shikkhanobishrealtimeapi.shikkhanobish.com/api/ShikkhanobishSignalR/CallSelectedTeacher?&teacherID=" + teacherisSelected + "&des=" + detailTxt + "&cls=" + SelectedClassName + "&sub=" + thisSearcherSubId + "&chapter=" + selectedChapterName + "&cost=" + "3" + "&name=" + StaticPageToPassData.thisStudentInfo.name + "&studentID=" + StaticPageToPassData.thisStudentInfo.studentID;
+                            await realtimeapi.ExecuteRealTimeApi(uriToCAllTeacher);
+                        }
+                        else
+                        {
+                            connectingTeachertxt = "Teacher is busy. Choose another teacher.";
+                            Task.Delay(2000);
+                            selectedTeacherConnectingVisibility = false;
+                            chooseTeacherVisibility = true;
+                            teacherisSelected = thisSelectedFavPopUpTeacher;
+                        }
+
+                       
                     }
                     else
                     {
