@@ -98,9 +98,10 @@ namespace ShikkhanobishStudentApp.ViewModel
         }
         public async Task PopulateTuitionList()
         {
-            IEnumerable<StudentTuitionHistory> tuitionList = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getStudentTuitionHistoryWithID".PostUrlEncodedAsync(new { studentID = StaticPageToPassData.thisStudentInfo.studentID})
-        .ReceiveJson<IEnumerable<StudentTuitionHistory>>();
+            List<StudentTuitionHistory> tuitionList = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getStudentTuitionHistoryWithID".PostUrlEncodedAsync(new { studentID = StaticPageToPassData.thisStudentInfo.studentID})
+        .ReceiveJson<List<StudentTuitionHistory>>();
             tuiListItemSource = tuitionList;
+            
         }
         public async Task PopulatePaymentList()
         {
@@ -421,9 +422,9 @@ namespace ShikkhanobishStudentApp.ViewModel
 
         public string popBtnTxt { get => popBtnTxt1; set => SetProperty(ref popBtnTxt1, value); }
 
-        private System.Collections.IEnumerable tuiListItemSource1;
+        private List<StudentTuitionHistory> tuiListItemSource1;
 
-        public System.Collections.IEnumerable tuiListItemSource { get => tuiListItemSource1; set => SetProperty(ref tuiListItemSource1, value); }
+        public List<StudentTuitionHistory> tuiListItemSource { get => tuiListItemSource1; set => SetProperty(ref tuiListItemSource1, value); }
 
         private System.Collections.IEnumerable paymentList1;
 
