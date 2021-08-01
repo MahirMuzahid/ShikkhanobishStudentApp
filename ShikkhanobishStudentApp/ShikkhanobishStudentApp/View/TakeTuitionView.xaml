@@ -232,14 +232,13 @@
             <Grid x:Name="coingrid" BackgroundColor="#FFFFFF" Grid.Row="1" Grid.RowSpan="4" Grid.ColumnSpan="3">
                 <Grid.RowDefinitions>
                     <RowDefinition Height=".1*"/>
-                    <RowDefinition Height=".6*"/>
+                    <RowDefinition Height="1*"/>
                     <RowDefinition Height=".01*"/>
                     <RowDefinition Height=".001*"/>
                     <RowDefinition Height="2.6*"/>
                     <RowDefinition Height=".001*"/>
                     <RowDefinition Height=".7*"/>
                     <RowDefinition Height="2*"/>
-                    <RowDefinition Height=".01*"/>
                 </Grid.RowDefinitions>
 
                 <Grid.ColumnDefinitions>
@@ -249,19 +248,24 @@
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Row="1" Grid.Column="1" RowSpacing="0">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height=".5*"/>
+                        <RowDefinition Height=".4*"/>
+                        <RowDefinition Height=".3*"/>
                         <RowDefinition Height=".7*"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width=".3*"/>
-                        <ColumnDefinition Width="10*"/>
+                        <ColumnDefinition Width="5*"/>
+                        <ColumnDefinition Width="5*"/>
                         <ColumnDefinition Width=".3*"/>
                     </Grid.ColumnDefinitions>
-                    <material:MaterialCard BackgroundColor="White" Grid.RowSpan="2" Grid.ColumnSpan="3" CornerRadius="10" Elevation="0"/>
-                    <Label Text="Total Available Balance" Grid.Row="0" HorizontalOptions="Start" VerticalOptions="End" Grid.Column="1" FontSize="13"/>
-                    <Label x:Name="avaiableCoin" Grid.Row="1" HorizontalOptions="Start" VerticalOptions="Start" FontSize="25" FontAttributes="Bold" Grid.Column="1"/>
-                    <Label Text="Total Free Minute" Grid.Row="0" HorizontalOptions="End" VerticalOptions="End" Grid.Column="1" FontSize="13"/>
-                    <Label x:Name="freeMin" Grid.Row="1" HorizontalOptions="End" VerticalOptions="End" FontSize="25" FontAttributes="Bold" Grid.Column="1"/>
+                    <Image Source="totalblnc.png" Grid.Row="0" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" Aspect="AspectFill" Margin="10,0,0,0"/>
+                    <Image Source="freemin.png" Grid.Row="0" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center" Aspect="AspectFill" Margin="10,5,0,0"/>
+                    <material:MaterialCard BackgroundColor="#05000000"  Grid.RowSpan="3" Grid.Column="1" CornerRadius="10" Elevation="10"/>
+                    <material:MaterialCard BackgroundColor="#05000000"  Grid.RowSpan="3" Grid.Column="2" CornerRadius="10" Elevation="10"/>
+                    <Label Text="Total Available Balance" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="End" Grid.Column="1" FontSize="13"/>
+                    <Label x:Name="avaiableCoin" Grid.Row="2" HorizontalOptions="Center" VerticalOptions="Center" FontSize="25" FontAttributes="Bold" Grid.Column="1"/>
+                    <Label Text="Total Free Minute" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="End" Grid.Column="2" FontSize="13"/>
+                    <Label x:Name="freeMin" Grid.Row="2" HorizontalOptions="Center" VerticalOptions="Center" FontSize="25" FontAttributes="Bold" Grid.Column="2"/>
                 </Grid>
                 <Frame BackgroundColor="#50000000" Grid.Row="3" Grid.Column="1"/>
                 <Grid Grid.Row="4" Grid.Column="1" Margin="0,15,0,15">
