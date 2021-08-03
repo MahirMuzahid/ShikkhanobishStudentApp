@@ -236,6 +236,8 @@ namespace ShikkhanobishStudentApp.ViewModel
        .ReceiveJson<List<favouriteTeacher>>();
                  for (int i = 0; i < popupfavteacheritemSource.Count; i++)
                  {
+                     popupfavteacheritemSource[i].activeStatus = "Online";
+                     popupfavteacheritemSource[i].activeColor = "Green";
                      popupfavteacheritemSource[i].teacherRatting = Math.Round(popupfavteacheritemSource[i].teacherRatting, 2);
                  }
                  if (popupfavteacheritemSource.Count != 0)
@@ -514,6 +516,26 @@ namespace ShikkhanobishStudentApp.ViewModel
 
 
                     }
+                }
+            });
+            _connection.On<int, bool>("PassActiveStatus", async (teacherID, isActive) =>
+            {
+                popupfavteacheritemSource.Clear();
+                popupfavteacheritemSource = await "https://api.shikkhanobish.com/api/ShikkhanobishTeacher/getFavouriteTeacherwithStudentIDForPopUp".PostUrlEncodedAsync(new { studentID = StaticPageToPassData.thisStudentInfo.studentID, subjectID = thisSearcherSubId })
+   .ReceiveJson<List<favouriteTeacher>>();
+
+                for (int i = 0; i < popupfavteacheritemSource.Count; i++)
+                {
+
+                    popupfavteacheritemSource[i].activeStatus = "Online";
+                    popupfavteacheritemSource[i].activeColor = "Green";
+                    popupfavteacheritemSource[i].teacherRatting = Math.Round(popupfavteacheritemSource[i].teacherRatting, 2);
+                }
+
+                if(thisSelectedFavPopUpTeacher == teacherID)
+                {
+                    hireteacherEnabled = false;
+                    randonpopupTeacherbtnColor = Color.FromHex("#5098E87F");
                 }
             });
         }
@@ -980,25 +1002,30 @@ namespace ShikkhanobishStudentApp.ViewModel
             {
                 return new Command<favouriteTeacher>(async (favteacher) =>
                 {
-                    List<favouriteTeacher> newfavTeacher = await "https://api.shikkhanobish.com/api/ShikkhanobishTeacher/getFavouriteTeacherwithStudentIDForPopUp".PostUrlEncodedAsync(new { studentID = StaticPageToPassData.thisStudentInfo.studentID, subjectID = thisSearcherSubId })
-      .ReceiveJson<List<favouriteTeacher>>();
+                    //List<favouriteTeacher> newfavTeacher = await "https://api.shikkhanobish.com/api/ShikkhanobishTeacher/getFavouriteTeacherwithStudentIDForPopUp".PostUrlEncodedAsync(new { studentID = StaticPageToPassData.thisStudentInfo.studentID, subjectID = thisSearcherSubId })
+     // .ReceiveJson<List<favouriteTeacher>>();
+                    popupfavteacheritemSource.Clear();
+                    popupfavteacheritemSource = await "https://api.shikkhanobish.com/api/ShikkhanobishTeacher/getFavouriteTeacherwithStudentIDForPopUp".PostUrlEncodedAsync(new { studentID = StaticPageToPassData.thisStudentInfo.studentID, subjectID = thisSearcherSubId })
+       .ReceiveJson<List<favouriteTeacher>>();
 
-                    for (int i = 0; i < newfavTeacher.Count; i++)
+                    for (int i = 0; i < popupfavteacheritemSource.Count; i++)
                     {
-                        if(newfavTeacher[i].teacherID == favteacher.teacherID)
+                        popupfavteacheritemSource[i].activeStatus = "Online";
+                        popupfavteacheritemSource[i].activeColor = "Green";
+                        if (popupfavteacheritemSource[i].teacherID == favteacher.teacherID)
                         {
-                            newfavTeacher[i].popupfavSelectedbackground = "#5098E87F";
-                            thisSelectedFavPopUpTeacher = newfavTeacher[i].teacherID;
-                            newfavTeacher[i].teacherRatting = Math.Round(newfavTeacher[i].teacherRatting, 2);
+                            popupfavteacheritemSource[i].popupfavSelectedbackground = "#5098E87F";
+                            thisSelectedFavPopUpTeacher = popupfavteacheritemSource[i].teacherID;
+                            
                         }
                         else
                         {
-                            newfavTeacher[i].popupfavSelectedbackground = "#Transparent";
+                            popupfavteacheritemSource[i].popupfavSelectedbackground = "#Transparent";
                         }
-                       
+                        popupfavteacheritemSource[i].teacherRatting = Math.Round(popupfavteacheritemSource[i].teacherRatting, 2);
                     }
-                    popupfavteacheritemSource.Clear();
-                    popupfavteacheritemSource = newfavTeacher;
+                   //// popupfavteacheritemSource.Clear();
+                    //popupfavteacheritemSource = newfavTeacher;
                     hireteacherEnabled = true;
                     randonpopupTeacherbtnColor = Color.Transparent;
                 });

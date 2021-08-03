@@ -619,7 +619,7 @@
                                     <Label Text="Total Tuition" Grid.Row="2" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" FontSize="10"/>
                                     <Label Text="{Binding teacherRatting}" Grid.Row="1" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" FontSize="10" FontAttributes="Bold"/>
                                     <Label Text="Ratting" Grid.Row="2" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" FontSize="10"/>
-                                    <Label Text="Online" Grid.Row="1" Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center" FontSize="10" FontAttributes="Bold" TextColor="Green"/>
+                                    <Label Text="{Binding activeStatus}" Grid.Row="1" Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center" FontSize="10" FontAttributes="Bold" TextColor="{Binding activeColor}"/>
                                     <Label Text="Activity" Grid.Row="2" Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center" FontSize="10" />
                                     <material:MaterialButton Grid.RowSpan="4" Grid.ColumnSpan="4" ButtonType="Text" PressedBackgroundColor="#20000000" Command="{Binding Source={x:Reference tuitionView}, Path=BindingContext.SeletecFavpopupTeacher}" CommandParameter="{Binding .}"/>
                                 </Grid>
