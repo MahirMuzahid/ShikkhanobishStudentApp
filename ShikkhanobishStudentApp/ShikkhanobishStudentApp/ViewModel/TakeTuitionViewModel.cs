@@ -37,13 +37,22 @@ namespace ShikkhanobishStudentApp.ViewModel
         HubConnection _connection = null;
         Teacher SelectedTeacher = new Teacher();
         string url = "https://shikkhanobishrealtimeapi.shikkhanobish.com/ShikkhanobishHub";
-
+        List<Voucher> allVoucher = new List<Voucher>();
         #region Methods
         public TakeTuitionViewModel()
         {
             homeFirst();
         }
-        
+        bool IsDigitsOnly(string str)
+        {
+            foreach (char c in str)
+            {
+                if (c < '0' || c > '9')
+                    return false;
+            }
+
+            return true;
+        }
         public async Task homeFirst()
         {
             prmStudentTextVisibility = false;
@@ -67,13 +76,8 @@ namespace ShikkhanobishStudentApp.ViewModel
             remainColopr = "Black";
 
             remainword = "Remain 300 Words";
-            List<int> ggl = new List<int>();
-            ggl.Add(1);
-            ggl.Add(2);
-            ggl.Add(3);
-            ggl.Add(4);
+           
             remainColopr = "#E5E5E5";
-            offerList = ggl;
             secTitle = "Class";
             thirdTitle = "Subject";
             forthTitle = "Chapter";
@@ -84,13 +88,20 @@ namespace ShikkhanobishStudentApp.ViewModel
             resultprgs = .1;
             resultvisi = true;
             rechargeButtonVisibility = false;
-            ConnectToRealTimeApiServer();
-            GetAllCost();
+            
+            await GetAllCost();
+            await GetVoucher();
+            await ConnectToRealTimeApiServer();
         }
         #region Methods
         public async Task GetAllCost()
         {
              Allcost = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/GetCost".GetJsonAsync<CostClass>();
+        }
+        public  async Task GetVoucher()
+        {
+             allVoucher = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getVoucher".GetJsonAsync<List<Voucher>>();
+            offerList = allVoucher;
         }
         public bool checkInternet()
         {
@@ -1362,8 +1373,8 @@ namespace ShikkhanobishStudentApp.ViewModel
 
         public string SecondListTitle { get => SecondListTitle1; set => SetProperty(ref SecondListTitle1, value); }
 
-        private List<int> offerList1 { get; set; }
-        public List<int> offerList { get { return offerList1; } set { offerList1 = value; OnPropertyChanged(); } }
+        private List<Voucher> offerList1 { get; set; }
+        public List<Voucher> offerList { get { return offerList1; } set { offerList1 = value; OnPropertyChanged(); } }
 
         private double tticonopacity1;
 
@@ -1664,7 +1675,7 @@ namespace ShikkhanobishStudentApp.ViewModel
 
         private string rechargeAmount1;
 
-        public string rechargeAmount { get => rechargeAmount1; set { rechargeAmount1 = value; if (rechargeAmount != null) { rechargeButtonVisibility = true; } else { rechargeButtonVisibility = false; } SetProperty(ref rechargeAmount1, value); } }
+        public string rechargeAmount { get => rechargeAmount1; set { rechargeAmount1 = value; if (rechargeAmount != null && rechargeAmount != "" && IsDigitsOnly(rechargeAmount)) { if (int.Parse(rechargeAmount) < 10) { rechargeButtonVisibility = false; } else { rechargeButtonVisibility = true; }  } else { rechargeButtonVisibility = false; } SetProperty(ref rechargeAmount1, value); } }
 
         private bool rechargeButton1;
 

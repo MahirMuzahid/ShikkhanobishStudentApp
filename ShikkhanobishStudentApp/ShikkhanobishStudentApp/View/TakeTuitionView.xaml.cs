@@ -21,6 +21,7 @@ namespace ShikkhanobishStudentApp.View
         public TakeTuitionView(bool fromLogin)
         {
             InitializeComponent();
+            connectivityGrid.IsVisible = false;
             proImage.IsVisible = false;
             if(!fromLogin)
             {
@@ -45,24 +46,28 @@ namespace ShikkhanobishStudentApp.View
             }
            
         }
+   
 
         public async Task getAllInfo()
         {
-            
-            connectivityGrid.IsVisible = false;
-            NavigationPage.SetHasNavigationBar(this, false);
-            var mainDisplayInfo = DeviceDisplay.MainDisplayInfo;
-            var width = mainDisplayInfo.Width;
-            cpimg.Opacity = .3;
-            fvimg.Opacity = .3;
-            rclbl.TextColor = Color.FromHex("#C9C9C9");
-            fvlbl.TextColor = Color.FromHex("#C9C9C9");
+            using (await MaterialDialog.Instance.LoadingDialogAsync(message: "Cheking Data..."))
+            {
+                
+                NavigationPage.SetHasNavigationBar(this, false);
+                var mainDisplayInfo = DeviceDisplay.MainDisplayInfo;
+                var width = mainDisplayInfo.Width;
+                cpimg.Opacity = .3;
+                fvimg.Opacity = .3;
+                rclbl.TextColor = Color.FromHex("#C9C9C9");
+                fvlbl.TextColor = Color.FromHex("#C9C9C9");
 
-            StaticPageToPassData.thisStudentInfo = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/LoginStudent".PostUrlEncodedAsync(new { phonenumber = StaticPageToPassData.thisStPh, password = StaticPageToPassData.thisstPass })
-          .ReceiveJson<Student>();
-           
-            Connectivity.ConnectivityChanged += Connectivity_ConnectivityChanged;
-            proImage.IsVisible = true;
+                StaticPageToPassData.thisStudentInfo = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/LoginStudent".PostUrlEncodedAsync(new { phonenumber = StaticPageToPassData.thisStPh, password = StaticPageToPassData.thisstPass })
+              .ReceiveJson<Student>();
+
+                Connectivity.ConnectivityChanged += Connectivity_ConnectivityChanged;
+                proImage.IsVisible = true;
+            }
+            
         }
         async void Connectivity_ConnectivityChanged(object sender, ConnectivityChangedEventArgs e)
         {
