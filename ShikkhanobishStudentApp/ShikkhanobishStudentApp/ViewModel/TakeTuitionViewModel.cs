@@ -83,6 +83,7 @@ namespace ShikkhanobishStudentApp.ViewModel
             forthBtnVisbility = false;
             resultprgs = .1;
             resultvisi = true;
+            rechargeButtonVisibility = false;
             ConnectToRealTimeApiServer();
             GetAllCost();
         }
@@ -157,30 +158,27 @@ namespace ShikkhanobishStudentApp.ViewModel
         }
         private async Task PerformrechargeCoin()
         {
-            var amount = await MaterialDialog.Instance.InputAsync("Enter Amount", "", "", "Amount(BDT)", "Confirm", "Cancle");
-            if (amount != null && amount != "")
+            using (await MaterialDialog.Instance.LoadingDialogAsync(message: "Wait..."))
             {
-                var pn = await MaterialDialog.Instance.InputAsync("Enter Bkash Phone Number", "This is not your login phone number. Enter bkash number from which you paid the payment.", "", "Phone Number", "Confirm", "Cancle");
-                if (pn != null && pn != "")
+                RechargeerrorTxt = "";
+                try
                 {
-                    using (await MaterialDialog.Instance.LoadingDialogAsync(message: "Checking..."))
+                    var redirectURL = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/RequestPayment".PostUrlEncodedAsync(new
                     {
-                        var redirectURL = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/RequestPayment".PostUrlEncodedAsync(new
-                        {
-                            name = StaticPageToPassData.thisStudentInfo.name,
-                            amount = amount,
-                            studentID = StaticPageToPassData.thisStudentInfo.studentID,
-                            phonenumber = pn
-                        })
-    .ReceiveJson<string>();
-                        await Application.Current.MainPage.Navigation.PushModalAsync(new PaymentView(redirectURL));
-                        
-
-                    }
-
+                        name = StaticPageToPassData.thisStudentInfo.name,
+                        amount = int.Parse(rechargeAmount),
+                        studentID = StaticPageToPassData.thisStudentInfo.studentID,
+                        phonenumber = StaticPageToPassData.thisStudentInfo.phonenumber
+                    })
+       .ReceiveJson<string>();
+                    await Application.Current.MainPage.Navigation.PushModalAsync(new PaymentView(redirectURL));
                 }
-
+                catch (Exception ex)
+                {
+                    RechargeerrorTxt = ex.Message;
+                }
             }
+            
         }
 
         public ICommand goRegisterView =>
@@ -1663,6 +1661,22 @@ namespace ShikkhanobishStudentApp.ViewModel
         private WebViewSource paymentSource;
 
         public WebViewSource PaymentSource { get => paymentSource; set => SetProperty(ref paymentSource, value); }
+
+        private string rechargeAmount1;
+
+        public string rechargeAmount { get => rechargeAmount1; set { rechargeAmount1 = value; if (rechargeAmount != null) { rechargeButtonVisibility = true; } else { rechargeButtonVisibility = false; } SetProperty(ref rechargeAmount1, value); } }
+
+        private bool rechargeButton1;
+
+        public bool rechargeButton { get => rechargeButton1; set => SetProperty(ref rechargeButton1, value); }
+
+        private string rechargeerrorTxt;
+
+        public string RechargeerrorTxt { get => rechargeerrorTxt; set { rechargeerrorTxt = value;  SetProperty(ref rechargeerrorTxt, value); } }
+
+        private bool rechargeButtonVisibility1;
+
+        public bool rechargeButtonVisibility { get => rechargeButtonVisibility1; set => SetProperty(ref rechargeButtonVisibility1, value); }
 
 
 
