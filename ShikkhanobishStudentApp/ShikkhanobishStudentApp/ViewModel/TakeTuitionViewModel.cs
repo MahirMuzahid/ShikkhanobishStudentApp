@@ -157,58 +157,29 @@ namespace ShikkhanobishStudentApp.ViewModel
         }
         private async Task PerformrechargeCoin()
         {
-            var input = await MaterialDialog.Instance.InputAsync("Enter Password","","","Password","Confirm","Cancle");
-            if(input == StaticPageToPassData.thisStudentInfo.password)
+            var amount = await MaterialDialog.Instance.InputAsync("Enter Amount", "", "", "Amount(BDT)", "Confirm", "Cancle");
+            if (amount != null && amount != "")
             {
-                var trxID = await MaterialDialog.Instance.InputAsync("Enter Transaction ID", "", "", "TrxID", "Confirm", "Cancle");
-                if(trxID != null && trxID != "")
+                var pn = await MaterialDialog.Instance.InputAsync("Enter Bkash Phone Number", "This is not your login phone number. Enter bkash number from which you paid the payment.", "", "Phone Number", "Confirm", "Cancle");
+                if (pn != null && pn != "")
                 {
-                    var actions = new string[] { "Yes", "No" };
-                    var result = await MaterialDialog.Instance.SelectActionAsync(title: "Do you want to use promo code?",
-                                                             actions: actions);
-                    if(result == 0)
+                    using (await MaterialDialog.Instance.LoadingDialogAsync(message: "Checking..."))
                     {
-                        var promotcode = await MaterialDialog.Instance.InputAsync("Enter Promo Code", "", "", "", "Confirm");
-                        if(promotcode == "1")
+                        var redirectURL = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/RequestPayment".PostUrlEncodedAsync(new
                         {
-                            var bkashpn = await MaterialDialog.Instance.InputAsync("Enter Bkash Phone Number", "This is not your login phone number. Enter bkash number from which you paid the payment.", "", "Phone Number", "Confirm", "Cancle");
-                            if (bkashpn != null || bkashpn != "")
-                            {
-                                using (await MaterialDialog.Instance.LoadingDialogAsync(message: "Checking..."))
-                                {
-                                    //////// bkash api to check trxID
-                                    await Task.Delay(2000);
-                                }
-                                await MaterialDialog.Instance.AlertAsync(message: "Successfully recharged 100 coin! Thank you.",
-                                                    title: "Congretulation");
-                            }
-                        }
-                        else
-                        {
-                            await MaterialDialog.Instance.AlertAsync(message: "Promo Code is not valid");
-                        }
+                            name = StaticPageToPassData.thisStudentInfo.name,
+                            amount = amount,
+                            studentID = StaticPageToPassData.thisStudentInfo.studentID,
+                            phonenumber = pn
+                        })
+    .ReceiveJson<string>();
+                        await Application.Current.MainPage.Navigation.PushModalAsync(new PaymentView(redirectURL));
+                        
+
                     }
-                    else
-                    {
-                        var bkashpn = await MaterialDialog.Instance.InputAsync("Enter Bkash Phone Number", "This is not your login phone number. Enter bkash number from which you paid the payment.", "", "Phone Number", "Confirm", "Cancle");
-                        if (bkashpn != null && bkashpn != "")
-                        {
-                            using (await MaterialDialog.Instance.LoadingDialogAsync(message: "Checking..."))
-                            {
-                                //////// bkash api to check trxID
-                                await Task.Delay(2000);
-                            }
-                            await MaterialDialog.Instance.AlertAsync(message: "Successfully recharged 100 coin! Thank you.",
-                                                title: "Congretulation");
-                        }
-                    }
-                    
+
                 }
-                
-            }
-            else
-            {
-                await MaterialDialog.Instance.AlertAsync(message: "Pawssword Doesn't Match");
+
             }
         }
 
@@ -538,6 +509,23 @@ namespace ShikkhanobishStudentApp.ViewModel
                     randonpopupTeacherbtnColor = Color.FromHex("#5098E87F");
                 }
             });
+            _connection.On<int, bool, string,string>("StudentPaymentStatus", async (studentID, successFullPayment,amount,response) =>
+            {
+                if(studentID == StaticPageToPassData.thisStudentInfo.studentID)
+                {
+                    if (successFullPayment)
+                    {
+                        await MaterialDialog.Instance.AlertAsync(message: "You have successfully added " + amount + " coin in your account. Thnak you for staying with us.",
+                                    title: "Successfull");
+                    }
+                    else
+                    {
+                        await MaterialDialog.Instance.AlertAsync(message: response,
+                                    title: "There is problem");
+                    }
+                }
+            });
+
         }
         #endregion
 
@@ -1672,7 +1660,11 @@ namespace ShikkhanobishStudentApp.ViewModel
             }
         }
 
-       
+        private WebViewSource paymentSource;
+
+        public WebViewSource PaymentSource { get => paymentSource; set => SetProperty(ref paymentSource, value); }
+
+
 
 
 
