@@ -19,6 +19,7 @@ namespace ShikkhanobishStudentApp.Model
         public static int reportIndex { get; set; }
         public static string reportDes { get; set; }
         public static PerMinPassModel perMinCall { get; set; }
+        public static StudentPaymentHistory thispayment { get; set; }
         public static favouriteTeacher selectedPopupFavTeacher { get; set; }
         public static int GenarateNewID()
         {

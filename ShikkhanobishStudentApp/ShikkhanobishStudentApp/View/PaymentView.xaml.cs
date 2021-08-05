@@ -36,7 +36,7 @@ namespace ShikkhanobishStudentApp.View
             };
 
             
-            _connection.On<int, bool, string, string>("StudentPaymentStatus", async (studentID, successFullPayment, amount, response) =>
+            _connection.On<int, bool, string, string,string,string,string,string>("StudentPaymentStatus", async (studentID, successFullPayment, amount, response, paymentID, trxID, cardID, cardType) =>
             {
                 if (studentID == StaticPageToPassData.thisStudentInfo.studentID)
                 {

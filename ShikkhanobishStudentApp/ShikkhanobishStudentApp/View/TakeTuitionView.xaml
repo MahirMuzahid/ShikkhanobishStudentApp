@@ -242,9 +242,9 @@
                 </Grid.RowDefinitions>
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width=".5*"/>
                     <ColumnDefinition Width="20*"/>
-                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width=".5*"/>
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Row="1" Grid.Column="1" RowSpacing="0">
                     <Grid.RowDefinitions>
@@ -268,34 +268,63 @@
                     <Label Text="Total Free Minute" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="End" Grid.Column="2" FontSize="13"/>
                     <Label x:Name="freeMin" Grid.Row="2" HorizontalOptions="Center" VerticalOptions="Center" FontSize="25" FontAttributes="Bold" Grid.Column="2"/>
                 </Grid>
-                <Frame BackgroundColor="Black" Grid.Row="3" Grid.Column="1" HasShadow="False"/>
+               
+                <Grid Grid.Row="4" Grid.RowSpan="3" Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="6*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <material:MaterialCard BackgroundColor="White" Grid.RowSpan="2" Grid.ColumnSpan="2" Elevation="5"/>
+                    <Image Source="rechargeback.png" Grid.Row="1" Grid.Column="0"  Aspect="AspectFill" Margin="0,100,0,20"  />
+                </Grid>
+               
                 <Grid Grid.Row="4" Grid.Column="1" Margin="0,15,0,15">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height=".5*"/>
+                        <RowDefinition Height="1*"/>
                         <RowDefinition Height="1*"/>
                         <RowDefinition Height="1*"/>
                         <RowDefinition Height="1.5*"/>
-                        <RowDefinition Height=".7*"/>
+                        <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width=".1*"/>
-                        <ColumnDefinition Width="25*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="15*"/>
                         <ColumnDefinition Width="10*"/>
-                        <ColumnDefinition Width=".1*"/>
+                        <ColumnDefinition Width="10*"/>
+                        <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
-                    
-                    <Label Text="Add Coin" Grid.Row="0" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" FontSize="15" FontAttributes="Bold"/>
+                    <Label Text="Add Coin" Grid.Row="0" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="End" FontSize="15" FontAttributes="Bold"/>
                     <Label Text="Number Of Coin" Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" FontSize="13"/>
-                    <Entry Grid.Row="2" Grid.Column="1" BackgroundColor="Transparent" FontSize="14" HorizontalTextAlignment="Center" Text="{Binding rechargeAmount}"/>
-                    <Label Text="Cost" Grid.Row="1" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" FontSize="13"/>
-                    <Label Text="5000 Taka" Grid.Row="2" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" FontAttributes="Bold"/>
+                    <Entry Grid.Row="2" Grid.Column="1" Placeholder="Coin" BackgroundColor="Transparent" FontSize="14" HorizontalTextAlignment="Center" Text="{Binding rechargeAmount}"/>
+
+                    <Label Text="Total Coin" Grid.Row="1" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" FontSize="13"/>
+                    <Label  Grid.Row="2" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" FontAttributes="Bold">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="{Binding totalRechargeCoin}"/>
+                                <Span Text="{Binding addedCoinamount}" TextColor="#0BCD48"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label Text="Cost" Grid.Row="1" Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center" FontSize="13"/>
+                    <Label Text="{Binding totalAmount}" Grid.Row="2" Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center" FontAttributes="Bold"/>
+
+                   
+
                     <Label Text="{Binding RechargeerrorTxt}" Grid.Row="3"  Grid.Column="1" TextColor="Red" HorizontalOptions="Center" VerticalOptions="Center" FontSize="14"/>
 
-                    <material:MaterialCard Grid.Row="3" Grid.Column="2" Grid.RowSpan="2" Margin="6" Elevation="5" BackgroundColor="#99ffffff" IsVisible="{Binding rechargeButtonVisibility}"/>
-                    <Image Source="rechargeicon.png" Grid.Row="3" Grid.Column="2" HorizontalOptions="Center"  VerticalOptions="Center" Aspect="AspectFill" Margin="7,5,5,5" IsVisible="{Binding rechargeButtonVisibility}"/>
-                    <material:MaterialButton Grid.Row="3" Grid.Column="2" Grid.RowSpan="2" BackgroundColor="Transparent" PressedBackgroundColor="#5010E754" Command="{Binding rechargeCoin}" IsVisible="{Binding rechargeButtonVisibility}"/>
-                    <Label Text="Add Now" Grid.Row="4" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Start" FontSize="11" FontAttributes="Bold" Margin="0,0,7,0" IsVisible="{Binding rechargeButtonVisibility}"/>
+                   
+                    <Image Source="rechargeicon.png" Grid.Row="3" Grid.Column="3" HorizontalOptions="Center"  VerticalOptions="Center" Aspect="AspectFill" Margin="7,10,5,5" IsVisible="{Binding rechargeButtonVisibility}"/>
+                    <material:MaterialButton Grid.Row="3" Grid.Column="3" Grid.RowSpan="2" BackgroundColor="Transparent" PressedBackgroundColor="#5010E754" Command="{Binding rechargeCoin}" IsVisible="{Binding rechargeButtonVisibility}"/>
+                    <Label Text="Add Now" Grid.Row="4" Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Start" FontSize="11" FontAttributes="Bold" Margin="0,0,7,0" IsVisible="{Binding rechargeButtonVisibility}"/>
+
                     
+
                 </Grid>
 
                 <Frame BackgroundColor="Black" Grid.Row="5" Grid.Column="1" HasShadow="False"/>
@@ -329,7 +358,7 @@
                     <ColumnDefinition Width="20*"/>
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
-
+                <Image Source="favback.png" Grid.RowSpan="4" Grid.ColumnSpan="3" Aspect="AspectFill" VerticalOptions="End"/>
                 <Grid Grid.Row="1" Grid.Column="1" RowSpacing="0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height=".5*"/>

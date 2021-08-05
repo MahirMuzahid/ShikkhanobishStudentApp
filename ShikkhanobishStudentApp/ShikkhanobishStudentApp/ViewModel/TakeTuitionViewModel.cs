@@ -37,6 +37,8 @@ namespace ShikkhanobishStudentApp.ViewModel
         HubConnection _connection = null;
         Teacher SelectedTeacher = new Teacher();
         string url = "https://shikkhanobishrealtimeapi.shikkhanobish.com/ShikkhanobishHub";
+        int rechargeCoinAMountInt, rechargeTTakaAmountInt;
+        public Voucher thisUsedVoucher { get; set; }
         List<Voucher> allVoucher = new List<Voucher>();
         #region Methods
         public TakeTuitionViewModel()
@@ -102,6 +104,33 @@ namespace ShikkhanobishStudentApp.ViewModel
         {
              allVoucher = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getVoucher".GetJsonAsync<List<Voucher>>();
             offerList = allVoucher;
+        }
+        public async Task CalCulateReachrgeCost()
+        {
+            for(int i = 0; i < allVoucher.Count; i++)
+            {
+                if(allVoucher[i].type == 0)
+                {
+                    if(int.Parse(rechargeAmount) == allVoucher[i].amountTaka)
+                    {
+                        totalRechargeCoin = rechargeAmount;
+                        addedCoinamount = " + "+ allVoucher[i].getAmount.ToString() + " Coin";
+                        thisUsedVoucher = allVoucher[i];
+                        rechargeCoinAMountInt = allVoucher[i].getAmount + int.Parse(rechargeAmount);
+                        rechargeTTakaAmountInt = int.Parse(rechargeAmount);
+                        break;
+                    }
+                    else
+                    {
+                        totalRechargeCoin = rechargeAmount + " Coin";
+                        addedCoinamount = "";
+                        thisUsedVoucher = new Voucher();
+                        rechargeCoinAMountInt = allVoucher[i].getAmount;
+                        rechargeTTakaAmountInt = int.Parse(rechargeAmount);
+                    }
+                }
+                totalAmount = rechargeAmount + " Taka";
+            }
         }
         public bool checkInternet()
         {
@@ -174,6 +203,23 @@ namespace ShikkhanobishStudentApp.ViewModel
                 RechargeerrorTxt = "";
                 try
                 {
+                    
+                    StudentPaymentHistory thispayment = new StudentPaymentHistory();
+                    thispayment.studentID = StaticPageToPassData.thisStudentInfo.studentID;                  
+                    thispayment.amountTaka = rechargeTTakaAmountInt;
+                    if (thisUsedVoucher.voucherID == 0)
+                    {
+                        thispayment.isVoucherUsed = 1;
+                        thispayment.voucherID = thisUsedVoucher.voucherID;
+                        thispayment.amountCoin = rechargeCoinAMountInt;
+                    }
+                    else
+                    {
+                        thispayment.isVoucherUsed = 0;
+                        thispayment.voucherID = 0;
+                        thispayment.amountCoin = rechargeCoinAMountInt;
+                    }
+                    thispayment.date = DateTime.Now.ToString("MM/dd/yyyy HH:mm");
                     var redirectURL = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/RequestPayment".PostUrlEncodedAsync(new
                     {
                         name = StaticPageToPassData.thisStudentInfo.name,
@@ -518,7 +564,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                     randonpopupTeacherbtnColor = Color.FromHex("#5098E87F");
                 }
             });
-            _connection.On<int, bool, string,string>("StudentPaymentStatus", async (studentID, successFullPayment,amount,response) =>
+            _connection.On<int, bool, string,string, string, string, string, string>("StudentPaymentStatus", async (studentID, successFullPayment,amount,response, paymentID, trxID, cardID, cardType) =>
             {
                 if(studentID == StaticPageToPassData.thisStudentInfo.studentID)
                 {
@@ -1675,7 +1721,7 @@ namespace ShikkhanobishStudentApp.ViewModel
 
         private string rechargeAmount1;
 
-        public string rechargeAmount { get => rechargeAmount1; set { rechargeAmount1 = value; if (rechargeAmount != null && rechargeAmount != "" && IsDigitsOnly(rechargeAmount)) { if (int.Parse(rechargeAmount) < 10) { rechargeButtonVisibility = false; } else { rechargeButtonVisibility = true; }  } else { rechargeButtonVisibility = false; } SetProperty(ref rechargeAmount1, value); } }
+        public string rechargeAmount { get => rechargeAmount1; set { rechargeAmount1 = value; if (rechargeAmount != null && rechargeAmount != "" && IsDigitsOnly(rechargeAmount)) { if (int.Parse(rechargeAmount) < 10) { rechargeButtonVisibility = false; totalAmount = ""; totalRechargeCoin = ""; addedCoinamount = ""; } else { rechargeButtonVisibility = true; CalCulateReachrgeCost(); }  } else { rechargeButtonVisibility = false; totalAmount = ""; totalRechargeCoin = ""; addedCoinamount = ""; } SetProperty(ref rechargeAmount1, value); } }
 
         private bool rechargeButton1;
 
@@ -1688,6 +1734,18 @@ namespace ShikkhanobishStudentApp.ViewModel
         private bool rechargeButtonVisibility1;
 
         public bool rechargeButtonVisibility { get => rechargeButtonVisibility1; set => SetProperty(ref rechargeButtonVisibility1, value); }
+
+        private string totalRechargeCoin1;
+
+        public string totalRechargeCoin { get => totalRechargeCoin1; set => SetProperty(ref totalRechargeCoin1, value); }
+
+        private string totalAmount1;
+
+        public string totalAmount { get => totalAmount1; set => SetProperty(ref totalAmount1, value); }
+
+        private string addedCoinamount1;
+
+        public string addedCoinamount { get => addedCoinamount1; set => SetProperty(ref addedCoinamount1, value); }
 
 
 
