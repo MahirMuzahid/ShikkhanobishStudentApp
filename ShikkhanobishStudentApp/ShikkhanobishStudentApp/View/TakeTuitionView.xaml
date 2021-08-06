@@ -334,7 +334,7 @@
                         <DataTemplate>
                             <StackLayout>
                                 <Grid>
-                                    <Image Source="{Binding voucherImageSrc}" Aspect="AspectFit"/>
+                                    <Image Source="{Binding imgSource}" Aspect="AspectFit"/>
                                 </Grid>
                             </StackLayout>
                         </DataTemplate>

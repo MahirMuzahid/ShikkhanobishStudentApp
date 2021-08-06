@@ -93,6 +93,7 @@ namespace ShikkhanobishStudentApp.ViewModel
             
             await GetAllCost();
             await GetVoucher();
+            await GetPromotImage();
             await ConnectToRealTimeApiServer();
         }
         #region Methods
@@ -103,7 +104,11 @@ namespace ShikkhanobishStudentApp.ViewModel
         public  async Task GetVoucher()
         {
              allVoucher = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getVoucher".GetJsonAsync<List<Voucher>>();
-            offerList = allVoucher;
+        }
+        public async Task GetPromotImage()
+        {
+            var allPromoImage = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/GetPromotionalImage".GetJsonAsync<List<PromotionalImage>>();
+            offerList = allPromoImage;
         }
         public async Task CalCulateReachrgeCost()
         {
@@ -552,7 +557,6 @@ namespace ShikkhanobishStudentApp.ViewModel
 
                 for (int i = 0; i < popupfavteacheritemSource.Count; i++)
                 {
-
                     popupfavteacheritemSource[i].activeStatus = "Online";
                     popupfavteacheritemSource[i].activeColor = "Green";
                     popupfavteacheritemSource[i].teacherRatting = Math.Round(popupfavteacheritemSource[i].teacherRatting, 2);
@@ -1419,8 +1423,8 @@ namespace ShikkhanobishStudentApp.ViewModel
 
         public string SecondListTitle { get => SecondListTitle1; set => SetProperty(ref SecondListTitle1, value); }
 
-        private List<Voucher> offerList1 { get; set; }
-        public List<Voucher> offerList { get { return offerList1; } set { offerList1 = value; OnPropertyChanged(); } }
+        private List<PromotionalImage> offerList1 { get; set; }
+        public List<PromotionalImage> offerList { get { return offerList1; } set { offerList1 = value; OnPropertyChanged(); } }
 
         private double tticonopacity1;
 
