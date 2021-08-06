@@ -187,7 +187,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                              await RegisterStudnet();
                              if(regRes.Massage == "Succesfull!")
                              {
-                                 Application.Current.MainPage.Navigation.PushModalAsync(new TakeTuitionView(false));
+                                 Application.Current.MainPage.Navigation.PushModalAsync(new TakeTuitionView(false,true));
                              }
                              else
                              {

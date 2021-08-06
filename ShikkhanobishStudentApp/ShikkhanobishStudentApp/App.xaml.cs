@@ -24,14 +24,14 @@ namespace ShikkhanobishStudentApp
             var pass = await SecureStorage.GetAsync("passowrd");
             if(pn == null && pass == null)
             {
-                MainPage = new TakeTuitionView(true);
+                MainPage = new TakeTuitionView(true,false);
             }
             else
             {
                 StaticPageToPassData.thisstPass = pass;
                 StaticPageToPassData.thisStPh = pn;
                 
-                MainPage =  new TakeTuitionView(false);
+                MainPage =  new TakeTuitionView(false,false);
             }
             
         }

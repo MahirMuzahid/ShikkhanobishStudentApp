@@ -18,7 +18,7 @@ namespace ShikkhanobishStudentApp.View
     public partial class TakeTuitionView : ContentPage
     {
         
-        public TakeTuitionView(bool fromLogin)
+        public TakeTuitionView(bool fromLogin,bool fromReg)
         {
             InitializeComponent();
             connectivityGrid.IsVisible = false;
@@ -28,6 +28,15 @@ namespace ShikkhanobishStudentApp.View
                 loginView.Opacity = 0;
                 loginView.TranslateTo(0, -1000, 1500, Easing.CubicIn);
                 loginView.FadeTo(0, 1200, Easing.CubicIn);
+                
+            }
+            if (fromReg)
+            {
+                regmsgPopup.IsVisible = true;
+            }
+            else
+            {
+                regmsgPopup.IsVisible = false;
             }
             var current = Connectivity.NetworkAccess;
             FavouriteTeacherGrid.IsVisible = false;

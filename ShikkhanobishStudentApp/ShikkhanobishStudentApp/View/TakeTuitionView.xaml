@@ -313,17 +313,12 @@
 
                     <Label Text="Cost" Grid.Row="1" Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center" FontSize="13"/>
                     <Label Text="{Binding totalAmount}" Grid.Row="2" Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center" FontAttributes="Bold"/>
-
-                   
-
+                
                     <Label Text="{Binding RechargeerrorTxt}" Grid.Row="3"  Grid.Column="1" TextColor="Red" HorizontalOptions="Center" VerticalOptions="Center" FontSize="14"/>
-
-                   
+                
                     <Image Source="rechargeicon.png" Grid.Row="3" Grid.Column="3" HorizontalOptions="Center"  VerticalOptions="Center" Aspect="AspectFill" Margin="7,10,5,5" IsVisible="{Binding rechargeButtonVisibility}"/>
                     <material:MaterialButton Grid.Row="3" Grid.Column="3" Grid.RowSpan="2" BackgroundColor="Transparent" PressedBackgroundColor="#5010E754" Command="{Binding rechargeCoin}" IsVisible="{Binding rechargeButtonVisibility}"/>
-                    <Label Text="Add Now" Grid.Row="4" Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Start" FontSize="11" FontAttributes="Bold" Margin="0,0,7,0" IsVisible="{Binding rechargeButtonVisibility}"/>
-
-                    
+                    <Label Text="Add Now" Grid.Row="4" Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Start" FontSize="11" FontAttributes="Bold" Margin="0,0,7,0" IsVisible="{Binding rechargeButtonVisibility}"/>                    
 
                 </Grid>
 
@@ -668,7 +663,7 @@
 
                 </material:MaterialTextField>
 
-                <material:MaterialTextField x:Name="pass" Placeholder="Password" InputType="NumericPassword" Grid.Row="1"   Grid.Column="1"  TextColor="White" IsSpellCheckEnabled="False" Text="{Binding Password}"  CardBackgroundColor="#20000000" FloatingPlaceholderColor="White" PlaceholderColor="White"  TintColor="White" Focused="pass_Focused">
+                <material:MaterialTextField x:Name="pass" Placeholder="Password" InputType="Password" Grid.Row="1"   Grid.Column="1"  TextColor="White" IsSpellCheckEnabled="False" Text="{Binding Password}"  CardBackgroundColor="#20000000" FloatingPlaceholderColor="White" PlaceholderColor="White"  TintColor="White" Focused="pass_Focused">
 
                 </material:MaterialTextField>
 
@@ -707,6 +702,31 @@
             </Grid>
         </Grid>
         <!-- Login -->
+        
+        <!--Reg Mas-->
+        <Grid x:Name="regmsgPopup" IsVisible="{Binding regMsgVisiblity}" BackgroundColor="#50000000">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="20*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Row="1" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="346"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height=".4*"/>
+                </Grid.RowDefinitions>
+                <material:MaterialCard Grid.RowSpan="3" Elevation="20" BackgroundColor="White"/>
+                <Image Source="{Binding promsgImgSrc}" Grid.Row="0" Aspect="AspectFill"/>
+                <Label Text="{Binding proMsgText}" Grid.Row="1" Margin="20"/>
+                <Button Text="OK" Grid.Row="2" HorizontalOptions="End" VerticalOptions="End" Margin="10" Command="{Binding popOutRegMsgVisiblility}"/>
+            </Grid>
+        </Grid>
        
 
     </Grid>

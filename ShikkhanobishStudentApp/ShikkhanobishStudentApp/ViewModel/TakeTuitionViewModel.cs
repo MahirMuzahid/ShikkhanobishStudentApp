@@ -94,6 +94,7 @@ namespace ShikkhanobishStudentApp.ViewModel
             await GetAllCost();
             await GetVoucher();
             await GetPromotImage();
+            await GetProMsg();
             await ConnectToRealTimeApiServer();
         }
         #region Methods
@@ -104,6 +105,22 @@ namespace ShikkhanobishStudentApp.ViewModel
         public  async Task GetVoucher()
         {
              allVoucher = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getVoucher".GetJsonAsync<List<Voucher>>();
+        }
+        private void PerformpopOutRegMsgVisiblility()
+        {
+            regMsgVisiblity = false; ;
+        }
+        public async Task GetProMsg()
+        {
+            var promsg = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/GetPromotionalMassage".GetJsonAsync<List<PromotionalMassage>>();
+            for(int i = 0; i < promsg.Count; i++)
+            {
+                if(promsg[i].userType == "student")
+                {
+                    promsgImgSrc = promsg[i].imageSrc;
+                    proMsgText = promsg[i].text;
+                }
+            }
         }
         public async Task GetPromotImage()
         {
@@ -1751,6 +1768,34 @@ namespace ShikkhanobishStudentApp.ViewModel
 
         public string addedCoinamount { get => addedCoinamount1; set => SetProperty(ref addedCoinamount1, value); }
 
+        private bool regMsgVisiblity1;
+
+        public bool regMsgVisiblity { get => regMsgVisiblity1; set => SetProperty(ref regMsgVisiblity1, value); }
+
+        private ImageSource promsgImgSrc1;
+
+        public ImageSource promsgImgSrc { get => promsgImgSrc1; set => SetProperty(ref promsgImgSrc1, value); }
+
+        private string proMsgText1;
+
+        public string proMsgText { get => proMsgText1; set => SetProperty(ref proMsgText1, value); }
+
+        private Command popOutRegMsgVisiblility1;
+
+        public ICommand popOutRegMsgVisiblility
+        {
+            get
+            {
+                if (popOutRegMsgVisiblility1 == null)
+                {
+                    popOutRegMsgVisiblility1 = new Command(PerformpopOutRegMsgVisiblility);
+                }
+
+                return popOutRegMsgVisiblility1;
+            }
+        }
+
+       
 
 
 
