@@ -724,7 +724,7 @@
                 <material:MaterialCard Grid.RowSpan="3" Elevation="20" BackgroundColor="White"/>
                 <Image Source="{Binding promsgImgSrc}" Grid.Row="0" Aspect="AspectFill"/>
                 <Label Text="{Binding proMsgText}" Grid.Row="1" Margin="20"/>
-                <Button Text="OK" Grid.Row="2" HorizontalOptions="End" VerticalOptions="End" Margin="10" Command="{Binding popOutRegMsgVisiblility}"/>
+                <Button Text="OK" Grid.Row="2" HorizontalOptions="End" VerticalOptions="End" Margin="10" Clicked="Button_Clicked"/>
             </Grid>
         </Grid>
        

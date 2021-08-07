@@ -274,6 +274,9 @@ namespace ShikkhanobishStudentApp.View
             }
         }
 
-        
+        private void Button_Clicked(object sender, EventArgs e)
+        {
+            regmsgPopup.IsVisible = false;
+        }
     }
 }

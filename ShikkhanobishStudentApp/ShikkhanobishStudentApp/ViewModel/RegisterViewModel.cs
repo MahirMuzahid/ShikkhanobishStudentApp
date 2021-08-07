@@ -56,18 +56,27 @@ namespace ShikkhanobishStudentApp.ViewModel
                  {
                      if (btnNav == 1)
                      {
-                         
-                         
-                         btnNav++;
-                         titleTxt = "Enter 5 Digit OTP ";
-                         numberVisibility = false;
-                         egTxt = "";
-                         btnTxt = "Varify";
-                         sendAgainColor = "gray";
-                         sendAgainVisibility = true;
-                         varificationvisibility = true;
-                         otpVisibility = true;
-                         entryText = "";
+                         studentPhonenumber = "01" + StaticPageToPassData.RegisteredPhonenNumber;
+                         await CheckPhonenumber();
+                         if (uniquePhonenumber == true)
+                         {
+                             btnNav++;
+                             titleTxt = "Enter 5 Digit OTP ";
+                             numberVisibility = false;
+                             egTxt = "";
+                             btnTxt = "Varify";
+                             sendAgainColor = "gray";
+                             sendAgainVisibility = true;
+                             varificationvisibility = true;
+                             otpVisibility = true;
+                             entryText = "";
+
+                         }
+                         else
+                         {
+                             errorText = "Phone Number Already Registered";
+                         }
+                        
                      }
                      else if (btnNav == 2)
                      {
@@ -75,24 +84,15 @@ namespace ShikkhanobishStudentApp.ViewModel
                          if (otpfiText != null && otpsecText != null && otpthText != null && otpfrText != null && otpfivText != null)
                          {
                              if(otpfiText == otp[0].ToString() && otpsecText == otp[1].ToString() && otpthText == otp[2].ToString() && otpfrText == otp[3].ToString() && otpfivText == otp[4].ToString() )
-                             {
-                                 studentPhonenumber = "01"+StaticPageToPassData.RegisteredPhonenNumber;
-                                 await CheckPhonenumber();
-                                 if(uniquePhonenumber == true)
-                                 {
-     
-                                     btnNav++;
-                                     errorText = "";
-                                     otpVisibility = false;
-                                     titleTxt = "Enter Your Information";
-                                     infoVisibility = true;
-                                     btnTxt = "Register";
-                                     sendAgainVisibility = false;
-                                 }
-                                 else
-                                 {
-                                     errorText = "Phone Number Already Registered";
-                                 }
+                             {                              
+                                 btnNav++;
+                                 errorText = "";
+                                 otpVisibility = false;
+                                 titleTxt = "Enter Your Information";
+                                 infoVisibility = true;
+                                 btnTxt = "Register";
+                                 sendAgainVisibility = false;
+                                 
                                  
                              }
                              else
