@@ -18,18 +18,11 @@ namespace ShikkhanobishStudentApp.View
     public partial class TakeTuitionView : ContentPage
     {
         
-        public TakeTuitionView(bool fromLogin,bool fromReg)
+        public TakeTuitionView(bool fromReg)
         {
             InitializeComponent();
             connectivityGrid.IsVisible = false;
             proImage.IsVisible = false;
-            if(!fromLogin)
-            {
-                loginView.Opacity = 0;
-                loginView.TranslateTo(0, -1000, 1500, Easing.CubicIn);
-                loginView.FadeTo(0, 1200, Easing.CubicIn);
-                
-            }
             if (fromReg)
             {
                 regmsgPopup.IsVisible = true;
@@ -47,7 +40,7 @@ namespace ShikkhanobishStudentApp.View
             }
             else
             {
-                loginbtn.IsEnabled = false;
+              
                 logoutBtn.IsEnabled = false;
                 connectivityGrid.IsVisible = true;
                 
@@ -70,8 +63,7 @@ namespace ShikkhanobishStudentApp.View
                 rclbl.TextColor = Color.FromHex("#C9C9C9");
                 fvlbl.TextColor = Color.FromHex("#C9C9C9");
 
-                StaticPageToPassData.thisStudentInfo = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/LoginStudent".PostUrlEncodedAsync(new { phonenumber = StaticPageToPassData.thisStPh, password = StaticPageToPassData.thisstPass })
-              .ReceiveJson<Student>();
+                
 
                 Connectivity.ConnectivityChanged += Connectivity_ConnectivityChanged;
                 proImage.IsVisible = true;
@@ -84,12 +76,12 @@ namespace ShikkhanobishStudentApp.View
             if (current == NetworkAccess.Internet)
             {
                 logoutBtn.IsEnabled = true;
-                loginbtn.IsEnabled = true;
+               
                 connectivityGrid.IsVisible = false;
             }
             else
             {
-                loginbtn.IsEnabled = false;
+                
                 logoutBtn.IsEnabled = false;
                 connectivityGrid.IsVisible = true;
                 ShowSnakeBarError();
@@ -169,85 +161,13 @@ namespace ShikkhanobishStudentApp.View
         private void Button_Clicked_3(object sender, EventArgs e)
         {
             SecureStorage.RemoveAll();
-            loginView.TranslateTo(0, 0, 1500, Easing.CubicOut);
-            loginView.FadeTo(1, 1000, Easing.CubicOut);
         }
 
-        private void Button_Clicked_4(object sender, EventArgs e)
-        {
-            errortxt.Text = "";
-            LoginStudent();
-        }
+       
 
-        public async Task LoginStudent()
-        {
-            loginbtn.IsEnabled = false;
-            var current = Connectivity.NetworkAccess;
-            if ( current == NetworkAccess.Internet)
-            {
-                using (var dialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Checking..."))
-                {
-                    errortxt.TextColor = Color.White;
-                    if (pn.Text != null && pass.Text != null)
-                    {
-                        Student thistudent = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/LoginStudent".PostUrlEncodedAsync(new {  phonenumber = pn.Text, password = pass.Text })
-          .ReceiveJson<Student>();
-                        if (pn.Text == thistudent.phonenumber && pass.Text == thistudent.password)
-                        {
-                            StaticPageToPassData.thisStudentInfo = thistudent;
-                            dialog.MessageText = "Loggin In...";
-                            if (chkBox.IsChecked)
-                            {
-                                SecureStorage.SetAsync("phonenumber", pn.Text);
-                                SecureStorage.SetAsync("passowrd", pass.Text);
-                            }
-                            loginView.TranslateTo(0, -1000, 1500, Easing.CubicIn);
-                            loginView.FadeTo(0, 1200, Easing.CubicIn);
-                            loginView.Opacity = 0;
-                            errortxt.Text = "";
-                            pn.Text = "";
-                            pass.Text = "";
-                        }
-                        else
-                        {
-                            pn.HasError = true;
-                            pn.ErrorText = "Incorrect Phone Number or Password!";
-                            pass.HasError = true;
-                        }
+       
 
-                    }
-                    else
-                    {
-                        pn.HasError = true;
-                        pn.ErrorText = "Phone Number Or Password can't be empty!";
-                        pass.HasError = true;
-                    }
-                    loginbtn.IsEnabled = true;
-                    await dialog.DismissAsync();
-                }
-                
-            }
-            else
-            {
-                errortxt.Text = "No Internet connection";
-                errortxt.TextColor = Color.Red;
-            }
-            loginbtn.IsEnabled = true;
-        }
-
-        private void pn_Focused(object sender, FocusEventArgs e)
-        {
-            pn.HasError = false;
-            pn.ErrorText = "";
-            pass.HasError = false;
-        }
-
-        private void pass_Focused(object sender, FocusEventArgs e)
-        {
-            pn.HasError = false;
-            pn.ErrorText = "";
-            pass.HasError = false;
-        }
+      
 
         private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
@@ -261,14 +181,14 @@ namespace ShikkhanobishStudentApp.View
             {
                 await getAllInfo();
                 logoutBtn.IsEnabled = true;
-                loginbtn.IsEnabled = true;
+                
                 connectivityGrid.IsVisible = false;
                 
             }
             else
             {
                 logoutBtn.IsEnabled = false;
-                loginbtn.IsEnabled = false;
+              
                 connectivityGrid.IsVisible = true;
                 ShowSnakeBarError();
             }

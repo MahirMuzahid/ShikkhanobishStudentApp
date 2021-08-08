@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+              xmlns:viewmodel="clr-namespace:ShikkhanobishStudentApp.ViewModel"
+             xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             x:Class="ShikkhanobishStudentApp.View.LoginPage">
+    <ContentPage.BindingContext>
+        <viewmodel:LoginViewModel/>
+    </ContentPage.BindingContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1.5*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+
+        <BoxView  Grid.RowSpan="2" Grid.ColumnSpan="3">
+            <BoxView.Background>
+                <LinearGradientBrush EndPoint="1,0">
+                    <GradientStop Color="#11AAD7" Offset="1" />
+                    <GradientStop Color="#864AE8" Offset=".01" />
+                </LinearGradientBrush>
+            </BoxView.Background>
+        </BoxView>
+        <Image Source="newlogowhite.png" HorizontalOptions="Center" VerticalOptions="Center" Grid.Row="0" Grid.Column="1" Margin="50"/>
+
+        <Label x:Name="errortxt"  Grid.Row="0" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="End" Margin="20,0,20,0" />
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1.4*"/>
+                <RowDefinition Height="1.2*"/>
+                <RowDefinition Height=".5*"/>
+                <RowDefinition Height=".5*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width=".1*"/>
+                <ColumnDefinition Width="20*"/>
+                <ColumnDefinition Width=".1*"/>
+            </Grid.ColumnDefinitions>
+            <material:MaterialTextField x:Name="pn" Placeholder="Phone Number" InputType="Numeric" MaxLength="11" Grid.Row="0"  Grid.Column="1" TextColor="White" IsSpellCheckEnabled="False" CardBackgroundColor="#20000000" FloatingPlaceholderColor="White" PlaceholderColor="White"  TintColor="White" >
+
+            </material:MaterialTextField>
+
+            <material:MaterialTextField x:Name="pass" Placeholder="Password" InputType="Password" Grid.Row="1"   Grid.Column="1"  TextColor="White" IsSpellCheckEnabled="False"   CardBackgroundColor="#20000000" FloatingPlaceholderColor="White" PlaceholderColor="White"  TintColor="White" >
+
+            </material:MaterialTextField>
+
+
+            <Button x:Name="loginbtn" Text="Login" Grid.Row="4" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="White" CornerRadius="10" TextColor="#1D64B4"  Clicked="loginbtn_Clicked" />
+            <Grid Grid.Row="2" Grid.Column="1" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width=".2*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <CheckBox x:Name="chkBox" Grid.Column="0" HorizontalOptions="Start" Color="White"/>
+                <Label Text="Remeber Me" TextColor="White" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" />
+                <Label Text="Forgot Password?" TextColor="White" Grid.Column="2" HorizontalOptions="End" VerticalOptions="Center" Margin="0,0,0,0" >
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped">
+                        </TapGestureRecognizer>
+                    </Label.GestureRecognizers>
+                </Label>
+            </Grid>
+
+
+            <Label FontSize="12" Grid.Row="6" Grid.Column="1" TextColor="White" HorizontalOptions="Center">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Do not have an account? "></Span>
+                        <Span Text=" Register Now " FontAttributes="Bold">
+                            <Span.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding goRegisterView}" />
+                            </Span.GestureRecognizers>
+                        </Span>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+
+        </Grid>
+    </Grid>
+</ContentPage>

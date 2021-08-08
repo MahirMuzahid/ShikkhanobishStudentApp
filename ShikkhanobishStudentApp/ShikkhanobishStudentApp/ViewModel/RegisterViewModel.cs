@@ -16,9 +16,11 @@ namespace ShikkhanobishStudentApp.ViewModel
     {
         int btnNav;
         public string studentPhonenumber;
+        int sec;
         List<Student> allStudent { get; set; }
         public RegisterViewModel()
         {
+            sec = 60;
             waitVisibility = false;
             btnNav = 1;
             btnTxt = "Send Otp";
@@ -60,6 +62,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                          await CheckPhonenumber();
                          if (uniquePhonenumber == true)
                          {
+                             sndAgainEnabled = false;
                              btnNav++;
                              titleTxt = "Enter 5 Digit OTP ";
                              numberVisibility = false;
@@ -70,7 +73,23 @@ namespace ShikkhanobishStudentApp.ViewModel
                              varificationvisibility = true;
                              otpVisibility = true;
                              entryText = "";
+                             Device.StartTimer(TimeSpan.FromSeconds(1), () =>
+                             {
+                                 if (sec == 0)
+                                 {
+                                     sec = 60;
+                                     sendAgainText = "Send OTP Again ";
+                                     return false;
+                                 }
+                                 else
+                                 {
+                                     sec--;
+                                     sendAgainText = "Send OTP Again in 60 Seconds";
+                                     return true;
+                                 }
 
+                                
+                             });
                          }
                          else
                          {
@@ -187,7 +206,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                              await RegisterStudnet();
                              if(regRes.Massage == "Succesfull!")
                              {
-                                 Application.Current.MainPage.Navigation.PushModalAsync(new TakeTuitionView(false,true));
+                                 Application.Current.MainPage.Navigation.PushModalAsync(new TakeTuitionView(true));
                              }
                              else
                              {
@@ -200,6 +219,10 @@ namespace ShikkhanobishStudentApp.ViewModel
                  }
                  
              });
+
+        
+
+
         bool uniquePhonenumber = true;
         Response regRes;
         public async Task CheckPhonenumber()
@@ -388,6 +411,14 @@ namespace ShikkhanobishStudentApp.ViewModel
         private string prgsPercent1;
 
         public string prgsPercent { get => prgsPercent1; set => SetProperty(ref prgsPercent1, value); }
+
+        private bool sndAgainEnabled1;
+
+        public bool sndAgainEnabled { get => sndAgainEnabled1; set => SetProperty(ref sndAgainEnabled1, value); }
+
+        private string sendAgainText1;
+
+        public string sendAgainText { get => sendAgainText1; set => SetProperty(ref sendAgainText1, value); }
         #endregion
 
     }

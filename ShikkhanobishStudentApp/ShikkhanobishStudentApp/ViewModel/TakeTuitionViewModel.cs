@@ -16,6 +16,7 @@ using Xamarin.Forms.Vonage;
 using System.Net.Http;
 using Microsoft.AspNetCore.SignalR.Client;
 using XF.Material.Forms.UI.Dialogs;
+using System.Linq;
 
 namespace ShikkhanobishStudentApp.ViewModel
 {
@@ -166,9 +167,19 @@ namespace ShikkhanobishStudentApp.ViewModel
                 return false;
             }
         }
-        private void Performlogout()
+        private async Task PerformlogoutAsync()
         {
-            homeFirst();
+            using (var dialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Please Wait..."))
+            {
+               
+                var existingPages = Application.Current.MainPage.Navigation.NavigationStack.ToList();
+                foreach (var page in existingPages)
+                {
+                    Application.Current.MainPage.Navigation.RemovePage(page);
+                }
+                await Application.Current.MainPage.Navigation.PushModalAsync(new LoginPage());
+                await dialog.DismissAsync();
+            }
         }
        
 
@@ -260,11 +271,7 @@ namespace ShikkhanobishStudentApp.ViewModel
             
         }
 
-        public ICommand goRegisterView =>
-              new Command(() =>
-              {
-                  Application.Current.MainPage.Navigation.PushModalAsync(new ResgisterView());
-              });
+       
 
         #endregion
 
@@ -1507,7 +1514,7 @@ namespace ShikkhanobishStudentApp.ViewModel
             {
                 if (logout1 == null)
                 {
-                    logout1 = new Command(Performlogout);
+                    logout1 = new Command(async => PerformlogoutAsync());
                 }
 
                 return logout1;

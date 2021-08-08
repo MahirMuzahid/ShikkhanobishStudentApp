@@ -16,25 +16,9 @@ namespace ShikkhanobishStudentApp
         {
             InitializeComponent();
             XF.Material.Forms.Material.Init(this);
-            getInfo();
+            MainPage = new LoadingPage();
         }
-        public async Task getInfo ()
-        {
-            var pn = await SecureStorage.GetAsync("phonenumber");
-            var pass = await SecureStorage.GetAsync("passowrd");
-            if(pn == null && pass == null)
-            {
-                MainPage = new TakeTuitionView(true,false);
-            }
-            else
-            {
-                StaticPageToPassData.thisstPass = pass;
-                StaticPageToPassData.thisStPh = pn;
-                
-                MainPage =  new TakeTuitionView(false,false);
-            }
-            
-        }
+        
 
         protected override void OnStart()
         {

@@ -193,7 +193,7 @@
         </Grid>
         <Button Text="Change Number" HorizontalOptions="Start" VerticalOptions="Center" Grid.Row="9" Grid.Column="1" FontSize="10" BackgroundColor="White" TextColor="Blue"  IsVisible="{Binding sendAgainVisibility}" Command="{Binding btnCommand}" CommandParameter="0" Clicked="Button_Clicked_1"/>
         <Button Text="{Binding btnTxt}" Grid.Row="9" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" CornerRadius="10" BackgroundColor="#6C3ED6" TextColor="White" Command="{Binding btnCommand}" IsEnabled="{Binding registerbtvEnabled}" CommandParameter="1" Clicked="Button_Clicked"/>
-        <Button Text="Send Again in 60 Seconds" Grid.Row="8" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Start" BackgroundColor="White"  FontSize="10" IsVisible="{Binding sendAgainVisibility}" TextColor="{Binding sendAgainColor}"/>
+        <Button Text="{Binding sendAgainText}" Grid.Row="8" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Start" BackgroundColor="White"  FontSize="10" IsEnabled="{Binding sndAgainEnabled}" IsVisible="{Binding sendAgainVisibility}" TextColor="{Binding sendAgainColor}"/>
 
         <Label Text="{Binding errorText}" Grid.Row="10" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="End" TextColor="Red"/>
         <Label Text="Terms And Conditions" Grid.Column="1" Grid.Row="11" HorizontalOptions="Center" VerticalOptions="Center" TextColor="#354EFF"/>
