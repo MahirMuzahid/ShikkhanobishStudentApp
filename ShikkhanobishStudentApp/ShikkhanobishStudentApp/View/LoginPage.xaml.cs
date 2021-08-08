@@ -44,6 +44,7 @@ namespace ShikkhanobishStudentApp.View
                             errortxt.Text = "";
                             pn.Text = "";
                             pass.Text = "";
+                            Application.Current.MainPage.Navigation.PushModalAsync(new TakeTuitionView(false));
                         }
                         else
                         {

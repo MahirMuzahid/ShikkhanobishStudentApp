@@ -198,5 +198,24 @@ namespace ShikkhanobishStudentApp.View
         {
             regmsgPopup.IsVisible = false;
         }
+        protected override bool OnBackButtonPressed()
+        {
+            EndOrBackBtn();
+            return true;
+        }
+
+        private async Task EndOrBackBtn()
+        {
+            var actions = new string[] { "Yes", "No" };
+
+            //Show simple dialog
+            var result = await MaterialDialog.Instance.SelectActionAsync(title: "Do you want to exit this app?",
+                                                             actions: actions);
+            if(result == 0)
+            {
+                System.Diagnostics.Process.GetCurrentProcess().Kill();
+            }
+
+        }
     }
 }
