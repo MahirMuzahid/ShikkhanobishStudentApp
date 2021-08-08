@@ -171,8 +171,8 @@ namespace ShikkhanobishStudentApp.ViewModel
         {
             using (var dialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Please Wait..."))
             {
-               
-                var existingPages = Application.Current.MainPage.Navigation.NavigationStack.ToList();
+                SecureStorage.RemoveAll();
+                 var existingPages = Application.Current.MainPage.Navigation.NavigationStack.ToList();
                 foreach (var page in existingPages)
                 {
                     Application.Current.MainPage.Navigation.RemovePage(page);

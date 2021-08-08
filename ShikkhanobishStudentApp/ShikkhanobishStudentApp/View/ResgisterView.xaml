@@ -17,12 +17,12 @@
             <RowDefinition Height=".1*"/>
             <RowDefinition Height=".3*"/>
             <RowDefinition Height=".5*"/>
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height="4*"/>
             <RowDefinition Height=".4*"/>
             <RowDefinition Height=".6*"/>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="1*"/>
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height=".5*"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -42,6 +42,8 @@
 
         <Label Text="Welcome To Shikkhanobish Registration" TextColor="#A5A5A5" Grid.Row="3" HorizontalOptions="Start" VerticalOptions="End" Grid.Column="1"/>
         <Label Text="{Binding titleTxt}" Grid.Row="4" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Start" TextColor="#3D3D3D" FontSize="26" FontAttributes="Bold"/>
+
+        <Image Source="regback.png" Grid.Row="5" Grid.Column="1" Aspect="AspectFit"/>
 
         <Label Text="{Binding egTxt}" Grid.Column="1" Grid.Row="6" HorizontalOptions="Start" VerticalOptions="Center"/>
         <Grid Grid.Row="7" Grid.Column="1" IsVisible="{Binding varificationvisibility}">
@@ -162,38 +164,37 @@
             </localEntry:CustomEntry>
         </Grid>
 
-        <Grid Grid.Row="5" Grid.RowSpan="4" Grid.Column="1" Margin="0,80,0,40" IsVisible="{Binding infoVisibility}">
+        <Grid Grid.Row="5" Grid.RowSpan="4" Grid.Column="1" Margin="0,40,0,40" IsVisible="{Binding infoVisibility}" BackgroundColor="#80ffffff">
             <Grid.RowDefinitions>
 
-                <RowDefinition Height="1.2*"/>
+                <RowDefinition Height="1.4*"/>
                 <RowDefinition Height="3*"/>
-                <RowDefinition Height="1.2*"/>
+                <RowDefinition Height="1.4*"/>
                 <RowDefinition Height="3*"/>
-                <RowDefinition Height="1.2*"/>
+                <RowDefinition Height="1.4*"/>
                 <RowDefinition Height="3*"/>
-                <RowDefinition Height="1.2*"/>
+                <RowDefinition Height="1.4*"/>
                 <RowDefinition Height="3*"/>
 
             </Grid.RowDefinitions>
-            <Label Text="Password*" Grid.Row="0" HorizontalOptions="Start" VerticalOptions="Center" FontSize="12"/>
-            <Entry  Grid.Row="1" FontSize="16" Text="{Binding password}"/>
-            <Image Source="{Binding passimgsrc}" Grid.Row="1" HorizontalOptions="End" VerticalOptions="Start" Aspect="AspectFill" Margin="{Binding pasMargin}"/>
+            <Label Text="Password*" Grid.Row="0" HorizontalOptions="Start" VerticalOptions="Center" FontSize="12" FontAttributes="Bold"/>
+            <Entry  Grid.Row="1" FontSize="14" Text="{Binding password}"/>
+ 
 
-            <Label Text="Confirm Password*" Grid.Row="2" HorizontalOptions="Start" VerticalOptions="Center"  FontSize="12"/>
-            <Entry  Grid.Row="3" FontSize="16" Text="{Binding conPassword}"/>
-            <Image Source="{Binding conpassimgsrc}" Grid.Row="3" HorizontalOptions="End" VerticalOptions="Center" Aspect="AspectFill"  Margin="{Binding conpasMargin}"/>
+            <Label Text="Confirm Password*" Grid.Row="2" HorizontalOptions="Start" VerticalOptions="Center"  FontSize="12" FontAttributes="Bold"/>
+            <Entry  Grid.Row="3" FontSize="14" Text="{Binding conPassword}"/>
 
-            <Label Text="Name*" Grid.Row="4" HorizontalOptions="Start" VerticalOptions="Center"  FontSize="12"/>
-            <Entry  Grid.Row="5" FontSize="16" Text="{Binding name}"/>
-            <Image Source="{Binding nameimgsrc}" Grid.Row="5" HorizontalOptions="End" VerticalOptions="Center" Aspect="AspectFill" Margin="{Binding nameMargin}"/>
+            <Label Text="Name*" Grid.Row="4" HorizontalOptions="Start" VerticalOptions="Center"  FontSize="12" FontAttributes="Bold"/>
+            <Entry  Grid.Row="5" FontSize="14" Text="{Binding name}"/>
 
-            <Label Text="City*" Grid.Row="6" HorizontalOptions="Start" VerticalOptions="Center"  FontSize="12"/>
-            <Entry  Grid.Row="7" FontSize="16" Text="{Binding city}"/>
-            <Image Source="{Binding cityimgsrc}" Grid.Row="7" HorizontalOptions="End" VerticalOptions="Center" Aspect="AspectFill" Margin="{Binding cityMargin}"/>
+
+            <Label Text="City*" Grid.Row="6" HorizontalOptions="Start" VerticalOptions="Center"  FontSize="12" FontAttributes="Bold"/>
+            <Entry  Grid.Row="7" FontSize="14" Text="{Binding city}"/>
+
         </Grid>
         <Button Text="Change Number" HorizontalOptions="Start" VerticalOptions="Center" Grid.Row="9" Grid.Column="1" FontSize="10" BackgroundColor="White" TextColor="Blue"  IsVisible="{Binding sendAgainVisibility}" Command="{Binding btnCommand}" CommandParameter="0" Clicked="Button_Clicked_1"/>
         <Button Text="{Binding btnTxt}" Grid.Row="9" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" CornerRadius="10" BackgroundColor="#6C3ED6" TextColor="White" Command="{Binding btnCommand}" IsEnabled="{Binding registerbtvEnabled}" CommandParameter="1" Clicked="Button_Clicked"/>
-        <Button Text="{Binding sendAgainText}" Grid.Row="8" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Start" BackgroundColor="White"  FontSize="10" IsEnabled="{Binding sndAgainEnabled}" IsVisible="{Binding sendAgainVisibility}" TextColor="{Binding sendAgainColor}"/>
+        <Button Text="{Binding sendAgainText}" Grid.Row="8" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Start" BackgroundColor="white"  FontSize="10" IsEnabled="{Binding sndAgainEnabled}" IsVisible="{Binding sendAgainVisibility}" TextColor="{Binding sendAgainColor}" Command="{Binding sendAgainBtn}" FontAttributes="Bold"/>
 
         <Label Text="{Binding errorText}" Grid.Row="10" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="End" TextColor="Red"/>
         <Label Text="Terms And Conditions" Grid.Column="1" Grid.Row="11" HorizontalOptions="Center" VerticalOptions="Center" TextColor="#354EFF"/>

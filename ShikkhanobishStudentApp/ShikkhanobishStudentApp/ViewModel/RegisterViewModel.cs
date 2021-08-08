@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
+using XF.Material.Forms.UI.Dialogs;
 
 namespace ShikkhanobishStudentApp.ViewModel
 {
@@ -32,10 +33,12 @@ namespace ShikkhanobishStudentApp.ViewModel
             infoVisibility = false;
             registerbtvEnabled = true;
             otpVisibility = false;
+            sndAgainEnabled = false;
         }
         public ICommand btnCommand =>
              new Command<string>( async(index) =>
              {
+
                  if(int.Parse(index) == 0)
                  {
                      btnNav = 1;
@@ -58,43 +61,53 @@ namespace ShikkhanobishStudentApp.ViewModel
                  {
                      if (btnNav == 1)
                      {
-                         studentPhonenumber = "01" + StaticPageToPassData.RegisteredPhonenNumber;
-                         await CheckPhonenumber();
-                         if (uniquePhonenumber == true)
+                         using (var dialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Checking Phonenumber..."))
                          {
-                             sndAgainEnabled = false;
-                             btnNav++;
-                             titleTxt = "Enter 5 Digit OTP ";
-                             numberVisibility = false;
-                             egTxt = "";
-                             btnTxt = "Varify";
-                             sendAgainColor = "gray";
-                             sendAgainVisibility = true;
-                             varificationvisibility = true;
-                             otpVisibility = true;
-                             entryText = "";
-                             Device.StartTimer(TimeSpan.FromSeconds(1), () =>
+                             studentPhonenumber = StaticPageToPassData.RegisteredPhonenNumber;
+                             await CheckPhonenumber();
+                             if (uniquePhonenumber == true)
                              {
-                                 if (sec == 0)
+                                 dialog.MessageText = "Sending OTP To Your Number...";
+                                 await sendsms();
+                                 sndAgainEnabled = false;
+                                 btnNav++;
+                                 titleTxt = "Enter 5 Digit OTP ";
+                                 numberVisibility = false;
+                                 egTxt = "";
+                                 btnTxt = "Varify";
+                                 sendAgainColor = Color.Gray;
+                                 sendAgainVisibility = true;
+                                 varificationvisibility = true;
+                                 otpVisibility = true;
+                                 entryText = "";
+                                 Device.StartTimer(TimeSpan.FromSeconds(1), () =>
                                  {
-                                     sec = 60;
-                                     sendAgainText = "Send OTP Again ";
-                                     return false;
-                                 }
-                                 else
-                                 {
-                                     sec--;
-                                     sendAgainText = "Send OTP Again in 60 Seconds";
-                                     return true;
-                                 }
+                                     if (sec == 0)
+                                     {
+                                         sendAgainColor = Color.Green;
+                                         sec = 60;
+                                         sendAgainText = "Send OTP Again ";
+                                         sndAgainEnabled = true;
+                                         btnNav--;
+                                         return false;
+                                     }
+                                     else
+                                     {
+                                         sec--;
+                                         sendAgainText = "Send OTP Again In " + sec + " Seconds";
+                                         return true;
+                                     }
 
-                                
-                             });
+
+                                 });
+                             }
+                             else
+                             {
+                                 errorText = "Phone Number Already Registered";
+                             }
                          }
-                         else
-                         {
-                             errorText = "Phone Number Already Registered";
-                         }
+                         
+                         
                         
                      }
                      else if (btnNav == 2)
@@ -220,8 +233,42 @@ namespace ShikkhanobishStudentApp.ViewModel
                  
              });
 
-        
+        private void PerformsendAgainBtn()
+        {
+            sendsms();
+            sndAgainEnabled = false;
+            sendAgainColor = Color.Gray;
+            Device.StartTimer(TimeSpan.FromSeconds(1), () =>
+            {
+                if (sec == 0)
+                {
+                    sendAgainColor = Color.Green;
+                    sec = 60;
+                    sendAgainText = "Send OTP Again ";
+                    sndAgainEnabled = true;
+                    return false;
+                }
+                else
+                {
+                    sec--;
+                    sendAgainText = "Send OTP Again In " + sec + " Seconds";
+                    return true;
+                }
 
+
+            });
+        }
+        public async Task sendsms()
+        {
+            Random rd = new Random();
+            string number = "01" + StaticPageToPassData.RegisteredPhonenNumber;
+            int code = rd.Next(10000, 99999);
+            string msg = "Shikkhanobish Verification Code: " + code;
+            var regRes = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/SendSmsAsync"
+        .PostUrlEncodedAsync(new { msg = msg, number = number })
+        .ReceiveJson<SendSms>();
+            StaticPageToPassData.otpcode = code.ToString();
+        }
 
         bool uniquePhonenumber = true;
         Response regRes;
@@ -308,9 +355,9 @@ namespace ShikkhanobishStudentApp.ViewModel
 
         public bool sendAgainVisibility { get => sendAgainVisibility1; set => SetProperty(ref sendAgainVisibility1, value); }
 
-        private string sendAgainColor1;
+        private Color sendAgainColor1;
 
-        public string sendAgainColor { get => sendAgainColor1; set => SetProperty(ref sendAgainColor1, value); }
+        public Color sendAgainColor { get => sendAgainColor1; set => SetProperty(ref sendAgainColor1, value); }
 
         private string entryText1;
 
@@ -419,6 +466,27 @@ namespace ShikkhanobishStudentApp.ViewModel
         private string sendAgainText1;
 
         public string sendAgainText { get => sendAgainText1; set => SetProperty(ref sendAgainText1, value); }
+
+        private Color sendAgainBack1;
+
+        public Color sendAgainBack { get => sendAgainBack1; set => SetProperty(ref sendAgainBack1, value); }
+
+        private Command sendAgainBtn1;
+
+        public ICommand sendAgainBtn
+        {
+            get
+            {
+                if (sendAgainBtn1 == null)
+                {
+                    sendAgainBtn1 = new Command(PerformsendAgainBtn);
+                }
+
+                return sendAgainBtn1;
+            }
+        }
+
+        
         #endregion
 
     }
