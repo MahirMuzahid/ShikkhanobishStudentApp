@@ -39,7 +39,7 @@
                     <ColumnDefinition Width="2*"/>
                     <ColumnDefinition Width=".3*"/>
                 </Grid.ColumnDefinitions>
-                <Image Source="newlogowhite.png" Grid.Column="0" Aspect="AspectFit" Margin="0,0,50,0"/>
+                <Image Source="logowhite.png" Grid.Column="0" Aspect="AspectFit" Margin="0,0,30,0"/>
                 <material:MaterialButton x:Name="logoutBtn" Text="Signout" Grid.Column="1" Grid.ColumnSpan="2" ButtonType="Elevated" HorizontalOptions="End"  VerticalOptions="Center" BorderWidth="2"  FontAttributes="Bold" FontSize="11" BackgroundColor="#20000000" TextColor="White" Clicked="Button_Clicked_3" Command="{Binding logout}">
                 </material:MaterialButton>
 

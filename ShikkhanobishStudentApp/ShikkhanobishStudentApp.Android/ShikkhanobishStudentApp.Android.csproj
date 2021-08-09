@@ -119,16 +119,10 @@
     <AndroidResource Include="Resources\drawable\download.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\logo.png" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable\taketuition.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\coinplus.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\newLogo.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\newlogowhite.png" />
@@ -201,6 +195,12 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\loginback.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\logowhite.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\regback.png" />
