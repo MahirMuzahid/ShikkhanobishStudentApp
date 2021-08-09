@@ -18,6 +18,7 @@ namespace ShikkhanobishStudentApp.View
         public LoginPage()
         {
             InitializeComponent();
+            hideLoading();
         }
         public async Task LoginStudent()
         {
@@ -25,44 +26,48 @@ namespace ShikkhanobishStudentApp.View
             var current = Connectivity.NetworkAccess;
             if (current == NetworkAccess.Internet)
             {
-                using (var dialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Checking..."))
-                {
-                    errortxt.TextColor = Color.White;
-                    if (pn.Text != null && pass.Text != null)
-                    {
-                        Student thistudent = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/LoginStudent".PostUrlEncodedAsync(new { phonenumber = pn.Text, password = pass.Text })
-          .ReceiveJson<Student>();
-                        if (pn.Text == thistudent.phonenumber && pass.Text == thistudent.password)
-                        {
-                            StaticPageToPassData.thisStudentInfo = thistudent;
-                            dialog.MessageText = "Loggin In...";
-                            if (chkBox.IsChecked)
-                            {
-                                SecureStorage.SetAsync("phonenumber", pn.Text);
-                                SecureStorage.SetAsync("passowrd", pass.Text);
-                            }
-                            errortxt.Text = "";
-                            pn.Text = "";
-                            pass.Text = "";
-                            Application.Current.MainPage.Navigation.PushModalAsync(new TakeTuitionView(false));
-                        }
-                        else
-                        {
-                            pn.HasError = true;
-                            pn.ErrorText = "Incorrect Phone Number or Password!";
-                            pass.HasError = true;
-                        }
+                //using (var dialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Checking..."))
+                // {
 
+                // }
+                showLoading("Checking...");
+                await Task.Delay(3000);
+                errortxt.TextColor = Color.White;
+                if (pn.Text != null && pass.Text != null)
+                {
+                    Student thistudent = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/LoginStudent".PostUrlEncodedAsync(new { phonenumber = pn.Text, password = pass.Text })
+      .ReceiveJson<Student>();
+                    if (pn.Text == thistudent.phonenumber && pass.Text == thistudent.password)
+                    {
+                        StaticPageToPassData.thisStudentInfo = thistudent;
+                        //dialog.MessageText = "Loggin In...";
+                        if (chkBox.IsChecked)
+                        {
+                            await SecureStorage.SetAsync("phonenumber", pn.Text);
+                            await SecureStorage.SetAsync("passowrd", pass.Text);
+                        }
+                        errortxt.Text = "";
+                        pn.Text = "";
+                        pass.Text = "";
+                        await Application.Current.MainPage.Navigation.PushModalAsync(new TakeTuitionView(false));
                     }
                     else
                     {
                         pn.HasError = true;
-                        pn.ErrorText = "Phone Number Or Password can't be empty!";
+                        pn.ErrorText = "Incorrect Phone Number or Password!";
                         pass.HasError = true;
                     }
-                    loginbtn.IsEnabled = true;
-                    await dialog.DismissAsync();
+
                 }
+                else
+                {
+                    pn.HasError = true;
+                    pn.ErrorText = "Phone Number Or Password can't be empty!";
+                    pass.HasError = true;
+                }
+                loginbtn.IsEnabled = true;
+                hideLoading();
+                //await dialog.DismissAsync();
 
             }
             else
@@ -77,7 +82,18 @@ namespace ShikkhanobishStudentApp.View
         {
             LoginStudent();
         }
-
+        public void showLoading(string text)
+        {
+            loadingGrid.IsVisible = true;
+            loadingText.Text = text;
+            loadingGif.IsAnimationPlaying = true;
+        }
+        public void hideLoading()
+        {
+            loadingGrid.IsVisible = false;
+            loadingText.Text = "";
+            loadingGif.IsAnimationPlaying = false;
+        }
         private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
 
