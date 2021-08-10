@@ -58,6 +58,9 @@ namespace ShikkhanobishStudentApp.ViewModel
         }
         public async Task homeFirst()
         {
+            isLoading = false;
+            paymentGifGrid = false;
+            SucPaymentText = "";
             prmStudentTextVisibility = false;
             acceptTeacherVisibility = false;
             selectedTeacherConnectingVisibility = false;
@@ -169,17 +172,16 @@ namespace ShikkhanobishStudentApp.ViewModel
         }
         private async Task PerformlogoutAsync()
         {
-            using (var dialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Please Wait..."))
+            isLoading = true;
+            await Task.Delay(4000);
+            SecureStorage.RemoveAll();
+            var existingPages = Application.Current.MainPage.Navigation.NavigationStack.ToList();
+            foreach (var page in existingPages)
             {
-                SecureStorage.RemoveAll();
-                 var existingPages = Application.Current.MainPage.Navigation.NavigationStack.ToList();
-                foreach (var page in existingPages)
-                {
-                    Application.Current.MainPage.Navigation.RemovePage(page);
-                }
-                await Application.Current.MainPage.Navigation.PushModalAsync(new LoginPage());
-                await dialog.DismissAsync();
+                Application.Current.MainPage.Navigation.RemovePage(page);
             }
+            await Application.Current.MainPage.Navigation.PushModalAsync(new LoginPage());
+            isLoading = false;
         }
        
 
@@ -231,44 +233,43 @@ namespace ShikkhanobishStudentApp.ViewModel
         }
         private async Task PerformrechargeCoin()
         {
-            using (await MaterialDialog.Instance.LoadingDialogAsync(message: "Wait..."))
+            isLoading = true;
+            await  Task.Delay(3000);
+            RechargeerrorTxt = "";
+            try
             {
-                RechargeerrorTxt = "";
-                try
+
+                StudentPaymentHistory thispayment = new StudentPaymentHistory();
+                thispayment.studentID = StaticPageToPassData.thisStudentInfo.studentID;
+                thispayment.amountTaka = rechargeTTakaAmountInt;
+                if (thisUsedVoucher.voucherID == 0)
                 {
-                    
-                    StudentPaymentHistory thispayment = new StudentPaymentHistory();
-                    thispayment.studentID = StaticPageToPassData.thisStudentInfo.studentID;                  
-                    thispayment.amountTaka = rechargeTTakaAmountInt;
-                    if (thisUsedVoucher.voucherID == 0)
-                    {
-                        thispayment.isVoucherUsed = 1;
-                        thispayment.voucherID = thisUsedVoucher.voucherID;
-                        thispayment.amountCoin = rechargeCoinAMountInt;
-                    }
-                    else
-                    {
-                        thispayment.isVoucherUsed = 0;
-                        thispayment.voucherID = 0;
-                        thispayment.amountCoin = rechargeCoinAMountInt;
-                    }
-                    thispayment.date = DateTime.Now.ToString("MM/dd/yyyy HH:mm");
-                    var redirectURL = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/RequestPayment".PostUrlEncodedAsync(new
-                    {
-                        name = StaticPageToPassData.thisStudentInfo.name,
-                        amount = int.Parse(rechargeAmount),
-                        studentID = StaticPageToPassData.thisStudentInfo.studentID,
-                        phonenumber = StaticPageToPassData.thisStudentInfo.phonenumber
-                    })
-       .ReceiveJson<string>();
-                    await Application.Current.MainPage.Navigation.PushModalAsync(new PaymentView(redirectURL));
+                    thispayment.isVoucherUsed = 1;
+                    thispayment.voucherID = thisUsedVoucher.voucherID;
+                    thispayment.amountCoin = rechargeCoinAMountInt;
                 }
-                catch (Exception ex)
+                else
                 {
-                    RechargeerrorTxt = ex.Message;
+                    thispayment.isVoucherUsed = 0;
+                    thispayment.voucherID = 0;
+                    thispayment.amountCoin = rechargeCoinAMountInt;
                 }
+                thispayment.date = DateTime.Now.ToString("MM/dd/yyyy HH:mm");
+                var redirectURL = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/RequestPayment".PostUrlEncodedAsync(new
+                {
+                    name = StaticPageToPassData.thisStudentInfo.name,
+                    amount = int.Parse(rechargeAmount),
+                    studentID = StaticPageToPassData.thisStudentInfo.studentID,
+                    phonenumber = StaticPageToPassData.thisStudentInfo.phonenumber
+                })
+   .ReceiveJson<string>();
+                await Application.Current.MainPage.Navigation.PushModalAsync(new PaymentView(redirectURL));
             }
-            
+            catch (Exception ex)
+            {
+                RechargeerrorTxt = ex.Message;
+            }
+            isLoading = false;
         }
 
        
@@ -598,8 +599,9 @@ namespace ShikkhanobishStudentApp.ViewModel
                 {
                     if (successFullPayment)
                     {
-                        await MaterialDialog.Instance.AlertAsync(message: "You have successfully added " + amount + " coin in your account. Thnak you for staying with us.",
-                                    title: "Successfull");
+                        
+                        paymentGifGrid = true;
+                        SucPaymentText = "You have successfully added " + amount + " coin in your account. Thank you for staying with us.";
                     }
                     else
                     {
@@ -609,6 +611,11 @@ namespace ShikkhanobishStudentApp.ViewModel
                 }
             });
 
+        }
+        private void PerformpopOUTpaymentGif()
+        {
+            paymentGifGrid = false;
+            SucPaymentText = "";
         }
         #endregion
 
@@ -1802,7 +1809,35 @@ namespace ShikkhanobishStudentApp.ViewModel
             }
         }
 
-       
+        private bool paymentGifGrid1;
+
+        public bool paymentGifGrid { get => paymentGifGrid1; set => SetProperty(ref paymentGifGrid1, value); }
+
+        private string sucPaymentText;
+
+        public string SucPaymentText { get => sucPaymentText; set => SetProperty(ref sucPaymentText, value); }
+
+        private Command popOUTpaymentGif1;
+
+        public ICommand popOUTpaymentGif
+        {
+            get
+            {
+                if (popOUTpaymentGif1 == null)
+                {
+                    popOUTpaymentGif1 = new Command(PerformpopOUTpaymentGif);
+                }
+
+                return popOUTpaymentGif1;
+            }
+        }
+
+        private bool isLoading1;
+
+        public bool isLoading { get => isLoading1; set => SetProperty(ref isLoading1, value); }
+
+
+
 
 
 

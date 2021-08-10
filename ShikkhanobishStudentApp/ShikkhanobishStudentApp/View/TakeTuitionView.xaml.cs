@@ -52,9 +52,6 @@ namespace ShikkhanobishStudentApp.View
 
         public async Task getAllInfo()
         {
-            using (await MaterialDialog.Instance.LoadingDialogAsync(message: "Cheking Data..."))
-            {
-                
                 NavigationPage.SetHasNavigationBar(this, false);
                 var mainDisplayInfo = DeviceDisplay.MainDisplayInfo;
                 var width = mainDisplayInfo.Width;
@@ -62,13 +59,9 @@ namespace ShikkhanobishStudentApp.View
                 fvimg.Opacity = .3;
                 rclbl.TextColor = Color.FromHex("#C9C9C9");
                 fvlbl.TextColor = Color.FromHex("#C9C9C9");
-
-                
-
                 Connectivity.ConnectivityChanged += Connectivity_ConnectivityChanged;
                 proImage.IsVisible = true;
-            }
-            
+
         }
         async void Connectivity_ConnectivityChanged(object sender, ConnectivityChangedEventArgs e)
         {
