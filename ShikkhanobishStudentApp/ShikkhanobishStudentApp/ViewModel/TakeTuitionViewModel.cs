@@ -58,7 +58,7 @@ namespace ShikkhanobishStudentApp.ViewModel
         }
         public async Task homeFirst()
         {
-            isLoading = false;
+            isLoading = true;
             paymentGifGrid = false;
             SucPaymentText = "";
             prmStudentTextVisibility = false;
@@ -100,11 +100,13 @@ namespace ShikkhanobishStudentApp.ViewModel
             await GetPromotImage();
             await GetProMsg();
             await ConnectToRealTimeApiServer();
+            isLoading = false;
         }
         #region Methods
         public async Task GetAllCost()
         {
-             Allcost = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/GetCost".GetJsonAsync<CostClass>();
+            Allcost = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/GetCost".GetJsonAsync<CostClass>();
+
         }
         public  async Task GetVoucher()
         {
@@ -171,17 +173,9 @@ namespace ShikkhanobishStudentApp.ViewModel
             }
         }
         private async Task PerformlogoutAsync()
-        {
-            isLoading = true;
-            await Task.Delay(4000);
+        {            
             SecureStorage.RemoveAll();
-            var existingPages = Application.Current.MainPage.Navigation.NavigationStack.ToList();
-            foreach (var page in existingPages)
-            {
-                Application.Current.MainPage.Navigation.RemovePage(page);
-            }
-            await Application.Current.MainPage.Navigation.PushModalAsync(new LoginPage());
-            isLoading = false;
+            await Application.Current.MainPage.Navigation.PopModalAsync();
         }
        
 

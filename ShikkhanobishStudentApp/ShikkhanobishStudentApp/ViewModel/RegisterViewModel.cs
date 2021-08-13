@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using XF.Material.Forms.UI.Dialogs;
 
@@ -219,6 +220,8 @@ namespace ShikkhanobishStudentApp.ViewModel
                              await RegisterStudnet();
                              if(regRes.Massage == "Succesfull!")
                              {
+                                 await SecureStorage.SetAsync("phonenumber", studentPhonenumber);
+                                 await SecureStorage.SetAsync("passowrd", password);
                                  Application.Current.MainPage.Navigation.PushModalAsync(new TakeTuitionView(true));
                              }
                              else

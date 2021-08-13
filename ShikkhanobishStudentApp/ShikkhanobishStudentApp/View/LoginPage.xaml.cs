@@ -31,7 +31,7 @@ namespace ShikkhanobishStudentApp.View
 
                 // }
                 showLoading("Checking...");
-                await Task.Delay(3000);
+                await Task.Delay(1000);
                 errortxt.TextColor = Color.White;
                 if (pn.Text != null && pass.Text != null)
                 {
@@ -86,13 +86,11 @@ namespace ShikkhanobishStudentApp.View
         {
             loadingGrid.IsVisible = true;
             loadingText.Text = text;
-            loadingGif.IsAnimationPlaying = true;
         }
         public void hideLoading()
         {
             loadingGrid.IsVisible = false;
             loadingText.Text = "";
-            loadingGif.IsAnimationPlaying = false;
         }
         private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {

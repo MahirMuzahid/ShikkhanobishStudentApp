@@ -103,7 +103,7 @@
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="4*"/>
                 </Grid.ColumnDefinitions>
-                <Image x:Name="loadingGif" Source="loading.gif"  Grid.Column="0" Margin="15"/>
+                <Image x:Name="loadingGif" Source="loading.gif" IsAnimationPlaying="True" Grid.Column="0" Margin="15"/>
                 <Label x:Name="loadingText" Text="Checking..." Grid.Column="1" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" FontAttributes="Bold"/>
             </Grid>
         </Grid>
