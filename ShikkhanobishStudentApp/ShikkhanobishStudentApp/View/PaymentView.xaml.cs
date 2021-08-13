@@ -38,8 +38,9 @@ namespace ShikkhanobishStudentApp.View
             
             _connection.On<int, bool, string, string,string,string,string,string>("StudentPaymentStatus", async (studentID, successFullPayment, amount, response, paymentID, trxID, cardID, cardType) =>
             {
-                if (studentID == StaticPageToPassData.thisStudentInfo.studentID)
+                if (studentID == StaticPageToPassData.thisStudentInfo.studentID && StaticPageToPassData.LastPaymentRequestID != paymentID)
                 {
+                    StaticPageToPassData.LastPaymentRequestID = paymentID;
                     await _connection.StopAsync();
                     await Application.Current.MainPage.Navigation.PopModalAsync();
                    

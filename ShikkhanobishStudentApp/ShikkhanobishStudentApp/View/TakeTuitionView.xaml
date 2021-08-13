@@ -220,7 +220,7 @@
                 <Label x:Name="fvlbl" Text="Favourite Teacher" Grid.RowSpan="2" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="End" FontSize="11" FontAttributes="Bold" Margin="0,0,0,7"/>
                 <Button Grid.Column="0" BackgroundColor="Transparent" Grid.RowSpan="2" Clicked="homeClicked"/>
                 <Button Grid.Column="1" Clicked="paymentClicked" BackgroundColor="Transparent" Grid.RowSpan="2"/>
-                <Button Grid.Column="2" Clicked="favouriteClicked" BackgroundColor="Transparent" Grid.RowSpan="2" Command="{Binding favGridCommand}"/>
+                <Button Grid.Column="2" Clicked="favouriteClicked" BackgroundColor="Transparent" Grid.RowSpan="2"/>
                 <Button Grid.Column="3" Clicked="profileClicked" BackgroundColor="Transparent" Grid.RowSpan="2"/>
                 
 

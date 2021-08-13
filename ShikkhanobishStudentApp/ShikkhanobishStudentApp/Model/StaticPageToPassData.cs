@@ -21,6 +21,7 @@ namespace ShikkhanobishStudentApp.Model
         public static PerMinPassModel perMinCall { get; set; }
         public static StudentPaymentHistory thispayment { get; set; }
         public static favouriteTeacher selectedPopupFavTeacher { get; set; }
+        public static string LastPaymentRequestID {get;set;}
         public static int GenarateNewID()
         {
             Random rnd = new Random();

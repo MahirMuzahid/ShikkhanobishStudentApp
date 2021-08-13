@@ -58,7 +58,7 @@ namespace ShikkhanobishStudentApp.ViewModel
         }
         public async Task homeFirst()
         {
-            isLoading = true;
+          
             paymentGifGrid = false;
             SucPaymentText = "";
             prmStudentTextVisibility = false;
@@ -94,12 +94,14 @@ namespace ShikkhanobishStudentApp.ViewModel
             resultprgs = .1;
             resultvisi = true;
             rechargeButtonVisibility = false;
-            
+
+            isLoading = true;
             await GetAllCost();
             await GetVoucher();
             await GetPromotImage();
             await GetProMsg();
             await ConnectToRealTimeApiServer();
+            await getALlFavTeacher();
             isLoading = false;
         }
         #region Methods
@@ -1009,7 +1011,7 @@ namespace ShikkhanobishStudentApp.ViewModel
         #region favourite Teacher
         private void favGrid()
         {          
-            getALlFavTeacher();
+          
         }
         public async Task GetFavouriteTeaacherList()
         {
