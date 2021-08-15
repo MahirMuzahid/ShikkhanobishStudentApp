@@ -322,6 +322,7 @@ namespace ShikkhanobishStudentApp.ViewModel
             }
             prgs = .8;
             prgsPercent = "80%";
+            StaticPageToPassData.isFromLogin = false;
             regRes = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/setStudent"
           .PostUrlEncodedAsync(new { studentID = thisUSerID, phonenumber = studentPhonenumber, password = password, totalSpent = 0, totalTuitionTime = 0, coin = 0, freemin = 10, city = city, name = name, institutionName  = "none"})
           .ReceiveJson<Response>();

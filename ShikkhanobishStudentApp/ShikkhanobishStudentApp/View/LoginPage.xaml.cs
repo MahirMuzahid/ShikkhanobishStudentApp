@@ -18,7 +18,8 @@ namespace ShikkhanobishStudentApp.View
         public LoginPage()
         {
             InitializeComponent();
-            hideLoading();
+            loadingGrid.IsVisible = false;
+            loadingText.Text = "";
         }
         public async Task LoginStudent()
         {
@@ -26,10 +27,6 @@ namespace ShikkhanobishStudentApp.View
             var current = Connectivity.NetworkAccess;
             if (current == NetworkAccess.Internet)
             {
-                //using (var dialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Checking..."))
-                // {
-
-                // }
                 showLoading("Checking...");
                 await Task.Delay(1000);
                 errortxt.TextColor = Color.White;
@@ -49,6 +46,7 @@ namespace ShikkhanobishStudentApp.View
                         errortxt.Text = "";
                         pn.Text = "";
                         pass.Text = "";
+                        StaticPageToPassData.isFromLogin = true;
                         await Application.Current.MainPage.Navigation.PushModalAsync(new TakeTuitionView(false));
                     }
                     else
@@ -67,8 +65,6 @@ namespace ShikkhanobishStudentApp.View
                 }
                 loginbtn.IsEnabled = true;
                 hideLoading();
-                //await dialog.DismissAsync();
-
             }
             else
             {

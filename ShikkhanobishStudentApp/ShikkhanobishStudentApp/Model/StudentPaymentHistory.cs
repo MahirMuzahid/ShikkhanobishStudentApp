@@ -17,6 +17,7 @@ namespace ShikkhanobishStudentApp.Model
         public string cardID { get; set; }
         public int voucherID { get; set; }
         public string name { get; set; }
+        public int addedMin { get; set; }
         public string Response { get; set; }
     }
 }

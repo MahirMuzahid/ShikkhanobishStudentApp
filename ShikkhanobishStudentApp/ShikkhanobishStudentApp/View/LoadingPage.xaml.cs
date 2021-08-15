@@ -32,6 +32,7 @@ namespace ShikkhanobishStudentApp.View
             {
                 StaticPageToPassData.thisstPass = pass;
                 StaticPageToPassData.thisStPh = pn;
+                StaticPageToPassData.isFromLogin = false;
                 StaticPageToPassData.thisStudentInfo = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/LoginStudent".PostUrlEncodedAsync(new { phonenumber = StaticPageToPassData.thisStPh, password = StaticPageToPassData.thisstPass })
               .ReceiveJson<Student>();
                 await Application.Current.MainPage.Navigation.PushModalAsync(new TakeTuitionView(false));

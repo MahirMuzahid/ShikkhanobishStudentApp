@@ -17,6 +17,7 @@ using System.Net.Http;
 using Microsoft.AspNetCore.SignalR.Client;
 using XF.Material.Forms.UI.Dialogs;
 using System.Linq;
+using Android.Content.Res;
 
 namespace ShikkhanobishStudentApp.ViewModel
 {
@@ -38,10 +39,12 @@ namespace ShikkhanobishStudentApp.ViewModel
         HubConnection _connection = null;
         Teacher SelectedTeacher = new Teacher();
         string url = "https://shikkhanobishrealtimeapi.shikkhanobish.com/ShikkhanobishHub";
-        int rechargeCoinAMountInt, rechargeTTakaAmountInt;
+        int rechargeCoinAMountInt, rechargeTTakaAmountInt; 
+        StudentPaymentHistory thispayment = new StudentPaymentHistory();
         public Voucher thisUsedVoucher { get; set; }
         List<Voucher> allVoucher = new List<Voucher>();
         #region Methods
+
         public TakeTuitionViewModel()
         {
             homeFirst();
@@ -103,6 +106,8 @@ namespace ShikkhanobishStudentApp.ViewModel
             await ConnectToRealTimeApiServer();
             await getALlFavTeacher();
             isLoading = false;
+            avaiableCoin = StaticPageToPassData.thisStudentInfo.coin+"";
+            freeMinText = StaticPageToPassData.thisStudentInfo.freemin + "";
         }
         #region Methods
         public async Task GetAllCost()
@@ -139,27 +144,50 @@ namespace ShikkhanobishStudentApp.ViewModel
         {
             for(int i = 0; i < allVoucher.Count; i++)
             {
-                if(allVoucher[i].type == 0)
+                if (int.Parse(rechargeAmount) == allVoucher[i].amountTaka)
                 {
-                    if(int.Parse(rechargeAmount) == allVoucher[i].amountTaka)
+                    if (allVoucher[i].type == 0)
                     {
                         totalRechargeCoin = rechargeAmount;
-                        addedCoinamount = " + "+ allVoucher[i].getAmount.ToString() + " Coin";
+                        addedCoinamount = " + " + allVoucher[i].getAmount.ToString();
                         thisUsedVoucher = allVoucher[i];
                         rechargeCoinAMountInt = allVoucher[i].getAmount + int.Parse(rechargeAmount);
                         rechargeTTakaAmountInt = int.Parse(rechargeAmount);
+                        totalAmount = rechargeAmount + " Taka";
+                        freeminInaddCoinScreen = 0 + "";
+                        thispayment.addedMin = 0;
                         break;
                     }
-                    else
+                    if (allVoucher[i].type == 1)
                     {
-                        totalRechargeCoin = rechargeAmount + " Coin";
+                        totalRechargeCoin = rechargeAmount;
                         addedCoinamount = "";
-                        thisUsedVoucher = new Voucher();
-                        rechargeCoinAMountInt = allVoucher[i].getAmount;
+                        thisUsedVoucher = allVoucher[i];
+                        rechargeCoinAMountInt =  int.Parse(rechargeAmount);
                         rechargeTTakaAmountInt = int.Parse(rechargeAmount);
+                        totalAmount = rechargeAmount + " Taka";
+                        freeminInaddCoinScreen = allVoucher[i].getAmount +  "";
+                        thispayment.addedMin = allVoucher[i].getAmount;
+                        break;
                     }
+
                 }
-                totalAmount = rechargeAmount + " Taka";
+                else
+                {
+                    totalRechargeCoin = rechargeAmount;
+                    addedCoinamount = "";
+                    thisUsedVoucher = new Voucher();
+                    rechargeCoinAMountInt = allVoucher[i].getAmount;
+                    rechargeTTakaAmountInt = int.Parse(rechargeAmount);
+                    totalAmount = rechargeAmount + " Taka";
+                    freeminInaddCoinScreen = 0 + "";
+                }
+                if (allVoucher[i].type == 0)
+                {
+                    
+                }
+                
+               
             }
         }
         public bool checkInternet()
@@ -177,7 +205,20 @@ namespace ShikkhanobishStudentApp.ViewModel
         private async Task PerformlogoutAsync()
         {            
             SecureStorage.RemoveAll();
-            await Application.Current.MainPage.Navigation.PopModalAsync();
+            if (StaticPageToPassData.isFromLogin)
+            {
+                await Application.Current.MainPage.Navigation.PopModalAsync();
+            }
+            else
+            {
+                var existingPages = Application.Current.MainPage.Navigation.NavigationStack.ToList();
+                foreach (var page in existingPages)
+                {
+                    Application.Current.MainPage.Navigation.RemovePage(page);
+                }
+                await Application.Current.MainPage.Navigation.PushModalAsync(new LoginPage());
+            }
+            
         }
        
 
@@ -230,15 +271,15 @@ namespace ShikkhanobishStudentApp.ViewModel
         private async Task PerformrechargeCoin()
         {
             isLoading = true;
-            await  Task.Delay(3000);
+            await  Task.Delay(1000);
             RechargeerrorTxt = "";
             try
             {
 
-                StudentPaymentHistory thispayment = new StudentPaymentHistory();
+                
                 thispayment.studentID = StaticPageToPassData.thisStudentInfo.studentID;
                 thispayment.amountTaka = rechargeTTakaAmountInt;
-                if (thisUsedVoucher.voucherID == 0)
+                if (thisUsedVoucher.voucherID != 0)
                 {
                     thispayment.isVoucherUsed = 1;
                     thispayment.voucherID = thisUsedVoucher.voucherID;
@@ -250,7 +291,8 @@ namespace ShikkhanobishStudentApp.ViewModel
                     thispayment.voucherID = 0;
                     thispayment.amountCoin = rechargeCoinAMountInt;
                 }
-                thispayment.date = DateTime.Now.ToString("MM/dd/yyyy HH:mm");
+                thispayment.date = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
+                thispayment.name = thisUsedVoucher.name;
                 var redirectURL = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/RequestPayment".PostUrlEncodedAsync(new
                 {
                     name = StaticPageToPassData.thisStudentInfo.name,
@@ -595,9 +637,40 @@ namespace ShikkhanobishStudentApp.ViewModel
                 {
                     if (successFullPayment)
                     {
-                        
+                        //StaticPageToPassData.LastPaymentRequestID = paymentID;
+                        var res = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/setStudentPaymentHistory".PostUrlEncodedAsync(new { 
+                            studentID = StaticPageToPassData.thisStudentInfo.studentID,
+                            paymentID = paymentID,
+                            date = thispayment.date,
+                            trxID = trxID,
+                            amountTaka = amount,
+                            amountCoin = thispayment.amountCoin,
+                            medium = cardType,
+                            name = thispayment.name,
+                            isVoucherUsed = thispayment.isVoucherUsed,
+                            voucherID = thispayment.voucherID,
+                            cardID = cardID})
+                            .ReceiveJson<Response>();
+
+                        var regRes = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/updateStudent"
+                            .PostUrlEncodedAsync(new { 
+                             studentID = thispayment.studentID, 
+                             phonenumber = StaticPageToPassData.thisStudentInfo.phonenumber, 
+                             password = StaticPageToPassData.thisStudentInfo.password,
+                             totalSpent = StaticPageToPassData.thisStudentInfo.totalSpent,
+                             totalTuitionTime = StaticPageToPassData.thisStudentInfo.totalTuitionTime, 
+                             coin = StaticPageToPassData.thisStudentInfo.coin+thispayment.amountCoin, 
+                             freemin = StaticPageToPassData.thisStudentInfo.freemin+thispayment.addedMin, 
+                             city = StaticPageToPassData.thisStudentInfo.city, 
+                             name = StaticPageToPassData.thisStudentInfo.name, 
+                             institutionName = "none" })
+                             .ReceiveJson<Response>();
+
                         paymentGifGrid = true;
                         SucPaymentText = "You have successfully added " + amount + " coin in your account. Thank you for staying with us.";
+                        await StaticPageToPassData.GetStudent();
+                        avaiableCoin = StaticPageToPassData.thisStudentInfo.coin + "";
+                        freeMinText = StaticPageToPassData.thisStudentInfo.freemin + "";
                     }
                     else
                     {
@@ -1831,6 +1904,14 @@ namespace ShikkhanobishStudentApp.ViewModel
         private bool isLoading1;
 
         public bool isLoading { get => isLoading1; set => SetProperty(ref isLoading1, value); }
+
+        private string freeminInaddCoinScreen1;
+
+        public string freeminInaddCoinScreen { get => freeminInaddCoinScreen1; set => SetProperty(ref freeminInaddCoinScreen1, value); }
+
+        private string freeMinText1;
+
+        public string freeMinText { get => freeMinText1; set => SetProperty(ref freeMinText1, value); }
 
 
 

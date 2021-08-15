@@ -44,6 +44,7 @@ namespace ShikkhanobishStudentApp.View
                 {
                     Navigation.RemovePage(page);
                 }
+                await StaticPageToPassData.GetStudent();
                 await Application.Current.MainPage.Navigation.PushModalAsync(new TakeTuitionView(false));
                 await dialog.DismissAsync();
             }

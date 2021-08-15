@@ -15,6 +15,7 @@ using XF.Material.Forms.UI.Dialogs.Configurations;
 namespace ShikkhanobishStudentApp.View
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
+  
     public partial class TakeTuitionView : ContentPage
     {
         
@@ -98,13 +99,9 @@ namespace ShikkhanobishStudentApp.View
                                         actionButtonText: "Got It",
                                         configuration: alertDialogConfiguration,
                                         msDuration: MaterialSnackbar.DurationIndefinite);
-
-
         }
         async private void paymentClicked(object sender, EventArgs e)
-        {
-            freeMin.Text = "" + StaticPageToPassData.thisStudentInfo.freemin;
-            avaiableCoin.Text = "" + StaticPageToPassData.thisStudentInfo.coin;
+        {           
             coingrid.IsVisible = true;
             FavouriteTeacherGrid.IsVisible = false;
             ttlbl.TextColor = Color.FromHex("#C9C9C9");
@@ -155,12 +152,12 @@ namespace ShikkhanobishStudentApp.View
         {
             SecureStorage.RemoveAll();
         }
-
        
 
-       
 
-      
+
+
+
 
         private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {

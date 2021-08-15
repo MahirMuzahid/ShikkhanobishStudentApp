@@ -6,6 +6,7 @@ using Android.Runtime;
 using Android.OS;
 using Xamarin.Forms.Vonage.Android;
 using ImageCircle.Forms.Plugin.Droid;
+using ShikkhanobishStudentApp.Model;
 
 namespace ShikkhanobishStudentApp.Droid
 {
@@ -29,5 +30,7 @@ namespace ShikkhanobishStudentApp.Droid
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
+
+       
     }
 }

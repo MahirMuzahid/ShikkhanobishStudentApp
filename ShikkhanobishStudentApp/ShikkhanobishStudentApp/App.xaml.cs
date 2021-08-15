@@ -9,6 +9,7 @@ using Flurl.Http;
 
 namespace ShikkhanobishStudentApp
 {
+
     public partial class App : Application
     {
         NetworkAccess current = Connectivity.NetworkAccess;
@@ -22,16 +23,18 @@ namespace ShikkhanobishStudentApp
 
         protected override void OnStart()
         {
-            
-           
+            StaticPageToPassData.OnStart();
         }
 
         protected override void OnSleep()
         {
+            StaticPageToPassData.OnPause();
         }
 
         protected override void OnResume()
         {
+            StaticPageToPassData.OnStart();
         }
+
     }
 }
