@@ -132,6 +132,9 @@
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Client">
       <Version>5.0.8</Version>
     </PackageReference>
+    <PackageReference Include="Plugin.LocalNotification">
+      <Version>8.0.1</Version>
+    </PackageReference>
     <PackageReference Include="Xam.Plugins.Forms.ImageCircle">
       <Version>3.1.1.1-beta</Version>
     </PackageReference>

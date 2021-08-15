@@ -1,4 +1,5 @@
 ﻿using Flurl.Http;
+using Plugin.LocalNotification;
 using ShikkhanobishStudentApp.Model;
 using System;
 using System.Collections.Generic;
@@ -142,6 +143,21 @@ namespace ShikkhanobishStudentApp.View
             fvlbl.TextColor = Color.Black;
            
             GetAllFavTeacher();
+            var noti = new NotificationRequest()
+            {
+                BadgeNumber = 1,
+                Description = "GG",
+                Title = "Notification",
+                ReturningData = "click",
+                Android = new Plugin.LocalNotification.AndroidOption.AndroidOptions
+                {
+                    TimeoutAfter = TimeSpan.FromSeconds(10),
+                    Priority = NotificationPriority.Max,                    
+                    VisibilityType = Plugin.LocalNotification.AndroidOption.AndroidVisibilityType.Public
+                }
+            };
+            NotificationCenter.Current.Show(noti);
+
 
         }
         public async Task GetAllFavTeacher()
