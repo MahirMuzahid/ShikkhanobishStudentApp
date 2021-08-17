@@ -4,9 +4,10 @@
 		<shape>
 			<gradient
 				android:angle="0"
-				android:startColor="#11AAD7"
-				android:endColor="#864AE8"
-				android:type="linear" />
+				android:startColor="#ffffff"
+				android:endColor="#ffffff"
+				android:type="linear" 
+				/>
 		</shape>
 
 	</item>
@@ -15,8 +16,9 @@
 		>
 		
 		<bitmap
-            android:src="@drawable/splashlogo"
+            android:src="@drawable/logo"
             android:gravity="center"
+		
 	/>
 	</item>
 </layer-list>

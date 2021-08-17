@@ -3,7 +3,9 @@ using Plugin.LocalNotification;
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
@@ -142,9 +144,6 @@ namespace ShikkhanobishStudentApp.View
             ttlbl.TextColor = Color.FromHex("#C9C9C9");
             rclbl.TextColor = Color.FromHex("#C9C9C9");
             fvlbl.TextColor = Color.Black;
-            ShowNotification("A teacher has accepted your call!");
-
-           
 
 
         }
@@ -153,23 +152,20 @@ namespace ShikkhanobishStudentApp.View
 
             await NotificationCenter.Current.Show((notification) => notification
                     .WithScheduleOptions((schedule) => schedule
+                    
                     .Build())
                     .WithAndroidOptions((android) => android
-                         .WithAutoCancel(true)
                          .WithChannelId("General")
-                         .WithOngoing(true)
-                         .WithTimeout(TimeSpan.FromSeconds(30))
-                         .WithPriority(NotificationPriority.Max)
-                         .WithVisibilityType(Plugin.LocalNotification.AndroidOption.AndroidVisibilityType.Public)
+                         .WithTimeout(TimeSpan.FromSeconds(30))                      
                          .Build())
                     .WithiOSOptions((ios) => ios
                         .Build())
                     .WithReturningData("Dummy Data")
                     .WithTitle("Shikkhanobish")
                     .WithDescription(msg)
-                    .WithSound("ringtone")
                     .WithNotificationId(100)
-                    .Create());
+                    
+                    .Create());;
         }
         private void Button_Clicked_3(object sender, EventArgs e)
         {

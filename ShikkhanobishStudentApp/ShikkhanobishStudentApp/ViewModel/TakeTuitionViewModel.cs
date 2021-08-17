@@ -601,7 +601,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                     }
                     else
                     {
-                        ShowNotification("A teacher has been connected accepted your request");
+                        //ShowNotification("A teacher has been connected accepted your request! Click to join");
                         connectingTeachertxt = "A teacher has been connected...";
                         thisSesionID = sessionID;
                         acceptTeacherVisibility = true;
@@ -700,7 +700,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                     .WithReturningData("Dummy Data")
                     .WithTitle("Shikkhanobish")
                     .WithDescription(msg)
-                    .WithSound("ringtone.wav")
+                    .WithSound("ringtone.mp3")
                     .WithNotificationId(100)
                     .Create());
         }

@@ -8,6 +8,7 @@ using Plugin.LocalNotification;
 using Xamarin.Forms.Vonage.Android;
 using ImageCircle.Forms.Plugin.Droid;
 using ShikkhanobishStudentApp.Model;
+using Plugin.LocalNotification.Platform.Droid;
 
 namespace ShikkhanobishStudentApp.Droid
 {
@@ -17,7 +18,7 @@ namespace ShikkhanobishStudentApp.Droid
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            NotificationCenter.CreateNotificationChannel(new Plugin.LocalNotification.Platform.Droid.NotificationChannelRequest { Importance = NotificationImportance.High});
+            NotificationCenter.CreateNotificationChannel(new NotificationChannelRequest { Importance = NotificationImportance.High });
             PlatformVonage.Init(this);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
@@ -33,6 +34,6 @@ namespace ShikkhanobishStudentApp.Droid
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 
-        
+      
     }
 }
