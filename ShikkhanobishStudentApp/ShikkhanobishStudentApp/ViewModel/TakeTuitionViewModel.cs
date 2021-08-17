@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.SignalR.Client;
 using XF.Material.Forms.UI.Dialogs;
 using System.Linq;
 using Android.Content.Res;
+using Plugin.LocalNotification;
 
 namespace ShikkhanobishStudentApp.ViewModel
 {
@@ -60,8 +61,7 @@ namespace ShikkhanobishStudentApp.ViewModel
             return true;
         }
         public async Task homeFirst()
-        {
-          
+        {         
             paymentGifGrid = false;
             SucPaymentText = "";
             prmStudentTextVisibility = false;
@@ -601,6 +601,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                     }
                     else
                     {
+                        ShowNotification("A teacher has been connected accepted your request");
                         connectingTeachertxt = "A teacher has been connected...";
                         thisSesionID = sessionID;
                         acceptTeacherVisibility = true;
@@ -637,7 +638,6 @@ namespace ShikkhanobishStudentApp.ViewModel
                 {
                     if (successFullPayment)
                     {
-                        //StaticPageToPassData.LastPaymentRequestID = paymentID;
                         var res = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/setStudentPaymentHistory".PostUrlEncodedAsync(new { 
                             studentID = StaticPageToPassData.thisStudentInfo.studentID,
                             paymentID = paymentID,
@@ -680,6 +680,29 @@ namespace ShikkhanobishStudentApp.ViewModel
                 }
             });
 
+        }
+        public async Task ShowNotification(string msg)
+        {
+
+            await NotificationCenter.Current.Show((notification) => notification
+                    .WithScheduleOptions((schedule) => schedule
+                    .Build())
+                    .WithAndroidOptions((android) => android
+                         .WithAutoCancel(true)
+                         .WithChannelId("General")
+                         .WithOngoing(true)
+                         .WithTimeout(TimeSpan.FromSeconds(30))
+                         .WithPriority(NotificationPriority.Max)
+                         .WithVisibilityType(Plugin.LocalNotification.AndroidOption.AndroidVisibilityType.Public)
+                         .Build())
+                    .WithiOSOptions((ios) => ios
+                        .Build())
+                    .WithReturningData("Dummy Data")
+                    .WithTitle("Shikkhanobish")
+                    .WithDescription(msg)
+                    .WithSound("ringtone.wav")
+                    .WithNotificationId(100)
+                    .Create());
         }
         private void PerformpopOUTpaymentGif()
         {

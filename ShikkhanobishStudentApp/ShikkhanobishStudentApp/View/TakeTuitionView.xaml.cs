@@ -1,6 +1,6 @@
 ﻿using Flurl.Http;
 using Plugin.LocalNotification;
-using ShikkhanobishStudentApp.Model;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +12,7 @@ using Xamarin.Forms.Xaml;
 using XF.Material.Forms.Resources;
 using XF.Material.Forms.UI.Dialogs;
 using XF.Material.Forms.UI.Dialogs.Configurations;
+
 
 namespace ShikkhanobishStudentApp.View
 {
@@ -141,28 +142,34 @@ namespace ShikkhanobishStudentApp.View
             ttlbl.TextColor = Color.FromHex("#C9C9C9");
             rclbl.TextColor = Color.FromHex("#C9C9C9");
             fvlbl.TextColor = Color.Black;
+            ShowNotification("A teacher has accepted your call!");
+
            
-            GetAllFavTeacher();
-            var noti = new NotificationRequest()
-            {
-                BadgeNumber = 1,
-                Description = "GG",
-                Title = "Notification",
-                ReturningData = "click",
-                Android = new Plugin.LocalNotification.AndroidOption.AndroidOptions
-                {
-                    TimeoutAfter = TimeSpan.FromSeconds(10),
-                    Priority = NotificationPriority.Max,                    
-                    VisibilityType = Plugin.LocalNotification.AndroidOption.AndroidVisibilityType.Public
-                }
-            };
-            NotificationCenter.Current.Show(noti);
 
 
         }
-        public async Task GetAllFavTeacher()
+        public async Task ShowNotification(string msg)
         {
-            
+
+            await NotificationCenter.Current.Show((notification) => notification
+                    .WithScheduleOptions((schedule) => schedule
+                    .Build())
+                    .WithAndroidOptions((android) => android
+                         .WithAutoCancel(true)
+                         .WithChannelId("General")
+                         .WithOngoing(true)
+                         .WithTimeout(TimeSpan.FromSeconds(30))
+                         .WithPriority(NotificationPriority.Max)
+                         .WithVisibilityType(Plugin.LocalNotification.AndroidOption.AndroidVisibilityType.Public)
+                         .Build())
+                    .WithiOSOptions((ios) => ios
+                        .Build())
+                    .WithReturningData("Dummy Data")
+                    .WithTitle("Shikkhanobish")
+                    .WithDescription(msg)
+                    .WithSound("ringtone")
+                    .WithNotificationId(100)
+                    .Create());
         }
         private void Button_Clicked_3(object sender, EventArgs e)
         {

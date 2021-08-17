@@ -17,7 +17,7 @@ namespace ShikkhanobishStudentApp.Droid
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            NotificationCenter.CreateNotificationChannel();
+            NotificationCenter.CreateNotificationChannel(new Plugin.LocalNotification.Platform.Droid.NotificationChannelRequest { Importance = NotificationImportance.High});
             PlatformVonage.Init(this);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
@@ -33,6 +33,6 @@ namespace ShikkhanobishStudentApp.Droid
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 
-       
+        
     }
 }
