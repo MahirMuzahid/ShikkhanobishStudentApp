@@ -5,11 +5,10 @@
              xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin"
              xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
              x:Name="tuitionView"           
+            
              x:Class="ShikkhanobishStudentApp.View.TakeTuitionView">
     <!--  x:DataType="viewmodel:TakeTuitionViewModel" !-->
-    <ContentPage.BindingContext>
-        <viewmodel:TakeTuitionViewModel/>
-    </ContentPage.BindingContext>
+    
     <Grid>
         <Grid  x:Name="ttGrid" BackgroundColor="White" RowSpacing="0">
             <Grid.RowDefinitions>
@@ -651,7 +650,7 @@
      
         
         <!--Reg Mas-->
-        <Grid x:Name="regmsgPopup" IsVisible="{Binding regMsgVisiblity}" BackgroundColor="#50000000">
+        <Grid  IsVisible="{Binding regMsgVisiblity}" BackgroundColor="#50000000">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="10*"/>
@@ -671,7 +670,7 @@
                 <material:MaterialCard Grid.RowSpan="3" Elevation="20" BackgroundColor="White"/>
                 <Image Source="{Binding promsgImgSrc}" Grid.Row="0" Aspect="AspectFill"/>
                 <Label Text="{Binding proMsgText}" Grid.Row="1" Margin="20"/>
-                <Button Text="OK" Grid.Row="2" HorizontalOptions="End" VerticalOptions="End" Margin="10" Clicked="Button_Clicked"/>
+                <Button Text="OK" Grid.Row="2" HorizontalOptions="End" VerticalOptions="End" Margin="10" Command="{Binding popOutRegMsgVisiblility}"/>
             </Grid>
         </Grid>
         

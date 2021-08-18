@@ -24,7 +24,7 @@ namespace ShikkhanobishStudentApp.ViewModel
 {
     public class TakeTuitionViewModel : BaseViewModel, INotifyPropertyChanged
     {
-
+        string isNewUpdate;
         public ServerConnection serverconnection { get; set; }
         ObservableCollection<ClassInfo> AllclsList = new ObservableCollection<ClassInfo>();
         ObservableCollection<UniversityName> AllUNameList = new ObservableCollection<UniversityName>();
@@ -46,9 +46,9 @@ namespace ShikkhanobishStudentApp.ViewModel
         List<Voucher> allVoucher = new List<Voucher>();
         #region Methods
 
-        public TakeTuitionViewModel()
+        public TakeTuitionViewModel(bool fromReg)
         {
-            homeFirst();
+            homeFirst(fromReg);
         }
         bool IsDigitsOnly(string str)
         {
@@ -60,8 +60,11 @@ namespace ShikkhanobishStudentApp.ViewModel
 
             return true;
         }
-        public async Task homeFirst()
-        {         
+        public async Task homeFirst(bool fromReg)
+        {
+            isNewUpdate = "";
+            proMsgBtnIsVisible = false;
+            PerformpopOutRegMsgVisiblility();
             paymentGifGrid = false;
             SucPaymentText = "";
             prmStudentTextVisibility = false;
@@ -102,7 +105,7 @@ namespace ShikkhanobishStudentApp.ViewModel
             await GetAllCost();
             await GetVoucher();
             await GetPromotImage();
-            await GetProMsg();
+            await GetProMsg(fromReg);
             await ConnectToRealTimeApiServer();
             await getALlFavTeacher();
             isLoading = false;
@@ -121,17 +124,52 @@ namespace ShikkhanobishStudentApp.ViewModel
         }
         private void PerformpopOutRegMsgVisiblility()
         {
-            regMsgVisiblity = false; ;
+            if(isNewUpdate == "")
+            {
+                regMsgVisiblity = false;
+            }
+            else
+            {
+                url = isNewUpdate;
+                Browser.OpenAsync(url, BrowserLaunchMode.External);
+            }
+            
         }
-        public async Task GetProMsg()
+        private void PerformpopUPRegMsgVisiblility()
+        {
+            regMsgVisiblity = true; 
+        }
+        public async Task GetProMsg(bool fromReg)
         {
             var promsg = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/GetPromotionalMassage".GetJsonAsync<List<PromotionalMassage>>();
             for(int i = 0; i < promsg.Count; i++)
             {
-                if(promsg[i].userType == "student")
+                if (promsg[i].userType == "student")
                 {
-                    promsgImgSrc = promsg[i].imageSrc;
-                    proMsgText = promsg[i].text;
+                    if (fromReg)
+                    {
+                        isNewUpdate = "";
+                        PerformpopUPRegMsgVisiblility();
+                        promsgImgSrc = promsg[i].imageSrc;
+                        proMsgText = promsg[i].text;
+                        break;
+                    }
+                    if(promsg[i].msgType == 2)
+                    {
+                        isNewUpdate = "";
+                        PerformpopUPRegMsgVisiblility();
+                        promsgImgSrc = promsg[i].imageSrc;
+                        proMsgText = promsg[i].text;
+                        break;
+                    }
+                    if (promsg[i].msgType == 3)
+                    {
+                        isNewUpdate = promsg[i].playstoreAppLink;
+                        PerformpopUPRegMsgVisiblility();
+                        promsgImgSrc = promsg[i].imageSrc;
+                        proMsgText = promsg[i].text;
+                        break;
+                    }
                 }
             }
         }
@@ -1935,6 +1973,10 @@ namespace ShikkhanobishStudentApp.ViewModel
         private string freeMinText1;
 
         public string freeMinText { get => freeMinText1; set => SetProperty(ref freeMinText1, value); }
+
+        private bool proMsgBtnIsVisible1;
+
+        public bool proMsgBtnIsVisible { get => proMsgBtnIsVisible1; set => SetProperty(ref proMsgBtnIsVisible1, value); }
 
 
 

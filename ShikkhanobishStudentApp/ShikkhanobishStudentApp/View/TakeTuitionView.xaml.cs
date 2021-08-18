@@ -1,6 +1,6 @@
 ﻿using Flurl.Http;
 using Plugin.LocalNotification;
-
+using ShikkhanobishStudentApp.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -26,16 +26,9 @@ namespace ShikkhanobishStudentApp.View
         public TakeTuitionView(bool fromReg)
         {
             InitializeComponent();
+            BindingContext = new TakeTuitionViewModel(fromReg);
             connectivityGrid.IsVisible = false;
             proImage.IsVisible = false;
-            if (fromReg)
-            {
-                regmsgPopup.IsVisible = true;
-            }
-            else
-            {
-                regmsgPopup.IsVisible = false;
-            }
             var current = Connectivity.NetworkAccess;
             FavouriteTeacherGrid.IsVisible = false;
             coingrid.IsVisible = false;
@@ -203,10 +196,7 @@ namespace ShikkhanobishStudentApp.View
             }
         }
 
-        private void Button_Clicked(object sender, EventArgs e)
-        {
-            regmsgPopup.IsVisible = false;
-        }
+       
         protected override bool OnBackButtonPressed()
         {
             EndOrBackBtn();

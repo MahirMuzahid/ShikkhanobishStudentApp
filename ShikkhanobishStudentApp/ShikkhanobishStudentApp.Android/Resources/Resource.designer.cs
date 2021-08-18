@@ -24246,7 +24246,7 @@ namespace ShikkhanobishStudentApp.Droid
 			public const int splash = 2131165362;
 			
 			// aapt resource value: 0x7F0700B3
-			public const int splashlogo = 2131165363;
+			public const int splashscreenlogo = 2131165363;
 			
 			// aapt resource value: 0x7F0700B4
 			public const int subject = 2131165364;

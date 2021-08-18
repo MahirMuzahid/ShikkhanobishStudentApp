@@ -8,7 +8,9 @@ namespace ShikkhanobishStudentApp.Model
     {
         public string imageSrc { get; set; }
         public string text { get; set; }
+        public int msgType { get; set; }
         public string userType { get; set; }
+        public string playstoreAppLink { get; set; }
         public string Response { get; set; }
     }
 }
