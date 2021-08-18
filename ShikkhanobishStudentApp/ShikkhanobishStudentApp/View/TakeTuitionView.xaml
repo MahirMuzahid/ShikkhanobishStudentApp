@@ -5,7 +5,6 @@
              xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin"
              xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
              x:Name="tuitionView"           
-            
              x:Class="ShikkhanobishStudentApp.View.TakeTuitionView">
     <!--  x:DataType="viewmodel:TakeTuitionViewModel" !-->
     
@@ -230,12 +229,12 @@
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height=".1*"/>
-                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height=".9*"/>
                         <RowDefinition Height=".01*"/>
                         <RowDefinition Height=".001*"/>
                         <RowDefinition Height="2.3*"/>
                         <RowDefinition Height=".001*"/>
-                        <RowDefinition Height=".1*"/>
+                        <RowDefinition Height=".01*"/>
                         <RowDefinition Height="2*"/>
                     </Grid.RowDefinitions>
 
@@ -276,7 +275,7 @@
                             <ColumnDefinition Width="2*"/>
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
-                        <material:MaterialCard BackgroundColor="White" Grid.RowSpan="2" Grid.ColumnSpan="2" Elevation="5"/>
+                        
                         <Image Source="rechargeback.png" Grid.Row="1" Grid.Column="0"  Aspect="AspectFill" Margin="0,100,0,20"  />
                     </Grid>
 
@@ -297,7 +296,8 @@
                             <ColumnDefinition Width="10*"/>
                             <ColumnDefinition Width="2*"/>
                         </Grid.ColumnDefinitions>
-                        <Label Text="Add Coin" Grid.Row="0" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="End" FontSize="15" FontAttributes="Bold"/>
+                        <Label Text="Add Coin" Grid.Row="0" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" FontSize="15" FontAttributes="Bold"/>
+                       
                         <Label Text="Number Of Coin You Want To Recharge" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" HorizontalOptions="Center" VerticalOptions="Center" FontSize="12"/>
                         <Entry Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Placeholder="Coin" BackgroundColor="Transparent" FontSize="14" HorizontalTextAlignment="Center" Text="{Binding rechargeAmount}"/>
 
@@ -328,17 +328,32 @@
 
                     <Frame BackgroundColor="Black" Grid.Row="5" Grid.Column="1" HasShadow="False"/>
 
-                    <CarouselView ItemsSource="{Binding offerList}" Grid.Row="7" Grid.Column="1">
-                        <CarouselView.ItemTemplate>
-                            <DataTemplate>
-                                <StackLayout>
-                                    <Grid>
-                                        <Image Source="{Binding imgSource}" Aspect="AspectFit"/>
-                                    </Grid>
-                                </StackLayout>
-                            </DataTemplate>
-                        </CarouselView.ItemTemplate>
-                    </CarouselView>
+                    <Grid Grid.Row="7" Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height=".5*"/>
+                            <RowDefinition Height="2*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Source="becomepremiumstudent.gif" Grid.Row="0" Grid.Column="2"  IsAnimationPlaying="True"/>
+                        <Label Text="100 Taka" Grid.Row="0" Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Center" FontSize="12" TextColor="Black" FontAttributes="Bold"/>
+                        <material:MaterialButton Text="Become Premium Student" Grid.Row="0" Grid.Column="0" VerticalOptions="Center" FontSize="9" Command="{Binding premiumStudentBtn}"/>
+                        <CarouselView ItemsSource="{Binding offerList}" Grid.Row="1" Grid.ColumnSpan="3">
+                            <CarouselView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackLayout>
+                                        <Grid>
+                                            <Image Source="{Binding imgSource}" Aspect="AspectFit"/>
+                                        </Grid>
+                                    </StackLayout>
+                                </DataTemplate>
+                            </CarouselView.ItemTemplate>
+                        </CarouselView>
+                    </Grid>
+                    
                    
                 </Grid>
                 <Grid IsVisible="{Binding paymentGifGrid}" BackgroundColor="#50000000">

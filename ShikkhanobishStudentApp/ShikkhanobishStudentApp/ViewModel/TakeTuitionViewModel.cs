@@ -65,7 +65,7 @@ namespace ShikkhanobishStudentApp.ViewModel
         {
             isNewUpdate = "";
             proMsgBtnIsVisible = false;
-            PerformpopOutRegMsgVisiblility();
+            regMsgVisiblity = false;
             paymentGifGrid = false;
             SucPaymentText = "";
             prmStudentTextVisibility = false;
@@ -104,14 +104,14 @@ namespace ShikkhanobishStudentApp.ViewModel
 
             isLoading = true;
             await GetAllCost();
-            await GetVoucher();
-            await GetPromotImage();
+            await GetVoucher();            
             await GetProMsg(fromReg);
             await ConnectToRealTimeApiServer();
             await getALlFavTeacher();
             isLoading = false;
             avaiableCoin = StaticPageToPassData.thisStudentInfo.coin+"";
             freeMinText = StaticPageToPassData.thisStudentInfo.freemin + "";
+            await GetPromotImage();
         }
         #region Methods
         public async Task GetAllCost()
@@ -349,7 +349,18 @@ namespace ShikkhanobishStudentApp.ViewModel
             isLoading = false;
         }
 
-       
+        private async Task PerformpremiumStudentBtn()
+        {
+            var redirectURL = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/RequestPayment".PostUrlEncodedAsync(new
+            {
+                name = StaticPageToPassData.thisStudentInfo.name,
+                amount = 100,
+                studentID = StaticPageToPassData.thisStudentInfo.studentID,
+                phonenumber = StaticPageToPassData.thisStudentInfo.phonenumber
+            })
+   .ReceiveJson<string>();
+            await Application.Current.MainPage.Navigation.PushModalAsync(new PaymentView(redirectURL));
+        }
 
         #endregion
 
@@ -647,8 +658,6 @@ namespace ShikkhanobishStudentApp.ViewModel
                         CrossVonage.Current.ApiKey = apikey + "";
                         CrossVonage.Current.SessionId = sessionID;
                         CrossVonage.Current.UserToken = token;
-
-
                     }
                 }
             });
@@ -1980,6 +1989,22 @@ namespace ShikkhanobishStudentApp.ViewModel
 
         public bool proMsgBtnIsVisible { get => proMsgBtnIsVisible1; set => SetProperty(ref proMsgBtnIsVisible1, value); }
 
+        private Command premiumStudentBtn1;
+
+        public ICommand premiumStudentBtn
+        {
+            get
+            {
+                if (premiumStudentBtn1 == null)
+                {
+                    premiumStudentBtn1 = new Command(async => PerformpremiumStudentBtn());
+                }
+
+                return premiumStudentBtn1;
+            }
+        }
+
+        
 
 
 
