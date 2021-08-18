@@ -669,7 +669,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                 if(thisSelectedFavPopUpTeacher == teacherID)
                 {
                     hireteacherEnabled = false;
-                    randonpopupTeacherbtnColor = Color.FromHex("#5098E87F");
+                    randonpopupTeacherbtnColor = Color.Transparent;
                 }
             });
             _connection.On<int, bool, string,string, string, string, string, string>("StudentPaymentStatus", async (studentID, successFullPayment,amount,response, paymentID, trxID, cardID, cardType) =>
