@@ -45,15 +45,7 @@
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
             <Label Text="{Binding time}" Grid.ColumnSpan="3" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" FontSize="17" TextColor="{Binding timeColor}"></Label>
-            <Label Grid.Row="1" Grid.ColumnSpan="3" HorizontalOptions="Center" VerticalOptions="Center"  TextColor="White">
-                <Label.FormattedText>
-                    <FormattedString>
-                        <Span Text="Cost: "/>
-                        <Span Text="{Binding totaolCost}" FontAttributes="Bold" FontSize="14"/>
-                        <Span Text=" Taka"/>
-                    </FormattedString>
-                </Label.FormattedText>
-            </Label>
+            
             <material:MaterialButton Text="End Call" Grid.Row="2" ButtonType="Flat" BackgroundColor="#FA6666" TextColor="#C21212" Grid.Column="0" Command="{Binding EndCall}" FontSize="10" />
             <material:MaterialButton Text="Swap" TextColor="#2864C8" Grid.Row="2" BackgroundColor="#6C9FF3" Grid.Column="1" Clicked="OnSwapCamera" FontSize="10"/>
             <material:MaterialButton Text="Hide Vieo" TextColor="#77A609" Grid.Row="2" BackgroundColor="#CFF37D" Grid.Column="2" FontSize="10"/>

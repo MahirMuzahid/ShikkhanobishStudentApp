@@ -43,6 +43,7 @@ namespace ShikkhanobishStudentApp.ViewModel
         int rechargeCoinAMountInt, rechargeTTakaAmountInt; 
         StudentPaymentHistory thispayment = new StudentPaymentHistory();
         public Voucher thisUsedVoucher { get; set; }
+        int teacherisSelected;
         List<Voucher> allVoucher = new List<Voucher>();
         #region Methods
 
@@ -547,7 +548,7 @@ namespace ShikkhanobishStudentApp.ViewModel
             chooseTeacherVisibility = false;
             selectedTeacherConnectingVisibility = true;
             connectingTeachertxt = "Conneting with Shikkhanobish Teacher Server. Please Wait...";
-            int teacherisSelected;
+           
 
             if (thisSelectedFavPopUpTeacher == 0)
             {
@@ -579,7 +580,7 @@ namespace ShikkhanobishStudentApp.ViewModel
             }
             PerMinPassModel perminPass = new PerMinPassModel();
             perminPass.studentID = StaticPageToPassData.thisStudentInfo.studentID;
-            perminPass.teacherID = thisSelectedFavPopUpTeacher;
+            perminPass.teacherID = teacherisSelected;
             perminPass.time = 0;
             perminPass.sessionID = thisSesionID;
             perminPass.firstChoiceID = firstChoiceID + "";
@@ -612,7 +613,7 @@ namespace ShikkhanobishStudentApp.ViewModel
 
             _connection.On<int, int, bool, int, string, string>("SelectedTeacherResponse", async (teacherID, studentID, response, apikey, sessionID, token) =>
             {
-                if (teacherID == thisSelectedFavPopUpTeacher && studentID == StaticPageToPassData.thisStudentInfo.studentID)
+                if (teacherID == teacherisSelected && studentID == StaticPageToPassData.thisStudentInfo.studentID)
                 {
                     if (response == false)
                     {
@@ -653,6 +654,7 @@ namespace ShikkhanobishStudentApp.ViewModel
             });
             _connection.On<int, bool>("PassActiveStatus", async (teacherID, isActive) =>
             {
+
                 popupfavteacheritemSource.Clear();
                 popupfavteacheritemSource = await "https://api.shikkhanobish.com/api/ShikkhanobishTeacher/getFavouriteTeacherwithStudentIDForPopUp".PostUrlEncodedAsync(new { studentID = StaticPageToPassData.thisStudentInfo.studentID, subjectID = thisSearcherSubId })
    .ReceiveJson<List<favouriteTeacher>>();
