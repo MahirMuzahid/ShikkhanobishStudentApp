@@ -39,9 +39,19 @@ namespace ShikkhanobishStudentApp.ViewModel
  .ReceiveJson<PremiumStudent>();
             if(prm.studentID == 0)
             {
-                addFavteacherVisbility = false;
-                nofavTeacherTextVisbility = true;
-                nofavTeacherTxt = "You cannot add more then 1 favourite teacher. To add unlimited favourite teacher please subcrite to our premium student feature only with "+ prm.buyingAmount+" taka";
+                var thisfavteacher = await "https://api.shikkhanobish.com/api/ShikkhanobishTeacher/getFavouriteTeacherwithStudentID".PostUrlEncodedAsync(new { studentID = StaticPageToPassData.thisStudentInfo.studentID })
+      .ReceiveJson<List<favouriteTeacher>>();
+                if(thisfavteacher.Count == 1)
+                {
+                    addFavteacherVisbility = false;
+                    nofavTeacherTextVisbility = true;
+                    nofavTeacherTxt = "You cannot add more then 1 favourite teacher. To add unlimited favourite teacher please subcrite to our premium student feature only with " + prm.buyingAmount + " taka";
+                }
+                else if (thisfavteacher.Count == 0)
+                {
+                    addFavteacherVisbility = true;
+                    nofavTeacherTextVisbility = false;
+                }
             }
             for (int i =0; i < FavstudentList.Count; i++)
             {

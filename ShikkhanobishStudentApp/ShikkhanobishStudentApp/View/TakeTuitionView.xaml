@@ -339,8 +339,8 @@
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
                         <Image Source="becomepremiumstudent.gif" Grid.Row="0" Grid.Column="2"  IsAnimationPlaying="True"/>
-                        <Label Text="100 Taka" Grid.Row="0" Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Center" FontSize="12" TextColor="Black" FontAttributes="Bold"/>
-                        <material:MaterialButton Text="Become Premium Student" Grid.Row="0" Grid.Column="0" VerticalOptions="Center" FontSize="9" Command="{Binding premiumStudentBtn}"/>
+                        <Label Text="{Binding prmbuyingamount}" Grid.Row="0" Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Center" FontSize="12" TextColor="Black" FontAttributes="Bold"/>
+                        <material:MaterialButton Text="Become Premium Student" Grid.Row="0" Grid.Column="0" VerticalOptions="Center" FontSize="9" Command="{Binding premiumStudentBtn}" IsEnabled="{Binding makepremiumEnabled}"/>
                         <CarouselView ItemsSource="{Binding offerList}" Grid.Row="1" Grid.ColumnSpan="3">
                             <CarouselView.ItemTemplate>
                                 <DataTemplate>
