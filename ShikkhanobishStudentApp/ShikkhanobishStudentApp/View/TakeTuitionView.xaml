@@ -183,7 +183,7 @@
                     
                 </Label>
 
-                <material:MaterialButton Text="Choose Teacher" ButtonType="Flat" Elevation="0"   CornerRadius="5" TextColor="White" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" FontSize="10" FontAttributes="Bold" IsVisible="{Binding activebtn}" Command="{Binding ChooseTeacherPopUp}" BorderColor="#864AE8" PressedBackgroundColor="#50864AE8">
+                <material:MaterialButton Text="Choose Teacher" ButtonType="Flat" Elevation="0"   CornerRadius="5" TextColor="White" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" FontSize="10" FontAttributes="Bold" IsVisible="{Binding activebtn}" Command="{Binding ChooseTeacherPopUp}" IsEnabled="{Binding chooseTeacherEnabled}" BorderColor="#864AE8" PressedBackgroundColor="#50864AE8">
 
                 </material:MaterialButton>
                

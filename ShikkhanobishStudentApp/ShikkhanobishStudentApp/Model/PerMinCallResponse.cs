@@ -8,6 +8,7 @@ namespace ShikkhanobishStudentApp.Model
     {
         public string Massage { get; set; }
         public int cost { get; set; }
+        public double earned { get; set; }
         public int Status { get; set; }
     }
 }

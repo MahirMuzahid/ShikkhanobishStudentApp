@@ -270,16 +270,28 @@ namespace ShikkhanobishStudentApp.ViewModel
                 {
                     if (SelectedInsName != "Not Selected" & SelectedClassName != "Not Selected" & SelectedSubjectName != "Not Selected" & SelectedChapterName != "Not Selected"  && detailTxt.Length < 300 && detailTxt != "" && detailTxt != null)
                     {
-                        activebtn = true;
-                        permincostVisibility = true;
-                        if(selectedInsName == "School")
+                        if(StaticPageToPassData.thisStudentInfo.coin < 3)
                         {
-                            perminCostText = Allcost.SchoolCost+ " coin/min";
+                            activebtn = true;
+                            permincostVisibility = true;
+                            chooseTeacherEnabled = false;
+                            perminCostText = "Insufficient Balance!";
                         }
-                        if(SelectedInsName == "College")
+                        else
                         {
-                            perminCostText = Allcost.CollegeCost + " coin/min";
-                        }                     
+                            activebtn = true;
+                            chooseTeacherEnabled = true;
+                            permincostVisibility = true;
+                            if (selectedInsName == "School")
+                            {
+                                perminCostText = Allcost.SchoolCost + " coin/min";
+                            }
+                            if (SelectedInsName == "College")
+                            {
+                                perminCostText = Allcost.CollegeCost + " coin/min";
+                            }
+                        }
+                                       
                     }
                     else
                     {
@@ -888,6 +900,7 @@ namespace ShikkhanobishStudentApp.ViewModel
         public ICommand selectInsCommand =>
             new Command<string>(async (index) =>
             {
+                groupChoiseVisibility = false;
                 popupList.Clear();
                 popUpVisibility = true;
                 if (int.Parse(index) == 0)
@@ -973,7 +986,14 @@ namespace ShikkhanobishStudentApp.ViewModel
                                 popupclsList.Add(AllsubList[i]);
                             }
                         }
-                        groupChoiseVisibility = true;
+                       if(popupclsList[0].classID == 102)
+                        {
+                            groupChoiseVisibility = true;
+                        }
+                        else
+                        {
+                            groupChoiseVisibility = false;
+                        }
                         ObservableCollection<popupList> convertedList = new ObservableCollection<popupList>();
                         convertedList = ConvertSubTOPupUpList(popupclsList);
                         resultvisi = false;
@@ -2101,6 +2121,10 @@ namespace ShikkhanobishStudentApp.ViewModel
         private string prmbuyingamount1;
 
         public string prmbuyingamount { get => prmbuyingamount1; set => SetProperty(ref prmbuyingamount1, value); }
+
+        private bool chooseTeacherEnabled1;
+
+        public bool chooseTeacherEnabled { get => chooseTeacherEnabled1; set => SetProperty(ref chooseTeacherEnabled1, value); }
 
 
 

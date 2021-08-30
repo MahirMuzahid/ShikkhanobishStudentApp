@@ -264,7 +264,7 @@ namespace ShikkhanobishStudentApp.ViewModel
         public async Task sendsms()
         {
             Random rd = new Random();
-            string number = "01" + StaticPageToPassData.RegisteredPhonenNumber;
+            string number = "+8801" + StaticPageToPassData.RegisteredPhonenNumber;
             int code = rd.Next(10000, 99999);
             string msg = "Shikkhanobish Verification Code: " + code;
             var regRes = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/SendSmsAsync"

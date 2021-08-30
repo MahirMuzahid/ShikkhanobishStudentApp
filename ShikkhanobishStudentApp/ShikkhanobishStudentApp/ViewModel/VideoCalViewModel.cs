@@ -111,7 +111,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                     forthChoiceName = perminCall.forthChoiceName
                 })
          .ReceiveJson<PerMinCallResponse>();
-                string SendTimeAndCostInfo = "https://shikkhanobishrealtimeapi.shikkhanobish.com/api/ShikkhanobishSignalR/SendTimeAndCostInfo?&teacherID=" + perminCall.teacherID + "&studentID=" + perminCall.studentID + "&time=" + time + "&earned=" +( cost-(cost * Allcost.ProcessignCostPercent));
+                string SendTimeAndCostInfo = "https://shikkhanobishrealtimeapi.shikkhanobish.com/api/ShikkhanobishSignalR/SendTimeAndCostInfo?&teacherID=" + perminCall.teacherID + "&studentID=" + perminCall.studentID + "&time=" + time + "&earned=" + res.earned;
                 await realtimeapi.ExecuteRealTimeApi(SendTimeAndCostInfo);
                 if (isLastMin)
                 {
