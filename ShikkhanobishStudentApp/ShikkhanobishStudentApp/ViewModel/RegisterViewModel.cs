@@ -64,7 +64,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                      {
                          using (var dialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Checking Phonenumber..."))
                          {
-                             studentPhonenumber = StaticPageToPassData.RegisteredPhonenNumber;
+                             studentPhonenumber = "01"+StaticPageToPassData.RegisteredPhonenNumber;
                              await CheckPhonenumber();
                              if (uniquePhonenumber == true)
                              {
@@ -316,10 +316,7 @@ namespace ShikkhanobishStudentApp.ViewModel
             }
             prgs = .3;
             prgsPercent = "30%";
-            if (studentPhonenumber.Length != 11)
-            {
-                studentPhonenumber = "0" + studentPhonenumber;
-            }
+          
             prgs = .8;
             prgsPercent = "80%";
             StaticPageToPassData.isFromLogin = false;

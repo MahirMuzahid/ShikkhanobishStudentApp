@@ -15,6 +15,7 @@
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
                 <Image Source="logo.png" Grid.Row="0" Aspect="AspectFit" Margin="30,0,30,0"/>
+                <Label Text="Loading Shikkhanobish. Please wait..." Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center"/>
             </Grid>
         </Grid>
     </ScrollView>

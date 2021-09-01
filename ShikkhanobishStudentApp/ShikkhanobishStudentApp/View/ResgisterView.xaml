@@ -170,7 +170,7 @@
                     </localEntry:CustomEntry>
                 </Grid>
 
-                <Grid Grid.Row="5" Grid.RowSpan="4" Grid.Column="1" Margin="0,40,0,40" IsVisible="{Binding infoVisibility}" BackgroundColor="#80ffffff">
+                <Grid Grid.Row="5" Grid.RowSpan="4" Grid.Column="1" Margin="0,40,0,40" IsVisible="{Binding infoVisibility}" BackgroundColor="#90ffffff">
                     <Grid.RowDefinitions>
 
                         <RowDefinition Height="1.4*"/>

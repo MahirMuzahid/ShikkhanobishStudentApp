@@ -6,20 +6,17 @@
 				android:angle="0"
 				android:startColor="#ffffff"
 				android:endColor="#ffffff"
-				android:type="linear" 
+				android:type="linear"
 				/>
 		</shape>
 
 	</item>
-	<item android:bottom="600dp"
-        android:top="200dp"
-android:right="100dp"
-		  android:left="100dp"
+	<item
 		>
-		
+
 		<bitmap
-            android:src="@drawable/splashscreenlogo"
-            android:gravity="center"
+            android:src="@drawable/onlylogo"
+			android:gravity="center"
 		
 	/>
 	</item>
