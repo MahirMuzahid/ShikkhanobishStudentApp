@@ -332,6 +332,11 @@ namespace ShikkhanobishStudentApp.ViewModel
                  Application.Current.MainPage.Navigation.PopModalAsync();
              });
 
+
+        private async Task PerformgoToTermConditionPgae()
+        {
+            await Browser.OpenAsync("https://www.termsandcondiitionssample.com/live.php?token=fqOkRWtl84cXwPJdjXKTKRKxHxive1lj", BrowserLaunchMode.SystemPreferred);
+        }
         #region Binding 
         private bool numberVisibility1;
 
@@ -487,7 +492,23 @@ namespace ShikkhanobishStudentApp.ViewModel
             }
         }
 
+        private Command goToTermConditionPgae1;
+
+        public ICommand goToTermConditionPgae
+        {
+            get
+            {
+                if (goToTermConditionPgae1 == null)
+                {
+                    goToTermConditionPgae1 = new Command( async => PerformgoToTermConditionPgae());
+                }
+
+                return goToTermConditionPgae1;
+            }
+        }
+
         
+
         #endregion
 
     }

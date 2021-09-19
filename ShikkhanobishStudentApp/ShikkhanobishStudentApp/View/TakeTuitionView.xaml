@@ -4,7 +4,8 @@
              xmlns:viewmodel="clr-namespace:ShikkhanobishStudentApp.ViewModel"
              xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin"
              xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
-             x:Name="tuitionView"           
+
+             x:Name="tuitionView"     
              x:Class="ShikkhanobishStudentApp.View.TakeTuitionView">
     <!--  x:DataType="viewmodel:TakeTuitionViewModel" !-->
     
@@ -81,7 +82,11 @@
                             </Grid.ColumnDefinitions>
 
                             <material:MaterialLabel Text="Detail about your question" Grid.Column="1" Grid.Row="1" HorizontalTextAlignment="Start" VerticalTextAlignment="Center"  FontSize="13"  TextColor="White"/>
-                            <material:MaterialLabel Text="What should I write here?" Grid.Column="2" Grid.Row="1"  FontSize="11" HorizontalTextAlignment="End" VerticalTextAlignment="Center" TextColor="White"/>
+                            <material:MaterialLabel Text="What should I write here?" Grid.Column="2" Grid.Row="1" TextDecorations="Underline"  FontSize="11" HorizontalTextAlignment="End" VerticalTextAlignment="Center" TextColor="White">
+                                <material:MaterialLabel.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding showSuggestion}"/>
+                                </material:MaterialLabel.GestureRecognizers>
+                            </material:MaterialLabel>
                             <Frame BackgroundColor="#20000000" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" HasShadow="False"/>
                             <Editor Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" FontSize="14" Text='{Binding detailTxt}' TextColor="White"/>
                             <Label Text="{Binding remainword}" Grid.Column="2" Grid.Row="3" HorizontalTextAlignment="End" VerticalTextAlignment="Start"  FontSize="11" TextColor="{Binding remainColopr}"/>
@@ -270,6 +275,8 @@
                                     <Image Source="rechargeback.png" Grid.Row="1" Grid.Column="0"  Aspect="AspectFill" Margin="0,100,0,20"  />
                                 </Grid>
 
+                                
+
                                 <Grid Grid.Row="4" Grid.Column="1" Margin="0,15,0,15">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="1*"/>
@@ -287,7 +294,15 @@
                                         <ColumnDefinition Width="10*"/>
                                         <ColumnDefinition Width="2*"/>
                                     </Grid.ColumnDefinitions>
-                                    <Label Text="Add Coin" Grid.Row="0" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" FontSize="15" FontAttributes="Bold"/>
+                                    <Grid Grid.Row="0" Grid.ColumnSpan="5">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <material:MaterialButton Text="Add Coin" FontSize="10" Grid.Column="0"  BackgroundColor="{Binding showAddCoinColor}" TextColor="{Binding showAddCoinTxtColor}" Command="{Binding showAddCoin}"/>
+                                        <material:MaterialButton Text="See Offers" FontSize="10" Grid.Column="1" BackgroundColor="{Binding  showVoucherColor}" TextColor="{Binding showVoucherTxtColor}" Command="{Binding showVouchers}" />
+
+                                    </Grid>
 
                                     <Label Text="Number Of Coin You Want To Recharge" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" HorizontalOptions="Center" VerticalOptions="Center" FontSize="12"/>
                                     <Entry Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Placeholder="Coin" BackgroundColor="Transparent" FontSize="14" HorizontalTextAlignment="Center" Text="{Binding rechargeAmount}"/>
@@ -301,6 +316,8 @@
                                             </FormattedString>
                                         </Label.FormattedText>
                                     </Label>
+
+                                    <Frame BackgroundColor="#20000000" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" IsVisible="{Binding rechargeCoinBackVisibility}"/>
 
                                     <Label Text="Cost" Grid.Row="3" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" FontSize="12"/>
                                     <Label Text="{Binding totalAmount}" Grid.Row="4" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" FontAttributes="Bold"/>
@@ -533,70 +550,73 @@
         </Grid>
         
         <!-- PopUp -->
-        <Grid BackgroundColor="#50000000" IsVisible="{Binding popUpVisibility}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="6*"/>
-                <RowDefinition Height="1*"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width=".1*"/>
-                <ColumnDefinition Width="10*"/>
-                <ColumnDefinition Width=".1*"/>
-            </Grid.ColumnDefinitions>
-           
-            <Button Grid.RowSpan="3" Grid.ColumnSpan="3" BackgroundColor="Transparent" Command="{Binding ClosePopUp}"/>
-            <Grid Grid.Row="1" Grid.Column="1" BackgroundColor="White" >
+        <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+            <Grid BackgroundColor="#50000000" IsVisible="{Binding popUpVisibility}">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height=".1*"/>
-                    <RowDefinition Height=".7*"/>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height=".01*"/>
-                    <RowDefinition Height="15*"/>
-
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="6*"/>
+                    <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width=".5*"/>
+                    <ColumnDefinition Width=".1*"/>
                     <ColumnDefinition Width="10*"/>
-                    <ColumnDefinition Width=".5*"/>
+                    <ColumnDefinition Width=".1*"/>
                 </Grid.ColumnDefinitions>
-                <Label Text="{Binding searchName}" Grid.Row="1" Grid.Column="1" FontSize="17"  HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
-                
-                <Grid Grid.Row="2" Grid.Column="1" IsVisible="{Binding groupChoiseVisibility}">
+
+                <Button Grid.RowSpan="3" Grid.ColumnSpan="3" BackgroundColor="Transparent" Command="{Binding ClosePopUp}"/>
+                <Grid Grid.Row="1" Grid.Column="1" BackgroundColor="White" >
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height=".1*"/>
+                        <RowDefinition Height=".7*"/>
                         <RowDefinition Height="2*"/>
+                        <RowDefinition Height=".01*"/>
+                        <RowDefinition Height="15*"/>
+
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1.5*"/>
-                        <ColumnDefinition Width=".8*"/>
+                        <ColumnDefinition Width=".5*"/>
+                        <ColumnDefinition Width="10*"/>
+                        <ColumnDefinition Width=".5*"/>
                     </Grid.ColumnDefinitions>
-                    <Label Text="Choose Group" Grid.Row="0" Grid.ColumnSpan="3" HorizontalOptions="Start" VerticalOptions="Center"/>
-                    <material:MaterialButton Text="Science" ButtonType="Flat" Grid.Row="1" Grid.Column="0" HorizontalOptions="Center" TextColor="Black" VerticalOptions="Center" FontSize="9" BackgroundColor="{Binding scChoice}" PressedBackgroundColor="#20000000" Command="{Binding groupChoice}" CommandParameter="1"/>
-                    <material:MaterialButton Text="Commerce" ButtonType="Flat" Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" TextColor="Black" VerticalOptions="Center" FontSize="9" BackgroundColor="{Binding cmChoice}"  PressedBackgroundColor="#20000000" Command="{Binding groupChoice}" CommandParameter="2"/>
-                    <material:MaterialButton Text="Arts" ButtonType="Flat" Grid.Column="2" Grid.Row="1" HorizontalOptions="Center" TextColor="Black" VerticalOptions="Center" FontSize="9"  BackgroundColor="{Binding arChoice}" PressedBackgroundColor="#20000000" Command="{Binding groupChoice}" CommandParameter="3"/>
+                    <Label Text="{Binding searchName}" Grid.Row="1" Grid.Column="1" FontSize="17"  HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+
+                    <Grid Grid.Row="2" Grid.Column="1" IsVisible="{Binding groupChoiseVisibility}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="2*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1.5*"/>
+                            <ColumnDefinition Width=".8*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Text="Choose Group" Grid.Row="0" Grid.ColumnSpan="3" HorizontalOptions="Start" VerticalOptions="Center"/>
+                        <material:MaterialButton Text="Science" ButtonType="Flat" Grid.Row="1" Grid.Column="0" HorizontalOptions="Center" TextColor="Black" VerticalOptions="Center" FontSize="9" BackgroundColor="{Binding scChoice}" PressedBackgroundColor="#20000000" Command="{Binding groupChoice}" CommandParameter="1"/>
+                        <material:MaterialButton Text="Commerce" ButtonType="Flat" Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" TextColor="Black" VerticalOptions="Center" FontSize="9" BackgroundColor="{Binding cmChoice}"  PressedBackgroundColor="#20000000" Command="{Binding groupChoice}" CommandParameter="2"/>
+                        <material:MaterialButton Text="Arts" ButtonType="Flat" Grid.Column="2" Grid.Row="1" HorizontalOptions="Center" TextColor="Black" VerticalOptions="Center" FontSize="9"  BackgroundColor="{Binding arChoice}" PressedBackgroundColor="#20000000" Command="{Binding groupChoice}" CommandParameter="3"/>
+                    </Grid>
+                    <Frame BackgroundColor="Black" Grid.Row="3" Grid.Column="1" />
+
+                    <Label Text="Getting Result..." Grid.Row="4" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" TextColor="#9C9C9C" Margin="0,0,0,50" IsVisible="{Binding resultvisi}" FontAttributes="Bold"/>
+                    <ListView  ItemsSource="{Binding popupList}" Grid.Row="4" Grid.Column="1" RowHeight="50" SeparatorColor="Black" >
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell >
+                                    <Grid>
+                                        <material:MaterialCard  IsClickable="True" ClickCommand="{Binding Source={x:Reference tuitionView}, Path=BindingContext.SelectedItem}" ClickCommandParameter="{Binding .}"/>
+                                        <material:MaterialLabel Text="{Binding name}"   FontSize="15"  HorizontalOptions="Start" VerticalOptions="Center" TextColor="#4B4B4B" />
+
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
                 </Grid>
-                <Frame BackgroundColor="Black" Grid.Row="3" Grid.Column="1" />
-
-                <Label Text="Getting Result..." Grid.Row="4" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" TextColor="#9C9C9C" Margin="0,0,0,50" IsVisible="{Binding resultvisi}" FontAttributes="Bold"/>
-                <ListView  ItemsSource="{Binding popupList}" Grid.Row="4" Grid.Column="1" RowHeight="50" SeparatorColor="Black" >
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell >
-                                <Grid>
-                                    <material:MaterialCard  IsClickable="True" ClickCommand="{Binding Source={x:Reference tuitionView}, Path=BindingContext.SelectedItem}" ClickCommandParameter="{Binding .}"/>
-                                    <material:MaterialLabel Text="{Binding name}"   FontSize="15"  HorizontalOptions="Start" VerticalOptions="Center" TextColor="#4B4B4B" />
-
-                                </Grid>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                <Frame BackgroundColor="#50000000" Grid.Row="1" Grid.Column="1" IsVisible="{Binding popWaitVisiblity}"/>
+                <Label Text="Please Wait..." Grid.Column="1" Grid.Row="1" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="{Binding popWaitVisiblity}"/>
             </Grid>
-            <Frame BackgroundColor="#50000000" Grid.Row="1" Grid.Column="1" IsVisible="{Binding popWaitVisiblity}"/>
-            <Label Text="Please Wait..." Grid.Column="1" Grid.Row="1" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="{Binding popWaitVisiblity}"/>
-        </Grid>
+        </StackLayout>
+        
         <!-- PopUp End -->
         
         <!--hire Teacher popup-->

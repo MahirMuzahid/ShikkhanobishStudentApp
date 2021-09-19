@@ -40,7 +40,7 @@ namespace ShikkhanobishStudentApp.ViewModel
         private int thisSelectedFavPopUpTeacher;
         HubConnection _connection = null;
         Teacher SelectedTeacher = new Teacher();
-        string url = "https://shikkhanobishrealtimeapi.shikkhanobish.com/ShikkhanobishHub";
+        string url = "https://shikkhanobishRealTimeAPi.shikkhanobish.com/ShikkhanobishHub";
         int rechargeCoinAMountInt, rechargeTTakaAmountInt; 
         StudentPaymentHistory thispayment = new StudentPaymentHistory();
         public Voucher thisUsedVoucher { get; set; }
@@ -62,59 +62,86 @@ namespace ShikkhanobishStudentApp.ViewModel
 
             return true;
         }
+        private void PerformshowAddCoin()
+        {
+            showVoucherColor = Color.FromHex("#2392D8");
+            showAddCoinColor = Color.Transparent;
+            showAddCoinTxtColor = Color.Black;
+            showVoucherTxtColor = Color.White;
+        }
+        private void PerformshowVouchers()
+        {
+            showAddCoinColor = Color.FromHex("#723CE3");
+            showVoucherColor = Color.Transparent;
+            showAddCoinTxtColor = Color.White;
+            showVoucherTxtColor = Color.Black;
+        }
         public async Task homeFirst(bool fromReg)
         {
-            isNewUpdate = "";
-            proMsgBtnIsVisible = false;
-            regMsgVisiblity = false;
-            paymentGifGrid = false;
-            SucPaymentText = "";
-            prmStudentTextVisibility = false;
-            acceptTeacherVisibility = false;
-            selectedTeacherConnectingVisibility = false;
-            prmStudentTextVisibility = false;
-            hireteacherEnabled = false;
-            groupChoiseVisibility = false;
-            popUpVisibility = false;
-            SelectedInsName = "Not Selected";
-            SelectedClassName = "Not Selected";
-            SelectedSubjectName = "Not Selected";
-            SelectedChapterName = "Not Selected";
+            using (var dialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Please Wait..."))
+            {
+                PerformshowAddCoin();
+                rechargeCoinBackVisibility = false;
+                isLoading = false;
+                isNewUpdate = "";
+                proMsgBtnIsVisible = false;
+                regMsgVisiblity = false;
+                paymentGifGrid = false;
+                SucPaymentText = "";
+                prmStudentTextVisibility = false;
+                acceptTeacherVisibility = false;
+                selectedTeacherConnectingVisibility = false;
+                prmStudentTextVisibility = false;
+                hireteacherEnabled = false;
+                groupChoiseVisibility = false;
+                popUpVisibility = false;
+                SelectedInsName = "Not Selected";
+                SelectedClassName = "Not Selected";
+                SelectedSubjectName = "Not Selected";
+                SelectedChapterName = "Not Selected";
 
-            seletedCountTextVisibility = false;
-            CLseletedCountTextVisibility = false;
-            SubseletedCountTextVisibility = false;
-            ChpseletedCountTextVisibility = false;
+                seletedCountTextVisibility = false;
+                CLseletedCountTextVisibility = false;
+                SubseletedCountTextVisibility = false;
+                ChpseletedCountTextVisibility = false;
 
-            activebtn = false;
-            remainColopr = "Black";
+                activebtn = false;
+                remainColopr = "Black";
 
-            remainword = "Remain 300 Words";
-           
-            remainColopr = "#E5E5E5";
-            secTitle = "Class";
-            thirdTitle = "Subject";
-            forthTitle = "Chapter";
-            firstListBtnVisibility = true;
-            secondListBtnVisibility = false;
-            thirdListBtnVisibility = false;
-            forthBtnVisbility = false;
-            resultprgs = .1;
-            resultvisi = true;
-            rechargeButtonVisibility = false;
+                remainword = "Remain 300 Words";
 
-            isLoading = true;
-            await GetAllCost();
-            await GetVoucher();
-            await GetProMsg(fromReg);
-            await ConnectToRealTimeApiServer();
-            await getALlFavTeacher();          
-            avaiableCoin = StaticPageToPassData.thisStudentInfo.coin+"";
-            freeMinText = StaticPageToPassData.thisStudentInfo.freemin + "";
-            await GetPromotImage();
-            isLoading = false;
+                remainColopr = "#E5E5E5";
+                secTitle = "Class";
+                thirdTitle = "Subject";
+                forthTitle = "Chapter";
+                firstListBtnVisibility = true;
+                secondListBtnVisibility = false;
+                thirdListBtnVisibility = false;
+                forthBtnVisbility = false;
+                resultprgs = .1;
+                resultvisi = true;
+                rechargeButtonVisibility = false;
+
+
+                await ConnectToRealTimeApiServer().ConfigureAwait(false);
+                await GetAllCost().ConfigureAwait(false);
+                await GetVoucher().ConfigureAwait(false);
+                await GetProMsg(fromReg).ConfigureAwait(false);
+                await getALlFavTeacher().ConfigureAwait(false);
+                avaiableCoin = StaticPageToPassData.thisStudentInfo.coin + "";
+                freeMinText = StaticPageToPassData.thisStudentInfo.freemin + ""; 
+                await GetPromotImage();
+                isLoading = false;
+            }
+               
         }
         #region Methods
+        public async Task PerformshowSuggestion()
+        {
+            await MaterialDialog.Instance.AlertAsync(message: "এই সেকশনে আপনি কি শিখতে চাচ্ছেন তা নিয়ে কিছু লিখবেন অথবা আপনার প্রশ্ন থাকলে তা সরাসরি করবেন। যেমনঃ \"আমি পদার্থ বিজ্ঞানের টর্ক টপিকটা ভাল করে বুঝতে চাই।\" অথবা \"ব্যবসায় উদ্যোগগের ব্যবসায় পরিকল্পনা চাপ্টারটি বুঝতে চাই\"",
+                                    title: "কি লিখবেন এই এইখানে?");
+
+        }
         public async Task GetAllCost()
         {
             Allcost = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/GetCost".GetJsonAsync<CostClass>();
@@ -186,6 +213,7 @@ namespace ShikkhanobishStudentApp.ViewModel
             {
                 if (int.Parse(rechargeAmount) == allVoucher[i].amountTaka)
                 {
+                    
                     if (allVoucher[i].type == 0)
                     {
                         totalRechargeCoin = rechargeAmount;
@@ -662,10 +690,18 @@ namespace ShikkhanobishStudentApp.ViewModel
         }
         public async Task ConnectToRealTimeApiServer()
         {
+
             _connection = new HubConnectionBuilder()
-                 .WithUrl(url)
+                 .WithUrl("https://shikkhanobishRealTimeAPi.shikkhanobish.com/ShikkhanobishHub")
                  .Build();
-            await _connection.StartAsync();
+            try 
+            { 
+                await _connection.StartAsync();
+            }
+            catch (Exception ex)
+            {
+                var ss = ex.InnerException;
+            }
 
 
             _connection.Closed += async (s) =>
@@ -1635,6 +1671,20 @@ namespace ShikkhanobishStudentApp.ViewModel
                 return closePopUp;
             }
         }
+        private ICommand showSuggestion1;
+
+        public ICommand showSuggestion
+        {
+            get
+            {
+                if (showSuggestion1 == null)
+                {
+                    showSuggestion1 = new Command(async =>  PerformshowSuggestion());
+                }
+
+                return showSuggestion1;
+            }
+        }
 
         private int sCount;
 
@@ -2031,7 +2081,7 @@ namespace ShikkhanobishStudentApp.ViewModel
 
         private string rechargeAmount1;
 
-        public string rechargeAmount { get => rechargeAmount1; set { rechargeAmount1 = value; if (rechargeAmount != null && rechargeAmount != "" && IsDigitsOnly(rechargeAmount)) { if (int.Parse(rechargeAmount) < 10) { rechargeButtonVisibility = false; totalAmount = ""; totalRechargeCoin = ""; addedCoinamount = ""; } else { rechargeButtonVisibility = true; CalCulateReachrgeCost(); }  } else { rechargeButtonVisibility = false; totalAmount = ""; totalRechargeCoin = ""; addedCoinamount = ""; } SetProperty(ref rechargeAmount1, value); } }
+        public string rechargeAmount { get => rechargeAmount1; set { rechargeAmount1 = value; if (rechargeAmount != null && rechargeAmount != "" && IsDigitsOnly(rechargeAmount)) { if (int.Parse(rechargeAmount) < 10) { rechargeButtonVisibility = false; rechargeCoinBackVisibility = false; totalAmount = ""; totalRechargeCoin = ""; addedCoinamount = ""; freeminInaddCoinScreen = ""; } else { rechargeButtonVisibility = true; CalCulateReachrgeCost(); rechargeCoinBackVisibility = true; }  } else { rechargeButtonVisibility = false; totalAmount = ""; totalRechargeCoin = ""; addedCoinamount = ""; freeminInaddCoinScreen = ""; } SetProperty(ref rechargeAmount1, value); } }
 
         private bool rechargeButton1;
 
@@ -2150,7 +2200,59 @@ namespace ShikkhanobishStudentApp.ViewModel
 
         public bool chooseTeacherEnabled { get => chooseTeacherEnabled1; set => SetProperty(ref chooseTeacherEnabled1, value); }
 
+        private bool rechargeCoinBackVisibility1;
 
+        public bool rechargeCoinBackVisibility { get => rechargeCoinBackVisibility1; set => SetProperty(ref rechargeCoinBackVisibility1, value); }
+
+        private Command showVouchers1;
+
+        public ICommand showVouchers
+        {
+            get
+            {
+                if (showVouchers1 == null)
+                {
+                    showVouchers1 = new Command(PerformshowVouchers);
+                }
+
+                return showVouchers1;
+            }
+        }
+
+        
+
+        private Command showAddCoin1;
+
+        public ICommand showAddCoin
+        {
+            get
+            {
+                if (showAddCoin1 == null)
+                {
+                    showAddCoin1 = new Command(PerformshowAddCoin);
+                }
+
+                return showAddCoin1;
+            }
+        }
+
+       
+
+        private Color showAddCoinColor1;
+
+        public Color showAddCoinColor { get => showAddCoinColor1; set => SetProperty(ref showAddCoinColor1, value); }
+
+        private Color showVoucherColor1;
+
+        public Color showVoucherColor { get => showVoucherColor1; set => SetProperty(ref showVoucherColor1, value); }
+
+        private Color showVoucherTxtColor1;
+
+        public Color showVoucherTxtColor { get => showVoucherTxtColor1; set => SetProperty(ref showVoucherTxtColor1, value); }
+
+        private Color showAddCoinTxtColor1;
+
+        public Color showAddCoinTxtColor { get => showAddCoinTxtColor1; set => SetProperty(ref showAddCoinTxtColor1, value); }
 
 
 

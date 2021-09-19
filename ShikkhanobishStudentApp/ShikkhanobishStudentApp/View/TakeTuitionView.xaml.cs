@@ -216,5 +216,10 @@ namespace ShikkhanobishStudentApp.View
             }
 
         }
+
+        private void TapGestureRecognizer_Tapped_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }
