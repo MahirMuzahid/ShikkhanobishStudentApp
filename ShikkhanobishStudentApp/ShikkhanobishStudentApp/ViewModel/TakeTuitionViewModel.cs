@@ -68,72 +68,75 @@ namespace ShikkhanobishStudentApp.ViewModel
             showAddCoinColor = Color.Transparent;
             showAddCoinTxtColor = Color.Black;
             showVoucherTxtColor = Color.White;
+            showOffervisibility = false;
+            showAddCoinvisibility = true;
         }
         private void PerformshowVouchers()
         {
-            showAddCoinColor = Color.FromHex("#723CE3");
+            showAddCoinColor = Color.FromHex("#23D885");
             showVoucherColor = Color.Transparent;
             showAddCoinTxtColor = Color.White;
             showVoucherTxtColor = Color.Black;
+            showOffervisibility = true;
+            showAddCoinvisibility = false;
         }
         public async Task homeFirst(bool fromReg)
         {
+            PerformshowAddCoin();
+            rechargeCoinBackVisibility = false;
+            isLoading = false;
+            isNewUpdate = "";
+            proMsgBtnIsVisible = false;
+            regMsgVisiblity = false;
+            paymentGifGrid = false;
+            SucPaymentText = "";
+            prmStudentTextVisibility = false;
+            acceptTeacherVisibility = false;
+            selectedTeacherConnectingVisibility = false;
+            prmStudentTextVisibility = false;
+            hireteacherEnabled = false;
+            groupChoiseVisibility = false;
+            popUpVisibility = false;
+            SelectedInsName = "Not Selected";
+            SelectedClassName = "Not Selected";
+            SelectedSubjectName = "Not Selected";
+            SelectedChapterName = "Not Selected";
+
+            seletedCountTextVisibility = false;
+            CLseletedCountTextVisibility = false;
+            SubseletedCountTextVisibility = false;
+            ChpseletedCountTextVisibility = false;
+
+            activebtn = false;
+            remainColopr = "Black";
+
+            remainword = "Remain 300 Words";
+
+            remainColopr = "#E5E5E5";
+            secTitle = "Class";
+            thirdTitle = "Subject";
+            forthTitle = "Chapter";
+            firstListBtnVisibility = true;
+            secondListBtnVisibility = false;
+            thirdListBtnVisibility = false;
+            forthBtnVisbility = false;
+            resultprgs = .1;
+            resultvisi = true;
+            rechargeButtonVisibility = false;
+
             using (var dialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Please Wait..."))
             {
-                PerformshowAddCoin();
-                rechargeCoinBackVisibility = false;
-                isLoading = false;
-                isNewUpdate = "";
-                proMsgBtnIsVisible = false;
-                regMsgVisiblity = false;
-                paymentGifGrid = false;
-                SucPaymentText = "";
-                prmStudentTextVisibility = false;
-                acceptTeacherVisibility = false;
-                selectedTeacherConnectingVisibility = false;
-                prmStudentTextVisibility = false;
-                hireteacherEnabled = false;
-                groupChoiseVisibility = false;
-                popUpVisibility = false;
-                SelectedInsName = "Not Selected";
-                SelectedClassName = "Not Selected";
-                SelectedSubjectName = "Not Selected";
-                SelectedChapterName = "Not Selected";
-
-                seletedCountTextVisibility = false;
-                CLseletedCountTextVisibility = false;
-                SubseletedCountTextVisibility = false;
-                ChpseletedCountTextVisibility = false;
-
-                activebtn = false;
-                remainColopr = "Black";
-
-                remainword = "Remain 300 Words";
-
-                remainColopr = "#E5E5E5";
-                secTitle = "Class";
-                thirdTitle = "Subject";
-                forthTitle = "Chapter";
-                firstListBtnVisibility = true;
-                secondListBtnVisibility = false;
-                thirdListBtnVisibility = false;
-                forthBtnVisbility = false;
-                resultprgs = .1;
-                resultvisi = true;
-                rechargeButtonVisibility = false;
-
-
                 await ConnectToRealTimeApiServer().ConfigureAwait(false);
                 await GetAllCost().ConfigureAwait(false);
                 await GetVoucher().ConfigureAwait(false);
                 await GetProMsg(fromReg).ConfigureAwait(false);
                 await getALlFavTeacher().ConfigureAwait(false);
                 avaiableCoin = StaticPageToPassData.thisStudentInfo.coin + "";
-                freeMinText = StaticPageToPassData.thisStudentInfo.freemin + ""; 
+                freeMinText = StaticPageToPassData.thisStudentInfo.freemin + "";
                 await GetPromotImage();
                 isLoading = false;
             }
-               
+
         }
         #region Methods
         public async Task PerformshowSuggestion()
@@ -150,6 +153,65 @@ namespace ShikkhanobishStudentApp.ViewModel
         public  async Task GetVoucher()
         {
              allVoucher = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getVoucher".GetJsonAsync<List<Voucher>>();
+            for(int i = 0; i < allVoucher.Count; i++)
+            {
+               
+                if (i == 0)
+                {
+                    if (allVoucher[i].type == 0)
+                    {
+                        offertxt1 = "Recharge " + allVoucher[i].amountTaka + " coin with " + allVoucher[i].amountTaka + " taka and get " + allVoucher[i].getAmount + " coin free!";
+                    }
+                    if (allVoucher[i].type == 1)
+                    {
+                        offertxt1 = "Recharge " + allVoucher[i].amountTaka + " coin with " + allVoucher[i].amountTaka + " taka and get " + allVoucher[i].getAmount + " minutes free!";
+                    }
+                }
+                if (i == 1)
+                {
+                    if (allVoucher[i].type == 0)
+                    {
+                        offertxt2 = "Recharge " + allVoucher[i].amountTaka + " coin with " + allVoucher[i].amountTaka + " taka and get " + allVoucher[i].getAmount + " coin free!";
+                    }
+                    if (allVoucher[i].type == 1)
+                    {
+                        offertxt2 = "Recharge " + allVoucher[i].amountTaka + " coin with " + allVoucher[i].amountTaka + " taka and get " + allVoucher[i].getAmount + " minutes free!";
+                    }
+                }
+                if (i == 2)
+                {
+                    if (allVoucher[i].type == 0)
+                    {
+                        offertxt3 = "Recharge " + allVoucher[i].amountTaka + " coin with " + allVoucher[i].amountTaka + " taka and get " + allVoucher[i].getAmount + " coin free!";
+                    }
+                    if (allVoucher[i].type == 1)
+                    {
+                        offertxt3 = "Recharge " + allVoucher[i].amountTaka + " coin with " + allVoucher[i].amountTaka + " taka and get " + allVoucher[i].getAmount + " minutes free!";
+                    }
+                }
+                if (i == 3)
+                {
+                    if (allVoucher[i].type == 0)
+                    {
+                        offertxt4 = "Recharge " + allVoucher[i].amountTaka + " coin with " + allVoucher[i].amountTaka + " taka and get " + allVoucher[i].getAmount + " coin free!";
+                    }
+                    if (allVoucher[i].type == 1)
+                    {
+                        offertxt4 = "Recharge " + allVoucher[i].amountTaka + " coin with " + allVoucher[i].amountTaka + " taka and get " + allVoucher[i].getAmount + " minutes free!";
+                    }
+                }
+                if (i == 4)
+                {
+                    if (allVoucher[i].type == 0)
+                    {
+                        offertxt5 = "Recharge " + allVoucher[i].amountTaka + " coin with " + allVoucher[i].amountTaka + " taka and get " + allVoucher[i].getAmount + " coin free!";
+                    }
+                    if (allVoucher[i].type == 1)
+                    {
+                        offertxt5 = "Recharge " + allVoucher[i].amountTaka + " coin with " + allVoucher[i].amountTaka + " taka and get " + allVoucher[i].getAmount + " minutes free!";
+                    }
+                }
+            }
         }
         private void PerformpopOutRegMsgVisiblility()
         {
@@ -2253,6 +2315,38 @@ namespace ShikkhanobishStudentApp.ViewModel
         private Color showAddCoinTxtColor1;
 
         public Color showAddCoinTxtColor { get => showAddCoinTxtColor1; set => SetProperty(ref showAddCoinTxtColor1, value); }
+
+        private string offertxt11;
+
+        public string offertxt1 { get => offertxt11; set => SetProperty(ref offertxt11, value); }
+
+        private string offertxt21;
+
+        public string offertxt2 { get => offertxt21; set => SetProperty(ref offertxt21, value); }
+
+        private string offertxt31;
+
+        public string offertxt3 { get => offertxt31; set => SetProperty(ref offertxt31, value); }
+
+        private string offertxt41;
+
+        public string offertxt4 { get => offertxt41; set => SetProperty(ref offertxt41, value); }
+
+        private string offertxt51;
+
+        public string offertxt5 { get => offertxt51; set => SetProperty(ref offertxt51, value); }
+
+        private bool addVisibility1;
+
+        public bool addVisibility { get => addVisibility1; set => SetProperty(ref addVisibility1, value); }
+
+        private bool showOffervisibility1;
+
+        public bool showOffervisibility { get => showOffervisibility1; set => SetProperty(ref showOffervisibility1, value); }
+
+        private bool showAddCoinvisibility1;
+
+        public bool showAddCoinvisibility { get => showAddCoinvisibility1; set => SetProperty(ref showAddCoinvisibility1, value); }
 
 
 
