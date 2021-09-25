@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using XF.Material.Forms.UI.Dialogs;
 
 namespace ShikkhanobishStudentApp.View
 {
@@ -21,23 +22,40 @@ namespace ShikkhanobishStudentApp.View
         }
         public async Task getInfo()
         {
-            var pn = await SecureStorage.GetAsync("phonenumber");
-            var pass = await SecureStorage.GetAsync("passowrd");
-            if (pn == null && pass == null)
+            //var currentAppVersion = VersionTracking.CurrentBuild;
+            int currentAppVersion = 1;
+            int currentRealVersion = 1;
+            //var currentRealVersion = await "https://api.shikkhanobish.com/api/ShikkhanobishTeacher/getAppVersion".GetJsonAsync<AppVersion>();
+
+            if (currentAppVersion < currentRealVersion)
             {
-                await Task.Delay(1000);
-                await Application.Current.MainPage.Navigation.PushModalAsync(new LoginPage());
+                using (await MaterialDialog.Instance.LoadingDialogAsync(message: "New Version Is Available! Please download latest version to use Shikkhanobish Teacher App..."))
+                {
+                    await Task.Delay(3000);
+                    await Browser.OpenAsync("https://play.google.com/store/apps/details?id=com.shikkhanobishteacher.shikkhanobishteacher");
+                }
             }
             else
             {
-                StaticPageToPassData.thisstPass = pass;
-                StaticPageToPassData.thisStPh = pn;
-                StaticPageToPassData.isFromLogin = false;
-                StaticPageToPassData.thisStudentInfo = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/LoginStudent".PostUrlEncodedAsync(new { phonenumber = StaticPageToPassData.thisStPh, password = StaticPageToPassData.thisstPass })
-              .ReceiveJson<Student>();
-                await Task.Delay(1000);
-                Application.Current.MainPage.Navigation.PushModalAsync(new TakeTuitionView(false));
+                var pn = await SecureStorage.GetAsync("phonenumber");
+                var pass = await SecureStorage.GetAsync("passowrd");
+                if (pn == null && pass == null)
+                {
+                    await Task.Delay(1000);
+                    await Application.Current.MainPage.Navigation.PushModalAsync(new LoginPage());
+                }
+                else
+                {
+                    StaticPageToPassData.thisstPass = pass;
+                    StaticPageToPassData.thisStPh = pn;
+                    StaticPageToPassData.isFromLogin = false;
+                    StaticPageToPassData.thisStudentInfo = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/LoginStudent".PostUrlEncodedAsync(new { phonenumber = StaticPageToPassData.thisStPh, password = StaticPageToPassData.thisstPass })
+                  .ReceiveJson<Student>();
+                    Application.Current.MainPage.Navigation.PushModalAsync(new TakeTuitionView(false));
+                }
+
             }
+            
             
 
         }

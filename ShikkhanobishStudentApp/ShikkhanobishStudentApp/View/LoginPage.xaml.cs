@@ -27,44 +27,48 @@ namespace ShikkhanobishStudentApp.View
             var current = Connectivity.NetworkAccess;
             if (current == NetworkAccess.Internet)
             {
-                showLoading("Checking...");
-                await Task.Delay(1000);
-                errortxt.TextColor = Color.White;
-                if (pn.Text != null && pass.Text != null)
+                //showLoading("Checking...");
+                using (var dialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Please Wait..."))
                 {
-                    Student thistudent = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/LoginStudent".PostUrlEncodedAsync(new { phonenumber = pn.Text, password = pass.Text })
-      .ReceiveJson<Student>();
-                    if (pn.Text == thistudent.phonenumber && pass.Text == thistudent.password)
+                    await Task.Delay(1000);
+                    errortxt.TextColor = Color.White;
+                    if (pn.Text != null && pass.Text != null)
                     {
-                        StaticPageToPassData.thisStudentInfo = thistudent;
-                        //dialog.MessageText = "Loggin In...";
-                        if (chkBox.IsChecked)
+                        Student thistudent = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/LoginStudent".PostUrlEncodedAsync(new { phonenumber = pn.Text, password = pass.Text })
+          .ReceiveJson<Student>();
+                        if (pn.Text == thistudent.phonenumber && pass.Text == thistudent.password)
                         {
-                            await SecureStorage.SetAsync("phonenumber", pn.Text);
-                            await SecureStorage.SetAsync("passowrd", pass.Text);
+                            StaticPageToPassData.thisStudentInfo = thistudent;
+                            //dialog.MessageText = "Loggin In...";
+                            if (chkBox.IsChecked)
+                            {
+                                await SecureStorage.SetAsync("phonenumber", pn.Text);
+                                await SecureStorage.SetAsync("passowrd", pass.Text);
+                            }
+                            errortxt.Text = "";
+                            pn.Text = "";
+                            pass.Text = "";
+                            StaticPageToPassData.isFromLogin = true;
+                            await Application.Current.MainPage.Navigation.PushModalAsync(new TakeTuitionView(false));
                         }
-                        errortxt.Text = "";
-                        pn.Text = "";
-                        pass.Text = "";
-                        StaticPageToPassData.isFromLogin = true;
-                        await Application.Current.MainPage.Navigation.PushModalAsync(new TakeTuitionView(false));
+                        else
+                        {
+                            pn.HasError = true;
+                            pn.ErrorText = "Incorrect Phone Number or Password!";
+                            pass.HasError = true;
+                        }
+
                     }
                     else
                     {
                         pn.HasError = true;
-                        pn.ErrorText = "Incorrect Phone Number or Password!";
+                        pn.ErrorText = "Phone Number Or Password can't be empty!";
                         pass.HasError = true;
                     }
-
+                    loginbtn.IsEnabled = true;
                 }
-                else
-                {
-                    pn.HasError = true;
-                    pn.ErrorText = "Phone Number Or Password can't be empty!";
-                    pass.HasError = true;
-                }
-                loginbtn.IsEnabled = true;
-                hideLoading();
+                
+                //hideLoading();
             }
             else
             {
@@ -92,5 +96,25 @@ namespace ShikkhanobishStudentApp.View
         {
 
         }
+        protected override bool OnBackButtonPressed()
+        {
+            EndOrBackBtn();
+            return true;
+        }
+
+        private async Task EndOrBackBtn()
+        {
+            var actions = new string[] { "Yes", "No" };
+
+            //Show simple dialog
+            var result = await MaterialDialog.Instance.SelectActionAsync(title: "Do you want to exit this app?",
+                                                             actions: actions);
+            if (result == 0)
+            {
+                System.Diagnostics.Process.GetCurrentProcess().Kill();
+            }
+
+        }
+
     }
 }

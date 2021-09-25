@@ -141,8 +141,8 @@ namespace ShikkhanobishStudentApp.ViewModel
         #region Methods
         public async Task PerformshowSuggestion()
         {
-            await MaterialDialog.Instance.AlertAsync(message: "এই সেকশনে আপনি কি শিখতে চাচ্ছেন তা নিয়ে কিছু লিখবেন অথবা আপনার প্রশ্ন থাকলে তা সরাসরি করবেন। যেমনঃ \"আমি পদার্থ বিজ্ঞানের টর্ক টপিকটা ভাল করে বুঝতে চাই।\" অথবা \"ব্যবসায় উদ্যোগগের ব্যবসায় পরিকল্পনা চাপ্টারটি বুঝতে চাই\"",
-                                    title: "কি লিখবেন এই এইখানে?");
+            await MaterialDialog.Instance.AlertAsync(message: "এই সেকশনে আপনি কি শিখতে চাচ্ছেন তা নিয়ে কিছু লিখবেন অথবা আপনার প্রশ্ন থাকলে তা সরাসরি করবেন। যেমনঃ \"আমি পদার্থ বিজ্ঞানের টর্ক টপিকটা ভাল করে বুঝতে চাই।\" অথবা \"ব্যবসায় উদ্যোগের ব্যবসায় পরিকল্পনা চাপ্টারটি বুঝতে চাই\"",
+                                    title: "কি লিখবেন এইখানে?");
 
         }
         public async Task GetAllCost()
@@ -312,10 +312,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                     totalAmount = rechargeAmount + " Taka";
                     freeminInaddCoinScreen = 0 + "";
                 }
-                if (allVoucher[i].type == 0)
-                {
-                    
-                }
+
                 
                
             }
@@ -335,13 +332,14 @@ namespace ShikkhanobishStudentApp.ViewModel
         private async Task PerformlogoutAsync()
         {            
             SecureStorage.RemoveAll();
+            _connection.StopAsync();
             if (StaticPageToPassData.isFromLogin)
             {
                 await Application.Current.MainPage.Navigation.PopModalAsync();
             }
             else
             {
-                var existingPages = Application.Current.MainPage.Navigation.NavigationStack.ToList();
+                var existingPages = Application.Current.MainPage.Navigation.ModalStack.ToList();
                 foreach (var page in existingPages)
                 {
                     Application.Current.MainPage.Navigation.RemovePage(page);
@@ -684,8 +682,9 @@ namespace ShikkhanobishStudentApp.ViewModel
 
             chooseTeacherVisibility = false;
             selectedTeacherConnectingVisibility = true;
-            connectingTeachertxt = "Conneting with Shikkhanobish Teacher Server. Please Wait...";
+            connectingTeachertxt = "Searching Teacher...";
             teacherisSelected = 0;
+            //select Teacher
             while (teacherisSelected == 0)
             {
                 if (thisSelectedFavPopUpTeacher == 0)
@@ -698,8 +697,11 @@ namespace ShikkhanobishStudentApp.ViewModel
                 {
                     teacherisSelected = thisSelectedFavPopUpTeacher;
                 }
+               
             }
-            
+
+            connectingTeachertxt = "Teacher Found! Calling " + SelectedTeacher.name + "...";
+            //Call teacher
             int thisCost = thisTuitionCostCal();
             string uriToCAllTeacher = "https://shikkhanobishrealtimeapi.shikkhanobish.com/api/ShikkhanobishSignalR/CallSelectedTeacher?&teacherID=" + teacherisSelected + "&des=" + detailTxt + "&cls=" + SelectedClassName + "&sub=" + thisSearcherSubId + "&chapter=" + selectedChapterName + "&cost=" + thisCost + "&name=" + StaticPageToPassData.thisStudentInfo.name + "&studentID=" + StaticPageToPassData.thisStudentInfo.studentID;
             await realtimeapi.ExecuteRealTimeApi(uriToCAllTeacher);
@@ -781,9 +783,21 @@ namespace ShikkhanobishStudentApp.ViewModel
                         int teacherisSelected;
                         if (thisSelectedFavPopUpTeacher == 0)
                         {
-                            SelectedTeacher = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/HireTeacherAsync".PostUrlEncodedAsync(new { subID = thisSearcherSubId })
-                   .ReceiveJson<Teacher>();
-                            teacherisSelected = SelectedTeacher.teacherID;
+                            teacherisSelected = 0;
+                            //select Teacher
+                            while (teacherisSelected == 0)
+                            {
+                                if (thisSelectedFavPopUpTeacher == 0)
+                                {
+                                    SelectedTeacher = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/HireTeacherAsync".PostUrlEncodedAsync(new { subID = thisSearcherSubId })
+                           .ReceiveJson<Teacher>();
+                                    teacherisSelected = SelectedTeacher.teacherID;
+                                }
+                                else
+                                {
+                                    teacherisSelected = thisSelectedFavPopUpTeacher;
+                                }                               
+                            }
                             int thisCost = 0;
                             if (selectedInsName == "School")
                             {
@@ -793,6 +807,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                             {
                                 thisCost = Allcost.CollegeCost ;
                             }
+                            connectingTeachertxt = "Teacher Found! Calling " + SelectedTeacher.name + "...";
                             string uriToCAllTeacher = "https://shikkhanobishrealtimeapi.shikkhanobish.com/api/ShikkhanobishSignalR/CallSelectedTeacher?&teacherID=" + teacherisSelected + "&des=" + detailTxt + "&cls=" + SelectedClassName + "&sub=" + thisSearcherSubId + "&chapter=" + selectedChapterName + "&cost=" + thisTuitionCostCal() + "&name=" + StaticPageToPassData.thisStudentInfo.name + "&studentID=" + StaticPageToPassData.thisStudentInfo.studentID;
                             await realtimeapi.ExecuteRealTimeApi(uriToCAllTeacher);
                         }
