@@ -22,17 +22,16 @@ namespace ShikkhanobishStudentApp.View
         }
         public async Task getInfo()
         {
-            //var currentAppVersion = VersionTracking.CurrentBuild;
-            int currentAppVersion = 1;
-            int currentRealVersion = 1;
-            //var currentRealVersion = await "https://api.shikkhanobish.com/api/ShikkhanobishTeacher/getAppVersion".GetJsonAsync<AppVersion>();
+            var currentAppVersion = VersionTracking.CurrentBuild;
 
-            if (currentAppVersion < currentRealVersion)
+            var currentRealVersion = await "https://api.shikkhanobish.com/api/ShikkhanobishTeacher/getAppVersion".GetJsonAsync<AppVersion>();
+
+            if (int.Parse(currentAppVersion) < currentRealVersion.studentAtVersion)
             {
                 using (await MaterialDialog.Instance.LoadingDialogAsync(message: "New Version Is Available! Please download latest version to use Shikkhanobish Teacher App..."))
                 {
                     await Task.Delay(3000);
-                    await Browser.OpenAsync("https://play.google.com/store/apps/details?id=com.shikkhanobishteacher.shikkhanobishteacher");
+                    await Browser.OpenAsync("https://play.google.com/store/apps/details?id=com.shikkhanobish.shikkhanobishstudentapp");
                 }
             }
             else

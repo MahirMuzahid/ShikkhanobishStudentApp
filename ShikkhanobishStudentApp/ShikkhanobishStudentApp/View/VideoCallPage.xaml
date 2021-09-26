@@ -12,9 +12,10 @@
 
     <Grid >
         <Grid.RowDefinitions>
-            <RowDefinition Height="9*"/>
-            <RowDefinition Height="1.4*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="100"/>
         </Grid.RowDefinitions>
+        <Label Text="Connecting With Teacher..." HorizontalOptions="Center" VerticalOptions="Center"/>
         <Grid Grid.Row="0" BindableLayout.ItemsSource="{Binding Path=StreamIdCollection, Source={x:Static vonage:CrossVonage.Current}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>

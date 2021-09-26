@@ -339,12 +339,13 @@ namespace ShikkhanobishStudentApp.ViewModel
             }
             else
             {
+                await Application.Current.MainPage.Navigation.PushModalAsync(new LoginPage());
                 var existingPages = Application.Current.MainPage.Navigation.ModalStack.ToList();
                 foreach (var page in existingPages)
                 {
                     Application.Current.MainPage.Navigation.RemovePage(page);
                 }
-                await Application.Current.MainPage.Navigation.PushModalAsync(new LoginPage());
+               
             }
             
         }
@@ -726,27 +727,31 @@ namespace ShikkhanobishStudentApp.ViewModel
             chooseTeacherVisibility = true;
 
         }
-        private void PerformacceptTeacherTuition()
+        private async Task PerformacceptTeacherTuition()
         {
             if (!CrossVonage.Current.TryStartSession())
             {
                 return;
             }
-            PerMinPassModel perminPass = new PerMinPassModel();
-            perminPass.studentID = StaticPageToPassData.thisStudentInfo.studentID;
-            perminPass.teacherID = teacherisSelected;
-            perminPass.time = 0;
-            perminPass.sessionID = thisSesionID;
-            perminPass.firstChoiceID = firstChoiceID + "";
-            perminPass.secondChoiceID = secondChoiceID + "";
-            perminPass.thirdChoiceID = thirdChoiceID + "";
-            perminPass.forthChoiceID = forthChoiceID + "";
-            perminPass.firstChoiceName = SelectedInsName;
-            perminPass.secondChoiceName = SelectedClassName;
-            perminPass.thirdChoiceName = SelectedSubjectName;
-            perminPass.forthChoiceName = selectedChapterName;
-            StaticPageToPassData.perMinCall = perminPass;
-            Application.Current.MainPage.Navigation.PushModalAsync(new VideoCallPage());
+            using (await MaterialDialog.Instance.LoadingDialogAsync(message: "Connecting Video Call..."))
+            {
+                PerMinPassModel perminPass = new PerMinPassModel();
+                perminPass.studentID = StaticPageToPassData.thisStudentInfo.studentID;
+                perminPass.teacherID = teacherisSelected;
+                perminPass.time = 0;
+                perminPass.sessionID = thisSesionID;
+                perminPass.firstChoiceID = firstChoiceID + "";
+                perminPass.secondChoiceID = secondChoiceID + "";
+                perminPass.thirdChoiceID = thirdChoiceID + "";
+                perminPass.forthChoiceID = forthChoiceID + "";
+                perminPass.firstChoiceName = SelectedInsName;
+                perminPass.secondChoiceName = SelectedClassName;
+                perminPass.thirdChoiceName = SelectedSubjectName;
+                perminPass.forthChoiceName = selectedChapterName;
+                StaticPageToPassData.perMinCall = perminPass;
+                Application.Current.MainPage.Navigation.PushModalAsync(new VideoCallPage());
+            }
+            
         }
         public async Task requestPermission()
         {
@@ -2126,7 +2131,7 @@ namespace ShikkhanobishStudentApp.ViewModel
             {
                 if (acceptTeacherTuition1 == null)
                 {
-                    acceptTeacherTuition1 = new Command(PerformacceptTeacherTuition);
+                    acceptTeacherTuition1 = new Command(async => PerformacceptTeacherTuition());
                 }
 
                 return acceptTeacherTuition1;

@@ -21,6 +21,7 @@
          which is used to tint widgets -->
     <!--<item name="colorAccent">#FF4081</item>-->
 	  <item name="android:colorPressedHighlight">@color/ListViewSelected</item>
+	  <item name="android:forceDarkAllowed">false</item>
 	  <item name="android:colorLongPressedHighlight">@color/ListViewHighlighted</item>
 	  <item name="android:colorFocusedHighlight">@color/ListViewSelected</item>
 	  <item name="android:colorActivatedHighlight">@color/ListViewSelected</item>

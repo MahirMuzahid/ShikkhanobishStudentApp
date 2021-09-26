@@ -779,7 +779,7 @@
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="4*"/>
                 </Grid.ColumnDefinitions>
-                <Image  Source="loading.gif"  Grid.Column="0" Margin="10" IsAnimationPlaying="True"/>
+                
                 <Label Text="Please Wait..." Grid.Column="1" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" FontAttributes="Bold"/>
             </Grid>
         </Grid>

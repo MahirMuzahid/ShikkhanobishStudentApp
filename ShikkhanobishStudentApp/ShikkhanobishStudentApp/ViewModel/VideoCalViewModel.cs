@@ -72,7 +72,7 @@ namespace ShikkhanobishStudentApp.ViewModel
         }
         public async Task SendApiCall()
         {
-            if(timerMinCounter == 0)
+            if (timerMinCounter == 0)
             {
                 await GetAllCost();
             }
@@ -126,9 +126,17 @@ namespace ShikkhanobishStudentApp.ViewModel
                 {
                     isBalanceOver = true;
                 }
-                if (student.freemin == 0 && student.coin < cost * 2)
+                else if (student.freemin == 1 )
                 {
-                    isLastMin = true;
+                    if(student.coin < cost * 2)
+                    {
+                        isLastMin = true;
+                    }
+                    else
+                    {
+                        isLastMin = false;
+                    }
+                    
                 }
             }
             else
@@ -136,6 +144,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                 using (var dialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Insufficient Balance To Continue Call..."))
                 {
                     Task.Delay(1000);
+                    TimerContinue = false;
                     Application.Current.MainPage.Navigation.PushModalAsync(new RattingPageView());
                     string cutUrlCall = "https://shikkhanobishrealtimeapi.shikkhanobish.com/api/ShikkhanobishSignalR/CutVideoCall?&teacherID=" + StaticPageToPassData.lastTeacherID + "&studentID=" + StaticPageToPassData.thisStudentInfo.studentID + "&isCut=" + true;
                     await realtimeapi.ExecuteRealTimeApi(cutUrlCall);
