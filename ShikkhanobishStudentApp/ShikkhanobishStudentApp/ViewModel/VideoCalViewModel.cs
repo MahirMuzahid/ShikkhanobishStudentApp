@@ -76,25 +76,48 @@ namespace ShikkhanobishStudentApp.ViewModel
             {
                 await GetAllCost();
             }
-            if (!isBalanceOver)
+            int cost = 0;
+            PerMinPassModel perminCall = StaticPageToPassData.perMinCall;
+            int time = timerMinCounter + 1;
+            if (perminCall.firstChoiceID == "101")
             {
-                int cost = 0;
-                PerMinPassModel perminCall = StaticPageToPassData.perMinCall;
-                int time = timerMinCounter + 1;
-                if (perminCall.firstChoiceID == "101")
+                totalCostCount = totalCostCount + Allcost.SchoolCost;
+                cost = Allcost.SchoolCost;
+                totaolCost = totalCostCount + "";
+            }
+            if (perminCall.firstChoiceID == "102")
+            {
+                totalCostCount = totalCostCount + Allcost.CollegeCost;
+                cost = Allcost.CollegeCost;
+                totaolCost = totalCostCount + "";
+            }
+            StaticPageToPassData.lastTuitionHistoryID = perminCall.sessionID;
+            StaticPageToPassData.lastTeacherID = perminCall.teacherID;
+            bool cintinueTuition = true;
+            var student = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getStudentWithID".PostUrlEncodedAsync(new { studentID = StaticPageToPassData.thisStudentInfo.studentID })
+.ReceiveJson<Student>();          
+            if ((student.freemin == 1 && student.coin < cost) || (student.freemin == 0 && student.coin > cost && student.coin < cost*2))
+            {
+                var result = await MaterialDialog.Instance.ConfirmAsync(message: "You do not have enough balance to continue after 1 minuite. Call will cut autometicly after 1 minuite",
+                                confirmingText: "Ok");
+                string lastMinCall = "https://shikkhanobishrealtimeapi.shikkhanobish.com/api/ShikkhanobishSignalR/LastMinAlert?&teacherID=" + perminCall.teacherID + "&studentID=" + perminCall.studentID + "&isLastMin=" + true;
+                await realtimeapi.ExecuteRealTimeApi(lastMinCall);
+            }          
+            else if (student.freemin == 0 && student.coin < cost)
+            {
+                using (var dialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Insufficient Balance To Continue Call..."))
                 {
-                    totalCostCount = totalCostCount + Allcost.SchoolCost;
-                    cost = Allcost.SchoolCost;
-                    totaolCost = totalCostCount + "";
+                    cintinueTuition = false;
+                    Task.Delay(1000);
+                    TimerContinue = false;
+                    Application.Current.MainPage.Navigation.PushModalAsync(new RattingPageView());
+                    string cutUrlCall = "https://shikkhanobishrealtimeapi.shikkhanobish.com/api/ShikkhanobishSignalR/CutVideoCall?&teacherID=" + StaticPageToPassData.lastTeacherID + "&studentID=" + StaticPageToPassData.thisStudentInfo.studentID + "&isCut=" + true;
+                    await realtimeapi.ExecuteRealTimeApi(cutUrlCall);
+                    CrossVonage.Current.EndSession();
                 }
-                if (perminCall.firstChoiceID == "102")
-                {
-                    totalCostCount = totalCostCount + Allcost.CollegeCost;
-                    cost = Allcost.CollegeCost;
-                    totaolCost = totalCostCount + "";
-                }
-                StaticPageToPassData.lastTuitionHistoryID = perminCall.sessionID;
-                StaticPageToPassData.lastTeacherID = perminCall.teacherID;
+            }
+            if (cintinueTuition)
+            {
                 var res = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/PerMinPassCall".PostUrlEncodedAsync(new
                 {
                     studentID = perminCall.studentID,
@@ -110,51 +133,16 @@ namespace ShikkhanobishStudentApp.ViewModel
                     thirdChoiceName = perminCall.thirdChoiceName,
                     forthChoiceName = perminCall.forthChoiceName
                 })
-         .ReceiveJson<PerMinCallResponse>();
+     .ReceiveJson<PerMinCallResponse>();
                 string SendTimeAndCostInfo = "https://shikkhanobishrealtimeapi.shikkhanobish.com/api/ShikkhanobishSignalR/SendTimeAndCostInfo?&teacherID=" + perminCall.teacherID + "&studentID=" + perminCall.studentID + "&time=" + time + "&earned=" + res.earned;
                 await realtimeapi.ExecuteRealTimeApi(SendTimeAndCostInfo);
-                if (isLastMin)
-                {
-                    var result = await MaterialDialog.Instance.ConfirmAsync(message: "You do not have enough balance to continue after 1 minuite. Call will cut autometicly after 1 minuite",
-                                      confirmingText: "Ok");
-                    string lastMinCall = "https://shikkhanobishrealtimeapi.shikkhanobish.com/api/ShikkhanobishSignalR/LastMinAlert?&teacherID=" + perminCall.teacherID + "&studentID=" + perminCall.studentID + "&isLastMin=" + true;
-                    await realtimeapi.ExecuteRealTimeApi(lastMinCall);
-                }
-                var student = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getStudentWithID".PostUrlEncodedAsync(new { studentID = StaticPageToPassData.thisStudentInfo.studentID })
-    .ReceiveJson<Student>();
-                if (student.freemin == 0 && student.coin < cost)
-                {
-                    isBalanceOver = true;
-                }
-                else if (student.freemin == 1 )
-                {
-                    if(student.coin < cost * 2)
-                    {
-                        isLastMin = true;
-                    }
-                    else
-                    {
-                        isLastMin = false;
-                    }
-                    
-                }
             }
-            else
-            {
-                using (var dialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Insufficient Balance To Continue Call..."))
-                {
-                    Task.Delay(1000);
-                    TimerContinue = false;
-                    Application.Current.MainPage.Navigation.PushModalAsync(new RattingPageView());
-                    string cutUrlCall = "https://shikkhanobishrealtimeapi.shikkhanobish.com/api/ShikkhanobishSignalR/CutVideoCall?&teacherID=" + StaticPageToPassData.lastTeacherID + "&studentID=" + StaticPageToPassData.thisStudentInfo.studentID + "&isCut=" + true;
-                    await realtimeapi.ExecuteRealTimeApi(cutUrlCall);
-                    CrossVonage.Current.EndSession();                   
-                }
-                   
-            }
+            
 
+            //Ui in client
+            
            
-
+            
         }
         public async Task EndOrBackBtn()
         {
