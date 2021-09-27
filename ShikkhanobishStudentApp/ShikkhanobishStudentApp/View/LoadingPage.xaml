@@ -2,23 +2,16 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ShikkhanobishStudentApp.View.LoadingPage">
-    <ScrollView>
-        <Grid >
-            <Grid.RowDefinitions>
-                <RowDefinition Height="900"/>
-            </Grid.RowDefinitions>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Image Source="logo.png" Grid.Row="0" Aspect="AspectFit" Margin="30,0,30,0"/>
+        <Label Text="Loading Shikkhanobish. Please wait..." Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Start"/>
+        <ProgressBar x:Name="prgs" Grid.Row="1" VerticalOptions="End" Margin="10,0,0,10"/>
+    </Grid>
 
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
-                </Grid.RowDefinitions>
-                <Image Source="logo.png" Grid.Row="0" Aspect="AspectFit" Margin="30,0,30,0"/>
-                <Label Text="Loading Shikkhanobish. Please wait..." Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center"/>
-            </Grid>
-        </Grid>
-    </ScrollView>
 
-    
 </ContentPage>

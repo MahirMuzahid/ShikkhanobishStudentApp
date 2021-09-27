@@ -749,6 +749,8 @@ namespace ShikkhanobishStudentApp.ViewModel
                 perminPass.thirdChoiceName = SelectedSubjectName;
                 perminPass.forthChoiceName = selectedChapterName;
                 StaticPageToPassData.perMinCall = perminPass;
+                var res = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/setPendingRatting".PostUrlEncodedAsync(new { studentID = StaticPageToPassData.thisStudentInfo.studentID, tuitionID = thisSesionID })
+                  .ReceiveJson<Response>();
                 Application.Current.MainPage.Navigation.PushModalAsync(new VideoCallPage());
             }
             
