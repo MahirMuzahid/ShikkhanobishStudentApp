@@ -5,6 +5,7 @@ using ShikkhanobishStudentApp.View;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -29,10 +30,12 @@ namespace ShikkhanobishStudentApp.ViewModel
         public VideoCalViewModel()
         {
             isBalanceOver = false;
+            hideStudent = true;
+            hideVideotxt = "Hide Video";
             isLastMin = false;
             TimerContinue = true;
             timeColor = Color.LightSeaGreen;
-            timerSecCounter = 15;
+            timerSecCounter = 20;
             timerMinCounter = 0;
             totalCostCount = 0;
             totaolCost = totalCostCount + "";
@@ -146,19 +149,61 @@ namespace ShikkhanobishStudentApp.ViewModel
         }
         public async Task EndOrBackBtn()
         {
-            var result = await MaterialDialog.Instance.ConfirmAsync(message: "Do you want to cut the call?",
+            string msg;
+            if (isSafeTiemAvailable)
+            {
+                msg = "If you cut the call now you won't be charge any coin. Do you want to cuyt the call?";
+            }
+            else
+            {
+                msg = "Do you want to cut the call ? ";
+            }
+                
+            var result = await MaterialDialog.Instance.ConfirmAsync(message: msg,
                                     confirmingText: "Yes",
                                     dismissiveText: "No");           
             if (result == true)
             {
-                string cutUrlCall = "https://shikkhanobishrealtimeapi.shikkhanobish.com/api/ShikkhanobishSignalR/CutVideoCall?&teacherID=" + StaticPageToPassData.lastTeacherID + "&studentID=" + StaticPageToPassData.thisStudentInfo.studentID + "&isCut=" + true;
-                realtimeapi.ExecuteRealTimeApi(cutUrlCall);
-                TimerContinue = false;
-                CrossVonage.Current.EndSession();
-                //CrossVonage.Current.MessageReceived -= OnMessageReceived;
-               Application.Current.MainPage.Navigation.PushModalAsync(new RattingPageView());
+                using (var dialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Please Wait..."))
+                {
+                    string cutUrlCall = "https://shikkhanobishrealtimeapi.shikkhanobish.com/api/ShikkhanobishSignalR/CutVideoCall?&teacherID=" + StaticPageToPassData.lastTeacherID + "&studentID=" + StaticPageToPassData.thisStudentInfo.studentID + "&isCut=" + true;
+                    await realtimeapi.ExecuteRealTimeApi(cutUrlCall);
+                    TimerContinue = false;
+                    CrossVonage.Current.EndSession();
+                    if (isSafeTiemAvailable)
+                    {
+                        var reresponses = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/deletePendingTuition".PostUrlEncodedAsync(new { studentID = StaticPageToPassData.thisStudentInfo.studentID })
+                    .ReceiveJson<Response>();
+                        await StaticPageToPassData.GetStudent();
+                        Application.Current.MainPage.Navigation.PushModalAsync(new TakeTuitionView(false));
+                        var existingPages = Application.Current.MainPage.Navigation.ModalStack.ToList();
+                        foreach (var page in existingPages)
+                        {
+                            Application.Current.MainPage.Navigation.RemovePage(page);
+                        }
+                    }
+                    else
+                    {
+                        Application.Current.MainPage.Navigation.PushModalAsync(new RattingPageView());
+                    }
+                }
+                    
             }
 
+
+        }
+        private void PerformhideStudentCmd()
+        {
+            if (hideStudent)
+            {
+                hideStudent = false;
+                hideVideotxt = "Show Video";
+            }
+            else
+            {
+                hideStudent = true;
+                hideVideotxt = "Hide Video";
+            }
 
         }
         private void PerformEndCall()
@@ -202,7 +247,31 @@ namespace ShikkhanobishStudentApp.ViewModel
             }
         }
 
-        
+        private bool hideStudent1;
+
+        public bool hideStudent { get => hideStudent1; set => SetProperty(ref hideStudent1, value); }
+
+        private Command hideStudentCmd1;
+
+        public ICommand hideStudentCmd
+        {
+            get
+            {
+                if (hideStudentCmd1 == null)
+                {
+                    hideStudentCmd1 = new Command(PerformhideStudentCmd);
+                }
+
+                return hideStudentCmd1;
+            }
+        }
+
+        private string hideVideotxt1;
+
+        public string hideVideotxt { get => hideVideotxt1; set => SetProperty(ref hideVideotxt1, value); }
+
+
+
         #endregion
     }
 }

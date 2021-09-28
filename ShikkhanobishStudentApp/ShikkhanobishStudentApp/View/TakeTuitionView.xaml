@@ -685,7 +685,7 @@
                 </Label>
                 <Frame BackgroundColor="Black" Grid.Row="2" Grid.Column="1" HasShadow="False"/>
                 <Label Text="Choose from your favourite teacher" Grid.Row="3" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center"  IsVisible="{Binding choosefavteacherlbl}"/>
-                <Label Text="You do not have any favourite teacher of this subject" Grid.Row="4" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="{Binding nofavteacherlbl}" TextColor="#40000000"/>
+                <Label Text="You do not have any favourite teacher or active favourite teacher of this subject" Grid.Row="4" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="{Binding nofavteacherlbl}" TextColor="#40000000"/>
                 <ListView  ItemsSource="{Binding popupfavteacheritemSource}" Grid.Row="4" Grid.Column="1"  RowHeight="80" SeparatorColor="Black"   >
                     <ListView.ItemTemplate>
                         <DataTemplate>

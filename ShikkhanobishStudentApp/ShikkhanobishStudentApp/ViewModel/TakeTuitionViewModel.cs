@@ -37,7 +37,7 @@ namespace ShikkhanobishStudentApp.ViewModel
         bool isPremiumRechurge;
         CostClass Allcost = new CostClass();
         private int thisSearcherSubId;
-        private int thisSelectedFavPopUpTeacher;
+        private Teacher thisSelectedFavPopUpTeacher = new Teacher();
         HubConnection _connection = null;
         Teacher SelectedTeacher = new Teacher();
         string url = "https://shikkhanobishRealTimeAPi.shikkhanobish.com/ShikkhanobishHub";
@@ -83,6 +83,7 @@ namespace ShikkhanobishStudentApp.ViewModel
         public async Task homeFirst(bool fromReg)
         {
             PerformshowAddCoin();
+           
             rechargeCoinBackVisibility = false;
             isLoading = false;
             isNewUpdate = "";
@@ -136,7 +137,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                 await GetPromotImage();
                 isLoading = false;
             }
-
+            randonpopupTeacherbtnColor = Color.FromHex("#ECECEC");
         }
         #region Methods
         public async Task PerformshowSuggestion()
@@ -339,13 +340,14 @@ namespace ShikkhanobishStudentApp.ViewModel
             }
             else
             {
-                await Application.Current.MainPage.Navigation.PushModalAsync(new LoginPage());
+               
                 var existingPages = Application.Current.MainPage.Navigation.ModalStack.ToList();
                 foreach (var page in existingPages)
                 {
                     Application.Current.MainPage.Navigation.RemovePage(page);
                 }
-               
+                await Application.Current.MainPage.Navigation.PushModalAsync(new LoginPage());
+
             }
             
         }
@@ -656,7 +658,7 @@ namespace ShikkhanobishStudentApp.ViewModel
         {
             if (randonpopupTeacherbtnColor == Color.FromHex("#5098E87F"))
             {
-                randonpopupTeacherbtnColor = Color.Transparent;
+                randonpopupTeacherbtnColor = Color.FromHex("#ECECEC");
                 hireteacherEnabled = false;
             }
             else
@@ -669,12 +671,15 @@ namespace ShikkhanobishStudentApp.ViewModel
                 {
                     newfavTeacher[i].popupfavSelectedbackground = "#Transparent";
                     newfavTeacher[i].teacherRatting = Math.Round(newfavTeacher[i].teacherRatting, 2);
+                    newfavTeacher[i].activeStatus = "Online";
+                    newfavTeacher[i].activeColor = "Green";
+                    nofavteacherlbl = false;
                 }
                 popupfavteacheritemSource.Clear();
                 popupfavteacheritemSource = newfavTeacher;
                 thisfavteacher = newfavTeacher;
                 hireteacherEnabled = true;
-                thisSelectedFavPopUpTeacher = 0;
+                thisSelectedFavPopUpTeacher.teacherID = 0;
             }
 
         }
@@ -684,24 +689,27 @@ namespace ShikkhanobishStudentApp.ViewModel
             chooseTeacherVisibility = false;
             selectedTeacherConnectingVisibility = true;
             connectingTeachertxt = "Searching Teacher...";
+            Teacher thisTeacher = new Teacher();
             teacherisSelected = 0;
             //select Teacher
             while (teacherisSelected == 0)
             {
-                if (thisSelectedFavPopUpTeacher == 0)
+                if (thisSelectedFavPopUpTeacher.teacherID == 0)
                 {
                     SelectedTeacher = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/HireTeacherAsync".PostUrlEncodedAsync(new { subID = thisSearcherSubId })
            .ReceiveJson<Teacher>();
                     teacherisSelected = SelectedTeacher.teacherID;
+                    thisTeacher = SelectedTeacher;
                 }
                 else
                 {
-                    teacherisSelected = thisSelectedFavPopUpTeacher;
+                    teacherisSelected = thisSelectedFavPopUpTeacher.teacherID;
+                    thisTeacher = thisSelectedFavPopUpTeacher;
                 }
                
             }
 
-            connectingTeachertxt = "Teacher Found! Calling " + SelectedTeacher.name + "...";
+            connectingTeachertxt = "Teacher Found! Waiting for response...";
             //Call teacher
             int thisCost = thisTuitionCostCal();
             string uriToCAllTeacher = "https://shikkhanobishrealtimeapi.shikkhanobish.com/api/ShikkhanobishSignalR/CallSelectedTeacher?&teacherID=" + teacherisSelected + "&des=" + detailTxt + "&cls=" + SelectedClassName + "&sub=" + thisSearcherSubId + "&chapter=" + selectedChapterName + "&cost=" + thisCost + "&name=" + StaticPageToPassData.thisStudentInfo.name + "&studentID=" + StaticPageToPassData.thisStudentInfo.studentID;
@@ -722,6 +730,7 @@ namespace ShikkhanobishStudentApp.ViewModel
         }
         private void PerformcancleTeacherSearch()
         {
+            string uriToCAllTeacher = "https://shikkhanobishrealtimeapi.shikkhanobish.com/api/ShikkhanobishSignalR/studentTuitionResponse?&teacherID=" + teacherisSelected + "&studentID=" + StaticPageToPassData.thisStudentInfo.studentID + "&studentTuitionResponse=" + false;
             teacherisSelected = 0;
             selectedTeacherConnectingVisibility = false;
             chooseTeacherVisibility = true;
@@ -733,6 +742,8 @@ namespace ShikkhanobishStudentApp.ViewModel
             {
                 return;
             }
+            string sendResponse = "https://shikkhanobishrealtimeapi.shikkhanobish.com/api/ShikkhanobishSignalR/studentTuitionResponse?&teacherID=" + teacherisSelected + "&studentID=" + StaticPageToPassData.thisStudentInfo.studentID + "&studentTuitionResponse=" + true;
+            await realtimeapi.ExecuteRealTimeApi(sendResponse);
             using (await MaterialDialog.Instance.LoadingDialogAsync(message: "Connecting Video Call..."))
             {
                 PerMinPassModel perminPass = new PerMinPassModel();
@@ -786,23 +797,23 @@ namespace ShikkhanobishStudentApp.ViewModel
                 {
                     if (response == false)
                     {
-                        
                         int teacherisSelected;
-                        if (thisSelectedFavPopUpTeacher == 0)
+                        if (thisSelectedFavPopUpTeacher.teacherID == 0)
                         {
                             teacherisSelected = 0;
                             //select Teacher
                             while (teacherisSelected == 0)
                             {
-                                if (thisSelectedFavPopUpTeacher == 0)
+                                if (thisSelectedFavPopUpTeacher.teacherID == 0)
                                 {
+                                    await Task.Delay(2000);
                                     SelectedTeacher = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/HireTeacherAsync".PostUrlEncodedAsync(new { subID = thisSearcherSubId })
                            .ReceiveJson<Teacher>();
                                     teacherisSelected = SelectedTeacher.teacherID;
                                 }
                                 else
                                 {
-                                    teacherisSelected = thisSelectedFavPopUpTeacher;
+                                    teacherisSelected = thisSelectedFavPopUpTeacher.teacherID;
                                 }                               
                             }
                             int thisCost = 0;
@@ -814,25 +825,27 @@ namespace ShikkhanobishStudentApp.ViewModel
                             {
                                 thisCost = Allcost.CollegeCost ;
                             }
-                            connectingTeachertxt = "Teacher Found! Calling " + SelectedTeacher.name + "...";
+                            connectingTeachertxt = "Teacher Found! Waiting for response...";
                             string uriToCAllTeacher = "https://shikkhanobishrealtimeapi.shikkhanobish.com/api/ShikkhanobishSignalR/CallSelectedTeacher?&teacherID=" + teacherisSelected + "&des=" + detailTxt + "&cls=" + SelectedClassName + "&sub=" + thisSearcherSubId + "&chapter=" + selectedChapterName + "&cost=" + thisTuitionCostCal() + "&name=" + StaticPageToPassData.thisStudentInfo.name + "&studentID=" + StaticPageToPassData.thisStudentInfo.studentID;
                             await realtimeapi.ExecuteRealTimeApi(uriToCAllTeacher);
                         }
                         else
                         {
-                            connectingTeachertxt = "Teacher is busy. Choose another teacher.";
-                            Task.Delay(2000);
+                            connectingTeachertxt = "Teacher is unable to teach you. Please, choose another teacher.";
+                            await Task.Delay(2000);
                             selectedTeacherConnectingVisibility = false;
                             chooseTeacherVisibility = true;
-                            teacherisSelected = thisSelectedFavPopUpTeacher;
+                            teacherisSelected = thisSelectedFavPopUpTeacher.teacherID;
                         }
 
                        
                     }
                     else
                     {
+                        var thisTeacher = await "https://api.shikkhanobish.com/api/ShikkhanobishTeacher/getTeacherWithID".PostUrlEncodedAsync(new { teacherID = teacherID })
+                           .ReceiveJson<Teacher>();
                         //ShowNotification("A teacher has been connected accepted your request! Click to join");
-                        connectingTeachertxt = "A teacher has been connected...";
+                        connectingTeachertxt = thisTeacher.name + " has been connected. Please accept call to start tuition...";
                         thisSesionID = sessionID;
                         acceptTeacherVisibility = true;
                         CrossVonage.Current.ApiKey = apikey + "";
@@ -847,15 +860,26 @@ namespace ShikkhanobishStudentApp.ViewModel
                 popupfavteacheritemSource.Clear();
                 popupfavteacheritemSource = await "https://api.shikkhanobish.com/api/ShikkhanobishTeacher/getFavouriteTeacherwithStudentIDForPopUp".PostUrlEncodedAsync(new { studentID = StaticPageToPassData.thisStudentInfo.studentID, subjectID = thisSearcherSubId })
    .ReceiveJson<List<favouriteTeacher>>();
-
+                
                 for (int i = 0; i < popupfavteacheritemSource.Count; i++)
                 {
                     popupfavteacheritemSource[i].activeStatus = "Online";
                     popupfavteacheritemSource[i].activeColor = "Green";
                     popupfavteacheritemSource[i].teacherRatting = Math.Round(popupfavteacheritemSource[i].teacherRatting, 2);
+                    nofavteacherlbl = false;
+                   
                 }
-
-                if(thisSelectedFavPopUpTeacher == teacherID)
+                if(popupfavteacheritemSource.Count == 0)
+                {
+                    choosefavteacherlbl = false;
+                    nofavteacherlbl = true;
+                }
+                else
+                {
+                    choosefavteacherlbl = true;
+                    nofavteacherlbl = false;
+                }
+                if(thisSelectedFavPopUpTeacher.teacherID == teacherID)
                 {
                     hireteacherEnabled = false;
                     randonpopupTeacherbtnColor = Color.Transparent;
@@ -1475,8 +1499,6 @@ namespace ShikkhanobishStudentApp.ViewModel
             {
                 return new Command<favouriteTeacher>(async (favteacher) =>
                 {
-                    //List<favouriteTeacher> newfavTeacher = await "https://api.shikkhanobish.com/api/ShikkhanobishTeacher/getFavouriteTeacherwithStudentIDForPopUp".PostUrlEncodedAsync(new { studentID = StaticPageToPassData.thisStudentInfo.studentID, subjectID = thisSearcherSubId })
-     // .ReceiveJson<List<favouriteTeacher>>();
                     popupfavteacheritemSource.Clear();
                     popupfavteacheritemSource = await "https://api.shikkhanobish.com/api/ShikkhanobishTeacher/getFavouriteTeacherwithStudentIDForPopUp".PostUrlEncodedAsync(new { studentID = StaticPageToPassData.thisStudentInfo.studentID, subjectID = thisSearcherSubId })
        .ReceiveJson<List<favouriteTeacher>>();
@@ -1488,7 +1510,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                         if (popupfavteacheritemSource[i].teacherID == favteacher.teacherID)
                         {
                             popupfavteacheritemSource[i].popupfavSelectedbackground = "#5098E87F";
-                            thisSelectedFavPopUpTeacher = popupfavteacheritemSource[i].teacherID;
+                            thisSelectedFavPopUpTeacher.teacherID = popupfavteacheritemSource[i].teacherID;
                             
                         }
                         else
@@ -1497,10 +1519,8 @@ namespace ShikkhanobishStudentApp.ViewModel
                         }
                         popupfavteacheritemSource[i].teacherRatting = Math.Round(popupfavteacheritemSource[i].teacherRatting, 2);
                     }
-                   //// popupfavteacheritemSource.Clear();
-                    //popupfavteacheritemSource = newfavTeacher;
                     hireteacherEnabled = true;
-                    randonpopupTeacherbtnColor = Color.Transparent;
+                    randonpopupTeacherbtnColor = Color.FromHex("#ECECEC");
                 });
             }
         }
