@@ -444,15 +444,16 @@ namespace ShikkhanobishStudentApp.ViewModel
                 {
                     thispayment.name = "N/A";
                 }
-                
+
                 var redirectURL = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/RequestPayment".PostUrlEncodedAsync(new
-                {
+                {                   
                     name = StaticPageToPassData.thisStudentInfo.name,
                     amount = int.Parse(rechargeAmount),
                     studentID = StaticPageToPassData.thisStudentInfo.studentID,
-                    phonenumber = StaticPageToPassData.thisStudentInfo.phonenumber
-                })
+                    phonenumber = StaticPageToPassData.thisStudentInfo.phonenumber,
+                })               
    .ReceiveJson<string>();
+                thispayment.type = 0;
                 await Application.Current.MainPage.Navigation.PushModalAsync(new PaymentView(redirectURL));
             }
             catch (Exception ex)
@@ -481,9 +482,10 @@ namespace ShikkhanobishStudentApp.ViewModel
                 name = StaticPageToPassData.thisStudentInfo.name,
                 amount = prStudentBuyingAMount,
                 studentID = StaticPageToPassData.thisStudentInfo.studentID,
-                phonenumber = StaticPageToPassData.thisStudentInfo.phonenumber
+                phonenumber = StaticPageToPassData.thisStudentInfo.phonenumber,
             })
             .ReceiveJson<string>();
+            thispayment.type = 1;
             await Application.Current.MainPage.Navigation.PushModalAsync(new PaymentView(redirectURL));
 
             isLoading = false;
@@ -919,8 +921,9 @@ namespace ShikkhanobishStudentApp.ViewModel
                                 cardID = cardID
                             })
                             .ReceiveJson<Response>();
-
-                            var regRes = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/updateStudent"
+                            if(thispayment.type == 0)
+                            {
+                                var regRes = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/updateStudent"
                                 .PostUrlEncodedAsync(new
                                 {
                                     studentID = thispayment.studentID,
@@ -935,6 +938,12 @@ namespace ShikkhanobishStudentApp.ViewModel
                                     institutionName = "none"
                                 })
                                  .ReceiveJson<Response>();
+                            }
+                            else if (thispayment.type == 1)
+                            {
+
+                            }
+                            
 
                             paymentGifGrid = true;
                             SucPaymentText = "You have successfully added " + amount + " coin in your account. Thank you for staying with us.";
