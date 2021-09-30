@@ -72,50 +72,50 @@
             <Frame BackgroundColor="#E9E9E9" Grid.Column="9" IsVisible="{Binding numberVisibility}"/>
             <Frame BackgroundColor="#E9E9E9" Grid.Column="10" IsVisible="{Binding numberVisibility}"/>
 
-            <Label Text="0" Grid.Column="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20" IsVisible="{Binding numberVisibility}"/>
-            <Label Text="1" Grid.Column="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20" IsVisible="{Binding numberVisibility}"/>
+            <Label Text="0" Grid.Column="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20" IsVisible="{Binding numberVisibility}" TextColor="{AppThemeBinding Light=#545454, Dark=#545454}"/>
+            <Label Text="1" Grid.Column="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20" IsVisible="{Binding numberVisibility}" TextColor="{AppThemeBinding Light=#545454, Dark=#545454}"/>
 
-            <localEntry:CustomEntry x:Name="fi"  Grid.Column="2" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20" IsVisible="{Binding numberVisibility}"  Keyboard="Numeric" >
+            <localEntry:CustomEntry x:Name="fi"  Grid.Column="2" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20" IsVisible="{Binding numberVisibility}"  Keyboard="Numeric"  TextColor="{AppThemeBinding Light=#545454, Dark=#545454}">
                 <Entry.Behaviors>
                     <local:EntryFocusBehavior NextFocusElementName="sec"/>
                 </Entry.Behaviors>
             </localEntry:CustomEntry>
-            <localEntry:CustomEntry x:Name="sec" Grid.Column="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"  Keyboard="Numeric" IsVisible="{Binding numberVisibility}">
+            <localEntry:CustomEntry x:Name="sec" Grid.Column="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"  Keyboard="Numeric" IsVisible="{Binding numberVisibility}" TextColor="{AppThemeBinding Light=#545454, Dark=#545454}">
                 <Entry.Behaviors>
                     <local:EntryFocusBehavior NextFocusElementName="th"/>
                 </Entry.Behaviors>
             </localEntry:CustomEntry>
-            <localEntry:CustomEntry x:Name="th" Grid.Column="4" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"  Keyboard="Numeric" IsVisible="{Binding numberVisibility}">
+            <localEntry:CustomEntry x:Name="th" Grid.Column="4" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"  Keyboard="Numeric" IsVisible="{Binding numberVisibility}" TextColor="{AppThemeBinding Light=#545454, Dark=#545454}">
                 <Entry.Behaviors>
                     <local:EntryFocusBehavior NextFocusElementName="fr"/>
                 </Entry.Behaviors>
             </localEntry:CustomEntry>
-            <localEntry:CustomEntry x:Name="fr" Grid.Column="5" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"  Keyboard="Numeric" IsVisible="{Binding numberVisibility}">
+            <localEntry:CustomEntry x:Name="fr" Grid.Column="5" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"  Keyboard="Numeric" IsVisible="{Binding numberVisibility}" TextColor="{AppThemeBinding Light=#545454, Dark=#545454}">
                 <Entry.Behaviors>
                     <local:EntryFocusBehavior NextFocusElementName="fiv"/>
                 </Entry.Behaviors>
             </localEntry:CustomEntry>
-            <localEntry:CustomEntry x:Name="fiv" Grid.Column="6" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"  Keyboard="Numeric" IsVisible="{Binding numberVisibility}">
+            <localEntry:CustomEntry x:Name="fiv" Grid.Column="6" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"  Keyboard="Numeric" IsVisible="{Binding numberVisibility}" TextColor="{AppThemeBinding Light=#545454, Dark=#545454}">
                 <Entry.Behaviors>
                     <local:EntryFocusBehavior NextFocusElementName="si"/>
                 </Entry.Behaviors>
             </localEntry:CustomEntry>
-            <localEntry:CustomEntry x:Name="si" Grid.Column="7" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"  Keyboard="Numeric" IsVisible="{Binding numberVisibility}">
+            <localEntry:CustomEntry x:Name="si" Grid.Column="7" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"  Keyboard="Numeric" IsVisible="{Binding numberVisibility}" TextColor="{AppThemeBinding Light=#545454, Dark=#545454}">
                 <Entry.Behaviors>
                     <local:EntryFocusBehavior NextFocusElementName="sev"/>
                 </Entry.Behaviors>
             </localEntry:CustomEntry>
-            <localEntry:CustomEntry x:Name="sev" Grid.Column="8" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20" IsVisible="{Binding numberVisibility}" Keyboard="Numeric" >
+            <localEntry:CustomEntry x:Name="sev" Grid.Column="8" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20" IsVisible="{Binding numberVisibility}" Keyboard="Numeric" TextColor="{AppThemeBinding Light=#545454, Dark=#545454}">
                 <Entry.Behaviors>
                     <local:EntryFocusBehavior NextFocusElementName="ei"/>
                 </Entry.Behaviors>
             </localEntry:CustomEntry>
-            <localEntry:CustomEntry x:Name="ei" Grid.Column="9" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20" IsVisible="{Binding numberVisibility}"  Keyboard="Numeric" >
+            <localEntry:CustomEntry x:Name="ei" Grid.Column="9" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20" IsVisible="{Binding numberVisibility}"  Keyboard="Numeric" TextColor="{AppThemeBinding Light=#545454, Dark=#545454}">
                 <Entry.Behaviors>
                     <local:EntryFocusBehavior NextFocusElementName="ni"/>
                 </Entry.Behaviors>
             </localEntry:CustomEntry>
-            <localEntry:CustomEntry x:Name="ni" Grid.Column="10" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20" IsVisible="{Binding numberVisibility}"  Keyboard="Numeric"/>
+            <localEntry:CustomEntry x:Name="ni" Grid.Column="10" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20" IsVisible="{Binding numberVisibility}"  Keyboard="Numeric" TextColor="{AppThemeBinding Light=#545454, Dark=#545454}"/>
         </Grid>
         <Grid Grid.Row="7" Grid.Column="1" IsVisible="{Binding otpVisibility}">
             <Grid.ColumnDefinitions>

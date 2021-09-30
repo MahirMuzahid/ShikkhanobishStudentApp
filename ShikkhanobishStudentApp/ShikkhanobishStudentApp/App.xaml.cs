@@ -20,7 +20,7 @@ namespace ShikkhanobishStudentApp
             MainPage = new LoadingPage();
         }
         
-
+        
         protected override void OnStart()
         {
             StaticPageToPassData.OnStart();

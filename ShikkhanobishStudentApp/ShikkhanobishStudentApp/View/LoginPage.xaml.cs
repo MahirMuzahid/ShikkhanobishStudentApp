@@ -50,6 +50,7 @@ namespace ShikkhanobishStudentApp.View
                             pass.Text = "";
                             StaticPageToPassData.isFromLogin = true;
                             await Application.Current.MainPage.Navigation.PushModalAsync(new TakeTuitionView(false));
+                            StaticPageToPassData.MakeActiveInServer();
                         }
                         else
                         {
@@ -94,7 +95,7 @@ namespace ShikkhanobishStudentApp.View
         }
         private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
-
+            Application.Current.MainPage.Navigation.PushModalAsync(new ForgotPassword());
         }
         protected override bool OnBackButtonPressed()
         {

@@ -7,7 +7,7 @@
     <ContentPage.BindingContext>
         <viewmodel:LoginViewModel/>
     </ContentPage.BindingContext>
-    <Grid>
+    <Grid BackgroundColor="White">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -61,15 +61,14 @@
                     </Grid.ColumnDefinitions>
                     <CheckBox x:Name="chkBox" Grid.Column="0" HorizontalOptions="Start" Color="Black"/>
                     <Label Text="Remeber Me" TextColor="Black" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" />
-                    <Label Text="Forgot Password?" TextColor="Black" Grid.Column="2" HorizontalOptions="End" VerticalOptions="Center" Margin="0,0,0,0" >
-                        <Label.GestureRecognizers>
+                    <material:MaterialLabel Text="Forgot Password?" TextColor="Black" TextDecorations="Underline" Grid.Column="2" HorizontalOptions="End" VerticalOptions="Center" Margin="0,0,0,0" >
+                        <material:MaterialLabel.GestureRecognizers>
                             <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped">
                             </TapGestureRecognizer>
-                        </Label.GestureRecognizers>
-                    </Label>
+                        </material:MaterialLabel.GestureRecognizers>
+                    </material:MaterialLabel>
                 </Grid>
-
-
+                
                 <Label FontSize="12" Grid.Row="6" Grid.Column="1" TextColor="Black" HorizontalOptions="Center">
                     <Label.FormattedText>
                         <FormattedString>
@@ -82,7 +81,7 @@
                         </FormattedString>
                     </Label.FormattedText>
                 </Label>
-
+               
             </Grid>
         </Grid>
         <Grid x:Name="loadingGrid" BackgroundColor="#50000000">

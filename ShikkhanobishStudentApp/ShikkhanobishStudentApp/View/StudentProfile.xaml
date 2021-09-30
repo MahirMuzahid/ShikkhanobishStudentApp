@@ -41,8 +41,8 @@
                     </FormattedString>
                 </Label.FormattedText>
             </Label>
-            <Label Text="{Binding name}" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" FontSize="20" FontAttributes="Bold"/>
-            <Label Text="{Binding phonenumber}" Grid.Row="2" HorizontalOptions="Center" VerticalOptions="Start" FontSize="13"/>
+            <Label Text="{Binding name}" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" FontSize="20" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#545454, Dark=#545454}"/>
+            <Label Text="{Binding phonenumber}" Grid.Row="2" HorizontalOptions="Center" VerticalOptions="Start" FontSize="13" TextColor="{AppThemeBinding Light=#545454, Dark=#545454}"/>
         </Grid>
 
         <Grid Grid.Row="1" Grid.ColumnSpan="3" BackgroundColor="#774CD5">
@@ -84,9 +84,9 @@
                 <Label Text="Tuition Info" Grid.Row="0" FontSize="15" FontAttributes="Bold" TextColor="White" VerticalOptions="Center"/>
                 <Frame BackgroundColor="White" Grid.Row="1" Grid.RowSpan="2"  Grid.ColumnSpan="2" CornerRadius="20"/>
                 <Label Text="Total Spent" Grid.Row="1" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="End" TextColor="#9E9E9E"/>
-                <Label Text="{Binding coinSpent}" Grid.Row="2" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Start" FontAttributes="Bold" FontSize="20"/>
+                <Label Text="{Binding coinSpent}" Grid.Row="2" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Start" FontAttributes="Bold" FontSize="20" TextColor="{AppThemeBinding Light=#545454, Dark=#545454}"/>
                 <Label Text="Total Tuition Time" Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="End" TextColor="#9E9E9E"/>
-                <Label Text="{Binding totalTuition}" Grid.Row="2" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Start" FontAttributes="Bold" FontSize="20"/>
+                <Label Text="{Binding totalTuition}" Grid.Row="2" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Start" FontAttributes="Bold" FontSize="20" TextColor="{AppThemeBinding Light=#545454, Dark=#545454}"/>
             </Grid>
             <Grid Grid.Row="2" Grid.Column="1">
                 <Grid.RowDefinitions>

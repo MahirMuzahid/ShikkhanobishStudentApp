@@ -100,14 +100,19 @@ namespace ShikkhanobishStudentApp.ViewModel
         {
             List<StudentTuitionHistory> tuitionList = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getStudentTuitionHistoryWithID".PostUrlEncodedAsync(new { studentID = StaticPageToPassData.thisStudentInfo.studentID})
         .ReceiveJson<List<StudentTuitionHistory>>();
-            tuiListItemSource = tuitionList;
-            
+            List<StudentTuitionHistory> SortedList = new List<StudentTuitionHistory>();
+            SortedList = tuitionList.OrderBy(x => x.date).ToList();
+            SortedList.Reverse();
+            tuiListItemSource = SortedList;           
         }
         public async Task PopulatePaymentList()
         {
             IEnumerable<StudentPaymentHistory> payList = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getStudentPaymentHistoryWithID".PostUrlEncodedAsync(new { studentID = StaticPageToPassData.thisStudentInfo.studentID })
         .ReceiveJson<IEnumerable<StudentPaymentHistory>>();
-            paymentList = payList;
+            List<StudentPaymentHistory> SortedList = new List<StudentPaymentHistory>();
+            SortedList = payList.OrderBy(x => x.date).ToList();
+            SortedList.Reverse();
+            paymentList = SortedList;
         }
         public void Check()
         {

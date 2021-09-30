@@ -325,6 +325,7 @@ namespace ShikkhanobishStudentApp.ViewModel
           .ReceiveJson<Response>();
            prgs = 1;
            prgsPercent = "100%";
+            StaticPageToPassData.MakeActiveInServer();
         }
          public ICommand goBack =>
              new Command(() =>

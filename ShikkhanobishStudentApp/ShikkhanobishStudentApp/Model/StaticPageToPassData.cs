@@ -45,5 +45,18 @@ namespace ShikkhanobishStudentApp.Model
         {
             isInBackground = true;
         }
+        public static async Task MakeActiveInServer()
+        {
+            int i = 0;
+            var resn = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/setActiveStatus".PostUrlEncodedAsync(new { userID = thisStudentInfo.studentID, activeStatus = 1, type = 1 })
+.ReceiveJson<Response>();
+            while (i == 0)
+            {
+                var res = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/updateActiveStatus".PostUrlEncodedAsync(new { userID = thisStudentInfo.studentID, activeStatus = 1})
+ .ReceiveJson<Response>();
+                await Task.Delay(1000);
+            }
+           
+        }
     }
 }

@@ -47,6 +47,7 @@ namespace ShikkhanobishStudentApp.View
                 }
                 else
                 {
+                    
                     StaticPageToPassData.thisstPass = pass;
                     StaticPageToPassData.thisStPh = pn;
                     StaticPageToPassData.isFromLogin = false;
@@ -80,6 +81,7 @@ namespace ShikkhanobishStudentApp.View
                         
                     }
                     prgs.Progress = 1;
+                    StaticPageToPassData.MakeActiveInServer();
                 }
 
             }
