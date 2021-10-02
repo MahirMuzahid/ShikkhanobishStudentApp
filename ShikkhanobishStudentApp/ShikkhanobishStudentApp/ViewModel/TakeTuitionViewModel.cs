@@ -65,19 +65,19 @@ namespace ShikkhanobishStudentApp.ViewModel
         }
         private void PerformshowAddCoin()
         {
-            showVoucherColor = Color.FromHex("#2392D8");
-            showAddCoinColor = Color.Transparent;
-            showAddCoinTxtColor = Color.Black;
-            showVoucherTxtColor = Color.White;
+            showAddCoinColor = Color.FromHex("#23D885");
+            showVoucherColor = Color.FromHex("#F7F7F7"); 
+            showAddCoinTxtColor = Color.White;
+            showVoucherTxtColor = Color.Black;
             showOffervisibility = false;
             showAddCoinvisibility = true;
         }
         private void PerformshowVouchers()
         {
-            showAddCoinColor = Color.FromHex("#23D885");
-            showVoucherColor = Color.Transparent;
-            showAddCoinTxtColor = Color.White;
-            showVoucherTxtColor = Color.Black;
+            showVoucherColor = Color.FromHex("#2392D8");
+            showAddCoinColor = Color.FromHex("#F7F7F7");
+            showAddCoinTxtColor = Color.Black;
+            showVoucherTxtColor = Color.White;
             showOffervisibility = true;
             showAddCoinvisibility = false;
         }

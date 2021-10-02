@@ -51,11 +51,12 @@ namespace ShikkhanobishStudentApp.View
                     StaticPageToPassData.thisstPass = pass;
                     StaticPageToPassData.thisStPh = pn;
                     StaticPageToPassData.isFromLogin = false;
+                    bool isPending = false;
                     prgs.Progress = .5;
                     StaticPageToPassData.thisStudentInfo = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/LoginStudent".PostUrlEncodedAsync(new { phonenumber = StaticPageToPassData.thisStPh, password = StaticPageToPassData.thisstPass })
                   .ReceiveJson<Student>();
                     var pendingRatting = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getPendingRatting".GetJsonAsync<List<pendingRatting>>();
-                    bool isPending = false;
+                   
                     string tuitionID = "";
                     for(int i  =0; i < pendingRatting.Count; i++)
                     {
@@ -72,12 +73,16 @@ namespace ShikkhanobishStudentApp.View
                     }
                     else
                     {
-                        using (await MaterialDialog.Instance.LoadingDialogAsync(message: "You didn't rate last time you took tuition. Going ratting page..."))
+                        if(StaticPageToPassData.thisStudentInfo.studentID != 0)
                         {
-                            Task.Delay(4000);
-                            StaticPageToPassData.lastTuitionHistoryID = tuitionID;
-                            await Application.Current.MainPage.Navigation.PushModalAsync(new RattingPageView());
+                            using (await MaterialDialog.Instance.LoadingDialogAsync(message: "You didn't rate last time you took tuition. Going ratting page..."))
+                            {
+                                Task.Delay(4000);
+                                StaticPageToPassData.lastTuitionHistoryID = tuitionID;
+                                await Application.Current.MainPage.Navigation.PushModalAsync(new RattingPageView());
+                            }
                         }
+                           
                         
                     }
                     prgs.Progress = 1;

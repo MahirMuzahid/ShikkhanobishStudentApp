@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             x:Class="ShikkhanobishStudentApp.View.ReferralView">
+    <Grid BackgroundColor="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Image Source="back.png" Grid.Row="0" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" Aspect="AspectFit" Margin="0,8,0,8"/>
+        <Label Text="Refer A Friend!" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" FontSize="18" FontAttributes="Bold"/>
+        <Image Source="refarralback.png" Grid.Column="1" Grid.Row="1" Aspect="AspectFit"/>
+        <Label Text="Your Fererral Code" Grid.Column="1" Grid.Row="2" HorizontalOptions="Center" VerticalOptions="Center"/>
+        <Frame BackgroundColor="#20000000" Grid.Row="3" Grid.Column="1" HasShadow="False"/>
+        <Label Text="3342" Grid.Row="3" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" FontAttributes="Bold" TextColor="#5F2BFC" FontSize="25"/>
+        <Label Grid.Row="4" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center">
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span Text="Mahir Muzahid" FontAttributes="Bold"/>
+                    <Span Text=" used your referral code"/>
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+        <Entry Placeholder="Enter a referral code" Grid.Column="1" Grid.Row="5" />
+        <material:MaterialButton Text="Use" Grid.Row="6" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center"/>
+
+
+
+    </Grid>
+</ContentPage>
