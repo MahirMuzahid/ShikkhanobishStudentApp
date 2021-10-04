@@ -749,7 +749,11 @@ namespace ShikkhanobishStudentApp.ViewModel
                         CallTeacherAgain();
                     }
 
-                };
+                }
+                else
+                {
+                    return false;
+                }
                 sec -= 1;
                 return true;
             });
