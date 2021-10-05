@@ -40,6 +40,7 @@ namespace ShikkhanobishStudentApp.ViewModel
             totalCostCount = 0;
             totaolCost = totalCostCount + "";
             isSafeTiemAvailable = true;
+            CheckTeacherAlive();
             Device.StartTimer(TimeSpan.FromSeconds(1), () =>
             {
                 if(isSafeTiemAvailable)
@@ -67,6 +68,76 @@ namespace ShikkhanobishStudentApp.ViewModel
                 
                 return TimerContinue;
             });
+            
+        }
+        public async Task CheckTeacherAlive()
+        {
+            while(TimerContinue)
+            {
+                int k = 5;
+                int isTeacheractiveInARow = 0;
+                while(k > 0)
+                {
+                    var rightNowActiveTeacher = await "https://api.shikkhanobish.com/api/ShikkhanobishTeacher/getTeacherActivityStatus".GetJsonAsync<List<TeacherActivityStatus>>();
+                    await Task.Delay(1000);
+                    var AfterOneSecActiveTeacher = await "https://api.shikkhanobish.com/api/ShikkhanobishTeacher/getTeacherActivityStatus".GetJsonAsync<List<TeacherActivityStatus>>();
+
+                    List<TeacherActivityStatus> pureActive = new List<TeacherActivityStatus>();
+
+
+                    for (int i = 0; i < AfterOneSecActiveTeacher.Count; i++)
+                    {
+                        for (int j = 0; j < rightNowActiveTeacher.Count; j++)
+                        {
+                            if (AfterOneSecActiveTeacher[i].teacherID == rightNowActiveTeacher[j].teacherID)
+                            {
+                                pureActive.Add(AfterOneSecActiveTeacher[i]);
+                                break;
+                            }
+                        }
+                    }
+                    bool isteacheractive = false;
+                    for (int i = 0; i < pureActive.Count; i++)
+                    {
+                        if (pureActive[i].teacherID == StaticPageToPassData.perMinCall.teacherID)
+                        {
+                            isteacheractive = true;
+                        }
+                    }
+                    if (isteacheractive)
+                    {
+                        isTeacheractiveInARow++;
+                    }
+                    k--;
+                }
+                if(isTeacheractiveInARow == 0)
+                {
+                    using (var dialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Teacher has disconnected from video call!!Ending Video Tuition..."))
+                    {                       
+                        TimerContinue = false;
+                        CrossVonage.Current.EndSession();
+                        if (isSafeTiemAvailable)
+                        {
+                            var reresponses = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/deletePendingTuition".PostUrlEncodedAsync(new { studentID = StaticPageToPassData.thisStudentInfo.studentID })
+                        .ReceiveJson<Response>();
+                            await StaticPageToPassData.GetStudent();
+                            Application.Current.MainPage.Navigation.PushModalAsync(new TakeTuitionView(false));
+                            var existingPages = Application.Current.MainPage.Navigation.ModalStack.ToList();
+                            foreach (var page in existingPages)
+                            {
+                                Application.Current.MainPage.Navigation.RemovePage(page);
+                            }
+                        }
+                        else
+                        {
+                            Application.Current.MainPage.Navigation.PushModalAsync(new RattingPageView());
+                        }
+                        string cutUrlCall = "https://shikkhanobishrealtimeapi.shikkhanobish.com/api/ShikkhanobishSignalR/CutVideoCall?&teacherID=" + StaticPageToPassData.lastTeacherID + "&studentID=" + StaticPageToPassData.thisStudentInfo.studentID + "&isCut=" + true;
+                        await realtimeapi.ExecuteRealTimeApi(cutUrlCall);
+                    }
+                }
+                
+            }
             
         }
         public async Task GetAllCost()
@@ -164,7 +235,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                                     dismissiveText: "No");           
             if (result == true)
             {
-                using (var dialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Please Wait..."))
+                using (var dialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Ending Video Tuition..."))
                 {
                     string cutUrlCall = "https://shikkhanobishrealtimeapi.shikkhanobish.com/api/ShikkhanobishSignalR/CutVideoCall?&teacherID=" + StaticPageToPassData.lastTeacherID + "&studentID=" + StaticPageToPassData.thisStudentInfo.studentID + "&isCut=" + true;
                     await realtimeapi.ExecuteRealTimeApi(cutUrlCall);

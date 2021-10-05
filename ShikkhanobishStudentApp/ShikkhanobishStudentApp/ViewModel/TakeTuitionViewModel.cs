@@ -546,7 +546,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                         {
                             if (thisSelectedFavPopUpTeacher.teacherID == purefav[j].teacherID)
                             {
-                                popupfavteacheritemSource[i].popupfavSelectedbackground = "#B79FFF";
+                                popupfavteacheritemSource[i].popupfavSelectedbackground = "#CFBFFF";
                                 isOnline = true;
                             }
                         }
@@ -721,20 +721,6 @@ namespace ShikkhanobishStudentApp.ViewModel
             {
                 randonpopupTeacherbtnColor = Color.FromHex("#5098E87F");
                 hireteacherEnabled = true;
-                List<favouriteTeacher> newfavTeacher = await "https://api.shikkhanobish.com/api/ShikkhanobishTeacher/getFavouriteTeacherwithStudentIDForPopUp".PostUrlEncodedAsync(new { studentID = StaticPageToPassData.thisStudentInfo.studentID, subjectID = thisSearcherSubId })
-      .ReceiveJson<List<favouriteTeacher>>();
-                for (int i = 0; i < newfavTeacher.Count; i++)
-                {
-                    newfavTeacher[i].popupfavSelectedbackground = "#Transparent";
-                    newfavTeacher[i].teacherRatting = Math.Round(newfavTeacher[i].teacherRatting, 2);
-                    newfavTeacher[i].activeStatus = "Online";
-                    newfavTeacher[i].activeColor = "Green";
-                    nofavteacherlbl = false;
-                }
-                popupfavteacheritemSource.Clear();
-                popupfavteacheritemSource = newfavTeacher;
-                thisfavteacher = newfavTeacher;
-                hireteacherEnabled = true;
                 thisSelectedFavPopUpTeacher.teacherID = 0;
             }
 
@@ -839,7 +825,6 @@ namespace ShikkhanobishStudentApp.ViewModel
             {
                 if (thisSelectedFavPopUpTeacher.teacherID == 0)
                 {
-                    await Task.Delay(2000);
                     SelectedTeacher = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/HireTeacherAsync".PostUrlEncodedAsync(new { subID = thisSearcherSubId })
            .ReceiveJson<Teacher>();
                     teacherisSelected = SelectedTeacher.teacherID;
@@ -876,11 +861,12 @@ namespace ShikkhanobishStudentApp.ViewModel
             return thisCost;
         }
         private void PerformcancleTeacherSearch()
-        {
-            string uriToCAllTeacher = "https://shikkhanobishrealtimeapi.shikkhanobish.com/api/ShikkhanobishSignalR/studentTuitionResponse?&teacherID=" + teacherisSelected + "&studentID=" + StaticPageToPassData.thisStudentInfo.studentID + "&studentTuitionResponse=" + false;
-            teacherisSelected = 0;
+        {           
+            teacherisSelected = 1;
+            teacheracceptTimer = "";
             selectedTeacherConnectingVisibility = false;
             chooseTeacherVisibility = true;
+            acceptTeacherVisibility = false;
 
         }
         private async Task PerformacceptTeacherTuition()
@@ -981,6 +967,10 @@ namespace ShikkhanobishStudentApp.ViewModel
                         else
                         {
                             connectingTeachertxt = "Teacher is unable to teach you. Please, choose another teacher.";
+                            teacherisSelected = 0;
+                            teacheracceptTimer = "";
+                            chooseTeacherVisibility = true;
+                            acceptTeacherVisibility = false;
                             await Task.Delay(1000);
                             selectedTeacherConnectingVisibility = false;
                             chooseTeacherVisibility = true;
