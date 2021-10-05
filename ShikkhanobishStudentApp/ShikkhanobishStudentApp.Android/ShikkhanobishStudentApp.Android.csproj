@@ -39,7 +39,7 @@
     <BundleAssemblies>false</BundleAssemblies>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
+    <DebugSymbols>false</DebugSymbols>
     <DebugType>portable</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release</OutputPath>
@@ -56,6 +56,8 @@
     <AndroidCreatePackagePerAbi>false</AndroidCreatePackagePerAbi>
     <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
     <AndroidLinkTool>r8</AndroidLinkTool>
+    <AndroidLinkMode>None</AndroidLinkMode>
+    <MandroidI18n />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />

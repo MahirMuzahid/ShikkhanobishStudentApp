@@ -139,6 +139,11 @@ namespace ShikkhanobishStudentApp.ViewModel
                 isLoading = false;
             }
             randonpopupTeacherbtnColor = Color.FromHex("#ECECEC");
+            if (fromReg)
+            {
+                await MaterialDialog.Instance.AlertAsync(message: "শিক্ষানবিশে তোমাকে অভিন্দন! শিক্ষানবিশ এমন একটি প্লাটফর্ম যেখানে তুমি যখন ইচ্ছা এবং যে সাবজেক্ট ইচ্ছা সে সাবজেক্ট টিচারদের কাছ থেকে শিখে নিতে পারবে। জাস্ট তোমার প্রশ্নটি লিখ, প্রশ্নটি কোন ক্লাসের, সাবজেক্টের এবং চাপ্টারের তা সিলেক্ট কর এবং হায়ার টিচার বাটনে ক্লিক করে এখনি শুরু কর পড়াশোনা মোবাইলেই!");
+            }
+
         }
         #region Methods
         public async Task PerformshowSuggestion()
