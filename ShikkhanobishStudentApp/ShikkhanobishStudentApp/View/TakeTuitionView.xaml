@@ -602,7 +602,7 @@
                         <ColumnDefinition Width="10*"/>
                         <ColumnDefinition Width=".5*"/>
                     </Grid.ColumnDefinitions>
-                    <Label Text="{Binding searchName}" Grid.Row="1" Grid.Column="1" FontSize="17"  HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                    <Label Text="{Binding searchName}" Grid.Row="1" Grid.Column="1" FontSize="17"  HorizontalTextAlignment="Center" VerticalTextAlignment="Center" TextColor="{AppThemeBinding Light=#545454, Dark=#545454}"/>
 
                     <Grid Grid.Row="2" Grid.Column="1" IsVisible="{Binding groupChoiseVisibility}">
                         <Grid.RowDefinitions>
@@ -621,7 +621,7 @@
                     </Grid>
                     <Frame BackgroundColor="Black" Grid.Row="3" Grid.Column="1" />
 
-                    <Label Text="Getting Result..." Grid.Row="4" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" TextColor="#9C9C9C" Margin="0,0,0,50" IsVisible="{Binding resultvisi}" FontAttributes="Bold"/>
+                    <Label Text="Getting Result..." Grid.Row="4" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" TextColor="#9C9C9C" Margin="0,0,0,50" IsVisible="{Binding resultvisi}" FontAttributes="Bold" />
                     <ListView  ItemsSource="{Binding popupList}" Grid.Row="4" Grid.Column="1" RowHeight="50" SeparatorColor="Black" >
                         <ListView.ItemTemplate>
                             <DataTemplate>
@@ -676,8 +676,8 @@
                 </Grid.ColumnDefinitions>
                 <material:MaterialCard BackgroundColor="White" Elevation="20" Grid.RowSpan="8" Grid.ColumnSpan="3" CornerRadius="15" />
                 <material:MaterialButton Grid.Row="0" Grid.Column="1" Text="Close" ButtonType="Text" HorizontalOptions="End" VerticalOptions="Center" Command="{Binding ClosePopUpHireTeacher}" FontSize="10"/>
-                <Label Text="Hire Teacher" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" FontAttributes="Bold"/>
-                <Label Grid.Row="1" HorizontalOptions="Start" VerticalOptions="Center" Grid.Column="1">
+                <Label Text="Hire Teacher" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#545454, Dark=#545454}"/>
+                <Label Grid.Row="1" HorizontalOptions="Start" VerticalOptions="Center" Grid.Column="1" TextColor="{AppThemeBinding Light=#545454, Dark=#545454}">
                     <Label.FormattedText>
                         <FormattedString >
                             <Span Text="Cost: "/>
@@ -685,8 +685,9 @@
                         </FormattedString>
                     </Label.FormattedText>
                 </Label>
+                <Label Text="{Binding totalActiveTeacher}" Grid.Row="1" HorizontalOptions="End" VerticalOptions="Center" Grid.Column="1" TextColor="{AppThemeBinding Light=#545454, Dark=#545454}"></Label>
                 <Frame BackgroundColor="Black" Grid.Row="2" Grid.Column="1" HasShadow="False"/>
-                <Label Text="Choose from your favourite teacher" Grid.Row="3" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center"  IsVisible="{Binding choosefavteacherlbl}"/>
+                <Label Text="Choose from your favourite teacher" Grid.Row="3" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center"  IsVisible="{Binding choosefavteacherlbl}" TextColor="{AppThemeBinding Light=#545454, Dark=#545454}"/>
                 <Label Text="You do not have any favourite teacher or active favourite teacher of this subject" Grid.Row="4" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="{Binding nofavteacherlbl}" TextColor="#40000000"/>
                 <ListView  ItemsSource="{Binding popupfavteacheritemSource}" Grid.Row="4" Grid.Column="1"  RowHeight="80" SeparatorColor="Black"   >
                     <ListView.ItemTemplate>
@@ -705,14 +706,14 @@
                                         <ColumnDefinition Width="1*"/>
                                         <ColumnDefinition Width="1*"/>
                                     </Grid.ColumnDefinitions>
-                                    <Label Text="{Binding teacherName}" Grid.Row="1"  Grid.RowSpan="2" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" FontSize="11" FontAttributes="Bold"/>
-                                    <Label Text="{Binding teacherTotalTuition}" Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" FontSize="10"  FontAttributes="Bold"/>
-                                    <Label Text="Total Tuition" Grid.Row="2" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" FontSize="10"/>
-                                    <Label Text="{Binding teacherRatting}" Grid.Row="1" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" FontSize="10" FontAttributes="Bold"/>
-                                    <Label Text="Ratting" Grid.Row="2" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" FontSize="10"/>
+                                    <Label Text="{Binding teacherName}" Grid.Row="1"  Grid.RowSpan="2" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" FontSize="11" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#545454, Dark=#545454}"/>
+                                    <Label Text="{Binding teacherTotalTuition}" Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" FontSize="10"  FontAttributes="Bold" TextColor="{AppThemeBinding Light=#545454, Dark=#545454}"/>
+                                    <Label Text="Total Tuition" Grid.Row="2" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" FontSize="10" TextColor="{AppThemeBinding Light=#545454, Dark=#545454}"/>
+                                    <Label Text="{Binding teacherRatting}" Grid.Row="1" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" FontSize="10" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#545454, Dark=#545454}"/>
+                                    <Label Text="Ratting" Grid.Row="2" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" FontSize="10" TextColor="{AppThemeBinding Light=#545454, Dark=#545454}"/>
                                     <Label Text="{Binding activeStatus}" Grid.Row="1" Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center" FontSize="10" FontAttributes="Bold" TextColor="{Binding activeColor}"/>
-                                    <Label Text="Activity" Grid.Row="2" Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center" FontSize="10" />
-                                    <material:MaterialButton Grid.RowSpan="4" Grid.ColumnSpan="4" ButtonType="Text" PressedBackgroundColor="#20000000" Command="{Binding Source={x:Reference tuitionView}, Path=BindingContext.SeletecFavpopupTeacher}" CommandParameter="{Binding .}"/>
+                                    <Label Text="Activity" Grid.Row="2" Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center" FontSize="10" TextColor="{AppThemeBinding Light=#545454, Dark=#545454}" />
+                                    <material:MaterialButton Grid.RowSpan="4" Grid.ColumnSpan="4" ButtonType="Text" PressedBackgroundColor="#20000000" Command="{Binding Source={x:Reference tuitionView}, Path=BindingContext.SeletecFavpopupTeacher}" CommandParameter="{Binding .}" />
                                 </Grid>
                             </ViewCell>
                         </DataTemplate>

@@ -505,6 +505,17 @@ namespace ShikkhanobishStudentApp.ViewModel
         public ICommand ChooseTeacherPopUp =>
              new Command(async () =>
              {
+                 var allTeacher = await "https://api.shikkhanobish.com/api/ShikkhanobishTeacher/getAllTeacher".PostUrlEncodedAsync(new { })
+            .ReceiveJson<List<Teacher>>();
+                 int numOFActiveTeacher = 0;
+                 for (int i = 0; i < allTeacher.Count; i++)
+                 {
+                     if (allTeacher[i].activeStatus == 1)
+                     {
+                         numOFActiveTeacher++;
+                     }
+                 }
+                 totalActiveTeacher = "Total Active Teacher: " + numOFActiveTeacher;
                  chooseTeacherVisibility = true;
                  hireteacherPopupVisibility = true;
                  hireteacherEnabled = false;                
@@ -749,6 +760,7 @@ namespace ShikkhanobishStudentApp.ViewModel
         }
         private async Task PerformhireTeacherBtnCmdAsync()
         {
+            
             teacherGaveResponse = false;
             chooseTeacherVisibility = false;
             selectedTeacherConnectingVisibility = true;
@@ -2509,6 +2521,10 @@ namespace ShikkhanobishStudentApp.ViewModel
         private string teacheracceptTimer1;
 
         public string teacheracceptTimer { get => teacheracceptTimer1; set => SetProperty(ref teacheracceptTimer1, value); }
+
+        private string totalActiveTeacher1;
+
+        public string totalActiveTeacher { get => totalActiveTeacher1; set => SetProperty(ref totalActiveTeacher1, value); }
 
 
 
