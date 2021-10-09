@@ -109,7 +109,9 @@ namespace ShikkhanobishStudentApp.ViewModel
             SubseletedCountTextVisibility = false;
             ChpseletedCountTextVisibility = false;
 
-            activebtn = false;
+            activebtn = true;
+            chooseTeacherEnabled = true;
+            permincostVisibility = true;
             remainColopr = "Black";
 
             remainword = "Remain 300 Words";
@@ -369,31 +371,28 @@ namespace ShikkhanobishStudentApp.ViewModel
                     {
                         if(StaticPageToPassData.thisStudentInfo.coin < 3 && StaticPageToPassData.thisStudentInfo.freemin == 0)
                         {
-                            activebtn = true;
-                            permincostVisibility = true;
-                            chooseTeacherEnabled = false;
                             perminCostText = "Insufficient Balance!";
                         }
                         else
                         {
-                            activebtn = true;
-                            chooseTeacherEnabled = true;
-                            permincostVisibility = true;
-                            if (selectedInsName == "School")
+                            if(StaticPageToPassData.thisStudentInfo.freemin > 0)
                             {
-                                perminCostText = Allcost.SchoolCost + " coin/min";
+                                perminCostText = "Cost: Free!";
                             }
-                            if (SelectedInsName == "College")
+                            else
                             {
-                                perminCostText = Allcost.CollegeCost + " coin/min";
+                                if (selectedInsName == "School")
+                                {
+                                    perminCostText = Allcost.SchoolCost + " coin/min";
+                                }
+                                if (SelectedInsName == "College")
+                                {
+                                    perminCostText = Allcost.CollegeCost + " coin/min";
+                                }
                             }
+                            
                         }
                                        
-                    }
-                    else
-                    {
-                        activebtn = false;
-                        permincostVisibility = false;
                     }
                 }
                 
@@ -419,11 +418,13 @@ namespace ShikkhanobishStudentApp.ViewModel
         }
         private async Task PerformrechargeCoin()
         {
+            string thisAMount = rechargeAmount;
             totalRechargeCoin = "";
             addedCoinamount = "";
             totalAmount = "";
             freeminInaddCoinScreen = "";
             rechargeAmount = "";
+            
             rechargeCoinBackVisibility = false;
             rechargeButtonVisibility = false;
             isPremiumRechurge = false;
@@ -461,7 +462,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                 var redirectURL = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/RequestPayment".PostUrlEncodedAsync(new
                 {                   
                     name = StaticPageToPassData.thisStudentInfo.name,
-                    amount = int.Parse(rechargeAmount),
+                    amount = int.Parse(thisAMount),
                     studentID = StaticPageToPassData.thisStudentInfo.studentID,
                     phonenumber = StaticPageToPassData.thisStudentInfo.phonenumber,
                 })               
@@ -510,22 +511,41 @@ namespace ShikkhanobishStudentApp.ViewModel
         public ICommand ChooseTeacherPopUp =>
              new Command(async () =>
              {
-                 var allTeacher = await "https://api.shikkhanobish.com/api/ShikkhanobishTeacher/getAllTeacher".PostUrlEncodedAsync(new { })
-            .ReceiveJson<List<Teacher>>();
-                 int numOFActiveTeacher = 0;
-                 for (int i = 0; i < allTeacher.Count; i++)
+                 if (detailTxt != null)
                  {
-                     if (allTeacher[i].activeStatus == 1)
+                     if (detailTxt.Length > 300 && detailTxt == "" && detailTxt == null)
                      {
-                         numOFActiveTeacher++;
+                         await MaterialDialog.Instance.AlertAsync(message: "Write your question in the box");
+
+                     }
+                     else if (SelectedInsName == "Not Selected" & SelectedClassName == "Not Selected" & SelectedSubjectName == "Not Selected" & SelectedChapterName == "Not Selected")
+                     {
+                         await MaterialDialog.Instance.AlertAsync(message: "Please, select up Institution, Class, Subject, Chapter and write your question in the box");
+                     }
+                     else
+                     {
+                         var allTeacher = await "https://api.shikkhanobish.com/api/ShikkhanobishTeacher/getAllTeacher".PostUrlEncodedAsync(new { })
+                                     .ReceiveJson<List<Teacher>>();
+                         int numOFActiveTeacher = 0;
+                         for (int i = 0; i < allTeacher.Count; i++)
+                         {
+                             if (allTeacher[i].activeStatus == 1)
+                             {
+                                 numOFActiveTeacher++;
+                             }
+                         }
+                         totalActiveTeacher = "Total Active Teacher: " + numOFActiveTeacher;
+                         chooseTeacherVisibility = true;
+                         hireteacherPopupVisibility = true;
+                         hireteacherEnabled = false;
+                         CheckFavTeacherAvailable();
                      }
                  }
-                 totalActiveTeacher = "Total Active Teacher: " + numOFActiveTeacher;
-                 chooseTeacherVisibility = true;
-                 hireteacherPopupVisibility = true;
-                 hireteacherEnabled = false;                
-                 CheckFavTeacherAvailable();
-
+                 else
+                 {
+                     await MaterialDialog.Instance.AlertAsync(message: "Write your question in the box");
+                 }
+                                  
              });
         public async Task CheckFavTeacherAvailable()
         {
@@ -569,7 +589,13 @@ namespace ShikkhanobishStudentApp.ViewModel
                         if (!isOnline)
                         {
                             thisSelectedFavPopUpTeacher.teacherID = 0;
-                            await MaterialDialog.Instance.AlertAsync(message: popupfavteacheritemSource[i].teacherName + " is not online! Please select another teacher");                     
+                            await Task.Delay(1000);
+                            if (chooseTeacherVisibility)
+                            {
+                                await MaterialDialog.Instance.AlertAsync(message: popupfavteacheritemSource[i].teacherName + " is not online! Please select another teacher");
+                            }
+
+                                             
                         }
                     }
                 }
@@ -892,10 +918,12 @@ namespace ShikkhanobishStudentApp.ViewModel
             {
                 return;
             }
-            string sendResponse = "https://shikkhanobishrealtimeapi.shikkhanobish.com/api/ShikkhanobishSignalR/studentTuitionResponse?&teacherID=" + teacherisSelected + "&studentID=" + StaticPageToPassData.thisStudentInfo.studentID + "&studentTuitionResponse=" + true;
-            await realtimeapi.ExecuteRealTimeApi(sendResponse);
+           
             using (await MaterialDialog.Instance.LoadingDialogAsync(message: "Connecting Video Call..."))
             {
+                hireteacherPopupVisibility = false;
+                string sendResponse = "https://shikkhanobishrealtimeapi.shikkhanobish.com/api/ShikkhanobishSignalR/studentTuitionResponse?&teacherID=" + teacherisSelected + "&studentID=" + StaticPageToPassData.thisStudentInfo.studentID + "&studentTuitionResponse=" + true;
+                await realtimeapi.ExecuteRealTimeApi(sendResponse);
                 PerMinPassModel perminPass = new PerMinPassModel();
                 perminPass.studentID = StaticPageToPassData.thisStudentInfo.studentID;
                 perminPass.teacherID = teacherisSelected;

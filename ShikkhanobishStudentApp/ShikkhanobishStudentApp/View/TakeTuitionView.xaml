@@ -720,8 +720,8 @@
                     </ListView.ItemTemplate>
                 </ListView>
 
-                <Label Text="Choose rendom teacher" Grid.Row="5" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center"/>
-                <material:MaterialButton Text="Rendom Teacher" TextColor="Black" Grid.Row="6" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Start" ButtonType="Flat" BackgroundColor="{Binding randonpopupTeacherbtnColor}" PressedBackgroundColor="#20000000" FontSize="12" Command="{Binding chooserndTeachercmd}"/>
+                <Label Text="Choose rendom teacher" Grid.Row="5" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" TextColor="{AppThemeBinding Light=#545454, Dark=#545454}"/>
+                <material:MaterialButton Text="Random Teacher" TextColor="Black" Grid.Row="6" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Start" ButtonType="Flat" BackgroundColor="{Binding randonpopupTeacherbtnColor}" PressedBackgroundColor="#20000000" FontSize="12" Command="{Binding chooserndTeachercmd}"/>
                 <material:MaterialButton x:Name="popuphireteacher" Text="Hire Teacher" Grid.Row="7" Grid.Column="1" Command="{Binding hireTeacherBtnCmd}" IsEnabled="{Binding hireteacherEnabled}"/>
             </Grid>
             <Grid Grid.Row="1" Grid.Column="1" IsVisible="{Binding selectedTeacherConnectingVisibility}">
@@ -734,9 +734,9 @@
                 </Grid.RowDefinitions>
                 
                 <material:MaterialCard BackgroundColor="White" Elevation="20" Grid.Row="1" Grid.RowSpan="3" CornerRadius="15" />
-                <Label Text="{Binding teacheracceptTimer}" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center"/>
-                <Label Text="{Binding connectingTeachertxt}" Grid.Row="2" HorizontalOptions="Center" VerticalOptions="Center" FontSize="12"/>
-                <material:MaterialButton Text="Cancle" ButtonType="Text" Grid.Row="3" TextColor="red" HorizontalOptions="Start" Margin="10,0,0,0" Command="{Binding cancleTeacherSearch}" FontSize="10"/>
+                <Label Text="{Binding teacheracceptTimer}" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" TextColor="{AppThemeBinding Light=#545454, Dark=#545454}"/>
+                <Label Text="{Binding connectingTeachertxt}" Grid.Row="2" HorizontalOptions="Center" VerticalOptions="Center" FontSize="12" TextColor="{AppThemeBinding Light=#545454, Dark=#545454}"/>
+                <material:MaterialButton Text="Cancel" ButtonType="Text" Grid.Row="3" TextColor="red" HorizontalOptions="Start" Margin="10,0,0,0" Command="{Binding cancleTeacherSearch}" FontSize="10"/>
                 <material:MaterialButton Text="Accept Tuition" ButtonType="Flat" BackgroundColor="GreenYellow" TextColor="DarkSlateGray" HorizontalOptions="End" Grid.Row="3" Margin="0,0,10,0" FontSize="10" Command="{Binding acceptTeacherTuition}" IsVisible="{Binding acceptTeacherVisibility}"/>
             </Grid>
         </Grid>
@@ -763,7 +763,7 @@
                 </Grid.RowDefinitions>
                 <material:MaterialCard Grid.RowSpan="3" Elevation="20" BackgroundColor="White"/>
                 <Image Source="{Binding promsgImgSrc}" Grid.Row="0" Aspect="AspectFill"/>
-                <Label Text="{Binding proMsgText}" Grid.Row="1" Margin="20"/>
+                <Label Text="{Binding proMsgText}" Grid.Row="1" Margin="20" TextColor="{AppThemeBinding Light=#545454, Dark=#545454}"/>
                 <Button Text="OK" Grid.Row="2" HorizontalOptions="End" VerticalOptions="End" Margin="10" Command="{Binding popOutRegMsgVisiblility}"/>
             </Grid>
         </Grid>
@@ -785,8 +785,8 @@
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="4*"/>
                 </Grid.ColumnDefinitions>
-                
-                <Label Text="Please Wait..." Grid.Column="1" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" FontAttributes="Bold"/>
+
+                <Label Text="Please Wait..." Grid.Column="1" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#545454, Dark=#545454}"/>
             </Grid>
         </Grid>
 

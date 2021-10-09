@@ -138,28 +138,28 @@
             <Frame BackgroundColor="#E9E9E9" Grid.Column="7"/>
 
 
-            <localEntry:CustomEntry x:Name="first" Grid.Column="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"  Keyboard="Numeric" Text="{Binding otpfiText}">
+            <localEntry:CustomEntry x:Name="first" Grid.Column="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"  Keyboard="Numeric" Text="{Binding otpfiText}" TextColor="{AppThemeBinding Light=#545454, Dark=#545454}">
                 <Entry.Behaviors>
                     <local:EntryFocusBehavior NextFocusElementName="second"/>
                 </Entry.Behaviors>
             </localEntry:CustomEntry>
-            <localEntry:CustomEntry x:Name="second"  Grid.Column="4" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"  Keyboard="Numeric" Text="{Binding otpsecText}">
+            <localEntry:CustomEntry x:Name="second"  Grid.Column="4" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"  Keyboard="Numeric" Text="{Binding otpsecText}" TextColor="{AppThemeBinding Light=#545454, Dark=#545454}">
                 <Entry.Behaviors>
                     <local:EntryFocusBehavior NextFocusElementName="third"/>
                 </Entry.Behaviors>
             </localEntry:CustomEntry>
 
-            <localEntry:CustomEntry x:Name="third"  Grid.Column="5" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"  Keyboard="Numeric" Text="{Binding otpthText}">
+            <localEntry:CustomEntry x:Name="third"  Grid.Column="5" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"  Keyboard="Numeric" Text="{Binding otpthText}" TextColor="{AppThemeBinding Light=#545454, Dark=#545454}">
                 <Entry.Behaviors>
                     <local:EntryFocusBehavior NextFocusElementName="forth"/>
                 </Entry.Behaviors>
             </localEntry:CustomEntry>
-            <localEntry:CustomEntry x:Name="forth" Grid.Column="6" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"  Keyboard="Numeric" Text="{Binding otpfrText}">
+            <localEntry:CustomEntry x:Name="forth" Grid.Column="6" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"  Keyboard="Numeric" Text="{Binding otpfrText}" TextColor="{AppThemeBinding Light=#545454, Dark=#545454}">
                 <Entry.Behaviors>
                     <local:EntryFocusBehavior NextFocusElementName="fifth"/>
                 </Entry.Behaviors>
             </localEntry:CustomEntry>
-            <localEntry:CustomEntry x:Name="fifth" Grid.Column="7" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"  Keyboard="Numeric" Text="{Binding otpfivText}">
+            <localEntry:CustomEntry x:Name="fifth" Grid.Column="7" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="20"  Keyboard="Numeric" Text="{Binding otpfivText}" TextColor="{AppThemeBinding Light=#545454, Dark=#545454}">
 
             </localEntry:CustomEntry>
         </Grid>
@@ -177,19 +177,19 @@
                 <RowDefinition Height="3*"/>
 
             </Grid.RowDefinitions>
-            <Label Text="Password*" Grid.Row="0" HorizontalOptions="Start" VerticalOptions="Center" FontSize="12" FontAttributes="Bold"/>
-            <Entry  Grid.Row="1" FontSize="14" Text="{Binding password}"/>
+            <Label Text="Password*" Grid.Row="0" HorizontalOptions="Start" VerticalOptions="Center" FontSize="12" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#545454, Dark=#545454}"/>
+            <Entry  Grid.Row="1" FontSize="14" Text="{Binding password}" TextColor="{AppThemeBinding Light=#545454, Dark=#545454}"/>
 
 
-            <Label Text="Confirm Password*" Grid.Row="2" HorizontalOptions="Start" VerticalOptions="Center"  FontSize="12" FontAttributes="Bold"/>
-            <Entry  Grid.Row="3" FontSize="14" Text="{Binding conPassword}"/>
+            <Label Text="Confirm Password*" Grid.Row="2" HorizontalOptions="Start" VerticalOptions="Center"  FontSize="12" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#545454, Dark=#545454}"/>
+            <Entry  Grid.Row="3" FontSize="14" Text="{Binding conPassword}" TextColor="{AppThemeBinding Light=#545454, Dark=#545454}"/>
 
-            <Label Text="Name*" Grid.Row="4" HorizontalOptions="Start" VerticalOptions="Center"  FontSize="12" FontAttributes="Bold"/>
-            <Entry  Grid.Row="5" FontSize="14" Text="{Binding name}"/>
+            <Label Text="Name*" Grid.Row="4" HorizontalOptions="Start" VerticalOptions="Center"  FontSize="12" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#545454, Dark=#545454}"/>
+            <Entry  Grid.Row="5" FontSize="14" Text="{Binding name}" TextColor="{AppThemeBinding Light=#545454, Dark=#545454}"/>
 
 
-            <Label Text="City*" Grid.Row="6" HorizontalOptions="Start" VerticalOptions="Center"  FontSize="12" FontAttributes="Bold"/>
-            <Entry  Grid.Row="7" FontSize="14" Text="{Binding city}"/>
+            <Label Text="City*" Grid.Row="6" HorizontalOptions="Start" VerticalOptions="Center"  FontSize="12" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#545454, Dark=#545454}"/>
+            <Entry  Grid.Row="7" FontSize="14" Text="{Binding city}" TextColor="{AppThemeBinding Light=#545454, Dark=#545454}"/>
 
         </Grid>
         <Button Text="Change Number" HorizontalOptions="Start" VerticalOptions="Center" Grid.Row="9" Grid.Column="1" FontSize="10" BackgroundColor="White" TextColor="Blue"  IsVisible="{Binding sendAgainVisibility}" Command="{Binding btnCommand}" CommandParameter="0" Clicked="Button_Clicked_1"/>

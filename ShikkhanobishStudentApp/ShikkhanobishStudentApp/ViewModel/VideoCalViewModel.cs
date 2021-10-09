@@ -74,7 +74,7 @@ namespace ShikkhanobishStudentApp.ViewModel
         {
             while(TimerContinue)
             {
-                int k = 5;
+                int k = 7;
                 int isTeacheractiveInARow = 0;
                 while(k > 0)
                 {

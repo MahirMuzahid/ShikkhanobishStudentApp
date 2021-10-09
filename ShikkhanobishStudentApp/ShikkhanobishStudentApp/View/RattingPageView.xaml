@@ -8,7 +8,7 @@
     <ContentPage.BindingContext>
         <viewmodel:RattingPageViewModel/>
     </ContentPage.BindingContext>
-    <Grid >
+    <Grid BackgroundColor="White">
         <Grid.RowDefinitions>
             <RowDefinition Height=".7*"/>
             <RowDefinition Height=".7*"/>
