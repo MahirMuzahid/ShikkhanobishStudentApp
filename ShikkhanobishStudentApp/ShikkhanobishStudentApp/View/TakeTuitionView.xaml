@@ -685,7 +685,7 @@
                         </FormattedString>
                     </Label.FormattedText>
                 </Label>
-                <Label Text="{Binding totalActiveTeacher}" Grid.Row="1" HorizontalOptions="End" VerticalOptions="Center" Grid.Column="1" TextColor="{AppThemeBinding Light=#545454, Dark=#545454}"></Label>
+                <Label Text="{Binding totalActiveTeacher}" Grid.Row="1" HorizontalOptions="End" FontSize="11" VerticalOptions="Center" Grid.Column="1" TextColor="{AppThemeBinding Light=#545454, Dark=#545454}"></Label>
                 <Frame BackgroundColor="Black" Grid.Row="2" Grid.Column="1" HasShadow="False"/>
                 <Label Text="Choose from your favourite teacher" Grid.Row="3" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center"  IsVisible="{Binding choosefavteacherlbl}" TextColor="{AppThemeBinding Light=#545454, Dark=#545454}"/>
                 <Label Text="You do not have any favourite teacher or active favourite teacher of this subject" Grid.Row="4" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="{Binding nofavteacherlbl}" TextColor="#40000000"/>

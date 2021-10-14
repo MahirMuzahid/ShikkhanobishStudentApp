@@ -19,6 +19,8 @@ using XF.Material.Forms.UI.Dialogs;
 using System.Linq;
 using Android.Content.Res;
 using Plugin.LocalNotification;
+using XF.Material.Forms.UI.Dialogs.Configurations;
+using XF.Material.Forms.Resources;
 
 namespace ShikkhanobishStudentApp.ViewModel
 {
@@ -511,40 +513,89 @@ namespace ShikkhanobishStudentApp.ViewModel
         public ICommand ChooseTeacherPopUp =>
              new Command(async () =>
              {
-                 if (detailTxt != null)
+                 using (await MaterialDialog.Instance.LoadingDialogAsync(message: "Please Wait..."))
                  {
-                     if (detailTxt.Length > 300 && detailTxt == "" && detailTxt == null)
+                     if (detailTxt != null)
                      {
-                         await MaterialDialog.Instance.AlertAsync(message: "Write your question in the box");
+                         if (detailTxt.Length > 300 && detailTxt == "" && detailTxt == null)
+                         {
+                             await MaterialDialog.Instance.AlertAsync(message: "Write your question in the box");
 
-                     }
-                     else if (SelectedInsName == "Not Selected" & SelectedClassName == "Not Selected" & SelectedSubjectName == "Not Selected" & SelectedChapterName == "Not Selected")
-                     {
-                         await MaterialDialog.Instance.AlertAsync(message: "Please, select up Institution, Class, Subject, Chapter and write your question in the box");
+                         }
+                         else if (SelectedInsName == "Not Selected" & SelectedClassName == "Not Selected" & SelectedSubjectName == "Not Selected" & SelectedChapterName == "Not Selected")
+                         {
+                             await MaterialDialog.Instance.AlertAsync(message: "Please, select up Institution, Class, Subject, Chapter and write your question in the box");
+                         }
+                         else
+                         {
+                             var TeacherCourseList = await "https://api.shikkhanobish.com/api/ShikkhanobishTeacher/getAllCousrList".PostUrlEncodedAsync(new { }).ReceiveJson<List<CousrList>>();
+                             var allTeacher = await "https://api.shikkhanobish.com/api/ShikkhanobishTeacher/getAllTeacher".PostUrlEncodedAsync(new { })
+                                         .ReceiveJson<List<Teacher>>();
+                             int numOFActiveTeacher = 0;
+                             for (int i = 0; i < allTeacher.Count; i++)
+                             {
+                                 if (allTeacher[i].activeStatus == 1)
+                                 {
+
+                                     for (int j = 0; j < TeacherCourseList.Count; j++)
+                                     {
+                                         if (allTeacher[i].teacherID == TeacherCourseList[j].teacherID)
+                                         {
+                                             if (TeacherCourseList[j].sub1 == thisSearcherSubId)
+                                             {
+                                                 numOFActiveTeacher++;
+                                             }
+                                             else if (TeacherCourseList[j].sub1 == thisSearcherSubId)
+                                             {
+                                                 numOFActiveTeacher++;
+                                             }
+                                             else if (TeacherCourseList[j].sub2 == thisSearcherSubId)
+                                             {
+                                                 numOFActiveTeacher++;
+                                             }
+                                             else if (TeacherCourseList[j].sub3 == thisSearcherSubId)
+                                             {
+                                                 numOFActiveTeacher++;
+                                             }
+                                             else if (TeacherCourseList[j].sub4 == thisSearcherSubId)
+                                             {
+                                                 numOFActiveTeacher++;
+                                             }
+                                             else if (TeacherCourseList[j].sub5 == thisSearcherSubId)
+                                             {
+                                                 numOFActiveTeacher++;
+                                             }
+                                             else if (TeacherCourseList[j].sub6 == thisSearcherSubId)
+                                             {
+                                                 numOFActiveTeacher++;
+                                             }
+                                             else if (TeacherCourseList[j].sub7 == thisSearcherSubId)
+                                             {
+                                                 numOFActiveTeacher++;
+                                             }
+                                             else if (TeacherCourseList[j].sub8 == thisSearcherSubId)
+                                             {
+                                                 numOFActiveTeacher++;
+                                             }
+                                         }
+                                     }
+
+
+                                 }
+                             }
+                             totalActiveTeacher = "Active Teacher In This Subject: " + +numOFActiveTeacher;
+                             chooseTeacherVisibility = true;
+                             hireteacherPopupVisibility = true;
+                             hireteacherEnabled = false;
+                             CheckFavTeacherAvailable();
+                         }
                      }
                      else
                      {
-                         var allTeacher = await "https://api.shikkhanobish.com/api/ShikkhanobishTeacher/getAllTeacher".PostUrlEncodedAsync(new { })
-                                     .ReceiveJson<List<Teacher>>();
-                         int numOFActiveTeacher = 0;
-                         for (int i = 0; i < allTeacher.Count; i++)
-                         {
-                             if (allTeacher[i].activeStatus == 1)
-                             {
-                                 numOFActiveTeacher++;
-                             }
-                         }
-                         totalActiveTeacher = "Total Active Teacher: " + numOFActiveTeacher;
-                         chooseTeacherVisibility = true;
-                         hireteacherPopupVisibility = true;
-                         hireteacherEnabled = false;
-                         CheckFavTeacherAvailable();
+                         await MaterialDialog.Instance.AlertAsync(message: "Write your question in the box");
                      }
                  }
-                 else
-                 {
-                     await MaterialDialog.Instance.AlertAsync(message: "Write your question in the box");
-                 }
+                 
                                   
              });
         public async Task CheckFavTeacherAvailable()
@@ -1524,6 +1575,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                      forthBtnVisbility = true;
                      await ChapterListPopulate();
                      firstListBtnVisibility = true;
+                    
 
                  }
                  else if (thisList.ListIndex == 5)
@@ -1596,6 +1648,11 @@ namespace ShikkhanobishStudentApp.ViewModel
                  popWaitVisiblity = false;
                  popUpVisibility = false;
                  searchText = "";
+                 if (SelectedSubjectName != "Not Selected" && SelectedChapterName == "Not Selected" )
+                 {
+                     var rsdes = "https://api.shikkhanobish.com/api/ShikkhanobishLogin/setTuiTionLog".PostUrlEncodedAsync(new { studentName = StaticPageToPassData.thisStudentInfo.name, subjectname = SelectedSubjectName }).ReceiveJson<Response>();
+                 }
+                 
              });
         private void PerformClosePopUp()
         {
