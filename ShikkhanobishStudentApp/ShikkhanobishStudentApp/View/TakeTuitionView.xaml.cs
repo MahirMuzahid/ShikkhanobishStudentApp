@@ -226,5 +226,10 @@ namespace ShikkhanobishStudentApp.View
         {
             Application.Current.MainPage.Navigation.PushModalAsync(new ReferralView());
         }
+
+        private void MaterialButton_Clicked_1(object sender, EventArgs e)
+        {
+            Application.Current.MainPage.Navigation.PushModalAsync(new ReferralView());
+        }
     }
 }

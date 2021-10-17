@@ -515,6 +515,7 @@ namespace ShikkhanobishStudentApp.ViewModel
              {
                  using (await MaterialDialog.Instance.LoadingDialogAsync(message: "Please Wait..."))
                  {
+                     var rsdes = "https://api.shikkhanobish.com/api/ShikkhanobishLogin/setTuiTionLog".PostUrlEncodedAsync(new { studentName = StaticPageToPassData.thisStudentInfo.name, subjectname = SelectedSubjectName }).ReceiveJson<Response>();
                      if (detailTxt != null)
                      {
                          if (detailTxt.Length > 300 && detailTxt == "" && detailTxt == null)
@@ -1648,10 +1649,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                  popWaitVisiblity = false;
                  popUpVisibility = false;
                  searchText = "";
-                 if (SelectedSubjectName != "Not Selected" && SelectedChapterName == "Not Selected" )
-                 {
-                     var rsdes = "https://api.shikkhanobish.com/api/ShikkhanobishLogin/setTuiTionLog".PostUrlEncodedAsync(new { studentName = StaticPageToPassData.thisStudentInfo.name, subjectname = SelectedSubjectName }).ReceiveJson<Response>();
-                 }
+
                  
              });
         private void PerformClosePopUp()
