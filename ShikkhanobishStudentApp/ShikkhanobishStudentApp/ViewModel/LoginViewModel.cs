@@ -14,7 +14,7 @@ namespace ShikkhanobishStudentApp.ViewModel
         public ICommand goRegisterView =>
              new Command(() =>
              {
-                 Application.Current.MainPage.Navigation.PushModalAsync(new ResgisterView());
+                 Application.Current.MainPage.Navigation.PushAsync(new ResgisterView());
              });
     }
 }

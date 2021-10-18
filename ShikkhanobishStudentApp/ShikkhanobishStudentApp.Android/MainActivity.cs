@@ -23,6 +23,7 @@ namespace ShikkhanobishStudentApp.Droid
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             XF.Material.Droid.Material.Init(this, savedInstanceState);
+            FormsControls.Droid.Main.Init(this);
             ImageCircleRenderer.Init();
             LoadApplication(new App());
             Window.SetStatusBarColor ( Android.Graphics.Color.Rgb (74, 123, 223));

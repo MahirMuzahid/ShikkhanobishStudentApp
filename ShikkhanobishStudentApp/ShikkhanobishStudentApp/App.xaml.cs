@@ -6,6 +6,8 @@ using Xamarin.Essentials;
 using System.Threading.Tasks;
 using ShikkhanobishStudentApp.Model;
 using Flurl.Http;
+using FormsControls.Base;
+using Plugin.SharedTransitions;
 
 namespace ShikkhanobishStudentApp
 {
@@ -17,7 +19,8 @@ namespace ShikkhanobishStudentApp
         {
             InitializeComponent();
             XF.Material.Forms.Material.Init(this);
-            MainPage = new LoadingPage();
+            MainPage = new SharedTransitionNavigationPage(new LoadingPage());
+
         }
         
         

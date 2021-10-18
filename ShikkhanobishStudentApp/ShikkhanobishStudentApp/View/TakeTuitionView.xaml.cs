@@ -1,4 +1,5 @@
 ﻿using Flurl.Http;
+using FormsControls.Base;
 using Plugin.LocalNotification;
 using ShikkhanobishStudentApp.ViewModel;
 using System;
@@ -22,7 +23,8 @@ namespace ShikkhanobishStudentApp.View
   
     public partial class TakeTuitionView : ContentPage
     {
-        
+
+
         public TakeTuitionView(bool fromReg)
         {
             InitializeComponent();
@@ -229,7 +231,10 @@ namespace ShikkhanobishStudentApp.View
 
         private void MaterialButton_Clicked_1(object sender, EventArgs e)
         {
-            Application.Current.MainPage.Navigation.PushModalAsync(new ReferralView());
+            //refer
+            Application.Current.MainPage.Navigation.PushAsync(new ReferralView());
+            //Navigation.PushAsync(new CustomTransitionNavPage(new ReferralView()));
         }
+
     }
 }

@@ -2,6 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             xmlns:sharedTransitions="clr-namespace:Plugin.SharedTransitions;assembly=Plugin.SharedTransitions"
+             sharedTransitions:SharedTransitionNavigationPage.BackgroundAnimation="SlideFromRight"
              x:Class="ShikkhanobishStudentApp.View.ReferralView">
     <Grid BackgroundColor="White">
         <Grid.RowDefinitions>
@@ -25,11 +27,11 @@
                 <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
             </Image.GestureRecognizers>
         </Image>
-        <Label Text="Refer A Friend!" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" FontSize="18" FontAttributes="Bold"/>
+        <Label Text="Refer A Friend!" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" FontSize="18" FontAttributes="Bold" />
         <Image Source="refarralback.png" Grid.Column="1" Grid.Row="1" Aspect="AspectFit"/>
         <Label Text="Your Fererral Code" Grid.Column="1" Grid.Row="2" HorizontalOptions="Center" VerticalOptions="Center"/>
         <material:MaterialCard BackgroundColor="Transparent" Grid.Row="3" Elevation="10" Grid.Column="1" HasShadow="False"/>
-        <Label x:Name="rfrCode" Grid.Row="3" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" FontAttributes="Bold" TextColor="#5F2BFC" FontSize="30"/>
+        <Label x:Name="rfrCode" Grid.Row="3" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" FontAttributes="Bold" TextColor="#5F2BFC" FontSize="30" sharedTransitions:Transition.Name="refer"/>
         <Label Text="What Is This" Grid.Row="4" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" FontAttributes="Bold">
             <Label.GestureRecognizers>
                 <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_1"/>

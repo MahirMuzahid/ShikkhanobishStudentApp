@@ -325,12 +325,18 @@ namespace ShikkhanobishStudentApp.ViewModel
           .ReceiveJson<Response>();
            prgs = 1;
            prgsPercent = "100%";
-            StaticPageToPassData.MakeActiveInServer();
+            // StaticPageToPassData.MakeActiveInServer();
+            Random random = new Random();
+            int length = 7;
+            const string chars = "AB01CDEFG356HIJKLMN4OPQRS78TUVWXYZ29";
+            string id = new string(Enumerable.Repeat(chars, length)
+                .Select(s => s[random.Next(s.Length)]).ToArray());
+            var res = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/setReferralTable".PostUrlEncodedAsync(new { referralID = id, studentID = thisUSerID }).ReceiveJson<Response>();
         }
          public ICommand goBack =>
              new Command(() =>
              {
-                 Application.Current.MainPage.Navigation.PopModalAsync();
+                 Application.Current.MainPage.Navigation.PopAsync();
              });
 
 

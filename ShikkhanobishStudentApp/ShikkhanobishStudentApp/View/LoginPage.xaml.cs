@@ -20,6 +20,7 @@ namespace ShikkhanobishStudentApp.View
             InitializeComponent();
             loadingGrid.IsVisible = false;
             loadingText.Text = "";
+            NavigationPage.SetHasNavigationBar(this, false);
         }
         public async Task LoginStudent()
         {
@@ -49,8 +50,8 @@ namespace ShikkhanobishStudentApp.View
                             pn.Text = "";
                             pass.Text = "";
                             StaticPageToPassData.isFromLogin = true;
-                            await Application.Current.MainPage.Navigation.PushModalAsync(new TakeTuitionView(false));
-                            StaticPageToPassData.MakeActiveInServer();
+                            await Application.Current.MainPage.Navigation.PushAsync(new TakeTuitionView(false));
+                           // StaticPageToPassData.MakeActiveInServer();
                         }
                         else
                         {
@@ -95,7 +96,7 @@ namespace ShikkhanobishStudentApp.View
         }
         private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
-            Application.Current.MainPage.Navigation.PushModalAsync(new ForgotPassword());
+            Application.Current.MainPage.Navigation.PushAsync(new ForgotPassword());
         }
         protected override bool OnBackButtonPressed()
         {

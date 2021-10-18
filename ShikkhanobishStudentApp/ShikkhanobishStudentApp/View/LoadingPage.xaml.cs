@@ -18,6 +18,7 @@ namespace ShikkhanobishStudentApp.View
         public LoadingPage()
         {
             InitializeComponent();
+            NavigationPage.SetHasNavigationBar(this, false);
             getInfo();
         }
         public async Task getInfo()
@@ -29,7 +30,7 @@ namespace ShikkhanobishStudentApp.View
             if (int.Parse(currentAppVersion) < currentRealVersion.studentAtVersion)
             {
                 prgs.Progress = 1;
-                using (await MaterialDialog.Instance.LoadingDialogAsync(message: "New Version Is Available! Please download latest version to use Shikkhanobish Teacher App..."))
+                using (await MaterialDialog.Instance.LoadingDialogAsync(message: "New Version Is Available! Please download latest version to use Shikkhanobish Student App..."))
                 {
                     await Task.Delay(3000);
                     await Browser.OpenAsync("https://play.google.com/store/apps/details?id=com.shikkhanobish.shikkhanobishstudentapp");
@@ -42,8 +43,16 @@ namespace ShikkhanobishStudentApp.View
                 var pass = await SecureStorage.GetAsync("passowrd");
                 if (pn == null && pass == null)
                 {
-                    await Task.Delay(1000);
-                    await Application.Current.MainPage.Navigation.PushModalAsync(new LoginPage());
+                    try
+                    {
+                        await Application.Current.MainPage.Navigation.PushAsync(new LoginPage());
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+                    //await Task.Delay(1000);
+                    
                 }
                 else
                 {
@@ -69,7 +78,8 @@ namespace ShikkhanobishStudentApp.View
                     prgs.Progress = .8;
                     if (!isPending)
                     {
-                        await Application.Current.MainPage.Navigation.PushModalAsync(new TakeTuitionView(false));
+                        //await Task.Delay(2000);
+                        await Application.Current.MainPage.Navigation.PushAsync(new TakeTuitionView(false));
                     }
                     else
                     {

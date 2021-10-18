@@ -4,7 +4,9 @@
              xmlns:viewmodel="clr-namespace:ShikkhanobishStudentApp.ViewModel"
              x:Class="ShikkhanobishStudentApp.View.ResgisterView" 
              xmlns:local="clr-namespace:ShikkhanobishStudentApp.Custom_Rendarar" 
-
+                      xmlns:sharedTransitions="clr-namespace:Plugin.SharedTransitions;assembly=Plugin.SharedTransitions"
+ sharedTransitions:SharedTransitionNavigationPage.TransitionSelectedGroup="gg"
+             sharedTransitions:SharedTransitionNavigationPage.BackgroundAnimation="Fade"
              xmlns:localEntry="clr-namespace:ShikkhanobishStudentApp.Custom_Rendarar">
     <!--  x:DataType="viewmodel:RegisterViewModel" !-->
     <ContentPage.BindingContext>
@@ -43,7 +45,7 @@
         <Label Text="Welcome To Shikkhanobish Registration" TextColor="#A5A5A5" Grid.Row="3" HorizontalOptions="Start" VerticalOptions="End" Grid.Column="1"/>
         <Label Text="{Binding titleTxt}" Grid.Row="4" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Start" TextColor="#3D3D3D" FontSize="26" FontAttributes="Bold"/>
 
-        <Image Source="regback.png" Grid.Row="5" Grid.Column="1" Aspect="AspectFit"/>
+        <Image Source="regback.png" Grid.Row="5" Grid.Column="1" Aspect="AspectFit" sharedTransitions:Transition.Name="register"/>
 
         <Label Text="{Binding egTxt}" Grid.Column="1" Grid.Row="6" HorizontalOptions="Start" VerticalOptions="Center"/>
         <Grid Grid.Row="7" Grid.Column="1" IsVisible="{Binding varificationvisibility}">

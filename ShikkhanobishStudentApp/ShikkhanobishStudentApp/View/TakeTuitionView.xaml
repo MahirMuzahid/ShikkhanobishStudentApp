@@ -2,12 +2,15 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodel="clr-namespace:ShikkhanobishStudentApp.ViewModel"
+             xmlns:sharedTransitions="clr-namespace:Plugin.SharedTransitions;assembly=Plugin.SharedTransitions"
+             sharedTransitions:SharedTransitionNavigationPage.BackgroundAnimation="SlideFromRight"
+             xmlns:anim="clr-namespace:FormsControls.Base;assembly=FormsControls.Base"
              xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin"
              xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
              x:Name="tuitionView"    
              x:Class="ShikkhanobishStudentApp.View.TakeTuitionView">
     <!--  x:DataType="viewmodel:TakeTuitionViewModel" !-->
-    
+
     <Grid>
         <Grid  x:Name="ttGrid" BackgroundColor="White" RowSpacing="0">
             <Grid.RowDefinitions>
@@ -35,10 +38,11 @@
                     <ColumnDefinition Width=".3*"/>
                 </Grid.ColumnDefinitions>
                 
-                <Image Source="logowhite.png" Grid.Column="0" Aspect="AspectFit" Margin="0,0,30,0"/>
+                <Image Source="logowhite.png" Grid.Column="0" Aspect="AspectFit" Margin="0,0,30,0"
+                       sharedTransitions:Transition.Name="login"
+                       />
                 <material:MaterialButton x:Name="logoutBtn" Text="Signout" Grid.Column="1" Grid.ColumnSpan="2" ButtonType="Elevated" HorizontalOptions="End"  VerticalOptions="Center" BorderWidth="2"  FontAttributes="Bold" FontSize="11" BackgroundColor="#20000000" TextColor="White" Clicked="Button_Clicked_3" Command="{Binding logout}">
                 </material:MaterialButton>
-
             </Grid>
             <ScrollView Grid.Row="1" Grid.ColumnSpan="3">
                 <Grid >
@@ -282,7 +286,8 @@
                                         <RowDefinition Height="40"/>
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
-                                    <material:MaterialButton Text="Reffer A Friend" FontSize="10" Grid.Row="0"  Elevation="5" Clicked="MaterialButton_Clicked_1"/>
+                                    <material:MaterialButton Text="Reffer A Friend" FontSize="10" Grid.Row="0"  Elevation="5" Clicked="MaterialButton_Clicked_1"  sharedTransitions:Transition.Name="refer"
+               sharedTransitions:Transition.Group="gg"/>
                                     <Grid Grid.Row="1">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="1*"/>

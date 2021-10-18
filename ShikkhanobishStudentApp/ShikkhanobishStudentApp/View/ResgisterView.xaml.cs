@@ -17,7 +17,7 @@ namespace ShikkhanobishStudentApp.View
         public ResgisterView()
         {
             InitializeComponent();
-            NavigationPage.SetHasNavigationBar(this, true);
+            NavigationPage.SetHasNavigationBar(this, false);
         }
         int click = 0;
         private void Button_Clicked(object sender, EventArgs e)
