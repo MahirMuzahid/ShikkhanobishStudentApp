@@ -26,7 +26,7 @@
         </Image>
         <Label Text="এই উইন্ডোতে আপনি দেখবেন আপনাকে কোন টিচার রিপোর্ট করেছে। শিক্ষানবিশ শিক্ষার গুনগত মান নিয়ন্ত্রণের জন্য শিক্ষক এবং শিক্ষার্থী উভয়ের জন্যই রিপোর্ট সিস্টেম চালু করেছে। আশা করি আপনারা শিক্ষানবিশে শিক্ষার পরিবেশ বজায় রাখবেন" Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center"/>
         <Frame BackgroundColor="#80000000" Grid.Row="2" Grid.Column="1"/>
-        <ListView x:Name="rtitm" RowHeight="150" Grid.Row="3" Grid.Column="1" SeparatorColor="White">
+        <ListView x:Name="rtitm" RowHeight="170" Grid.Row="3" Grid.Column="1" SeparatorColor="White">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
@@ -34,6 +34,7 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="10"/>
                                 <RowDefinition Height="1*"/>
+                                <RowDefinition Height=".7*"/>
                                 <RowDefinition Height="3*"/>
                                 <RowDefinition Height="10"/>
                             </Grid.RowDefinitions>
@@ -43,18 +44,19 @@
                                 <ColumnDefinition Width="10*"/>
                                 <ColumnDefinition Width="1*"/>
                             </Grid.ColumnDefinitions>
-                            <Frame BackgroundColor="#08000000" Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="4" CornerRadius="10"/>
-                            <Label Text="Aggresive Behave" Grid.Row="1" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" FontAttributes="Bold" FontSize="13"/>
+                            <Frame BackgroundColor="#08000000" Grid.Row="0" Grid.RowSpan="4" Grid.ColumnSpan="4" CornerRadius="10"/>
+                            <Label Text="{Binding ReportTypeText}" Grid.Row="1" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" FontAttributes="Bold" FontSize="13"/>
                             <Label Grid.Row="1" Grid.Column="2" HorizontalOptions="End" VerticalOptions="Center" >
                                 <Label.FormattedText>
                                     <FormattedString>
                                         <Span Text="Report By: " FontSize="13"/>
-                                        <Span Text="Fahim Ahsan" FontAttributes="Bold" FontSize="13"/>
+                                        <Span Text="{Binding teacherName}" FontAttributes="Bold" FontSize="13"/>
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
-                            <Label Text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
-                                       Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Start" FontSize="11"/>
+                            <Label Text="{Binding date}" Grid.Row="2" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" FontSize="12"/>
+                            <Label Text="{Binding description}"
+                                       Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Start" FontSize="11"/>
                         </Grid>
                     </ViewCell>
                 </DataTemplate>

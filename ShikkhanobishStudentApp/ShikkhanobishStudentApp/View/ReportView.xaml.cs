@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Flurl.Http;
+using ShikkhanobishStudentApp.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,19 +17,20 @@ namespace ShikkhanobishStudentApp.View
         public ReportView()
         {
             InitializeComponent();
-            NavigationPage.SetHasNavigationBar(this, false);
-            List<int> a = new List<int>();
-            a.Add(0);
-            a.Add(0);
-            a.Add(0);
-            a.Add(0);
-            a.Add(0);
-            a.Add(0);
-            a.Add(0);
-
-            rtitm.ItemsSource = a;
+            NavigationPage.SetHasNavigationBar(this, false);          
+            getAllReport();
         }
-
+        public async Task getAllReport()
+        {
+            var regRes = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getStudentReportWithStudentID"
+              .PostUrlEncodedAsync(new
+              {
+                  studentID = StaticPageToPassData.thisStudentInfo.studentID
+                  
+              })
+              .ReceiveJson<List<StudentReport>>();
+            rtitm.ItemsSource = regRes;
+        }
         private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
             Application.Current.MainPage.Navigation.PopAsync();

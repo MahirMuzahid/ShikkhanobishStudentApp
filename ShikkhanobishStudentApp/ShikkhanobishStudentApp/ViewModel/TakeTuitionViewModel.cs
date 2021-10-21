@@ -1730,9 +1730,12 @@ namespace ShikkhanobishStudentApp.ViewModel
                 return new Command<favouriteTeacher>(async (favteacher) =>
                 {
                     thisSelectedFavPopUpTeacher.teacherID = favteacher.teacherID;
-                    
-                    hireteacherEnabled = true;
-                    randonpopupTeacherbtnColor = Color.FromHex("#ECECEC");
+                    if(favteacher.activeStatus == "Online")
+                    {
+                        hireteacherEnabled = true;
+                        randonpopupTeacherbtnColor = Color.FromHex("#ECECEC");
+                    }
+
                 });
             }
         }
