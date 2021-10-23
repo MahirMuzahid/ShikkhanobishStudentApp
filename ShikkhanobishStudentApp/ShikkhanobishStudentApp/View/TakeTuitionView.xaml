@@ -78,7 +78,7 @@
                         </Grid.ColumnDefinitions>
                         <Frame BackgroundColor="#15000000" Grid.RowSpan="2" Grid.ColumnSpan="2" CornerRadius="10"/>
                         <Image Source="streporticon.png" Grid.RowSpan="2" Grid.ColumnSpan="2" Aspect="AspectFit"  VerticalOptions="Center" Margin="6,2,0,2" HorizontalOptions="Start"/>
-                        <Label Text="12" Grid.RowSpan="2" Grid.ColumnSpan="2" TextColor="White" FontAttributes="Bold" HorizontalOptions="End" Margin="0,0,6,0"/>
+                        <Label Text="{Binding reportCount}" Grid.RowSpan="2" Grid.ColumnSpan="2" TextColor="White" FontAttributes="Bold" HorizontalOptions="End" Margin="0,0,6,0"/>
                         <Button BackgroundColor="Transparent" Grid.RowSpan="2" Grid.ColumnSpan="2" Clicked="Button_Clicked_1" sharedTransitions:Transition.Name="report" sharedTransitions:Transition.Group="gg"/>
                     </Grid>
                 </Grid>

@@ -79,7 +79,8 @@ namespace ShikkhanobishStudentApp.View
                     if (!isPending)
                     {
                         //await Task.Delay(2000);
-                        await Application.Current.MainPage.Navigation.PushAsync(new TakeTuitionView(false));
+                       // await Application.Current.MainPage.Navigation.PushAsync(new TakeTuitionView(false));
+                        await Application.Current.MainPage.Navigation.PushAsync(new RootPage());
                     }
                     else
                     {

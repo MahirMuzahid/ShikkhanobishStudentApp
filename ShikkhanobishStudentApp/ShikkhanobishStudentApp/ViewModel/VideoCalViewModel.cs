@@ -121,7 +121,8 @@ namespace ShikkhanobishStudentApp.ViewModel
                             var reresponses = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/deletePendingTuition".PostUrlEncodedAsync(new { studentID = StaticPageToPassData.thisStudentInfo.studentID })
                         .ReceiveJson<Response>();
                             await StaticPageToPassData.GetStudent();
-                            Application.Current.MainPage.Navigation.PushModalAsync(new TakeTuitionView(false));
+                            StaticPageToPassData.isFromReg = false;
+                            Application.Current.MainPage.Navigation.PushModalAsync(new TakeTuitionView());
                             var existingPages = Application.Current.MainPage.Navigation.ModalStack.ToList();
                             foreach (var page in existingPages)
                             {
@@ -246,7 +247,8 @@ namespace ShikkhanobishStudentApp.ViewModel
                         var reresponses = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/deletePendingTuition".PostUrlEncodedAsync(new { studentID = StaticPageToPassData.thisStudentInfo.studentID })
                     .ReceiveJson<Response>();
                         await StaticPageToPassData.GetStudent();
-                        Application.Current.MainPage.Navigation.PushModalAsync(new TakeTuitionView(false));
+                        StaticPageToPassData.isFromReg = false;
+                        Application.Current.MainPage.Navigation.PushModalAsync(new TakeTuitionView());
                         var existingPages = Application.Current.MainPage.Navigation.ModalStack.ToList();
                         foreach (var page in existingPages)
                         {

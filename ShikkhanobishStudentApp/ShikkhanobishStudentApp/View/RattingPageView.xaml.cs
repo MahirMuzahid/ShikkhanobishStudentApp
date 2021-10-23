@@ -47,7 +47,8 @@ namespace ShikkhanobishStudentApp.View
                 var reresponses = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/deletePendingTuition".PostUrlEncodedAsync(new { studentID = StaticPageToPassData.thisStudentInfo.studentID })
                   .ReceiveJson<Response>();
                 await StaticPageToPassData.GetStudent();
-                await Application.Current.MainPage.Navigation.PushModalAsync(new TakeTuitionView(false));
+                StaticPageToPassData.isFromReg = false;
+                await Application.Current.MainPage.Navigation.PushModalAsync(new TakeTuitionView());
                 await dialog.DismissAsync();
             }
         }

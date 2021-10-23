@@ -1,6 +1,7 @@
 ﻿using Flurl.Http;
 using FormsControls.Base;
 using Plugin.LocalNotification;
+using ShikkhanobishStudentApp.Model;
 using ShikkhanobishStudentApp.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -25,10 +26,10 @@ namespace ShikkhanobishStudentApp.View
     {
 
 
-        public TakeTuitionView(bool fromReg)
+        public TakeTuitionView()
         {
             InitializeComponent();
-            BindingContext = new TakeTuitionViewModel(fromReg);
+            BindingContext = new TakeTuitionViewModel(StaticPageToPassData.isFromReg);
             connectivityGrid.IsVisible = false;
             proImage.IsVisible = false;
             var current = Connectivity.NetworkAccess;

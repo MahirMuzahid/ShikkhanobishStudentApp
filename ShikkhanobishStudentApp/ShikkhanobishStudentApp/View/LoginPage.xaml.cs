@@ -50,7 +50,8 @@ namespace ShikkhanobishStudentApp.View
                             pn.Text = "";
                             pass.Text = "";
                             StaticPageToPassData.isFromLogin = true;
-                            await Application.Current.MainPage.Navigation.PushAsync(new TakeTuitionView(false));
+                            StaticPageToPassData.isFromReg = false;
+                            await Application.Current.MainPage.Navigation.PushAsync(new TakeTuitionView());
                            // StaticPageToPassData.MakeActiveInServer();
                         }
                         else

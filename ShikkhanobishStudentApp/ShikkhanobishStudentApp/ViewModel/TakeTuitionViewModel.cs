@@ -137,6 +137,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                 await GetVoucher().ConfigureAwait(false);
                 await GetProMsg(fromReg).ConfigureAwait(false);
                 await getALlFavTeacher().ConfigureAwait(false);
+                await GetALlReport();
                 avaiableCoin = StaticPageToPassData.thisStudentInfo.coin + "";
                 freeMinText = StaticPageToPassData.thisStudentInfo.freemin + "";
                 await GetPromotImage();
@@ -150,6 +151,18 @@ namespace ShikkhanobishStudentApp.ViewModel
 
         }
         #region Methods
+        public async Task GetALlReport()
+        {
+            var regRes = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getStudentReportWithStudentID"
+              .PostUrlEncodedAsync(new
+              {
+                  studentID = StaticPageToPassData.thisStudentInfo.studentID
+
+              })
+              .ReceiveJson<List<StudentReport>>();
+            reportCount = ""+ regRes.Count;
+
+        }
         public async Task PerformshowSuggestion()
         {
             await MaterialDialog.Instance.AlertAsync(message: "এই সেকশনে আপনি কি শিখতে চাচ্ছেন তা নিয়ে কিছু লিখবেন অথবা আপনার প্রশ্ন থাকলে তা সরাসরি করবেন। যেমনঃ \"আমি পদার্থ বিজ্ঞানের টর্ক টপিকটা ভাল করে বুঝতে চাই।\" অথবা \"ব্যবসায় উদ্যোগের ব্যবসায় পরিকল্পনা চাপ্টারটি বুঝতে চাই\"",
@@ -2616,6 +2629,10 @@ namespace ShikkhanobishStudentApp.ViewModel
         private string totalActiveTeacher1;
 
         public string totalActiveTeacher { get => totalActiveTeacher1; set => SetProperty(ref totalActiveTeacher1, value); }
+
+        private string reportCount1;
+
+        public string reportCount { get => reportCount1; set => SetProperty(ref reportCount1, value); }
 
 
 
