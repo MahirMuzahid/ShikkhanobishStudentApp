@@ -4,18 +4,21 @@
               xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
                xmlns:viewmodel="clr-namespace:ShikkhanobishStudentApp.ViewModel"
               xmlns:sharedTransitions="clr-namespace:Plugin.SharedTransitions;assembly=Plugin.SharedTransitions"
-             sharedTransitions:SharedTransitionNavigationPage.BackgroundAnimation="SlideFromRight"
-            
+             sharedTransitions:SharedTransitionNavigationPage.BackgroundAnimation="SlideFromLeft"
+             
              x:Class="ShikkhanobishStudentApp.View.RechargeCoinView">
+    <ContentPage.BindingContext>
+        <viewmodel:RechrageCoinViewModel/>
+    </ContentPage.BindingContext>
     <!--  x:DataType="viewmodel:RechrageCoinViewModel" !-->
     <Grid  BackgroundColor="#FFFFFF" >
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height=".1*"/>
+                <RowDefinition Height="50"/>
                 <RowDefinition Height=".9*"/>
                 <RowDefinition Height=".01*"/>
                 <RowDefinition Height=".001*"/>
-                <RowDefinition Height="3*"/>
+                <RowDefinition Height="330"/>
                 <RowDefinition Height=".001*"/>
                 <RowDefinition Height=".01*"/>
                 <RowDefinition Height="2*"/>
@@ -26,6 +29,7 @@
                 <ColumnDefinition Width="20*"/>
                 <ColumnDefinition Width=".5*"/>
             </Grid.ColumnDefinitions>
+            <Label Text="Recharge Coin" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" FontAttributes="Bold" FontSize="18"/>
             <Grid Grid.Row="1" Grid.Column="1" RowSpacing="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height=".4*"/>
@@ -81,6 +85,7 @@
                     <material:MaterialButton Text="See Offers" FontSize="10" Grid.Column="1" BackgroundColor="{Binding  showVoucherColor}" TextColor="{Binding showVoucherTxtColor}" Command="{Binding showVouchers}" Elevation="5"/>
 
                 </Grid>
+                
                 <Grid Grid.Row="2" IsVisible="{Binding showAddCoinvisibility}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height=".01*"/>
@@ -122,10 +127,11 @@
 
                     <Label Text="{Binding RechargeerrorTxt}" Grid.Row="5"  Grid.Column="1" TextColor="Red" HorizontalOptions="Center" VerticalOptions="Center" FontSize="14" />
 
-                    <Image Source="rechargeicon.png" Grid.Row="5" Grid.Column="3" HorizontalOptions="Center"  VerticalOptions="Center" Aspect="AspectFill" Margin="0,1,0,0" IsVisible="{Binding rechargeButtonVisibility}"/>
+                    <Image Source="rechargeicon.png" Grid.Row="5" Grid.Column="3" HorizontalOptions="Center"  VerticalOptions="Center" Aspect="AspectFill" Margin="0,2,3,2" IsVisible="{Binding rechargeButtonVisibility}"/>
                     <material:MaterialButton Grid.Row="5" Grid.Column="3" Grid.RowSpan="2" BackgroundColor="Transparent" PressedBackgroundColor="#5010E754" Command="{Binding rechargeCoin}" IsVisible="{Binding rechargeButtonVisibility}"/>
                     <Label Text="Add Now" Grid.Row="6" Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Start" FontSize="11" FontAttributes="Bold" Margin="0,0,7,0" IsVisible="{Binding rechargeButtonVisibility}" TextColor="{AppThemeBinding Light=#545454, Dark=#545454}"/>
                 </Grid>
+                
                 <Grid Grid.Row="2" IsVisible="{Binding showOffervisibility}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1*"/>

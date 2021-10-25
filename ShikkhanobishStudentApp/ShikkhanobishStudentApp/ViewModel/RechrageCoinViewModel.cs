@@ -1,4 +1,5 @@
 ﻿using Flurl.Http;
+using Microsoft.AspNetCore.SignalR.Client;
 using ShikkhanobishStudentApp.Model;
 using ShikkhanobishStudentApp.View;
 using System;
@@ -8,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
+using XF.Material.Forms.UI.Dialogs;
 
 namespace ShikkhanobishStudentApp.ViewModel
 {
@@ -19,10 +21,21 @@ namespace ShikkhanobishStudentApp.ViewModel
         int prStudentBuyingAMount = 0;
         public Voucher thisUsedVoucher { get; set; }
         bool isPremiumRechurge;
+        HubConnection _connection = null;
+        string url = "https://shikkhanobishRealTimeAPi.shikkhanobish.com/ShikkhanobishHub";
         public RechrageCoinViewModel()
         {
             avaiableCoin = StaticPageToPassData.thisStudentInfo.coin + "";
             freeMinText = StaticPageToPassData.thisStudentInfo.freemin + "";
+            showAddCoinColor = Color.FromHex("#23D885");
+            showVoucherColor = Color.FromHex("#F7F7F7");
+            showAddCoinTxtColor = Color.White;
+            showVoucherTxtColor = Color.Black;
+            showOffervisibility = false;
+            showAddCoinvisibility = true;
+            rechargeCoinBackVisibility = false;          
+            rechargeButtonVisibility = false;
+            paymentGifGrid = false;
             GetVoucher();
         }
         private async Task PerformrechargeCoin()
@@ -260,8 +273,143 @@ namespace ShikkhanobishStudentApp.ViewModel
 
             
         }
+        private void PerformpopOUTpaymentGif()
+        {
+            paymentGifGrid = false;
+            SucPaymentText = "";
+        }
+        public async Task ConnectToRealTimeApiServer()
+        {
+
+            _connection = new HubConnectionBuilder()
+                 .WithUrl("https://shikkhanobishRealTimeAPi.shikkhanobish.com/ShikkhanobishHub")
+                 .Build();
+            try
+            {
+                await _connection.StartAsync();
+            }
+            catch (Exception ex)
+            {
+                var ss = ex.InnerException;
+            }
 
 
+            _connection.Closed += async (s) =>
+            {
+                await _connection.StartAsync();
+            };
+
+            _connection.On<int, bool, string, string, string, string, string, string>("StudentPaymentStatus", async (studentID, successFullPayment, amount, response, paymentID, trxID, cardID, cardType) =>
+            {
+                if (studentID == StaticPageToPassData.thisStudentInfo.studentID)
+                {
+                    if (successFullPayment)
+                    {
+                        string pm = "";
+                        for (int i = 0; i < amount.Length; i++)
+                        {
+                            if (amount[i] == '.')
+                            {
+                                break;
+                            }
+                            pm = pm + amount[i];
+                        }
+                        int payamount = int.Parse(pm);
+                        if (!isPremiumRechurge)
+                        {
+
+                            var res = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/setStudentPaymentHistory".PostUrlEncodedAsync(new
+                            {
+                                studentID = StaticPageToPassData.thisStudentInfo.studentID,
+                                paymentID = paymentID,
+                                date = thispayment.date,
+                                trxID = trxID,
+                                amountTaka = payamount,
+                                amountCoin = thispayment.amountCoin,
+                                medium = cardType,
+                                name = thispayment.name,
+                                isVoucherUsed = thispayment.isVoucherUsed,
+                                voucherID = thispayment.voucherID,
+                                cardID = cardID
+                            })
+                            .ReceiveJson<Response>();
+                            if (thispayment.type == 0)
+                            {
+                                var regRes = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/updateStudent"
+                                .PostUrlEncodedAsync(new
+                                {
+                                    studentID = thispayment.studentID,
+                                    phonenumber = StaticPageToPassData.thisStudentInfo.phonenumber,
+                                    password = StaticPageToPassData.thisStudentInfo.password,
+                                    totalSpent = StaticPageToPassData.thisStudentInfo.totalSpent + payamount,
+                                    totalTuitionTime = StaticPageToPassData.thisStudentInfo.totalTuitionTime,
+                                    coin = StaticPageToPassData.thisStudentInfo.coin + thispayment.amountCoin,
+                                    freemin = StaticPageToPassData.thisStudentInfo.freemin + thispayment.addedMin,
+                                    city = StaticPageToPassData.thisStudentInfo.city,
+                                    name = StaticPageToPassData.thisStudentInfo.name,
+                                    institutionName = "none"
+                                })
+                                 .ReceiveJson<Response>();
+                            }
+                            else if (thispayment.type == 1)
+                            {
+                                var regRes = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/makePremiumStudent"
+                                .PostUrlEncodedAsync(new
+                                {
+                                    studentID = thispayment.studentID,
+                                })
+                                 .ReceiveJson<Response>();
+                            }
+
+
+                            paymentGifGrid = true;
+                            SucPaymentText = "You have successfully added " + amount + " coin in your account. Thank you for staying with us.";
+                            await StaticPageToPassData.GetStudent();
+                            avaiableCoin = StaticPageToPassData.thisStudentInfo.coin + "";
+                            freeMinText = StaticPageToPassData.thisStudentInfo.freemin + "";
+                        }
+                        else
+                        {
+                            var res = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/setStudentPaymentHistory".PostUrlEncodedAsync(new
+                            {
+                                studentID = StaticPageToPassData.thisStudentInfo.studentID,
+                                paymentID = paymentID,
+                                date = thispayment.date,
+                                trxID = trxID,
+                                amountTaka = payamount,
+                                amountCoin = 0,
+                                medium = cardType,
+                                name = thispayment.name,
+                                isVoucherUsed = thispayment.isVoucherUsed,
+                                voucherID = thispayment.voucherID,
+                                cardID = cardID
+                            })
+                            .ReceiveJson<Response>();
+
+
+                            var respr = await "https://api.shikkhanobish.com/api/ShikkhanobishTeacher/makePremiumStudent"
+                               .PostUrlEncodedAsync(new
+                               {
+                                   studentID = thispayment.studentID,
+                               })
+                                .ReceiveJson<Response>();
+                            paymentGifGrid = true;
+                            SucPaymentText = "Congratulation! You have bucome Shikkhanobish Premium Student. Thank you for staying with us.";
+                            await StaticPageToPassData.GetStudent();
+                            avaiableCoin = StaticPageToPassData.thisStudentInfo.coin + "";
+                            freeMinText = StaticPageToPassData.thisStudentInfo.freemin + "";                           
+                        }
+
+                    }
+                    else
+                    {
+                        await MaterialDialog.Instance.AlertAsync(message: response,
+                                    title: "There is problem");
+                    }
+                }
+            });
+
+        }
         #region Binding
         private string avaiableCoin1;
 
@@ -394,6 +542,23 @@ namespace ShikkhanobishStudentApp.ViewModel
                 return showVouchers1;
             }
         }
+        private Command popOUTpaymentGif1;
+
+        public ICommand popOUTpaymentGif
+        {
+            get
+            {
+                if (popOUTpaymentGif1 == null)
+                {
+                    popOUTpaymentGif1 = new Command(PerformpopOUTpaymentGif);
+                }
+
+                return popOUTpaymentGif1;
+            }
+        }
+        private bool paymentGifGrid1;
+
+        public bool paymentGifGrid { get => paymentGifGrid1; set => SetProperty(ref paymentGifGrid1, value); }
         private Command showAddCoin1;
 
         public ICommand showAddCoin
@@ -408,6 +573,9 @@ namespace ShikkhanobishStudentApp.ViewModel
                 return showAddCoin1;
             }
         }
+        private string sucPaymentText;
+
+        public string SucPaymentText { get => sucPaymentText; set => SetProperty(ref sucPaymentText, value); }
 
     }
     #endregion

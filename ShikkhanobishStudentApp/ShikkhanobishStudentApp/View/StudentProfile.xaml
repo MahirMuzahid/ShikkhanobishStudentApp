@@ -30,17 +30,7 @@
             </Grid.RowDefinitions>
             <Image Source="profilebac.jpg" Grid.Row="0" Aspect="AspectFill" Grid.RowSpan="4"/>
 
-            <Label Text="" Grid.Row="0" HorizontalOptions="Start" VerticalOptions="Center" FontSize="25" Margin="20,20,0,0">
-                <Label.FormattedText>
-                    <FormattedString>
-                        <Span Text="X" TextColor="Black">
-                            <Span.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding closeWindow}" />
-                            </Span.GestureRecognizers>
-                        </Span>
-                    </FormattedString>
-                </Label.FormattedText>
-            </Label>
+            
             <Label Text="{Binding name}" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" FontSize="20" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#545454, Dark=#545454}"/>
             <Label Text="{Binding phonenumber}" Grid.Row="2" HorizontalOptions="Center" VerticalOptions="Start" FontSize="13" TextColor="{AppThemeBinding Light=#545454, Dark=#545454}"/>
         </Grid>

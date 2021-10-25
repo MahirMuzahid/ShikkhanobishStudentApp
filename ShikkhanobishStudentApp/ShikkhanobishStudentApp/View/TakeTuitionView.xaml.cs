@@ -31,10 +31,10 @@ namespace ShikkhanobishStudentApp.View
             InitializeComponent();
             BindingContext = new TakeTuitionViewModel(StaticPageToPassData.isFromReg);
             connectivityGrid.IsVisible = false;
-            proImage.IsVisible = false;
+          
             var current = Connectivity.NetworkAccess;
-            FavouriteTeacherGrid.IsVisible = false;
-            coingrid.IsVisible = false;
+          
+          
             if (current == NetworkAccess.Internet)
             {
                 getAllInfo();
@@ -56,12 +56,9 @@ namespace ShikkhanobishStudentApp.View
                 NavigationPage.SetHasNavigationBar(this, false);
                 var mainDisplayInfo = DeviceDisplay.MainDisplayInfo;
                 var width = mainDisplayInfo.Width;
-                cpimg.Opacity = .3;
-                fvimg.Opacity = .3;
-                rclbl.TextColor = Color.FromHex("#C9C9C9");
-                fvlbl.TextColor = Color.FromHex("#C9C9C9");
+               
                 Connectivity.ConnectivityChanged += Connectivity_ConnectivityChanged;
-                proImage.IsVisible = true;
+               
 
         }
         async void Connectivity_ConnectivityChanged(object sender, ConnectivityChangedEventArgs e)
@@ -102,28 +99,18 @@ namespace ShikkhanobishStudentApp.View
         }
         async private void paymentClicked(object sender, EventArgs e)
         {           
-            coingrid.IsVisible = true;
-            FavouriteTeacherGrid.IsVisible = false;
-            ttlbl.TextColor = Color.FromHex("#C9C9C9");
-            fvlbl.TextColor = Color.FromHex("#C9C9C9");
-            rclbl.TextColor = Color.Black;
-            cpimg.Opacity = 1;
-            ttimg.Opacity = .3;
-            fvimg.Opacity = .3;
+          
+           
+           
             
         }
 
         async private void homeClicked(object sender, EventArgs e)
         {
 
-            FavouriteTeacherGrid.IsVisible = false;
-            coingrid.IsVisible = false;
-            ttimg.Opacity = 1;
-            cpimg.Opacity = .3;
-            fvimg.Opacity = .3;
-            ttlbl.TextColor = Color.Black;
-            rclbl.TextColor = Color.FromHex("#C9C9C9");
-            fvlbl.TextColor = Color.FromHex("#C9C9C9");
+          
+            
+           
         }
 
         private void profileClicked(object sender, EventArgs e)
@@ -132,14 +119,9 @@ namespace ShikkhanobishStudentApp.View
         }
         private void favouriteClicked(object sender, EventArgs e)
         {
-            FavouriteTeacherGrid.IsVisible = true;
-            coingrid.IsVisible = false;
-            ttimg.Opacity = .3;
-            cpimg.Opacity = .3;
-            fvimg.Opacity = 1;
-            ttlbl.TextColor = Color.FromHex("#C9C9C9");
-            rclbl.TextColor = Color.FromHex("#C9C9C9");
-            fvlbl.TextColor = Color.Black;
+          
+          
+           
 
 
         }
