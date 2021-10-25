@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+              xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             x:Class="ShikkhanobishStudentApp.View.ChooseInsAndClass">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="300"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Label Text="Select Your Class" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" FontAttributes="Bold" FontSize="18"/>
+            <material:MaterialButton Text="Class 8" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" ButtonType="Text" />
+            <material:MaterialButton Text="Class 9" Grid.Row="2" HorizontalOptions="Center" VerticalOptions="Center" ButtonType="Text" />
+            <material:MaterialButton Text="Class 10" Grid.Row="3" HorizontalOptions="Center" VerticalOptions="Center" ButtonType="Text" />
+            <material:MaterialButton Text="Class 11" Grid.Row="4" HorizontalOptions="Center" VerticalOptions="Center" ButtonType="Text" />
+            <material:MaterialButton Text="Class 12" Grid.Row="5" HorizontalOptions="Center" VerticalOptions="Center" ButtonType="Text" />
+            <material:MaterialButton Text="Select" Grid.Row="6" HorizontalOptions="Center" VerticalOptions="Center"/>
+        </Grid>
+    </Grid>
+</ContentPage>
