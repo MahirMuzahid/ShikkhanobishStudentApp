@@ -223,7 +223,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                                  await SecureStorage.SetAsync("phonenumber", studentPhonenumber);
                                  await SecureStorage.SetAsync("passowrd", password);
                                  StaticPageToPassData.isFromReg = true;
-                                 Application.Current.MainPage.Navigation.PushModalAsync(new TakeTuitionView());
+                                 await Application.Current.MainPage.Navigation.PushAsync(new ChooseInsAndClass());
                              }
                              else
                              {

@@ -1,4 +1,5 @@
 ﻿using Flurl.Http;
+using Newtonsoft.Json;
 using ShikkhanobishStudentApp.Model;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ namespace ShikkhanobishStudentApp.View
         public LoadingPage()
         {
             InitializeComponent();
+
             NavigationPage.SetHasNavigationBar(this, false);
             getInfo();
         }
@@ -81,7 +83,17 @@ namespace ShikkhanobishStudentApp.View
                         //await Task.Delay(2000);
                         // await Application.Current.MainPage.Navigation.PushAsync(new TakeTuitionView(false));
                         //await Application.Current.MainPage.Navigation.PushAsync(new RootPage());
-                         await Application.Current.MainPage.Navigation.PushAsync(new ChooseInsAndClass());
+                        var thischoice = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getClassChoiceWithID".PostUrlEncodedAsync(new { studentID = StaticPageToPassData.thisStudentInfo.studentID })
+                 .ReceiveJson<ClassChoice>();
+                        if(thischoice.studentID == 0)
+                        {
+                            await Application.Current.MainPage.Navigation.PushAsync(new ChooseInsAndClass());
+                        }
+                        else
+                        {
+                            await Application.Current.MainPage.Navigation.PushAsync(new RootPage());
+                        }
+                      
                     }
                     else
                     {

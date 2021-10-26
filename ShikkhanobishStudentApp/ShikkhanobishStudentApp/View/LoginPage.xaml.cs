@@ -51,8 +51,17 @@ namespace ShikkhanobishStudentApp.View
                             pass.Text = "";
                             StaticPageToPassData.isFromLogin = true;
                             StaticPageToPassData.isFromReg = false;
-                            await Application.Current.MainPage.Navigation.PushAsync(new TakeTuitionView());
-                           // StaticPageToPassData.MakeActiveInServer();
+                            var thischoice = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getClassChoiceWithID".PostUrlEncodedAsync(new { studentID = StaticPageToPassData.thisStudentInfo.studentID })
+                 .ReceiveJson<ClassChoice>();
+                            if (thischoice.studentID == 0)
+                            {
+                                await Application.Current.MainPage.Navigation.PushAsync(new ChooseInsAndClass());
+                            }
+                            else
+                            {
+                                await Application.Current.MainPage.Navigation.PushAsync(new RootPage());
+                            }
+                            // StaticPageToPassData.MakeActiveInServer();
                         }
                         else
                         {

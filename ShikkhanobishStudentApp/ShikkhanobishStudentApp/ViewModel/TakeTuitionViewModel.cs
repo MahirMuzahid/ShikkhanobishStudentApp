@@ -27,7 +27,7 @@ namespace ShikkhanobishStudentApp.ViewModel
     public class TakeTuitionViewModel : BaseViewModel, INotifyPropertyChanged
     {
         string isNewUpdate;
-        public ServerConnection serverconnection { get; set; }
+        //public ServerConnection serverconnection { get; set; }
         ObservableCollection<ClassInfo> AllclsList = new ObservableCollection<ClassInfo>();
         ObservableCollection<UniversityName> AllUNameList = new ObservableCollection<UniversityName>();
         ObservableCollection<Subject> AllsubList = new ObservableCollection<Subject>();
