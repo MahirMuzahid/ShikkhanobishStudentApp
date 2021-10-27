@@ -141,7 +141,9 @@ namespace ShikkhanobishStudentApp.ViewModel
                 avaiableCoin = StaticPageToPassData.thisStudentInfo.coin + "";
                 freeMinText = StaticPageToPassData.thisStudentInfo.freemin + "";
                 await GetPromotImage();
+                await GetThisStChoice();
                 isLoading = false;
+                
             }
             randonpopupTeacherbtnColor = Color.FromHex("#ECECEC");
             if (fromReg)
@@ -151,6 +153,37 @@ namespace ShikkhanobishStudentApp.ViewModel
 
         }
         #region Methods
+        public async Task GetThisStChoice()
+        {
+            var thischoice = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getClassChoiceWithID".PostUrlEncodedAsync(new { studentID = StaticPageToPassData.thisStudentInfo.studentID })
+                 .ReceiveJson<ClassChoice>();
+            await InsListPopulate();
+            await ClassListPopulate();
+            for(int i = 0; i < backUpFipName.Count; i++)
+            {
+                if(backUpFipName[i].institutionID == thischoice.institutionID)
+                {
+                    popupList thispop = new popupList();
+                    thispop.name = backUpFipName[i].name;
+                    thispop.ListIndex = 1;
+                    thispop.totalRequest = backUpFipName[i].tuitionRequest;
+                    await SelectInsInContructor(thispop);
+                    break;
+                }
+            }
+            for (int i = 0; i < AllclsList.Count; i++)
+            {
+                if (AllclsList[i].classID == thischoice.classID)
+                {
+                    popupList thispop = new popupList();
+                    thispop.name = AllclsList[i].name;
+                    thispop.ListIndex = AllclsList[i].indexNo;
+                    thispop.totalRequest = AllclsList[i].tuitionRequest;
+                    await SelectClasInConstructor(thispop);
+                    break;
+                }
+            }
+        }
         public async Task GetALlReport()
         {
             var regRes = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getStudentReportWithStudentID"
@@ -1298,11 +1331,13 @@ namespace ShikkhanobishStudentApp.ViewModel
         public async Task CourseListPopulate()
         {
             AllCrsList = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/getCourse".GetJsonAsync<ObservableCollection<Course>>();
+            
         }
         #endregion
 
         #region Popup in take tuition
         //Click in select btn
+        
         public ICommand selectInsCommand =>
             new Command<string>(async (index) =>
             {
@@ -1400,8 +1435,12 @@ namespace ShikkhanobishStudentApp.ViewModel
                         {
                             groupChoiseVisibility = false;
                         }
+                        List<Subject> SortedList = new List<Subject>();
+                        SortedList = popupclsList.OrderBy(x => x.subjectID).ToList();
+                        SortedList.Reverse();
+                        ObservableCollection<Subject> newsublist = new ObservableCollection<Subject>(SortedList);
                         ObservableCollection<popupList> convertedList = new ObservableCollection<popupList>();
-                        convertedList = ConvertSubTOPupUpList(popupclsList);
+                        convertedList = ConvertSubTOPupUpList(newsublist);
                         resultvisi = false;
                         popupList = convertedList;
                     }
@@ -1439,8 +1478,11 @@ namespace ShikkhanobishStudentApp.ViewModel
                                 popupclsList.Add(AllchpList[i]);
                             }
                         }
+                        List<Chapter> SortedList = new List<Chapter>();
+                        SortedList = popupclsList.OrderBy(x => x.chapterID).ToList();
+                        ObservableCollection<Chapter> newsublist = new ObservableCollection<Chapter>(SortedList);
                         ObservableCollection<popupList> convertedList = new ObservableCollection<popupList>();
-                        convertedList = ConvertChapterTOPupUpList(popupclsList);
+                        convertedList = ConvertChapterTOPupUpList(newsublist);
                         resultvisi = false;
                         popupList = convertedList;
 
@@ -1466,7 +1508,67 @@ namespace ShikkhanobishStudentApp.ViewModel
                 }
 
             });
+        public async Task SelectClasInConstructor(popupList thisList)
+        {
+            ClassInfo selectedList = new ClassInfo();
+            for (int i = 0; i < AllclsList.Count; i++)
+            {
+                if (AllclsList[i].name == thisList.name)
+                {
+                    selectedList = AllclsList[i];
+                    secondChoiceID = AllclsList[i].classID + "";
 
+                }
+
+            }
+
+            selectedGlobalCls = selectedList;
+            SelectedClassName = selectedList.name;
+            CLTRequest = selectedList.tuitionRequest;
+            CLavgratting = selectedList.avgRatting;
+            await SubjectListPopulate();
+            thirdListBtnVisibility = true;
+        }
+        public async Task SelectInsInContructor(popupList thisList)
+        {
+            groupChoiseVisibility = false;
+            if (thisList.ListIndex == 1)
+            {
+                if (selectedGlobalCls != null || selectedGlobalUniName != null)
+                {
+
+                    resetList(1);
+                }
+                seletedCountTextVisibility = true;
+                Institution selectedIns = new Institution();
+                for (int i = 0; i < backUpFipName.Count; i++)
+                {
+                    if (backUpFipName[i].name == thisList.name)
+                    {
+                        selectedIns = backUpFipName[i];
+                        firstChoiceID = backUpFipName[i].institutionID + "";
+                    }
+                }
+                selectedGlobalIns = selectedIns;
+                SelectedInsName = selectedIns.name;
+                TRequest = selectedIns.tuitionRequest;
+                avgratting = selectedIns.avgRatting;
+                if (thisList.name == "College" || thisList.name == "School")
+                {
+                    secTitle = "Class";
+                    thirdTitle = "Subject";
+                    forthTitle = "Chapter";
+                    await ClassListPopulate();
+                }
+                else
+                {
+                    secTitle = "University";
+                    thirdTitle = "Degree";
+                    forthTitle = "Course";
+                    await UNameListPopulate();
+                }
+            }
+        }
         //click in selected item
         public ICommand SelectedItem =>
              new Command<popupList>(async (thisList) =>
