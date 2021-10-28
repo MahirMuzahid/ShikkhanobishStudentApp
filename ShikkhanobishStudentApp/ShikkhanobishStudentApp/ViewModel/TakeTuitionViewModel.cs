@@ -889,7 +889,8 @@ namespace ShikkhanobishStudentApp.ViewModel
         }
         private async Task PerformhireTeacherBtnCmdAsync()
         {
-            
+            isscTeacherInfoVisible = false;
+            isSearchGifVisible = true;
             teacherGaveResponse = false;
             chooseTeacherVisibility = false;
             selectedTeacherConnectingVisibility = true;
@@ -918,10 +919,20 @@ namespace ShikkhanobishStudentApp.ViewModel
                 }
                
             }
-
+            isSearchGifVisible = false;
+            isscTeacherInfoVisible = true;
             connectingTeachertxt = "Teacher Found! Waiting for response...";
             //Call teacher
             int thisCost = thisTuitionCostCal();
+            Teacher thisscTeacherInfo = await "https://api.shikkhanobish.com/api/ShikkhanobishTeacher/getTeacherWithID".PostUrlEncodedAsync(new { teacherID = teacherisSelected }).ReceiveJson<Teacher>();
+            scteacherName = thisscTeacherInfo.name;
+            scteacherTotalTuition = thisscTeacherInfo.totalTuition+"";
+            float toalRating = 0;
+
+            float totalSum = thisscTeacherInfo.fiveStar * 5 + thisscTeacherInfo.fourStar * 4 + thisscTeacherInfo.threeStar * 3 + thisscTeacherInfo.twoStar * 2 + thisscTeacherInfo.oneStar;
+
+            toalRating = totalSum / (thisscTeacherInfo.fiveStar + thisscTeacherInfo.fourStar + thisscTeacherInfo.threeStar + thisscTeacherInfo.twoStar + thisscTeacherInfo.oneStar);
+            scteacherRatting = toalRating + "";
             string uriToCAllTeacher = "https://shikkhanobishrealtimeapi.shikkhanobish.com/api/ShikkhanobishSignalR/CallSelectedTeacher?&teacherID=" + teacherisSelected + "&des=" + detailTxt + "&cls=" + SelectedClassName + "&sub=" + thisSearcherSubId + "&chapter=" + selectedChapterName + "&cost=" + thisCost + "&name=" + StaticPageToPassData.thisStudentInfo.name + "&studentID=" + StaticPageToPassData.thisStudentInfo.studentID;
             await realtimeapi.ExecuteRealTimeApi(uriToCAllTeacher);
             int sec = 35;
@@ -932,7 +943,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                 {
                     if (isFavTeacher)
                     {
-                        connectingTeachertxt = "Teacher is unable to teach you. Please, choose another teacher.";
+                        connectingTeachertxt = "Teacher is unable to connect. Please, choose another teacher.";
                         selectedTeacherConnectingVisibility = false;
                         chooseTeacherVisibility = true;
                         Task.Delay(1000);
@@ -942,13 +953,10 @@ namespace ShikkhanobishStudentApp.ViewModel
                     else
                     {
                         CallTeacherAgain();
+                        return false;
                     }
 
-                }
-                else
-                {
-                    return false;
-                }
+                }              
                 sec -= 1;
                 return true;
             });
@@ -1004,6 +1012,7 @@ namespace ShikkhanobishStudentApp.ViewModel
         private void PerformcancleTeacherSearch()
         {           
             teacherisSelected = 1;
+            teacherGaveResponse = true;
             teacheracceptTimer = "";
             selectedTeacherConnectingVisibility = false;
             chooseTeacherVisibility = true;
@@ -1016,12 +1025,23 @@ namespace ShikkhanobishStudentApp.ViewModel
             {
                 return;
             }
-           
+            var actions = new string[] { "Audio Call", "Video Call" };
+            var result = await MaterialDialog.Instance.SelectActionAsync(title: "Do you want to use?[You can change it in call]",
+                                                             actions: actions);
+            if(result == 0)
+            {
+                string sendResponse = "https://shikkhanobishrealtimeapi.shikkhanobish.com/api/ShikkhanobishSignalR/studentTuitionResponse?&teacherID=" + teacherisSelected + "&studentID=" + StaticPageToPassData.thisStudentInfo.studentID + "&studentTuitionResponse=" + true + "&hidestVideo=" + true;
+                await realtimeapi.ExecuteRealTimeApi(sendResponse);
+            }
+            else
+            {
+                string sendResponse = "https://shikkhanobishrealtimeapi.shikkhanobish.com/api/ShikkhanobishSignalR/studentTuitionResponse?&teacherID=" + teacherisSelected + "&studentID=" + StaticPageToPassData.thisStudentInfo.studentID + "&studentTuitionResponse=" + true + "&hidestVideo=" + false;
+                await realtimeapi.ExecuteRealTimeApi(sendResponse);
+            }
             using (await MaterialDialog.Instance.LoadingDialogAsync(message: "Connecting Video Call..."))
             {
                 hireteacherPopupVisibility = false;
-                string sendResponse = "https://shikkhanobishrealtimeapi.shikkhanobish.com/api/ShikkhanobishSignalR/studentTuitionResponse?&teacherID=" + teacherisSelected + "&studentID=" + StaticPageToPassData.thisStudentInfo.studentID + "&studentTuitionResponse=" + true;
-                await realtimeapi.ExecuteRealTimeApi(sendResponse);
+                
                 PerMinPassModel perminPass = new PerMinPassModel();
                 perminPass.studentID = StaticPageToPassData.thisStudentInfo.studentID;
                 perminPass.teacherID = teacherisSelected;
@@ -2735,6 +2755,26 @@ namespace ShikkhanobishStudentApp.ViewModel
         private string reportCount1;
 
         public string reportCount { get => reportCount1; set => SetProperty(ref reportCount1, value); }
+
+        private bool isSearchGifVisible1;
+
+        public bool isSearchGifVisible { get => isSearchGifVisible1; set => SetProperty(ref isSearchGifVisible1, value); }
+
+        private string scteacherName1;
+
+        public string scteacherName { get => scteacherName1; set => SetProperty(ref scteacherName1, value); }
+
+        private string scteacherTotalTuition1;
+
+        public string scteacherTotalTuition { get => scteacherTotalTuition1; set => SetProperty(ref scteacherTotalTuition1, value); }
+
+        private string scteacherRatting1;
+
+        public string scteacherRatting { get => scteacherRatting1; set => SetProperty(ref scteacherRatting1, value); }
+
+        private bool isscTeacherInfoVisible1;
+
+        public bool isscTeacherInfoVisible { get => isscTeacherInfoVisible1; set => SetProperty(ref isscTeacherInfoVisible1, value); }
 
 
 
