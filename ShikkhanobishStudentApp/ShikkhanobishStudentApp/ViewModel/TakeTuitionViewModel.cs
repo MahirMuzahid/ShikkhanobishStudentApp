@@ -49,6 +49,7 @@ namespace ShikkhanobishStudentApp.ViewModel
         int teacherisSelected;
         List<Voucher> allVoucher = new List<Voucher>();
         bool teacherGaveResponse = true;
+        public bool isCancledTuition;
         #region Methods
 
         public TakeTuitionViewModel(bool fromReg)
@@ -86,8 +87,8 @@ namespace ShikkhanobishStudentApp.ViewModel
         public async Task homeFirst(bool fromReg)
         {
             PerformshowAddCoin();
-           
-            rechargeCoinBackVisibility = false;
+            isCancledTuition = false;
+             rechargeCoinBackVisibility = false;
             isLoading = false;
             isNewUpdate = "";
             proMsgBtnIsVisible = false;
@@ -939,8 +940,10 @@ namespace ShikkhanobishStudentApp.ViewModel
 
             Device.StartTimer(TimeSpan.FromSeconds(1), () =>
             {
-                if (sec == 0 && !teacherGaveResponse)
+                if (sec == 0)
                 {
+                    isSearchGifVisible = true;
+                    isscTeacherInfoVisible = false;
                     if (isFavTeacher)
                     {
                         connectingTeachertxt = "Teacher is unable to connect. Please, choose another teacher.";
@@ -952,7 +955,11 @@ namespace ShikkhanobishStudentApp.ViewModel
                     }
                     else
                     {
-                        CallTeacherAgain();
+                        if (!isCancledTuition)
+                        {
+                            CallTeacherAgain();
+                        }
+                       
                         return false;
                     }
 
@@ -975,7 +982,7 @@ namespace ShikkhanobishStudentApp.ViewModel
                 if (thisSelectedFavPopUpTeacher.teacherID == 0)
                 {
                     SelectedTeacher = await "https://api.shikkhanobish.com/api/ShikkhanobishLogin/HireTeacherAsync".PostUrlEncodedAsync(new { subID = thisSearcherSubId })
-           .ReceiveJson<Teacher>();
+                    .ReceiveJson<Teacher>();
                     teacherisSelected = SelectedTeacher.teacherID;
                 }
                 else
@@ -1010,7 +1017,8 @@ namespace ShikkhanobishStudentApp.ViewModel
             return thisCost;
         }
         private void PerformcancleTeacherSearch()
-        {           
+        {
+            isCancledTuition = true;
             teacherisSelected = 1;
             teacherGaveResponse = true;
             teacheracceptTimer = "";
@@ -1095,6 +1103,11 @@ namespace ShikkhanobishStudentApp.ViewModel
                     teacherGaveResponse = true;
                     if (response == false)
                     {
+                        isSearchGifVisible = true;
+                        isscTeacherInfoVisible = false;
+                        connectingTeachertxt = "Teacher decline your request!";
+                        await Task.Delay(1000);
+                        connectingTeachertxt = "Searching Teacher...";
                         int teacherisSelected;
                         if (thisSelectedFavPopUpTeacher.teacherID == 0)
                         {
@@ -1146,7 +1159,6 @@ namespace ShikkhanobishStudentApp.ViewModel
                     {
                         var thisTeacher = await "https://api.shikkhanobish.com/api/ShikkhanobishTeacher/getTeacherWithID".PostUrlEncodedAsync(new { teacherID = teacherID })
                            .ReceiveJson<Teacher>();
-                        //ShowNotification("A teacher has been connected accepted your request! Click to join");
                         connectingTeachertxt = thisTeacher.name + " has been connected. Please accept call to start tuition...";
                         thisSesionID = sessionID;
                         acceptTeacherVisibility = true;
